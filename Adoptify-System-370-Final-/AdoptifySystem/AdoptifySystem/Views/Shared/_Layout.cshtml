@@ -1,0 +1,294 @@
+﻿﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Adoptify System Application</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+
+
+    @*<script src="https://code.jquery.com.jquery.js"></script>*@
+    @*<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>*@
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> <!-- KIM added this here and the two below -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="~/StyleSheet1.css" rel="stylesheet" />
+    <link href="~/StyleSheet2.css" rel="stylesheet" />
+    <link href="~/StyleSheet3.css" rel="stylesheet" />
+    <link href="~/StyleSheet4.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="navbarstyle">
+        <div class="container-fluid">
+            <div class="navbar-header" style="font-family:serif">
+                <h2><a class="navbar-brand" href="#" style="font-size:30px"><span style="color:#FF5733">WOLLLIES ANIMAL SHELTER</span></a></h2>
+            </div>
+            <form class="navbar-form navbar-right">
+                <div class="row">
+                    <div class="form-group">
+                        <h4 style="color: white; font-size: 14.5px; font-family: 'Lato', sans-serif">  Time Remaining: </h4>
+                    </div>
+                    <div class="form-group">
+                        <h4 id="demo" style="color: white; font-size: 14.5px; font-family: 'Lato', sans-serif"></h4>
+                        @*<a href="#"><p id="demo" style="color:white; font-size: 12px"></p></a>*@
+                    </div>
+                    <div class="form-group usr_buttons">
+                        <a class="navbar-brand" href="http://localhost:13834/Home/Login"><i class="fas fa-user"></i><span style="color:white"> Logout</span></a>
+                    </div>
+                    <div class="form-group usr_buttons">
+                        <a class="navbar-brand" href="http://localhost:13834/EditMyProfile/Edit"><i class="fas fa-wrench"></i><span style="color:white"> Edit My Profile</span></a>
+                    </div>
+
+                </div>
+            </form>
+            <form id="form1">
+                <div class"row">
+                    <div class="col-md-5">
+                        <div id="menu" class="position-absolute" style="visibility:hidden">
+
+                            <ul class="list-unstyled components">
+                                <li>
+                                    <button class="accordion" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-home"></i>Home</button>
+                                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                                        <li><a><span class="sub"></span>@Html.ActionLink("About Us", "Index", "Home")</a></li>
+                                    </ul>
+
+                                <li>
+                                    @*<li><button class="accordion" href="http://localhost:13834/Home/Index"><i class="fas fa-home"></i>Home</button></li>*@
+                                    @*@Html.ActionLink("Home","Index","Home", new { @class = "sub" })*@
+
+
+                                <li>
+
+
+                                    <button class="accordion" href="#customerSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-heart"></i>Animals</button>
+                                    <ul class="collapse list-unstyled" id="customerSubmenu">
+                                        @*@if (Session["RoleDesc"].ToString().Contains("Search For Customers"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Search For Customers", "Search", "Customers")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Customers"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Customers", "Index", "Customers")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Customer Address"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Customer Address", "Index", "Customer_Address")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Customer Contact"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Customer Contact", "Index", "Customer_Contact")</a></li>
+                                            }*@
+
+                                    </ul>
+
+                                <li>
+                                    @*Employees*@
+                                    <button class="accordion act" href="#employeeSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-briefcase"></i> Employees</button>
+                                    <ul class="collapse list-unstyled" id="employeeSubmenu">
+                                        @*@if (Session["RoleDesc"].ToString().Contains("Search For Employees"))
+                                            {
+                                                <li act><a><span class="sub"></span>@Html.ActionLink("Search For Employees", "Search", "Users")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Employees"))
+                                            {
+                                                <li act><a><span class="sub"></span>@Html.ActionLink("Employees", "Index", "Users")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Employee Address"))
+                                            {
+                                                <li act><a><span class="sub"></span>@Html.ActionLink("Employee Address", "Index", "User_Address")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Employee Contact"))
+                                            {
+                                                <li act><a><span class="sub"></span>@Html.ActionLink("Employee Contact", "Index", "User_Contact")</a></li>
+                                            }*@
+                                    </ul>
+
+                                <li>
+                                    <!-- Products -->
+                                    <button class="accordion act" href="#productSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-box-open"></i>Stock</button>
+                                    <ul class="collapse list-unstyled" id="productSubmenu">
+                                        @*@if (Session["RoleDesc"].ToString().Contains("Products"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Products", "Index", "Products")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Product Type", "Index", "Product_Type")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Search For Products"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Search For Products", "Search", "Products")</a></li>
+                                            }*@
+                                    </ul>
+
+                                <li>
+                                    <!-- Ordering -->
+                                    <button class="accordion" href="#orderingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-shopping-basket"></i>Adoption</button>
+                                    <ul class="collapse list-unstyled" id="orderingSubmenu">
+                                        @*@if (Session["RoleDesc"].ToString().Contains("Place Orders"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Place Orders", "PlaceOrder", "Ordering")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Search For Orders"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Search For Orders", "Index", "Ordering")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Cancel Orders"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Cancel Orders", "CancelIndex", "Ordering")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Capture Payments"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Capture Payments", "CapturePaymentIndex", "Ordering")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Complete Packing Orders"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Complete Packing Orders", "CompletePackingOrderIndex", "Ordering")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Capture Order Returns"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Capture Order Returns", "CaptureOrderReturnIndex", "Ordering")</a></li>
+                                            }*@
+
+
+
+                                        @*<li><a><span class="sub"></span>@Html.ActionLink("Search Order", "Search", "tb_order")</a></li>
+                                            <li><a><span class="sub"></span>@Html.ActionLink("Order List", "Index", "tb_order")</a></li>
+                                            <li><a><span class="sub"></span>@Html.ActionLink("Place Order", "ShowProduct", "DemoCart")</a></li>
+                                            <li><span class="sub"></span>@Html.Action("Shop", "DemoCart")</li>*@
+                                    </ul>
+
+                                <li>
+                                    <!-- Supplier -->
+                                    <button class="accordion" href="#supplierSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-grain"></i><i></i>Vet</button>
+                                    <ul class="collapse list-unstyled" id="supplierSubmenu">
+                                        @*@if (Session["RoleDesc"].ToString().Contains("Suppliers"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Suppliers", "Index", "Suppliers")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Supplier Address"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Supplier Address", "Index", "Supplier_Address")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Supplier Contact"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Supplier Contact", "Index", "Supplier_Contact")</a></li>
+                                            }
+                                            @*<li><a><span class="sub" style="color:white"></span>@Html.ActionLink("Search For Suppliers", "Search", "Suppliers")</a></li>*@
+
+                                    </ul>
+
+                                <li>
+                                    <!-- Supplier Ordering -->
+                                    <button class="accordion" href="#supplierOrderingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-user"></i>Adopter</button>
+                                    <ul class="collapse list-unstyled" id="supplierOrderingSubmenu">
+                                        @*@if (Session["RoleDesc"].ToString().Contains("Place Purchase Orders"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Place Purchase Orders", "PlacePurchaseOrder", "SupplierOrdering")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Search For Purchase Orders"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Search For Purchase Orders", "SearchIndex", "SupplierOrdering") </a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Cancel Purchase Orders"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Cancel Purchase Orders", "CancelIndex", "SupplierOrdering")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Capture Purchase Payments"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Capture Purchase Payments", "CapturePaymentIndex", "SupplierOrdering")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Receive Purchase Payments"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Receive Purchase Orders", "ReceiveOrderIndex", "SupplierOrdering") </a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("View Supplier Back Orders"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("View Supplier Back Orders", "ViewSupplierBackOrders", "SupplierOrdering")</a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Capture Supplier Returns"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Capture Supplier Returns", "CaptureSupplierReturnIndex", "SupplierOrdering")</a></li>
+                                            }*@
+
+
+                                    </ul>
+
+
+
+                                <li>
+                                    <!-- Reporting -->
+                                    <button class="accordion" href="#reportingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-file-signature"></i>Reporting</button>
+                                    <ul class="collapse list-unstyled" id="reportingSubmenu">
+                                        @*@if (Session["RoleDesc"].ToString().Contains("Order Reports"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Order Reports", "OrderList", "OrderReport") </a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Courier Reports"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Courier Reports", "CourierList", "CourierReport") </a></li>
+                                            }
+                                            @if (Session["RoleDesc"].ToString().Contains("Product Reports"))
+                                            {
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Product Reports", "ProductList", "ProductReport") </a></li>
+                                            }*@
+
+                                    </ul>
+
+
+                                    @*<li>
+                                             User Roles
+
+                                            @if (Session["RoleDesc"].ToString().Contains("User Roles"))
+                                            {
+                                                <button class="accordion" href="#userRoleSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-user-check"></i>User Roles</button>
+                                                <ul class="collapse list-unstyled" id="userRoleSubmenu">
+                                                    <li><a><span class="sub" style="color:white"></span>@Html.ActionLink("User Roles", "Index", "UserRoles") </a></li>
+                                                </ul>
+                                            }
+
+                                        </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </nav>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("test", "AddDonation", "Donations")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>*@
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Developed by WaveyTec Group</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", false)
+</body>
+</html>
+

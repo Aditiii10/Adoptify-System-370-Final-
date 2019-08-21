@@ -1,0 +1,97 @@
+﻿@model List<AdoptifySystem.Stock_Type>
+
+@{
+    ViewBag.Title = "Add Stock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Stock</h2>
+@using (Html.BeginForm())
+{
+
+    <label></label>
+    if (Model != null)
+    {
+        <select name="Stock_Type" id="exampleList">
+
+            @foreach (var item in Model)
+            {
+                <option value="@item.Stock_Type_ID">@item.Stock_Type_Name</option>
+                @*<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />*@
+            }
+        </select>
+        <br />
+        <h1>Food Detail</h1>
+        <label>Food Packaging Type</label>
+        <div id="RadioFood_Packaging_Type">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Food_Packaging_Type" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                    Tin
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Food_Packaging_Type" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                    Bag
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Food_Packaging_Type" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                    Biscuits
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Food_Packaging_Type" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                    Treats
+                </label>
+            </div>
+        </div>
+        <label>Unit Type</label>
+        <div id="RadioUnit_Type">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Unit_Type" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                    g
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Unit_Type" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                    KG
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Units:</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <h1>Stock Detail</h1>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Number of Items:</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Date:</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Description:</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+            <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+        </div>
+    </div>
+}

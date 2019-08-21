@@ -1,0 +1,1424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Adopter">
+    <Key>
+      <PropertyRef Name="Adopter_ID" />
+    </Key>
+    <Property Name="Adopter_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Adopter_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_Surname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Title_ID" Type="Int32" />
+    <Property Name="Adopter_Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_PostalAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_HomeNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_WorkNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_CellNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_CarRegistartion_Number" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_Employer" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_Status_ID" Type="Int32" />
+    <Property Name="Amount_of_Family_Memebers" Type="Int32" />
+    <Property Name="No_of_Children" Type="Int32" />
+    <Property Name="Age_of_Children" Type="Int32" />
+    <Property Name="Property_Securely_Closed" Type="Boolean" />
+    <Property Name="Properyty_Include_Pool" Type="Boolean" />
+    <Property Name="Pool_Secured" Type="Boolean" />
+    <Property Name="Animal_Shelter_Available" Type="Boolean" />
+    <Property Name="Sick_Animal" Type="Boolean" />
+    <Property Name="Sick_Animal_Diagnosis" Type="String" MaxLength="354" FixedLength="false" Unicode="true" />
+    <Property Name="Animal_Sleep_Location" Type="String" MaxLength="354" FixedLength="false" Unicode="true" />
+    <Property Name="Given_Animal_Away" Type="Boolean" />
+    <Property Name="HomeCheck_Suburb" Type="String" MaxLength="354" FixedLength="false" Unicode="true" />
+    <Property Name="Type_of_House" Type="String" MaxLength="354" FixedLength="false" Unicode="true" />
+    <Property Name="Adopted_Before" Type="Boolean" />
+    <Property Name="Complex_or_Flat" Type="Boolean" />
+    <Property Name="Animal_Allowed" Type="Boolean" />
+    <Property Name="Animal_Captivity" Type="String" MaxLength="354" FixedLength="false" Unicode="true" />
+    <Property Name="Animal_Vaccines_Updated" Type="Boolean" />
+    <NavigationProperty Name="Title" Relationship="Self.fkado" FromRole="Adopter" ToRole="Title" />
+    <NavigationProperty Name="Adopter_Status" Relationship="Self.fkado1" FromRole="Adopter" ToRole="Adopter_Status" />
+    <NavigationProperty Name="Adopter_Contract" Relationship="Self.fkadoc" FromRole="Adopter" ToRole="Adopter_Contract" />
+    <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt3" FromRole="Adopter" ToRole="Adoption" />
+    <NavigationProperty Name="Adopter_Relative" Relationship="Self.fkador" FromRole="Adopter" ToRole="Adopter_Relative" />
+    <NavigationProperty Name="Foster_Care_Parent" Relationship="Self.fkfos" FromRole="Adopter" ToRole="Foster_Care_Parent" />
+  </EntityType>
+  <EntityType Name="Adopter_Contract">
+    <Key>
+      <PropertyRef Name="Contract_ID" />
+    </Key>
+    <Property Name="Contract_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Electronic_Contract" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Adopter_ID" Type="Int32" />
+    <NavigationProperty Name="Adopter" Relationship="Self.fkadoc" FromRole="Adopter_Contract" ToRole="Adopter" />
+  </EntityType>
+  <EntityType Name="Adopter_Relative">
+    <Key>
+      <PropertyRef Name="Relative_ID" />
+    </Key>
+    <Property Name="Relative_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Relative_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Relative_Surname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Relative_Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Relative_Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Relative_PostalAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Relative_Home_Tel" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Relative_Work_Tel" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Relative_Cell" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Relationship" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_ID" Type="Int32" />
+    <NavigationProperty Name="Adopter" Relationship="Self.fkador" FromRole="Adopter_Relative" ToRole="Adopter" />
+  </EntityType>
+  <EntityType Name="Adopter_Status">
+    <Key>
+      <PropertyRef Name="Adopter_Status_ID" />
+    </Key>
+    <Property Name="Adopter_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Adopter_Status_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Adopters" Relationship="Self.fkado1" FromRole="Adopter_Status" ToRole="Adopter" />
+  </EntityType>
+  <EntityType Name="Adoption">
+    <Key>
+      <PropertyRef Name="Adoption_ID" />
+    </Key>
+    <Property Name="Adoption_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Adoption_Date" Type="DateTime" Precision="3" />
+    <Property Name="Adoption_Form" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Payment_ID" Type="Int32" />
+    <Property Name="Adopter_ID" Type="Int32" />
+    <Property Name="Adopt_Status_ID" Type="Int32" />
+    <Property Name="Animal_ID" Type="Int32" />
+    <Property Name="Collection_Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Adopter" Relationship="Self.fkadopt3" FromRole="Adoption" ToRole="Adopter" />
+    <NavigationProperty Name="Animal" Relationship="Self.fkadopt" FromRole="Adoption" ToRole="Animal" />
+    <NavigationProperty Name="Payment" Relationship="Self.fkadopt1" FromRole="Adoption" ToRole="Payment" />
+    <NavigationProperty Name="Adoption_Status" Relationship="Self.fkadopt2" FromRole="Adoption" ToRole="Adoption_Status" />
+    <NavigationProperty Name="HomeChecks" Relationship="Self.fkhoch" FromRole="Adoption" ToRole="HomeCheck" />
+  </EntityType>
+  <EntityType Name="Adoption_Status">
+    <Key>
+      <PropertyRef Name="Adopt_Status_ID" />
+    </Key>
+    <Property Name="Adopt_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Adopt_Status_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt2" FromRole="Adoption_Status" ToRole="Adoption" />
+  </EntityType>
+  <EntityType Name="Animal">
+    <Key>
+      <PropertyRef Name="Animal_ID" />
+    </Key>
+    <Property Name="Animal_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Animal_Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Animal_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Animal_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Animal_Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Animal_Age" Type="Int32" />
+    <Property Name="Animal_Sterilization" Type="Boolean" />
+    <Property Name="Animal_Castration" Type="Boolean" />
+    <Property Name="Animal_Size" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Animal_Entry_Date" Type="DateTime" Precision="3" />
+    <Property Name="Animal_Coat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Animal_Status_ID" Type="Int32" />
+    <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt" FromRole="Animal" ToRole="Adoption" />
+    <NavigationProperty Name="Animal_Status" Relationship="Self.fkani" FromRole="Animal" ToRole="Animal_Status" />
+    <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh" FromRole="Animal" ToRole="Animal_Kennel_History" />
+    <NavigationProperty Name="CrossBreeds" Relationship="Self.fkcrb" FromRole="Animal" ToRole="CrossBreed" />
+    <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc" FromRole="Animal" ToRole="Foster_Care" />
+    <NavigationProperty Name="Microchips" Relationship="Self.fkmicro" FromRole="Animal" ToRole="Microchip" />
+    <NavigationProperty Name="Vet_Appointment_Line" Relationship="Self.fkvetapl" FromRole="Animal" ToRole="Vet_Appointment_Line" />
+  </EntityType>
+  <EntityType Name="Animal_Breed">
+    <Key>
+      <PropertyRef Name="Animal_Breed_ID" />
+    </Key>
+    <Property Name="Animal_Breed_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Animal_Breed_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Animal_Breed_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Animal_Type_ID" Type="Int32" />
+    <NavigationProperty Name="Animal_Type" Relationship="Self.fkanibreed" FromRole="Animal_Breed" ToRole="Animal_Type" />
+    <NavigationProperty Name="CrossBreeds" Relationship="Self.fkcrb1" FromRole="Animal_Breed" ToRole="CrossBreed" />
+  </EntityType>
+  <EntityType Name="Animal_Kennel_History">
+    <Key>
+      <PropertyRef Name="Animal_Kennel_History_ID" />
+    </Key>
+    <Property Name="Animal_Kennel_History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Animal_ID" Type="Int32" />
+    <Property Name="Kennel_ID" Type="Int32" />
+    <NavigationProperty Name="Animal" Relationship="Self.fkanikh" FromRole="Animal_Kennel_History" ToRole="Animal" />
+    <NavigationProperty Name="Kennel" Relationship="Self.fkanikh1" FromRole="Animal_Kennel_History" ToRole="Kennel" />
+  </EntityType>
+  <EntityType Name="Animal_Status">
+    <Key>
+      <PropertyRef Name="Animal_Status_ID" />
+    </Key>
+    <Property Name="Animal_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Animal_Status_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Animals" Relationship="Self.fkani" FromRole="Animal_Status" ToRole="Animal" />
+  </EntityType>
+  <EntityType Name="Animal_Treatment">
+    <Key>
+      <PropertyRef Name="Treat_ID" />
+    </Key>
+    <Property Name="Treat_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Treat_StartDate" Type="DateTime" Precision="0" />
+    <Property Name="Treat_EndDate" Type="DateTime" Precision="0" />
+    <Property Name="Treat_Quantity" Type="Int32" />
+    <Property Name="Treat_Regularity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Treat_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Treat_cost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Capture_Medical_Card_ID" Type="Int32" />
+    <NavigationProperty Name="Capture_Medical_Card" Relationship="Self.fkanitreat" FromRole="Animal_Treatment" ToRole="Capture_Medical_Card" />
+  </EntityType>
+  <EntityType Name="Animal_Type">
+    <Key>
+      <PropertyRef Name="Animal_Type_ID" />
+    </Key>
+    <Property Name="Animal_Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Animal_Type_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Animal_Breed" Relationship="Self.fkanibreed" FromRole="Animal_Type" ToRole="Animal_Breed" />
+  </EntityType>
+  <EntityType Name="Audit_Log">
+    <Key>
+      <PropertyRef Name="Auditlog_ID" />
+    </Key>
+    <Property Name="Auditlog_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Auditlog_DateTime" Type="DateTime" Precision="3" />
+    <Property Name="Transaction_Type" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Critical_Date" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="UserID" Type="Int32" />
+    <NavigationProperty Name="User_" Relationship="Self.fkaudlog" FromRole="Audit_Log" ToRole="User_" />
+  </EntityType>
+  <EntityType Name="Capture_Medical_Card">
+    <Key>
+      <PropertyRef Name="Capture_Medical_Card_ID" />
+    </Key>
+    <Property Name="Capture_Medical_Card_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Diagnosis_Details" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="Capture_Medical_Card_Date" Type="DateTime" Precision="3" />
+    <Property Name="Capture_Medical_Card_NextAppointment_Date" Type="DateTime" Precision="3" />
+    <Property Name="Vet_Appoint_Line_ID" Type="Int32" />
+    <NavigationProperty Name="Animal_Treatment" Relationship="Self.fkanitreat" FromRole="Capture_Medical_Card" ToRole="Animal_Treatment" />
+    <NavigationProperty Name="Vet_Appointment_Line" Relationship="Self.fkcapmed" FromRole="Capture_Medical_Card" ToRole="Vet_Appointment_Line" />
+  </EntityType>
+  <EntityType Name="CrossBreed">
+    <Key>
+      <PropertyRef Name="CrossBreed_ID" />
+    </Key>
+    <Property Name="CrossBreed_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Animal_ID" Type="Int32" />
+    <Property Name="Animal_Breed_ID" Type="Int32" />
+    <NavigationProperty Name="Animal" Relationship="Self.fkcrb" FromRole="CrossBreed" ToRole="Animal" />
+    <NavigationProperty Name="Animal_Breed" Relationship="Self.fkcrb1" FromRole="CrossBreed" ToRole="Animal_Breed" />
+  </EntityType>
+  <EntityType Name="Customer_Event">
+    <Key>
+      <PropertyRef Name="Customer_Event_ID" />
+    </Key>
+    <Property Name="Customer_Event_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customer_Event_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Customer_Event_Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Customer_Event_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="Number_of_tickects" Type="Int32" />
+    <Property Name="TicketFee_Date" Type="DateTime" Precision="3" />
+    <Property Name="TicketFee_Total" Type="Decimal" Precision="15" Scale="0" />
+    <Property Name="Event_ID" Type="Int32" />
+    <Property Name="Payment_ID" Type="Int32" />
+    <NavigationProperty Name="Event_" Relationship="Self.fkcevnt" FromRole="Customer_Event" ToRole="Event_" />
+    <NavigationProperty Name="Payment" Relationship="Self.fkcevnt1" FromRole="Customer_Event" ToRole="Payment" />
+  </EntityType>
+  <EntityType Name="Donation">
+    <Key>
+      <PropertyRef Name="Donation_ID" />
+    </Key>
+    <Property Name="Donation_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Donation_Date" Type="DateTime" Precision="3" />
+    <Property Name="Donor_ID" Type="Int32" />
+    <NavigationProperty Name="Donor" Relationship="Self.fkdon" FromRole="Donation" ToRole="Donor" />
+    <NavigationProperty Name="Donation_Line" Relationship="Self.fkdonl1" FromRole="Donation" ToRole="Donation_Line" />
+  </EntityType>
+  <EntityType Name="Donation_Line">
+    <Key>
+      <PropertyRef Name="Donation_Line_ID" />
+    </Key>
+    <Property Name="Donation_Line_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Donation_Quantity" Type="Decimal" Precision="15" Scale="0" />
+    <Property Name="Stock_ID" Type="Int32" />
+    <Property Name="Donation_ID" Type="Int32" />
+    <Property Name="Donation_Type_ID" Type="Int32" />
+    <NavigationProperty Name="Donation" Relationship="Self.fkdonl1" FromRole="Donation_Line" ToRole="Donation" />
+    <NavigationProperty Name="Stock" Relationship="Self.fkdonl" FromRole="Donation_Line" ToRole="Stock" />
+    <NavigationProperty Name="Donation_Type" Relationship="Self.fkdonl2" FromRole="Donation_Line" ToRole="Donation_Type" />
+  </EntityType>
+  <EntityType Name="Donation_Type">
+    <Key>
+      <PropertyRef Name="Donation_Type_ID" />
+    </Key>
+    <Property Name="Donation_Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Donation_Type_Name" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+    <Property Name="Donation_Type_Description" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Donation_Line" Relationship="Self.fkdonl2" FromRole="Donation_Type" ToRole="Donation_Line" />
+  </EntityType>
+  <EntityType Name="Donor">
+    <Key>
+      <PropertyRef Name="Donor_ID" />
+    </Key>
+    <Property Name="Donor_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Donor_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Donor_Surname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Donor_Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Title_ID" Type="Int32" />
+    <NavigationProperty Name="Donations" Relationship="Self.fkdon" FromRole="Donor" ToRole="Donation" />
+    <NavigationProperty Name="Title" Relationship="Self.fkdonor" FromRole="Donor" ToRole="Title" />
+  </EntityType>
+  <EntityType Name="Emp_Kennel">
+    <Key>
+      <PropertyRef Name="Emp_Kennel_ID" />
+    </Key>
+    <Property Name="Emp_Kennel_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Emp_ID" Type="Int32" />
+    <Property Name="Kennel_ID" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="Self.fkempk" FromRole="Emp_Kennel" ToRole="Employee" />
+    <NavigationProperty Name="Kennel" Relationship="Self.fkempk1" FromRole="Emp_Kennel" ToRole="Kennel" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Emp_ID" />
+    </Key>
+    <Property Name="Emp_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Emp_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Emp_Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Emp_ContactNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="Emp_IDNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Emp_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="Emp_Contract" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="Emp_Date_Employed" Type="DateTime" Precision="0" />
+    <Property Name="Title_ID" Type="Int32" />
+    <Property Name="Emp_Type_ID" Type="Int32" />
+    <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk" FromRole="Employee" ToRole="Emp_Kennel" />
+    <NavigationProperty Name="Title" Relationship="Self.fkemp" FromRole="Employee" ToRole="Title" />
+    <NavigationProperty Name="Employee_Type" Relationship="Self.fkemp1" FromRole="Employee" ToRole="Employee_Type" />
+    <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
+    <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
+  </EntityType>
+  <EntityType Name="Employee_Status">
+    <Key>
+      <PropertyRef Name="Employee_Status_ID" />
+    </Key>
+    <Property Name="Employee_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Employee_Status_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Employee_Type">
+    <Key>
+      <PropertyRef Name="Emp_Type_ID" />
+    </Key>
+    <Property Name="Emp_Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Emp_Type_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Emp_Type_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Employees" Relationship="Self.fkemp1" FromRole="Employee_Type" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Event_">
+    <Key>
+      <PropertyRef Name="Event_ID" />
+    </Key>
+    <Property Name="Event_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Event_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Event_StartTime" Type="DateTime" Precision="3" />
+    <Property Name="Event_EndTime" Type="DateTime" Precision="3" />
+    <Property Name="Event_Guest_Number" Type="Int32" />
+    <Property Name="Event_Ticket_Price" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="Event_Location" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Event_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Event_Type_ID" Type="Int32" />
+    <NavigationProperty Name="Customer_Event" Relationship="Self.fkcevnt" FromRole="Event_" ToRole="Customer_Event" />
+    <NavigationProperty Name="Event_Type" Relationship="Self.fkevnt" FromRole="Event_" ToRole="Event_Type" />
+  </EntityType>
+  <EntityType Name="Event_Schedule">
+    <Key>
+      <PropertyRef Name="EventID" />
+    </Key>
+    <Property Name="EventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Start" Type="DateTime" Precision="3" />
+    <Property Name="EventEnd" Type="DateTime" Precision="3" />
+    <Property Name="ThemeColour" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="IsFullDay" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Event_Type">
+    <Key>
+      <PropertyRef Name="Event_Type_ID" />
+    </Key>
+    <Property Name="Event_Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Event_Type_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Event_" Relationship="Self.fkevnt" FromRole="Event_Type" ToRole="Event_" />
+  </EntityType>
+  <EntityType Name="Foster_Care">
+    <Key>
+      <PropertyRef Name="Foster_Care_ID" />
+    </Key>
+    <Property Name="Foster_Care_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Foster_Care_Period" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Foster_Start_Date" Type="DateTime" Precision="0" />
+    <Property Name="Foster_Parent_ID" Type="Int32" />
+    <Property Name="Animal_ID" Type="Int32" />
+    <NavigationProperty Name="Animal" Relationship="Self.fkfosc" FromRole="Foster_Care" ToRole="Animal" />
+    <NavigationProperty Name="Foster_Care_Parent" Relationship="Self.fkfosc1" FromRole="Foster_Care" ToRole="Foster_Care_Parent" />
+  </EntityType>
+  <EntityType Name="Foster_Care_Parent">
+    <Key>
+      <PropertyRef Name="Foster_Parent_ID" />
+    </Key>
+    <Property Name="Foster_Parent_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Foster_Parent_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Foster_Parent_Surname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Foster_Parent_Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Foster_Parent_CellNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Foster_Parent_WorkNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Foster_Parent_Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Foster_Parent_IDNumber" Type="Int32" />
+    <Property Name="Foster_Parent_Last_Modified" Type="DateTime" Precision="3" />
+    <Property Name="Num_In_Household" Type="Int32" />
+    <Property Name="Type_Of_Housing" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Ownership_Housing" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Hours_Left_Alone" Type="Int32" />
+    <Property Name="Adopter_ID" Type="Int32" />
+    <NavigationProperty Name="Adopter" Relationship="Self.fkfos" FromRole="Foster_Care_Parent" ToRole="Adopter" />
+    <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc1" FromRole="Foster_Care_Parent" ToRole="Foster_Care" />
+  </EntityType>
+  <EntityType Name="HomeCheck">
+    <Key>
+      <PropertyRef Name="HomeCheck_ID" />
+    </Key>
+    <Property Name="HomeCheck_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HomeCheck_Datetime" Type="DateTime" Precision="3" />
+    <Property Name="Adoption_ID" Type="Int32" />
+    <NavigationProperty Name="Adoption" Relationship="Self.fkhoch" FromRole="HomeCheck" ToRole="Adoption" />
+  </EntityType>
+  <EntityType Name="Kennel">
+    <Key>
+      <PropertyRef Name="Kennel_ID" />
+    </Key>
+    <Property Name="Kennel_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kennel_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Kennel_Number" Type="Int32" />
+    <Property Name="Kennel_Capacity" Type="Int32" />
+    <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh1" FromRole="Kennel" ToRole="Animal_Kennel_History" />
+    <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk1" FromRole="Kennel" ToRole="Emp_Kennel" />
+  </EntityType>
+  <EntityType Name="Microchip">
+    <Key>
+      <PropertyRef Name="Microchip_ID" />
+    </Key>
+    <Property Name="Microchip_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Animal_Microchip_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Date_of_Implant" Type="DateTime" Precision="0" />
+    <Property Name="Implanters_PIN_Number" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Owner_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Owner_Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Animal_ID" Type="Int32" />
+    <NavigationProperty Name="Animal" Relationship="Self.fkmicro" FromRole="Microchip" ToRole="Animal" />
+  </EntityType>
+  <EntityType Name="Packaging_Type">
+    <Key>
+      <PropertyRef Name="Packaging_Type_ID" />
+    </Key>
+    <Property Name="Packaging_Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Packaging_Type_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Stocks" Relationship="Self.fkstock1" FromRole="Packaging_Type" ToRole="Stock" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Payment_ID" />
+    </Key>
+    <Property Name="Payment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Payment_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Amount_Paid" Type="Decimal" Precision="15" Scale="0" />
+    <Property Name="Payment_Date" Type="DateTime" Precision="3" />
+    <Property Name="Payment_Type_ID" Type="Int32" />
+    <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt1" FromRole="Payment" ToRole="Adoption" />
+    <NavigationProperty Name="Customer_Event" Relationship="Self.fkcevnt1" FromRole="Payment" ToRole="Customer_Event" />
+    <NavigationProperty Name="Payment_Type" Relationship="Self.fkpay" FromRole="Payment" ToRole="Payment_Type" />
+  </EntityType>
+  <EntityType Name="Payment_Type">
+    <Key>
+      <PropertyRef Name="Payment_Type_ID" />
+    </Key>
+    <Property Name="Payment_Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Payment_Type_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Payment_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Payments" Relationship="Self.fkpay" FromRole="Payment_Type" ToRole="Payment" />
+  </EntityType>
+  <EntityType Name="Role_">
+    <Key>
+      <PropertyRef Name="Role_ID" />
+    </Key>
+    <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.fkuserol1" FromRole="Role_" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="Stock">
+    <Key>
+      <PropertyRef Name="Stock_ID" />
+    </Key>
+    <Property Name="Stock_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Stock_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Stock_Quantity" Type="Int32" />
+    <Property Name="Stock_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Stock_Type_ID" Type="Int32" />
+    <Property Name="Packaging_Type_ID" Type="Int32" />
+    <Property Name="Unit_Type_ID" Type="Int32" />
+    <NavigationProperty Name="Donation_Line" Relationship="Self.fkdonl" FromRole="Stock" ToRole="Donation_Line" />
+    <NavigationProperty Name="Packaging_Type" Relationship="Self.fkstock1" FromRole="Stock" ToRole="Packaging_Type" />
+    <NavigationProperty Name="Stock_Type" Relationship="Self.fkstock" FromRole="Stock" ToRole="Stock_Type" />
+    <NavigationProperty Name="Unit_Type" Relationship="Self.fkstock2" FromRole="Stock" ToRole="Unit_Type" />
+  </EntityType>
+  <EntityType Name="Stock_Type">
+    <Key>
+      <PropertyRef Name="Stock_Type_ID" />
+    </Key>
+    <Property Name="Stock_Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Stock_Type_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Stock_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Stocks" Relationship="Self.fkstock" FromRole="Stock_Type" ToRole="Stock" />
+  </EntityType>
+  <EntityType Name="TimeSheet">
+    <Key>
+      <PropertyRef Name="TimeSheet_ID" />
+    </Key>
+    <Property Name="TimeSheet_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Check_in" Type="DateTime" Precision="3" />
+    <Property Name="Check_out" Type="DateTime" Precision="3" />
+    <Property Name="Emp_ID" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="Self.fktime" FromRole="TimeSheet" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Title">
+    <Key>
+      <PropertyRef Name="Title_ID" />
+    </Key>
+    <Property Name="Title_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Adopters" Relationship="Self.fkado" FromRole="Title" ToRole="Adopter" />
+    <NavigationProperty Name="Donors" Relationship="Self.fkdonor" FromRole="Title" ToRole="Donor" />
+    <NavigationProperty Name="Employees" Relationship="Self.fkemp" FromRole="Title" ToRole="Employee" />
+    <NavigationProperty Name="Volunteers" Relationship="Self.fkvol" FromRole="Title" ToRole="Volunteer" />
+  </EntityType>
+  <EntityType Name="Unit_Type">
+    <Key>
+      <PropertyRef Name="Unit_Type_ID" />
+    </Key>
+    <Property Name="Unit_Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Unit_Type_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Stocks" Relationship="Self.fkstock2" FromRole="Unit_Type" ToRole="Stock" />
+  </EntityType>
+  <EntityType Name="User_">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Emp_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Audit_Log" Relationship="Self.fkaudlog" FromRole="User_" ToRole="Audit_Log" />
+    <NavigationProperty Name="Employee" Relationship="Self.fkuser" FromRole="User_" ToRole="Employee" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.fkuserol" FromRole="User_" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserRole_ID" />
+    </Key>
+    <Property Name="UserRole_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="Role_ID" Type="Int32" />
+    <NavigationProperty Name="Role_" Relationship="Self.fkuserol1" FromRole="UserRole" ToRole="Role_" />
+    <NavigationProperty Name="User_" Relationship="Self.fkuserol" FromRole="UserRole" ToRole="User_" />
+  </EntityType>
+  <EntityType Name="Vet_Appointment">
+    <Key>
+      <PropertyRef Name="Vet_Appointment_ID" />
+    </Key>
+    <Property Name="Vet_Appointment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vet_ID" Type="Int32" />
+    <NavigationProperty Name="Veterinarian" Relationship="Self.fkvetap" FromRole="Vet_Appointment" ToRole="Veterinarian" />
+    <NavigationProperty Name="Vet_Appointment_Line" Relationship="Self.fkvetapl1" FromRole="Vet_Appointment" ToRole="Vet_Appointment_Line" />
+  </EntityType>
+  <EntityType Name="Vet_Appointment_Line">
+    <Key>
+      <PropertyRef Name="Vet_Appoint_Line_ID" />
+    </Key>
+    <Property Name="Vet_Appoint_Line_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vet_Appoint_Line_Status" Type="Int32" />
+    <Property Name="Animal_ID" Type="Int32" />
+    <Property Name="Vet_Appointment_ID" Type="Int32" />
+    <NavigationProperty Name="Animal" Relationship="Self.fkvetapl" FromRole="Vet_Appointment_Line" ToRole="Animal" />
+    <NavigationProperty Name="Capture_Medical_Card" Relationship="Self.fkcapmed" FromRole="Vet_Appointment_Line" ToRole="Capture_Medical_Card" />
+    <NavigationProperty Name="Vet_Appointment" Relationship="Self.fkvetapl1" FromRole="Vet_Appointment_Line" ToRole="Vet_Appointment" />
+  </EntityType>
+  <EntityType Name="Veterinarian">
+    <Key>
+      <PropertyRef Name="Vet_ID" />
+    </Key>
+    <Property Name="Vet_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vet_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Vet_Emial" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="Vet_Tel" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Vet_Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Vet_Appointment" Relationship="Self.fkvetap" FromRole="Veterinarian" ToRole="Vet_Appointment" />
+  </EntityType>
+  <EntityType Name="Volunteer">
+    <Key>
+      <PropertyRef Name="Vol_ID" />
+    </Key>
+    <Property Name="Vol_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vol_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Vol_Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Vol_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="Vol_ContactNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Vol_Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Vol_Emergency_ContactName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Vol_Emergency_ContactNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Title_ID" Type="Int32" />
+    <NavigationProperty Name="Title" Relationship="Self.fkvol" FromRole="Volunteer" ToRole="Title" />
+    <NavigationProperty Name="Volunteer_Hours" Relationship="Self.fkvolhrs" FromRole="Volunteer" ToRole="Volunteer_Hours" />
+  </EntityType>
+  <EntityType Name="Volunteer_Hours">
+    <Key>
+      <PropertyRef Name="Vol_Hours_ID" />
+    </Key>
+    <Property Name="Vol_Hours_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vol_workDate" Type="DateTime" Precision="0" />
+    <Property Name="Vol_Start_Time" Type="DateTime" Precision="3" />
+    <Property Name="Vol_End_Time" Type="DateTime" Precision="3" />
+    <Property Name="Vol_ID" Type="Int32" />
+    <Property Name="Vol_WorkType_ID" Type="Int32" />
+    <NavigationProperty Name="Volunteer" Relationship="Self.fkvolhrs" FromRole="Volunteer_Hours" ToRole="Volunteer" />
+    <NavigationProperty Name="Volunteer_Work_Type" Relationship="Self.fkvolhrs1" FromRole="Volunteer_Hours" ToRole="Volunteer_Work_Type" />
+  </EntityType>
+  <EntityType Name="Volunteer_Work_Type">
+    <Key>
+      <PropertyRef Name="Vol_WorkType_ID" />
+    </Key>
+    <Property Name="Vol_WorkType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vol_WorkType_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Vol_WorkType_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Volunteer_Hours" Relationship="Self.fkvolhrs1" FromRole="Volunteer_Work_Type" ToRole="Volunteer_Hours" />
+  </EntityType>
+  <Association Name="fkado">
+    <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="Title_ID" />
+      </Principal>
+      <Dependent Role="Adopter">
+        <PropertyRef Name="Title_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkado1">
+    <End Role="Adopter_Status" Type="Self.Adopter_Status" Multiplicity="0..1" />
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter_Status">
+        <PropertyRef Name="Adopter_Status_ID" />
+      </Principal>
+      <Dependent Role="Adopter">
+        <PropertyRef Name="Adopter_Status_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadoc">
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="0..1" />
+    <End Role="Adopter_Contract" Type="Self.Adopter_Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter">
+        <PropertyRef Name="Adopter_ID" />
+      </Principal>
+      <Dependent Role="Adopter_Contract">
+        <PropertyRef Name="Adopter_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadopt3">
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="0..1" />
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter">
+        <PropertyRef Name="Adopter_ID" />
+      </Principal>
+      <Dependent Role="Adoption">
+        <PropertyRef Name="Adopter_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkador">
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="0..1" />
+    <End Role="Adopter_Relative" Type="Self.Adopter_Relative" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter">
+        <PropertyRef Name="Adopter_ID" />
+      </Principal>
+      <Dependent Role="Adopter_Relative">
+        <PropertyRef Name="Adopter_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkfos">
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="0..1" />
+    <End Role="Foster_Care_Parent" Type="Self.Foster_Care_Parent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter">
+        <PropertyRef Name="Adopter_ID" />
+      </Principal>
+      <Dependent Role="Foster_Care_Parent">
+        <PropertyRef Name="Adopter_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadopt">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Adoption">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadopt1">
+    <End Role="Payment" Type="Self.Payment" Multiplicity="0..1" />
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment">
+        <PropertyRef Name="Payment_ID" />
+      </Principal>
+      <Dependent Role="Adoption">
+        <PropertyRef Name="Payment_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadopt2">
+    <End Role="Adoption_Status" Type="Self.Adoption_Status" Multiplicity="0..1" />
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adoption_Status">
+        <PropertyRef Name="Adopt_Status_ID" />
+      </Principal>
+      <Dependent Role="Adoption">
+        <PropertyRef Name="Adopt_Status_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkhoch">
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+    <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adoption">
+        <PropertyRef Name="Adoption_ID" />
+      </Principal>
+      <Dependent Role="HomeCheck">
+        <PropertyRef Name="Adoption_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkani">
+    <End Role="Animal_Status" Type="Self.Animal_Status" Multiplicity="0..1" />
+    <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal_Status">
+        <PropertyRef Name="Animal_Status_ID" />
+      </Principal>
+      <Dependent Role="Animal">
+        <PropertyRef Name="Animal_Status_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkanikh">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Animal_Kennel_History">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcrb">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="CrossBreed" Type="Self.CrossBreed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="CrossBreed">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkfosc">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Foster_Care" Type="Self.Foster_Care" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Foster_Care">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkmicro">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Microchip" Type="Self.Microchip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Microchip">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvetapl">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Vet_Appointment_Line" Type="Self.Vet_Appointment_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Vet_Appointment_Line">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkanibreed">
+    <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="0..1" />
+    <End Role="Animal_Breed" Type="Self.Animal_Breed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal_Type">
+        <PropertyRef Name="Animal_Type_ID" />
+      </Principal>
+      <Dependent Role="Animal_Breed">
+        <PropertyRef Name="Animal_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcrb1">
+    <End Role="Animal_Breed" Type="Self.Animal_Breed" Multiplicity="0..1" />
+    <End Role="CrossBreed" Type="Self.CrossBreed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal_Breed">
+        <PropertyRef Name="Animal_Breed_ID" />
+      </Principal>
+      <Dependent Role="CrossBreed">
+        <PropertyRef Name="Animal_Breed_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkanikh1">
+    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kennel">
+        <PropertyRef Name="Kennel_ID" />
+      </Principal>
+      <Dependent Role="Animal_Kennel_History">
+        <PropertyRef Name="Kennel_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkanitreat">
+    <End Role="Capture_Medical_Card" Type="Self.Capture_Medical_Card" Multiplicity="0..1" />
+    <End Role="Animal_Treatment" Type="Self.Animal_Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Capture_Medical_Card">
+        <PropertyRef Name="Capture_Medical_Card_ID" />
+      </Principal>
+      <Dependent Role="Animal_Treatment">
+        <PropertyRef Name="Capture_Medical_Card_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkaudlog">
+    <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+    <End Role="Audit_Log" Type="Self.Audit_Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Audit_Log">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcapmed">
+    <End Role="Vet_Appointment_Line" Type="Self.Vet_Appointment_Line" Multiplicity="0..1" />
+    <End Role="Capture_Medical_Card" Type="Self.Capture_Medical_Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vet_Appointment_Line">
+        <PropertyRef Name="Vet_Appoint_Line_ID" />
+      </Principal>
+      <Dependent Role="Capture_Medical_Card">
+        <PropertyRef Name="Vet_Appoint_Line_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcevnt">
+    <End Role="Event_" Type="Self.Event_" Multiplicity="0..1" />
+    <End Role="Customer_Event" Type="Self.Customer_Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event_">
+        <PropertyRef Name="Event_ID" />
+      </Principal>
+      <Dependent Role="Customer_Event">
+        <PropertyRef Name="Event_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcevnt1">
+    <End Role="Payment" Type="Self.Payment" Multiplicity="0..1" />
+    <End Role="Customer_Event" Type="Self.Customer_Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment">
+        <PropertyRef Name="Payment_ID" />
+      </Principal>
+      <Dependent Role="Customer_Event">
+        <PropertyRef Name="Payment_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdon">
+    <End Role="Donor" Type="Self.Donor" Multiplicity="0..1" />
+    <End Role="Donation" Type="Self.Donation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Donor">
+        <PropertyRef Name="Donor_ID" />
+      </Principal>
+      <Dependent Role="Donation">
+        <PropertyRef Name="Donor_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdonl1">
+    <End Role="Donation" Type="Self.Donation" Multiplicity="0..1" />
+    <End Role="Donation_Line" Type="Self.Donation_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Donation">
+        <PropertyRef Name="Donation_ID" />
+      </Principal>
+      <Dependent Role="Donation_Line">
+        <PropertyRef Name="Donation_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdonl">
+    <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+    <End Role="Donation_Line" Type="Self.Donation_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="Stock_ID" />
+      </Principal>
+      <Dependent Role="Donation_Line">
+        <PropertyRef Name="Stock_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdonl2">
+    <End Role="Donation_Type" Type="Self.Donation_Type" Multiplicity="0..1" />
+    <End Role="Donation_Line" Type="Self.Donation_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Donation_Type">
+        <PropertyRef Name="Donation_Type_ID" />
+      </Principal>
+      <Dependent Role="Donation_Line">
+        <PropertyRef Name="Donation_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdonor">
+    <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+    <End Role="Donor" Type="Self.Donor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="Title_ID" />
+      </Principal>
+      <Dependent Role="Donor">
+        <PropertyRef Name="Title_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkempk">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Emp_Kennel" Type="Self.Emp_Kennel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="Emp_Kennel">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkempk1">
+    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+    <End Role="Emp_Kennel" Type="Self.Emp_Kennel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kennel">
+        <PropertyRef Name="Kennel_ID" />
+      </Principal>
+      <Dependent Role="Emp_Kennel">
+        <PropertyRef Name="Kennel_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkemp">
+    <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="Title_ID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Title_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkemp1">
+    <End Role="Employee_Type" Type="Self.Employee_Type" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Type">
+        <PropertyRef Name="Emp_Type_ID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Emp_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fktime">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="TimeSheet">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkuser">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="User_" Type="Self.User_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="User_">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkevnt">
+    <End Role="Event_Type" Type="Self.Event_Type" Multiplicity="0..1" />
+    <End Role="Event_" Type="Self.Event_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event_Type">
+        <PropertyRef Name="Event_Type_ID" />
+      </Principal>
+      <Dependent Role="Event_">
+        <PropertyRef Name="Event_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkfosc1">
+    <End Role="Foster_Care_Parent" Type="Self.Foster_Care_Parent" Multiplicity="0..1" />
+    <End Role="Foster_Care" Type="Self.Foster_Care" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Foster_Care_Parent">
+        <PropertyRef Name="Foster_Parent_ID" />
+      </Principal>
+      <Dependent Role="Foster_Care">
+        <PropertyRef Name="Foster_Parent_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkstock1">
+    <End Role="Packaging_Type" Type="Self.Packaging_Type" Multiplicity="0..1" />
+    <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Packaging_Type">
+        <PropertyRef Name="Packaging_Type_ID" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="Packaging_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkpay">
+    <End Role="Payment_Type" Type="Self.Payment_Type" Multiplicity="0..1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment_Type">
+        <PropertyRef Name="Payment_Type_ID" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="Payment_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkuserol1">
+    <End Role="Role_" Type="Self.Role_" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role_">
+        <PropertyRef Name="Role_ID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkstock">
+    <End Role="Stock_Type" Type="Self.Stock_Type" Multiplicity="0..1" />
+    <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock_Type">
+        <PropertyRef Name="Stock_Type_ID" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="Stock_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkstock2">
+    <End Role="Unit_Type" Type="Self.Unit_Type" Multiplicity="0..1" />
+    <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit_Type">
+        <PropertyRef Name="Unit_Type_ID" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="Unit_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvol">
+    <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+    <End Role="Volunteer" Type="Self.Volunteer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="Title_ID" />
+      </Principal>
+      <Dependent Role="Volunteer">
+        <PropertyRef Name="Title_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkuserol">
+    <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvetap">
+    <End Role="Veterinarian" Type="Self.Veterinarian" Multiplicity="0..1" />
+    <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Veterinarian">
+        <PropertyRef Name="Vet_ID" />
+      </Principal>
+      <Dependent Role="Vet_Appointment">
+        <PropertyRef Name="Vet_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvetapl1">
+    <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="0..1" />
+    <End Role="Vet_Appointment_Line" Type="Self.Vet_Appointment_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vet_Appointment">
+        <PropertyRef Name="Vet_Appointment_ID" />
+      </Principal>
+      <Dependent Role="Vet_Appointment_Line">
+        <PropertyRef Name="Vet_Appointment_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvolhrs">
+    <End Role="Volunteer" Type="Self.Volunteer" Multiplicity="0..1" />
+    <End Role="Volunteer_Hours" Type="Self.Volunteer_Hours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Volunteer">
+        <PropertyRef Name="Vol_ID" />
+      </Principal>
+      <Dependent Role="Volunteer_Hours">
+        <PropertyRef Name="Vol_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvolhrs1">
+    <End Role="Volunteer_Work_Type" Type="Self.Volunteer_Work_Type" Multiplicity="0..1" />
+    <End Role="Volunteer_Hours" Type="Self.Volunteer_Hours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Volunteer_Work_Type">
+        <PropertyRef Name="Vol_WorkType_ID" />
+      </Principal>
+      <Dependent Role="Volunteer_Hours">
+        <PropertyRef Name="Vol_WorkType_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Wollies_ShelterEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Adopters" EntityType="Self.Adopter" />
+    <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" />
+    <EntitySet Name="Adopter_Relative" EntityType="Self.Adopter_Relative" />
+    <EntitySet Name="Adopter_Status" EntityType="Self.Adopter_Status" />
+    <EntitySet Name="Adoptions" EntityType="Self.Adoption" />
+    <EntitySet Name="Adoption_Status" EntityType="Self.Adoption_Status" />
+    <EntitySet Name="Animals" EntityType="Self.Animal" />
+    <EntitySet Name="Animal_Breed" EntityType="Self.Animal_Breed" />
+    <EntitySet Name="Animal_Kennel_History" EntityType="Self.Animal_Kennel_History" />
+    <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" />
+    <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" />
+    <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" />
+    <EntitySet Name="Audit_Log" EntityType="Self.Audit_Log" />
+    <EntitySet Name="Capture_Medical_Card" EntityType="Self.Capture_Medical_Card" />
+    <EntitySet Name="CrossBreeds" EntityType="Self.CrossBreed" />
+    <EntitySet Name="Customer_Event" EntityType="Self.Customer_Event" />
+    <EntitySet Name="Donations" EntityType="Self.Donation" />
+    <EntitySet Name="Donation_Line" EntityType="Self.Donation_Line" />
+    <EntitySet Name="Donation_Type" EntityType="Self.Donation_Type" />
+    <EntitySet Name="Donors" EntityType="Self.Donor" />
+    <EntitySet Name="Emp_Kennel" EntityType="Self.Emp_Kennel" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" />
+    <EntitySet Name="Employee_Type" EntityType="Self.Employee_Type" />
+    <EntitySet Name="Event_" EntityType="Self.Event_" />
+    <EntitySet Name="Event_Schedule" EntityType="Self.Event_Schedule" />
+    <EntitySet Name="Event_Type" EntityType="Self.Event_Type" />
+    <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" />
+    <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" />
+    <EntitySet Name="HomeChecks" EntityType="Self.HomeCheck" />
+    <EntitySet Name="Kennels" EntityType="Self.Kennel" />
+    <EntitySet Name="Microchips" EntityType="Self.Microchip" />
+    <EntitySet Name="Packaging_Type" EntityType="Self.Packaging_Type" />
+    <EntitySet Name="Payments" EntityType="Self.Payment" />
+    <EntitySet Name="Payment_Type" EntityType="Self.Payment_Type" />
+    <EntitySet Name="Role_" EntityType="Self.Role_" />
+    <EntitySet Name="Stocks" EntityType="Self.Stock" />
+    <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" />
+    <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
+    <EntitySet Name="Titles" EntityType="Self.Title" />
+    <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" />
+    <EntitySet Name="User_" EntityType="Self.User_" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <EntitySet Name="Vet_Appointment" EntityType="Self.Vet_Appointment" />
+    <EntitySet Name="Vet_Appointment_Line" EntityType="Self.Vet_Appointment_Line" />
+    <EntitySet Name="Veterinarians" EntityType="Self.Veterinarian" />
+    <EntitySet Name="Volunteers" EntityType="Self.Volunteer" />
+    <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" />
+    <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" />
+    <AssociationSet Name="fkado" Association="Self.fkado">
+      <End Role="Title" EntitySet="Titles" />
+      <End Role="Adopter" EntitySet="Adopters" />
+    </AssociationSet>
+    <AssociationSet Name="fkado1" Association="Self.fkado1">
+      <End Role="Adopter_Status" EntitySet="Adopter_Status" />
+      <End Role="Adopter" EntitySet="Adopters" />
+    </AssociationSet>
+    <AssociationSet Name="fkadoc" Association="Self.fkadoc">
+      <End Role="Adopter" EntitySet="Adopters" />
+      <End Role="Adopter_Contract" EntitySet="Adopter_Contract" />
+    </AssociationSet>
+    <AssociationSet Name="fkadopt3" Association="Self.fkadopt3">
+      <End Role="Adopter" EntitySet="Adopters" />
+      <End Role="Adoption" EntitySet="Adoptions" />
+    </AssociationSet>
+    <AssociationSet Name="fkador" Association="Self.fkador">
+      <End Role="Adopter" EntitySet="Adopters" />
+      <End Role="Adopter_Relative" EntitySet="Adopter_Relative" />
+    </AssociationSet>
+    <AssociationSet Name="fkfos" Association="Self.fkfos">
+      <End Role="Adopter" EntitySet="Adopters" />
+      <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
+    </AssociationSet>
+    <AssociationSet Name="fkadopt" Association="Self.fkadopt">
+      <End Role="Animal" EntitySet="Animals" />
+      <End Role="Adoption" EntitySet="Adoptions" />
+    </AssociationSet>
+    <AssociationSet Name="fkadopt1" Association="Self.fkadopt1">
+      <End Role="Payment" EntitySet="Payments" />
+      <End Role="Adoption" EntitySet="Adoptions" />
+    </AssociationSet>
+    <AssociationSet Name="fkadopt2" Association="Self.fkadopt2">
+      <End Role="Adoption_Status" EntitySet="Adoption_Status" />
+      <End Role="Adoption" EntitySet="Adoptions" />
+    </AssociationSet>
+    <AssociationSet Name="fkhoch" Association="Self.fkhoch">
+      <End Role="Adoption" EntitySet="Adoptions" />
+      <End Role="HomeCheck" EntitySet="HomeChecks" />
+    </AssociationSet>
+    <AssociationSet Name="fkani" Association="Self.fkani">
+      <End Role="Animal_Status" EntitySet="Animal_Status" />
+      <End Role="Animal" EntitySet="Animals" />
+    </AssociationSet>
+    <AssociationSet Name="fkanikh" Association="Self.fkanikh">
+      <End Role="Animal" EntitySet="Animals" />
+      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
+    </AssociationSet>
+    <AssociationSet Name="fkcrb" Association="Self.fkcrb">
+      <End Role="Animal" EntitySet="Animals" />
+      <End Role="CrossBreed" EntitySet="CrossBreeds" />
+    </AssociationSet>
+    <AssociationSet Name="fkfosc" Association="Self.fkfosc">
+      <End Role="Animal" EntitySet="Animals" />
+      <End Role="Foster_Care" EntitySet="Foster_Care" />
+    </AssociationSet>
+    <AssociationSet Name="fkmicro" Association="Self.fkmicro">
+      <End Role="Animal" EntitySet="Animals" />
+      <End Role="Microchip" EntitySet="Microchips" />
+    </AssociationSet>
+    <AssociationSet Name="fkvetapl" Association="Self.fkvetapl">
+      <End Role="Animal" EntitySet="Animals" />
+      <End Role="Vet_Appointment_Line" EntitySet="Vet_Appointment_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkanibreed" Association="Self.fkanibreed">
+      <End Role="Animal_Type" EntitySet="Animal_Type" />
+      <End Role="Animal_Breed" EntitySet="Animal_Breed" />
+    </AssociationSet>
+    <AssociationSet Name="fkcrb1" Association="Self.fkcrb1">
+      <End Role="Animal_Breed" EntitySet="Animal_Breed" />
+      <End Role="CrossBreed" EntitySet="CrossBreeds" />
+    </AssociationSet>
+    <AssociationSet Name="fkanikh1" Association="Self.fkanikh1">
+      <End Role="Kennel" EntitySet="Kennels" />
+      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
+    </AssociationSet>
+    <AssociationSet Name="fkanitreat" Association="Self.fkanitreat">
+      <End Role="Capture_Medical_Card" EntitySet="Capture_Medical_Card" />
+      <End Role="Animal_Treatment" EntitySet="Animal_Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="fkaudlog" Association="Self.fkaudlog">
+      <End Role="User_" EntitySet="User_" />
+      <End Role="Audit_Log" EntitySet="Audit_Log" />
+    </AssociationSet>
+    <AssociationSet Name="fkcapmed" Association="Self.fkcapmed">
+      <End Role="Vet_Appointment_Line" EntitySet="Vet_Appointment_Line" />
+      <End Role="Capture_Medical_Card" EntitySet="Capture_Medical_Card" />
+    </AssociationSet>
+    <AssociationSet Name="fkcevnt" Association="Self.fkcevnt">
+      <End Role="Event_" EntitySet="Event_" />
+      <End Role="Customer_Event" EntitySet="Customer_Event" />
+    </AssociationSet>
+    <AssociationSet Name="fkcevnt1" Association="Self.fkcevnt1">
+      <End Role="Payment" EntitySet="Payments" />
+      <End Role="Customer_Event" EntitySet="Customer_Event" />
+    </AssociationSet>
+    <AssociationSet Name="fkdon" Association="Self.fkdon">
+      <End Role="Donor" EntitySet="Donors" />
+      <End Role="Donation" EntitySet="Donations" />
+    </AssociationSet>
+    <AssociationSet Name="fkdonl1" Association="Self.fkdonl1">
+      <End Role="Donation" EntitySet="Donations" />
+      <End Role="Donation_Line" EntitySet="Donation_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkdonl" Association="Self.fkdonl">
+      <End Role="Stock" EntitySet="Stocks" />
+      <End Role="Donation_Line" EntitySet="Donation_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkdonl2" Association="Self.fkdonl2">
+      <End Role="Donation_Type" EntitySet="Donation_Type" />
+      <End Role="Donation_Line" EntitySet="Donation_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkdonor" Association="Self.fkdonor">
+      <End Role="Title" EntitySet="Titles" />
+      <End Role="Donor" EntitySet="Donors" />
+    </AssociationSet>
+    <AssociationSet Name="fkempk" Association="Self.fkempk">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
+    </AssociationSet>
+    <AssociationSet Name="fkempk1" Association="Self.fkempk1">
+      <End Role="Kennel" EntitySet="Kennels" />
+      <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
+    </AssociationSet>
+    <AssociationSet Name="fkemp" Association="Self.fkemp">
+      <End Role="Title" EntitySet="Titles" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="fkemp1" Association="Self.fkemp1">
+      <End Role="Employee_Type" EntitySet="Employee_Type" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="fktime" Association="Self.fktime">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="TimeSheet" EntitySet="TimeSheets" />
+    </AssociationSet>
+    <AssociationSet Name="fkuser" Association="Self.fkuser">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="User_" EntitySet="User_" />
+    </AssociationSet>
+    <AssociationSet Name="fkevnt" Association="Self.fkevnt">
+      <End Role="Event_Type" EntitySet="Event_Type" />
+      <End Role="Event_" EntitySet="Event_" />
+    </AssociationSet>
+    <AssociationSet Name="fkfosc1" Association="Self.fkfosc1">
+      <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
+      <End Role="Foster_Care" EntitySet="Foster_Care" />
+    </AssociationSet>
+    <AssociationSet Name="fkstock1" Association="Self.fkstock1">
+      <End Role="Packaging_Type" EntitySet="Packaging_Type" />
+      <End Role="Stock" EntitySet="Stocks" />
+    </AssociationSet>
+    <AssociationSet Name="fkpay" Association="Self.fkpay">
+      <End Role="Payment_Type" EntitySet="Payment_Type" />
+      <End Role="Payment" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="fkuserol1" Association="Self.fkuserol1">
+      <End Role="Role_" EntitySet="Role_" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="fkstock" Association="Self.fkstock">
+      <End Role="Stock_Type" EntitySet="Stock_Type" />
+      <End Role="Stock" EntitySet="Stocks" />
+    </AssociationSet>
+    <AssociationSet Name="fkstock2" Association="Self.fkstock2">
+      <End Role="Unit_Type" EntitySet="Unit_Type" />
+      <End Role="Stock" EntitySet="Stocks" />
+    </AssociationSet>
+    <AssociationSet Name="fkvol" Association="Self.fkvol">
+      <End Role="Title" EntitySet="Titles" />
+      <End Role="Volunteer" EntitySet="Volunteers" />
+    </AssociationSet>
+    <AssociationSet Name="fkuserol" Association="Self.fkuserol">
+      <End Role="User_" EntitySet="User_" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="fkvetap" Association="Self.fkvetap">
+      <End Role="Veterinarian" EntitySet="Veterinarians" />
+      <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="fkvetapl1" Association="Self.fkvetapl1">
+      <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
+      <End Role="Vet_Appointment_Line" EntitySet="Vet_Appointment_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkvolhrs" Association="Self.fkvolhrs">
+      <End Role="Volunteer" EntitySet="Volunteers" />
+      <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
+    </AssociationSet>
+    <AssociationSet Name="fkvolhrs1" Association="Self.fkvolhrs1">
+      <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
+      <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

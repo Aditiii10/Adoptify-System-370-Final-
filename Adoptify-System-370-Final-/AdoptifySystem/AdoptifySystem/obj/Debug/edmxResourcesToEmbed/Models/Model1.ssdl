@@ -1,0 +1,1328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Adopter">
+    <Key>
+      <PropertyRef Name="Adopter_ID" />
+    </Key>
+    <Property Name="Adopter_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adopter_Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_Surname" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_Email" Type="nvarchar" MaxLength="200" />
+    <Property Name="Title_ID" Type="int" />
+    <Property Name="Adopter_Address" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_PostalAddress" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_HomeNumber" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_WorkNumber" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_CellNumber" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_CarRegistartion_Number" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_Employer" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_Status_ID" Type="int" />
+    <Property Name="Amount_of_Family_Memebers" Type="int" />
+    <Property Name="No_of_Children" Type="int" />
+    <Property Name="Age_of_Children" Type="int" />
+    <Property Name="Property_Securely_Closed" Type="bit" />
+    <Property Name="Properyty_Include_Pool" Type="bit" />
+    <Property Name="Pool_Secured" Type="bit" />
+    <Property Name="Animal_Shelter_Available" Type="bit" />
+    <Property Name="Sick_Animal" Type="bit" />
+    <Property Name="Sick_Animal_Diagnosis" Type="nvarchar" MaxLength="354" />
+    <Property Name="Animal_Sleep_Location" Type="nvarchar" MaxLength="354" />
+    <Property Name="Given_Animal_Away" Type="bit" />
+    <Property Name="HomeCheck_Suburb" Type="nvarchar" MaxLength="354" />
+    <Property Name="Type_of_House" Type="nvarchar" MaxLength="354" />
+    <Property Name="Adopted_Before" Type="bit" />
+    <Property Name="Complex_or_Flat" Type="bit" />
+    <Property Name="Animal_Allowed" Type="bit" />
+    <Property Name="Animal_Captivity" Type="nvarchar" MaxLength="354" />
+    <Property Name="Animal_Vaccines_Updated" Type="bit" />
+  </EntityType>
+  <EntityType Name="Adopter_Contract">
+    <Key>
+      <PropertyRef Name="Contract_ID" />
+    </Key>
+    <Property Name="Contract_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Electronic_Contract" Type="varchar(max)" />
+    <Property Name="Adopter_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Adopter_Relative">
+    <Key>
+      <PropertyRef Name="Relative_ID" />
+    </Key>
+    <Property Name="Relative_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Relative_Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Relative_Surname" Type="nvarchar" MaxLength="200" />
+    <Property Name="Relative_Email" Type="nvarchar" MaxLength="200" />
+    <Property Name="Relative_Address" Type="nvarchar" MaxLength="200" />
+    <Property Name="Relative_PostalAddress" Type="nvarchar" MaxLength="200" />
+    <Property Name="Relative_Home_Tel" Type="nvarchar" MaxLength="200" />
+    <Property Name="Relative_Work_Tel" Type="nvarchar" MaxLength="200" />
+    <Property Name="Relative_Cell" Type="nvarchar" MaxLength="200" />
+    <Property Name="Relationship" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Adopter_Status">
+    <Key>
+      <PropertyRef Name="Adopter_Status_ID" />
+    </Key>
+    <Property Name="Adopter_Status_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adopter_Status_Name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Adoption">
+    <Key>
+      <PropertyRef Name="Adoption_ID" />
+    </Key>
+    <Property Name="Adoption_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adoption_Date" Type="datetime" />
+    <Property Name="Adoption_Form" Type="varchar(max)" />
+    <Property Name="Payment_ID" Type="int" />
+    <Property Name="Adopter_ID" Type="int" />
+    <Property Name="Adopt_Status_ID" Type="int" />
+    <Property Name="Animal_ID" Type="int" />
+    <Property Name="Collection_Date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Adoption_Status">
+    <Key>
+      <PropertyRef Name="Adopt_Status_ID" />
+    </Key>
+    <Property Name="Adopt_Status_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adopt_Status_Name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Animal">
+    <Key>
+      <PropertyRef Name="Animal_ID" />
+    </Key>
+    <Property Name="Animal_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Animal_Image" Type="varchar(max)" />
+    <Property Name="Animal_Name" Type="varchar" MaxLength="150" />
+    <Property Name="Animal_Description" Type="varchar" MaxLength="200" />
+    <Property Name="Animal_Gender" Type="varchar" MaxLength="50" />
+    <Property Name="Animal_Age" Type="int" />
+    <Property Name="Animal_Sterilization" Type="bit" />
+    <Property Name="Animal_Castration" Type="bit" />
+    <Property Name="Animal_Size" Type="varchar" MaxLength="10" />
+    <Property Name="Animal_Entry_Date" Type="datetime" />
+    <Property Name="Animal_Coat" Type="varchar" MaxLength="100" />
+    <Property Name="Animal_Status_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Animal_Breed">
+    <Key>
+      <PropertyRef Name="Animal_Breed_ID" />
+    </Key>
+    <Property Name="Animal_Breed_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Animal_Breed_Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Animal_Breed_Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="Animal_Type_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Animal_Kennel_History">
+    <Key>
+      <PropertyRef Name="Animal_Kennel_History_ID" />
+    </Key>
+    <Property Name="Animal_Kennel_History_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Animal_ID" Type="int" />
+    <Property Name="Kennel_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Animal_Status">
+    <Key>
+      <PropertyRef Name="Animal_Status_ID" />
+    </Key>
+    <Property Name="Animal_Status_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Animal_Status_Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Animal_Treatment">
+    <Key>
+      <PropertyRef Name="Treat_ID" />
+    </Key>
+    <Property Name="Treat_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Treat_StartDate" Type="date" />
+    <Property Name="Treat_EndDate" Type="date" />
+    <Property Name="Treat_Quantity" Type="int" />
+    <Property Name="Treat_Regularity" Type="varchar" MaxLength="50" />
+    <Property Name="Treat_Name" Type="varchar" MaxLength="150" />
+    <Property Name="Treat_cost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Capture_Medical_Card_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Animal_Type">
+    <Key>
+      <PropertyRef Name="Animal_Type_ID" />
+    </Key>
+    <Property Name="Animal_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Animal_Type_Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Audit_Log">
+    <Key>
+      <PropertyRef Name="Auditlog_ID" />
+    </Key>
+    <Property Name="Auditlog_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Auditlog_DateTime" Type="datetime" />
+    <Property Name="Transaction_Type" Type="varchar" MaxLength="1" />
+    <Property Name="Critical_Date" Type="varchar" MaxLength="1" />
+    <Property Name="UserID" Type="int" />
+  </EntityType>
+  <EntityType Name="Capture_Medical_Card">
+    <Key>
+      <PropertyRef Name="Capture_Medical_Card_ID" />
+    </Key>
+    <Property Name="Capture_Medical_Card_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Diagnosis_Details" Type="nvarchar" MaxLength="254" />
+    <Property Name="Capture_Medical_Card_Date" Type="datetime" />
+    <Property Name="Capture_Medical_Card_NextAppointment_Date" Type="datetime" />
+    <Property Name="Vet_Appoint_Line_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="CrossBreed">
+    <Key>
+      <PropertyRef Name="CrossBreed_ID" />
+    </Key>
+    <Property Name="CrossBreed_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Animal_ID" Type="int" />
+    <Property Name="Animal_Breed_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Customer_Event">
+    <Key>
+      <PropertyRef Name="Customer_Event_ID" />
+    </Key>
+    <Property Name="Customer_Event_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Customer_Event_Name" Type="varchar" MaxLength="150" />
+    <Property Name="Customer_Event_Surname" Type="varchar" MaxLength="150" />
+    <Property Name="Customer_Event_Email" Type="nvarchar" MaxLength="254" />
+    <Property Name="Number_of_tickects" Type="int" />
+    <Property Name="TicketFee_Date" Type="datetime" />
+    <Property Name="TicketFee_Total" Type="decimal" Precision="15" Scale="0" />
+    <Property Name="Event_ID" Type="int" />
+    <Property Name="Payment_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Donation">
+    <Key>
+      <PropertyRef Name="Donation_ID" />
+    </Key>
+    <Property Name="Donation_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Donation_Date" Type="datetime" />
+    <Property Name="Donor_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Donation_Line">
+    <Key>
+      <PropertyRef Name="Donation_Line_ID" />
+    </Key>
+    <Property Name="Donation_Line_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Donation_Quantity" Type="decimal" Precision="15" Scale="0" />
+    <Property Name="Stock_ID" Type="int" />
+    <Property Name="Donation_ID" Type="int" />
+    <Property Name="Donation_Type_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Donation_Type">
+    <Key>
+      <PropertyRef Name="Donation_Type_ID" />
+    </Key>
+    <Property Name="Donation_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Donation_Type_Name" Type="nvarchar" MaxLength="600" />
+    <Property Name="Donation_Type_Description" Type="nvarchar" MaxLength="600" />
+  </EntityType>
+  <EntityType Name="Donor">
+    <Key>
+      <PropertyRef Name="Donor_ID" />
+    </Key>
+    <Property Name="Donor_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Donor_Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Donor_Surname" Type="nvarchar" MaxLength="200" />
+    <Property Name="Donor_Email" Type="nvarchar" MaxLength="200" />
+    <Property Name="Title_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Emp_Kennel">
+    <Key>
+      <PropertyRef Name="Emp_Kennel_ID" />
+    </Key>
+    <Property Name="Emp_Kennel_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emp_ID" Type="int" />
+    <Property Name="Kennel_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Emp_ID" />
+    </Key>
+    <Property Name="Emp_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emp_Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="Emp_Surname" Type="varchar" MaxLength="150" />
+    <Property Name="Emp_ContactNumber" Type="nvarchar" MaxLength="12" />
+    <Property Name="Emp_IDNumber" Type="nvarchar" MaxLength="150" />
+    <Property Name="Emp_Email" Type="nvarchar" MaxLength="254" />
+    <Property Name="Emp_Contract" Type="nvarchar" MaxLength="254" />
+    <Property Name="Emp_Date_Employed" Type="date" />
+    <Property Name="Title_ID" Type="int" />
+    <Property Name="Emp_Type_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Employee_Status">
+    <Key>
+      <PropertyRef Name="Employee_Status_ID" />
+    </Key>
+    <Property Name="Employee_Status_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Employee_Status_Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Employee_Type">
+    <Key>
+      <PropertyRef Name="Emp_Type_ID" />
+    </Key>
+    <Property Name="Emp_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emp_Type_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Emp_Type_Description" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Event_">
+    <Key>
+      <PropertyRef Name="Event_ID" />
+    </Key>
+    <Property Name="Event_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Event_Name" Type="varchar" MaxLength="150" />
+    <Property Name="Event_StartTime" Type="datetime" />
+    <Property Name="Event_EndTime" Type="datetime" />
+    <Property Name="Event_Guest_Number" Type="int" />
+    <Property Name="Event_Ticket_Price" Type="decimal" Precision="12" Scale="0" />
+    <Property Name="Event_Location" Type="varchar" MaxLength="200" />
+    <Property Name="Event_Description" Type="varchar" MaxLength="200" />
+    <Property Name="Event_Type_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Event_Schedule">
+    <Key>
+      <PropertyRef Name="EventID" />
+    </Key>
+    <Property Name="EventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar" MaxLength="100" />
+    <Property Name="Description" Type="nvarchar" MaxLength="300" />
+    <Property Name="Start" Type="datetime" />
+    <Property Name="EventEnd" Type="datetime" />
+    <Property Name="ThemeColour" Type="nchar" MaxLength="10" />
+    <Property Name="IsFullDay" Type="bit" />
+  </EntityType>
+  <EntityType Name="Event_Type">
+    <Key>
+      <PropertyRef Name="Event_Type_ID" />
+    </Key>
+    <Property Name="Event_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Event_Type_Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Foster_Care">
+    <Key>
+      <PropertyRef Name="Foster_Care_ID" />
+    </Key>
+    <Property Name="Foster_Care_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Foster_Care_Period" Type="varchar" MaxLength="200" />
+    <Property Name="Foster_Start_Date" Type="date" />
+    <Property Name="Foster_Parent_ID" Type="int" />
+    <Property Name="Animal_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Foster_Care_Parent">
+    <Key>
+      <PropertyRef Name="Foster_Parent_ID" />
+    </Key>
+    <Property Name="Foster_Parent_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Foster_Parent_Name" Type="varchar" MaxLength="200" />
+    <Property Name="Foster_Parent_Surname" Type="varchar" MaxLength="200" />
+    <Property Name="Foster_Parent_Address" Type="varchar" MaxLength="200" />
+    <Property Name="Foster_Parent_CellNumber" Type="varchar" MaxLength="200" />
+    <Property Name="Foster_Parent_WorkNumber" Type="varchar" MaxLength="200" />
+    <Property Name="Foster_Parent_Email" Type="varchar" MaxLength="200" />
+    <Property Name="Foster_Parent_IDNumber" Type="int" />
+    <Property Name="Foster_Parent_Last_Modified" Type="datetime" />
+    <Property Name="Num_In_Household" Type="int" />
+    <Property Name="Type_Of_Housing" Type="varchar" MaxLength="200" />
+    <Property Name="Ownership_Housing" Type="varchar" MaxLength="200" />
+    <Property Name="Hours_Left_Alone" Type="int" />
+    <Property Name="Adopter_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="HomeCheck">
+    <Key>
+      <PropertyRef Name="HomeCheck_ID" />
+    </Key>
+    <Property Name="HomeCheck_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HomeCheck_Datetime" Type="datetime" />
+    <Property Name="Adoption_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Kennel">
+    <Key>
+      <PropertyRef Name="Kennel_ID" />
+    </Key>
+    <Property Name="Kennel_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kennel_Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Kennel_Number" Type="int" />
+    <Property Name="Kennel_Capacity" Type="int" />
+  </EntityType>
+  <EntityType Name="Microchip">
+    <Key>
+      <PropertyRef Name="Microchip_ID" />
+    </Key>
+    <Property Name="Microchip_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Animal_Microchip_Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date_of_Implant" Type="date" />
+    <Property Name="Implanters_PIN_Number" Type="nvarchar" MaxLength="10" />
+    <Property Name="Owner_Name" Type="varchar" MaxLength="200" />
+    <Property Name="Owner_Address" Type="varchar" MaxLength="200" />
+    <Property Name="Animal_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Packaging_Type">
+    <Key>
+      <PropertyRef Name="Packaging_Type_ID" />
+    </Key>
+    <Property Name="Packaging_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Packaging_Type_Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Payment_ID" />
+    </Key>
+    <Property Name="Payment_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Payment_Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="Amount_Paid" Type="decimal" Precision="15" Scale="0" />
+    <Property Name="Payment_Date" Type="datetime" />
+    <Property Name="Payment_Type_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Payment_Type">
+    <Key>
+      <PropertyRef Name="Payment_Type_ID" />
+    </Key>
+    <Property Name="Payment_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Payment_Type_Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Payment_Type_Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Role_">
+    <Key>
+      <PropertyRef Name="Role_ID" />
+    </Key>
+    <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role_Name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Stock">
+    <Key>
+      <PropertyRef Name="Stock_ID" />
+    </Key>
+    <Property Name="Stock_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Stock_Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Stock_Quantity" Type="int" />
+    <Property Name="Stock_Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="Stock_Type_ID" Type="int" />
+    <Property Name="Packaging_Type_ID" Type="int" />
+    <Property Name="Unit_Type_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Stock_Type">
+    <Key>
+      <PropertyRef Name="Stock_Type_ID" />
+    </Key>
+    <Property Name="Stock_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="TimeSheet">
+    <Key>
+      <PropertyRef Name="TimeSheet_ID" />
+    </Key>
+    <Property Name="TimeSheet_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Check_in" Type="datetime" />
+    <Property Name="Check_out" Type="datetime" />
+    <Property Name="Emp_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Title">
+    <Key>
+      <PropertyRef Name="Title_ID" />
+    </Key>
+    <Property Name="Title_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title_Description" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Unit_Type">
+    <Key>
+      <PropertyRef Name="Unit_Type_ID" />
+    </Key>
+    <Property Name="Unit_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Unit_Type_Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="User_">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Emp_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserRole_ID" />
+    </Key>
+    <Property Name="UserRole_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="Role_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Vet_Appointment">
+    <Key>
+      <PropertyRef Name="Vet_Appointment_ID" />
+    </Key>
+    <Property Name="Vet_Appointment_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vet_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Vet_Appointment_Line">
+    <Key>
+      <PropertyRef Name="Vet_Appoint_Line_ID" />
+    </Key>
+    <Property Name="Vet_Appoint_Line_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vet_Appoint_Line_Status" Type="int" />
+    <Property Name="Animal_ID" Type="int" />
+    <Property Name="Vet_Appointment_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Veterinarian">
+    <Key>
+      <PropertyRef Name="Vet_ID" />
+    </Key>
+    <Property Name="Vet_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vet_Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="Vet_Emial" Type="nvarchar" MaxLength="254" />
+    <Property Name="Vet_Tel" Type="nvarchar" MaxLength="15" />
+    <Property Name="Vet_Address" Type="nvarchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="Volunteer">
+    <Key>
+      <PropertyRef Name="Vol_ID" />
+    </Key>
+    <Property Name="Vol_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vol_Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Vol_Surname" Type="nvarchar" MaxLength="100" />
+    <Property Name="Vol_Email" Type="nvarchar" MaxLength="254" />
+    <Property Name="Vol_ContactNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="Vol_Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="Vol_Emergency_ContactName" Type="nvarchar" MaxLength="150" />
+    <Property Name="Vol_Emergency_ContactNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="Title_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Volunteer_Hours">
+    <Key>
+      <PropertyRef Name="Vol_Hours_ID" />
+    </Key>
+    <Property Name="Vol_Hours_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vol_workDate" Type="date" />
+    <Property Name="Vol_Start_Time" Type="datetime" />
+    <Property Name="Vol_End_Time" Type="datetime" />
+    <Property Name="Vol_ID" Type="int" />
+    <Property Name="Vol_WorkType_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Volunteer_Work_Type">
+    <Key>
+      <PropertyRef Name="Vol_WorkType_ID" />
+    </Key>
+    <Property Name="Vol_WorkType_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vol_WorkType_Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Vol_WorkType_Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <Association Name="fkado">
+    <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="Title_ID" />
+      </Principal>
+      <Dependent Role="Adopter">
+        <PropertyRef Name="Title_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkado1">
+    <End Role="Adopter_Status" Type="Self.Adopter_Status" Multiplicity="0..1" />
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter_Status">
+        <PropertyRef Name="Adopter_Status_ID" />
+      </Principal>
+      <Dependent Role="Adopter">
+        <PropertyRef Name="Adopter_Status_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadoc">
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="0..1" />
+    <End Role="Adopter_Contract" Type="Self.Adopter_Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter">
+        <PropertyRef Name="Adopter_ID" />
+      </Principal>
+      <Dependent Role="Adopter_Contract">
+        <PropertyRef Name="Adopter_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadopt">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Adoption">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadopt1">
+    <End Role="Payment" Type="Self.Payment" Multiplicity="0..1" />
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment">
+        <PropertyRef Name="Payment_ID" />
+      </Principal>
+      <Dependent Role="Adoption">
+        <PropertyRef Name="Payment_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadopt2">
+    <End Role="Adoption_Status" Type="Self.Adoption_Status" Multiplicity="0..1" />
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adoption_Status">
+        <PropertyRef Name="Adopt_Status_ID" />
+      </Principal>
+      <Dependent Role="Adoption">
+        <PropertyRef Name="Adopt_Status_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkadopt3">
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="0..1" />
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter">
+        <PropertyRef Name="Adopter_ID" />
+      </Principal>
+      <Dependent Role="Adoption">
+        <PropertyRef Name="Adopter_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkador">
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="0..1" />
+    <End Role="Adopter_Relative" Type="Self.Adopter_Relative" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter">
+        <PropertyRef Name="Adopter_ID" />
+      </Principal>
+      <Dependent Role="Adopter_Relative">
+        <PropertyRef Name="Adopter_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkani">
+    <End Role="Animal_Status" Type="Self.Animal_Status" Multiplicity="0..1" />
+    <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal_Status">
+        <PropertyRef Name="Animal_Status_ID" />
+      </Principal>
+      <Dependent Role="Animal">
+        <PropertyRef Name="Animal_Status_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkanibreed">
+    <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="0..1" />
+    <End Role="Animal_Breed" Type="Self.Animal_Breed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal_Type">
+        <PropertyRef Name="Animal_Type_ID" />
+      </Principal>
+      <Dependent Role="Animal_Breed">
+        <PropertyRef Name="Animal_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkanikh">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Animal_Kennel_History">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkanikh1">
+    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kennel">
+        <PropertyRef Name="Kennel_ID" />
+      </Principal>
+      <Dependent Role="Animal_Kennel_History">
+        <PropertyRef Name="Kennel_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkanitreat">
+    <End Role="Capture_Medical_Card" Type="Self.Capture_Medical_Card" Multiplicity="0..1" />
+    <End Role="Animal_Treatment" Type="Self.Animal_Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Capture_Medical_Card">
+        <PropertyRef Name="Capture_Medical_Card_ID" />
+      </Principal>
+      <Dependent Role="Animal_Treatment">
+        <PropertyRef Name="Capture_Medical_Card_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkaudlog">
+    <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+    <End Role="Audit_Log" Type="Self.Audit_Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Audit_Log">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcapmed">
+    <End Role="Vet_Appointment_Line" Type="Self.Vet_Appointment_Line" Multiplicity="0..1" />
+    <End Role="Capture_Medical_Card" Type="Self.Capture_Medical_Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vet_Appointment_Line">
+        <PropertyRef Name="Vet_Appoint_Line_ID" />
+      </Principal>
+      <Dependent Role="Capture_Medical_Card">
+        <PropertyRef Name="Vet_Appoint_Line_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcevnt">
+    <End Role="Event_" Type="Self.Event_" Multiplicity="0..1" />
+    <End Role="Customer_Event" Type="Self.Customer_Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event_">
+        <PropertyRef Name="Event_ID" />
+      </Principal>
+      <Dependent Role="Customer_Event">
+        <PropertyRef Name="Event_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcevnt1">
+    <End Role="Payment" Type="Self.Payment" Multiplicity="0..1" />
+    <End Role="Customer_Event" Type="Self.Customer_Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment">
+        <PropertyRef Name="Payment_ID" />
+      </Principal>
+      <Dependent Role="Customer_Event">
+        <PropertyRef Name="Payment_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcrb">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="CrossBreed" Type="Self.CrossBreed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="CrossBreed">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkcrb1">
+    <End Role="Animal_Breed" Type="Self.Animal_Breed" Multiplicity="0..1" />
+    <End Role="CrossBreed" Type="Self.CrossBreed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal_Breed">
+        <PropertyRef Name="Animal_Breed_ID" />
+      </Principal>
+      <Dependent Role="CrossBreed">
+        <PropertyRef Name="Animal_Breed_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdon">
+    <End Role="Donor" Type="Self.Donor" Multiplicity="0..1" />
+    <End Role="Donation" Type="Self.Donation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Donor">
+        <PropertyRef Name="Donor_ID" />
+      </Principal>
+      <Dependent Role="Donation">
+        <PropertyRef Name="Donor_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdonl">
+    <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+    <End Role="Donation_Line" Type="Self.Donation_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="Stock_ID" />
+      </Principal>
+      <Dependent Role="Donation_Line">
+        <PropertyRef Name="Stock_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdonl1">
+    <End Role="Donation" Type="Self.Donation" Multiplicity="0..1" />
+    <End Role="Donation_Line" Type="Self.Donation_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Donation">
+        <PropertyRef Name="Donation_ID" />
+      </Principal>
+      <Dependent Role="Donation_Line">
+        <PropertyRef Name="Donation_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdonl2">
+    <End Role="Donation_Type" Type="Self.Donation_Type" Multiplicity="0..1" />
+    <End Role="Donation_Line" Type="Self.Donation_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Donation_Type">
+        <PropertyRef Name="Donation_Type_ID" />
+      </Principal>
+      <Dependent Role="Donation_Line">
+        <PropertyRef Name="Donation_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdonor">
+    <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+    <End Role="Donor" Type="Self.Donor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="Title_ID" />
+      </Principal>
+      <Dependent Role="Donor">
+        <PropertyRef Name="Title_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkemp">
+    <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="Title_ID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Title_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkemp1">
+    <End Role="Employee_Type" Type="Self.Employee_Type" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Type">
+        <PropertyRef Name="Emp_Type_ID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Emp_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkempk">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Emp_Kennel" Type="Self.Emp_Kennel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="Emp_Kennel">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkempk1">
+    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+    <End Role="Emp_Kennel" Type="Self.Emp_Kennel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kennel">
+        <PropertyRef Name="Kennel_ID" />
+      </Principal>
+      <Dependent Role="Emp_Kennel">
+        <PropertyRef Name="Kennel_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkevnt">
+    <End Role="Event_Type" Type="Self.Event_Type" Multiplicity="0..1" />
+    <End Role="Event_" Type="Self.Event_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event_Type">
+        <PropertyRef Name="Event_Type_ID" />
+      </Principal>
+      <Dependent Role="Event_">
+        <PropertyRef Name="Event_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkfos">
+    <End Role="Adopter" Type="Self.Adopter" Multiplicity="0..1" />
+    <End Role="Foster_Care_Parent" Type="Self.Foster_Care_Parent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adopter">
+        <PropertyRef Name="Adopter_ID" />
+      </Principal>
+      <Dependent Role="Foster_Care_Parent">
+        <PropertyRef Name="Adopter_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkfosc">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Foster_Care" Type="Self.Foster_Care" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Foster_Care">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkfosc1">
+    <End Role="Foster_Care_Parent" Type="Self.Foster_Care_Parent" Multiplicity="0..1" />
+    <End Role="Foster_Care" Type="Self.Foster_Care" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Foster_Care_Parent">
+        <PropertyRef Name="Foster_Parent_ID" />
+      </Principal>
+      <Dependent Role="Foster_Care">
+        <PropertyRef Name="Foster_Parent_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkhoch">
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+    <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adoption">
+        <PropertyRef Name="Adoption_ID" />
+      </Principal>
+      <Dependent Role="HomeCheck">
+        <PropertyRef Name="Adoption_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkmicro">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Microchip" Type="Self.Microchip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Microchip">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkpay">
+    <End Role="Payment_Type" Type="Self.Payment_Type" Multiplicity="0..1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment_Type">
+        <PropertyRef Name="Payment_Type_ID" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="Payment_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkstock">
+    <End Role="Stock_Type" Type="Self.Stock_Type" Multiplicity="0..1" />
+    <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock_Type">
+        <PropertyRef Name="Stock_Type_ID" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="Stock_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkstock1">
+    <End Role="Packaging_Type" Type="Self.Packaging_Type" Multiplicity="0..1" />
+    <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Packaging_Type">
+        <PropertyRef Name="Packaging_Type_ID" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="Packaging_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkstock2">
+    <End Role="Unit_Type" Type="Self.Unit_Type" Multiplicity="0..1" />
+    <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit_Type">
+        <PropertyRef Name="Unit_Type_ID" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="Unit_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fktime">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="TimeSheet">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkuser">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="User_" Type="Self.User_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="User_">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkuserol">
+    <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkuserol1">
+    <End Role="Role_" Type="Self.Role_" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role_">
+        <PropertyRef Name="Role_ID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvetap">
+    <End Role="Veterinarian" Type="Self.Veterinarian" Multiplicity="0..1" />
+    <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Veterinarian">
+        <PropertyRef Name="Vet_ID" />
+      </Principal>
+      <Dependent Role="Vet_Appointment">
+        <PropertyRef Name="Vet_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvetapl">
+    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+    <End Role="Vet_Appointment_Line" Type="Self.Vet_Appointment_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal">
+        <PropertyRef Name="Animal_ID" />
+      </Principal>
+      <Dependent Role="Vet_Appointment_Line">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvetapl1">
+    <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="0..1" />
+    <End Role="Vet_Appointment_Line" Type="Self.Vet_Appointment_Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vet_Appointment">
+        <PropertyRef Name="Vet_Appointment_ID" />
+      </Principal>
+      <Dependent Role="Vet_Appointment_Line">
+        <PropertyRef Name="Vet_Appointment_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvol">
+    <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+    <End Role="Volunteer" Type="Self.Volunteer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="Title_ID" />
+      </Principal>
+      <Dependent Role="Volunteer">
+        <PropertyRef Name="Title_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvolhrs">
+    <End Role="Volunteer" Type="Self.Volunteer" Multiplicity="0..1" />
+    <End Role="Volunteer_Hours" Type="Self.Volunteer_Hours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Volunteer">
+        <PropertyRef Name="Vol_ID" />
+      </Principal>
+      <Dependent Role="Volunteer_Hours">
+        <PropertyRef Name="Vol_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkvolhrs1">
+    <End Role="Volunteer_Work_Type" Type="Self.Volunteer_Work_Type" Multiplicity="0..1" />
+    <End Role="Volunteer_Hours" Type="Self.Volunteer_Hours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Volunteer_Work_Type">
+        <PropertyRef Name="Vol_WorkType_ID" />
+      </Principal>
+      <Dependent Role="Volunteer_Hours">
+        <PropertyRef Name="Vol_WorkType_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Wollies_ShelterModelStoreContainer">
+    <EntitySet Name="Adopter" EntityType="Self.Adopter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Adopter_Relative" EntityType="Self.Adopter_Relative" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Adopter_Status" EntityType="Self.Adopter_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Adoption" EntityType="Self.Adoption" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Adoption_Status" EntityType="Self.Adoption_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Animal" EntityType="Self.Animal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Animal_Breed" EntityType="Self.Animal_Breed" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Animal_Kennel_History" EntityType="Self.Animal_Kennel_History" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Audit_Log" EntityType="Self.Audit_Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Capture_Medical_Card" EntityType="Self.Capture_Medical_Card" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CrossBreed" EntityType="Self.CrossBreed" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer_Event" EntityType="Self.Customer_Event" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Donation" EntityType="Self.Donation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Donation_Line" EntityType="Self.Donation_Line" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Donation_Type" EntityType="Self.Donation_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Donor" EntityType="Self.Donor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Emp_Kennel" EntityType="Self.Emp_Kennel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Type" EntityType="Self.Employee_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Event_" EntityType="Self.Event_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Event_Schedule" EntityType="Self.Event_Schedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Event_Type" EntityType="Self.Event_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HomeCheck" EntityType="Self.HomeCheck" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kennel" EntityType="Self.Kennel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Microchip" EntityType="Self.Microchip" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Packaging_Type" EntityType="Self.Packaging_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payment_Type" EntityType="Self.Payment_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_" EntityType="Self.User_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vet_Appointment" EntityType="Self.Vet_Appointment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vet_Appointment_Line" EntityType="Self.Vet_Appointment_Line" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Veterinarian" EntityType="Self.Veterinarian" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fkado" Association="Self.fkado">
+      <End Role="Title" EntitySet="Title" />
+      <End Role="Adopter" EntitySet="Adopter" />
+    </AssociationSet>
+    <AssociationSet Name="fkado1" Association="Self.fkado1">
+      <End Role="Adopter_Status" EntitySet="Adopter_Status" />
+      <End Role="Adopter" EntitySet="Adopter" />
+    </AssociationSet>
+    <AssociationSet Name="fkadoc" Association="Self.fkadoc">
+      <End Role="Adopter" EntitySet="Adopter" />
+      <End Role="Adopter_Contract" EntitySet="Adopter_Contract" />
+    </AssociationSet>
+    <AssociationSet Name="fkadopt" Association="Self.fkadopt">
+      <End Role="Animal" EntitySet="Animal" />
+      <End Role="Adoption" EntitySet="Adoption" />
+    </AssociationSet>
+    <AssociationSet Name="fkadopt1" Association="Self.fkadopt1">
+      <End Role="Payment" EntitySet="Payment" />
+      <End Role="Adoption" EntitySet="Adoption" />
+    </AssociationSet>
+    <AssociationSet Name="fkadopt2" Association="Self.fkadopt2">
+      <End Role="Adoption_Status" EntitySet="Adoption_Status" />
+      <End Role="Adoption" EntitySet="Adoption" />
+    </AssociationSet>
+    <AssociationSet Name="fkadopt3" Association="Self.fkadopt3">
+      <End Role="Adopter" EntitySet="Adopter" />
+      <End Role="Adoption" EntitySet="Adoption" />
+    </AssociationSet>
+    <AssociationSet Name="fkador" Association="Self.fkador">
+      <End Role="Adopter" EntitySet="Adopter" />
+      <End Role="Adopter_Relative" EntitySet="Adopter_Relative" />
+    </AssociationSet>
+    <AssociationSet Name="fkani" Association="Self.fkani">
+      <End Role="Animal_Status" EntitySet="Animal_Status" />
+      <End Role="Animal" EntitySet="Animal" />
+    </AssociationSet>
+    <AssociationSet Name="fkanibreed" Association="Self.fkanibreed">
+      <End Role="Animal_Type" EntitySet="Animal_Type" />
+      <End Role="Animal_Breed" EntitySet="Animal_Breed" />
+    </AssociationSet>
+    <AssociationSet Name="fkanikh" Association="Self.fkanikh">
+      <End Role="Animal" EntitySet="Animal" />
+      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
+    </AssociationSet>
+    <AssociationSet Name="fkanikh1" Association="Self.fkanikh1">
+      <End Role="Kennel" EntitySet="Kennel" />
+      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
+    </AssociationSet>
+    <AssociationSet Name="fkanitreat" Association="Self.fkanitreat">
+      <End Role="Capture_Medical_Card" EntitySet="Capture_Medical_Card" />
+      <End Role="Animal_Treatment" EntitySet="Animal_Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="fkaudlog" Association="Self.fkaudlog">
+      <End Role="User_" EntitySet="User_" />
+      <End Role="Audit_Log" EntitySet="Audit_Log" />
+    </AssociationSet>
+    <AssociationSet Name="fkcapmed" Association="Self.fkcapmed">
+      <End Role="Vet_Appointment_Line" EntitySet="Vet_Appointment_Line" />
+      <End Role="Capture_Medical_Card" EntitySet="Capture_Medical_Card" />
+    </AssociationSet>
+    <AssociationSet Name="fkcevnt" Association="Self.fkcevnt">
+      <End Role="Event_" EntitySet="Event_" />
+      <End Role="Customer_Event" EntitySet="Customer_Event" />
+    </AssociationSet>
+    <AssociationSet Name="fkcevnt1" Association="Self.fkcevnt1">
+      <End Role="Payment" EntitySet="Payment" />
+      <End Role="Customer_Event" EntitySet="Customer_Event" />
+    </AssociationSet>
+    <AssociationSet Name="fkcrb" Association="Self.fkcrb">
+      <End Role="Animal" EntitySet="Animal" />
+      <End Role="CrossBreed" EntitySet="CrossBreed" />
+    </AssociationSet>
+    <AssociationSet Name="fkcrb1" Association="Self.fkcrb1">
+      <End Role="Animal_Breed" EntitySet="Animal_Breed" />
+      <End Role="CrossBreed" EntitySet="CrossBreed" />
+    </AssociationSet>
+    <AssociationSet Name="fkdon" Association="Self.fkdon">
+      <End Role="Donor" EntitySet="Donor" />
+      <End Role="Donation" EntitySet="Donation" />
+    </AssociationSet>
+    <AssociationSet Name="fkdonl" Association="Self.fkdonl">
+      <End Role="Stock" EntitySet="Stock" />
+      <End Role="Donation_Line" EntitySet="Donation_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkdonl1" Association="Self.fkdonl1">
+      <End Role="Donation" EntitySet="Donation" />
+      <End Role="Donation_Line" EntitySet="Donation_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkdonl2" Association="Self.fkdonl2">
+      <End Role="Donation_Type" EntitySet="Donation_Type" />
+      <End Role="Donation_Line" EntitySet="Donation_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkdonor" Association="Self.fkdonor">
+      <End Role="Title" EntitySet="Title" />
+      <End Role="Donor" EntitySet="Donor" />
+    </AssociationSet>
+    <AssociationSet Name="fkemp" Association="Self.fkemp">
+      <End Role="Title" EntitySet="Title" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="fkemp1" Association="Self.fkemp1">
+      <End Role="Employee_Type" EntitySet="Employee_Type" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="fkempk" Association="Self.fkempk">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
+    </AssociationSet>
+    <AssociationSet Name="fkempk1" Association="Self.fkempk1">
+      <End Role="Kennel" EntitySet="Kennel" />
+      <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
+    </AssociationSet>
+    <AssociationSet Name="fkevnt" Association="Self.fkevnt">
+      <End Role="Event_Type" EntitySet="Event_Type" />
+      <End Role="Event_" EntitySet="Event_" />
+    </AssociationSet>
+    <AssociationSet Name="fkfos" Association="Self.fkfos">
+      <End Role="Adopter" EntitySet="Adopter" />
+      <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
+    </AssociationSet>
+    <AssociationSet Name="fkfosc" Association="Self.fkfosc">
+      <End Role="Animal" EntitySet="Animal" />
+      <End Role="Foster_Care" EntitySet="Foster_Care" />
+    </AssociationSet>
+    <AssociationSet Name="fkfosc1" Association="Self.fkfosc1">
+      <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
+      <End Role="Foster_Care" EntitySet="Foster_Care" />
+    </AssociationSet>
+    <AssociationSet Name="fkhoch" Association="Self.fkhoch">
+      <End Role="Adoption" EntitySet="Adoption" />
+      <End Role="HomeCheck" EntitySet="HomeCheck" />
+    </AssociationSet>
+    <AssociationSet Name="fkmicro" Association="Self.fkmicro">
+      <End Role="Animal" EntitySet="Animal" />
+      <End Role="Microchip" EntitySet="Microchip" />
+    </AssociationSet>
+    <AssociationSet Name="fkpay" Association="Self.fkpay">
+      <End Role="Payment_Type" EntitySet="Payment_Type" />
+      <End Role="Payment" EntitySet="Payment" />
+    </AssociationSet>
+    <AssociationSet Name="fkstock" Association="Self.fkstock">
+      <End Role="Stock_Type" EntitySet="Stock_Type" />
+      <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
+    <AssociationSet Name="fkstock1" Association="Self.fkstock1">
+      <End Role="Packaging_Type" EntitySet="Packaging_Type" />
+      <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
+    <AssociationSet Name="fkstock2" Association="Self.fkstock2">
+      <End Role="Unit_Type" EntitySet="Unit_Type" />
+      <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
+    <AssociationSet Name="fktime" Association="Self.fktime">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="TimeSheet" EntitySet="TimeSheet" />
+    </AssociationSet>
+    <AssociationSet Name="fkuser" Association="Self.fkuser">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="User_" EntitySet="User_" />
+    </AssociationSet>
+    <AssociationSet Name="fkuserol" Association="Self.fkuserol">
+      <End Role="User_" EntitySet="User_" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="fkuserol1" Association="Self.fkuserol1">
+      <End Role="Role_" EntitySet="Role_" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="fkvetap" Association="Self.fkvetap">
+      <End Role="Veterinarian" EntitySet="Veterinarian" />
+      <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="fkvetapl" Association="Self.fkvetapl">
+      <End Role="Animal" EntitySet="Animal" />
+      <End Role="Vet_Appointment_Line" EntitySet="Vet_Appointment_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkvetapl1" Association="Self.fkvetapl1">
+      <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
+      <End Role="Vet_Appointment_Line" EntitySet="Vet_Appointment_Line" />
+    </AssociationSet>
+    <AssociationSet Name="fkvol" Association="Self.fkvol">
+      <End Role="Title" EntitySet="Title" />
+      <End Role="Volunteer" EntitySet="Volunteer" />
+    </AssociationSet>
+    <AssociationSet Name="fkvolhrs" Association="Self.fkvolhrs">
+      <End Role="Volunteer" EntitySet="Volunteer" />
+      <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
+    </AssociationSet>
+    <AssociationSet Name="fkvolhrs1" Association="Self.fkvolhrs1">
+      <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
+      <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

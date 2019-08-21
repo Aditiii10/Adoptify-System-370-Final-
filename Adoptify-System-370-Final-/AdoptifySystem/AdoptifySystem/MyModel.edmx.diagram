@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d19c99152ceb4ddaa8d7de4e85b7cc7d" Name="Diagram1">
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Contract" Width="1.5" PointX="5.25" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Relative" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Status" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adoption" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adoption_Status" Width="1.5" PointX="3" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Animal" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Breed" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Kennel_History" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Status" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Treatment" Width="1.5" PointX="9.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Type" Width="1.5" PointX="3.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Audit_Log" Width="1.5" PointX="12.5" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Capture_Medical_Card" Width="1.5" PointX="7.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.CrossBreed" Width="1.5" PointX="8.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Customer_Event" Width="1.5" PointX="15.25" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Donation" Width="1.5" PointX="5.25" PointY="32.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Donation_Line" Width="1.5" PointX="7.5" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Donation_Type" Width="1.5" PointX="5.25" PointY="41.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Donor" Width="1.5" PointX="3" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Emp_Kennel" Width="1.5" PointX="13.25" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee" Width="1.5" PointX="8" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee_Status" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee_Type" Width="1.5" PointX="5.75" PointY="35.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Event_" Width="1.5" PointX="13" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Event_Schedule" Width="1.5" PointX="10.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Event_Type" Width="1.5" PointX="10.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Foster_Care" Width="1.5" PointX="8.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Foster_Care_Parent" Width="1.5" PointX="6" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.HomeCheck" Width="1.5" PointX="7.5" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Kennel" Width="1.5" PointX="6" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Microchip" Width="1.5" PointX="5.25" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Packaging_Type" Width="1.5" PointX="3" PointY="43.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Payment" Width="1.5" PointX="3" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Payment_Type" Width="1.5" PointX="0.75" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Role_" Width="1.5" PointX="10.25" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Stock" Width="1.5" PointX="5.25" PointY="45.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Stock_Type" Width="1.5" PointX="3" PointY="45.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.TimeSheet" Width="1.5" PointX="10.25" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Title" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Unit_Type" Width="1.5" PointX="3" PointY="48.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.User_" Width="1.5" PointX="10.25" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.UserRole" Width="1.5" PointX="12.5" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Vet_Appointment" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Vet_Appointment_Line" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Veterinarian" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Volunteer" Width="1.5" PointX="3" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Volunteer_Hours" Width="1.5" PointX="8.25" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Volunteer_Work_Type" Width="1.5" PointX="6" PointY="38.125" IsExpanded="true" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkado" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkado1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkadoc" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkadopt3" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkador" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkfos" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkadopt" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkadopt1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkadopt2" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkhoch" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkani" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkanikh" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkcrb" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkfosc" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkmicro" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkvetapl" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkanibreed" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkcrb1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkanikh1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkanitreat" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkaudlog" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkcapmed" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkcevnt" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkcevnt1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkdon" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkdonl1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkdonl" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkdonl2" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkdonor" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkempk" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkempk1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkemp" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkemp1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fktime" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkuser" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkevnt" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkfosc1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkstock1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkpay" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkuserol1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkstock" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkstock2" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkvol" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkuserol" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkvetap" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkvetapl1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

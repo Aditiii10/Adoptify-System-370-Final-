@@ -1,0 +1,81 @@
+﻿@model AdoptifySystem.Veterinarian
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="main">
+    <div class="" style="text-align:center;padding-left:120px">
+        <h3>Create New Veterinarian</h3>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="panel panel-default" style="width:1200px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Veterinarian Details</h3>
+            </div>
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4><span style="font-weight:bold">Name:<span class="label label-default"></span></span></h4>
+                        @Html.EditorFor(model => model.Vet_Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Vet_Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10">
+        
+                        
+                        
+                        
+                        
+                        
+                                        <h4><span style="font-weight:bold">Email:<span class="label label-default"></span></span></h4>
+                        @Html.EditorFor(model => model.Vet_Emial, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Vet_Emial, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4><span style="font-weight:bold">Tel:<span class="label label-default"></span></span></h4>
+                        @Html.EditorFor(model => model.Vet_Tel, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Vet_Tel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4><span style="font-weight:bold">Work Address:<span class="label label-default"></span></span></h4>
+                        @Html.EditorFor(model => model.Vet_Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Vet_Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+   
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success glyphicon glyphicon-floppy-disk" />
+        </div>
+
+        <div class="form-group">
+            <i class="glyphicon glyphicon-arrow-left">@Html.ActionLink("Back to List", "Index")</i>
+
+        </div>
+    </div>
+    }
+</div>

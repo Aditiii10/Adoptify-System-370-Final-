@@ -1,0 +1,57 @@
+﻿
+body {
+}
+
+/*Buttons*/
+
+#buttons {
+    background-color: green ;
+    color: #FFF;
+    font-family: 'Lato', sans-serif;
+    font-size: 14.5px;
+    width: 120px;
+    height: 40px;
+    text-align: center;
+    padding: 7px;
+    border-radius:0;
+}
+
+#mainButton {
+    color: white;
+    width: 300px;
+    background-color: green;
+    height: 55px;
+}
+
+/* enable absolute positioning */
+.inner-addon {
+  position: relative;
+}
+
+/* style glyph */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align glyph */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+
+
+body {
+  margin: 10px;
+}
+.info_card.products {
+    width: 200px;
+    height: auto;
+    float: left;
+    padding-left:20px;
+    margin-left:20px;
+}
