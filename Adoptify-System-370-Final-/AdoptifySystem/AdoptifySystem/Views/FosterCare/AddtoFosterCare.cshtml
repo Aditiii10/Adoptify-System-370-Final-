@@ -1,7 +1,54 @@
-﻿
+﻿@model AdoptifySystem.Models.nickeymodel.Flexible
+
 @{
     ViewBag.Title = "AddtoFosterCare";
 }
 
 <h2>AddtoFosterCare</h2>
 
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="column">
+            @*//this will be where the person searches for the Foster Care Parent*@
+            <label></label>
+            <input type="text" name="search" />
+            <button class="btn btn-success"></button>
+        </div>
+        <div class="column">
+            @*//this will preview of the Foster Care Parent*@
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="column">
+            @*//this will be where the person searches for the animal*@
+        </div>
+        <div class="column">
+            @*//this will show preview of the animal*@
+
+        </div>
+    </div>
+    <div class="row">
+        @if (Model != null)
+        {
+
+            <table>
+                <thead class="thead-light"></thead>
+                <tbody>
+                    @foreach (var item in Model.Fostercarelist)
+                    {
+                        <tr>
+                            <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
+                            <td>@item.Animal.Animal_Name</td>
+                            <td>@item.Foster_Start_Date</td>
+                            <td>@item.Foster_Care_Period</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+    </div>
+}
