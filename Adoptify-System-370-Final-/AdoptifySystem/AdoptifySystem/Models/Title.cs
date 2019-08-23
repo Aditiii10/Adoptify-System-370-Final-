@@ -11,7 +11,8 @@ namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Title
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,7 +24,10 @@ namespace AdoptifySystem.Models
             this.Volunteers = new HashSet<Volunteer>();
         }
     
+        [Display(Name="Title ID")]
         public int Title_ID { get; set; }
+
+
         public string Title_Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

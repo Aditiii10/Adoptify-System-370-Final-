@@ -14,11 +14,28 @@ namespace AdoptifySystem.Controllers.Aditi
     public class AdoptersController : Controller
     {
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
+        public IEnumerable<SelectListItem> Titles { get; set; }
 
+        //public ActionResult OnGet()
+        //{
+       
+        //    return Page();
+        //}
         // GET: Adopters
+
+        public AdoptersController()
+        {
+            Titles = db.Titles.Select(t => new SelectListItem
+            {
+                Text = t.Title_Description,
+                Value = t.Title_ID.ToString()
+            });
+            ViewData["Titles"] = Titles;
+        }
+
         public ActionResult Index()
         {
-            var adopters = db.Adopters.Include(a => a.Title).Include(a => a.Adopter_Status);
+           var adopters = db.Adopters.Include(a => a.Title).Include(a => a.Adopter_Status);
             return View(adopters.ToList());
         }
 
