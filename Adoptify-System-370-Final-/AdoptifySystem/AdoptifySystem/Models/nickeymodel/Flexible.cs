@@ -21,5 +21,6 @@ namespace AdoptifySystem.Models.nickeymodel
         public List<Foster_Care> Fostercarelist { get; set; }
         public List<Foster_Care> animallist { get; set; }
         public List<Foster_Care_Parent> fostercareparent { get; set; }
+        public Foster_Care_Parent parent { get; set; }
     }
 }

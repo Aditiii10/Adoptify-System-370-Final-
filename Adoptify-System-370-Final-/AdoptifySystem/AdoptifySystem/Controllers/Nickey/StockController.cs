@@ -66,6 +66,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch (Exception e)
                 {
+                    ViewBag.err = e.Message;
                     return RedirectToAction("MaintainStock", "Stock");
                 }
             }
@@ -207,6 +208,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch (Exception e)
                 {
+                    ViewBag.err = e.Message;
                     return RedirectToAction("MaintainStockType", "Stock");
                 }
             }

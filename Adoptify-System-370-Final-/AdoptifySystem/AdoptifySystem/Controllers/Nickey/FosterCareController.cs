@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using AdoptifySystem;
 using AdoptifySystem.Models;
+using AdoptifySystem.Models.nickeymodel;
 
 namespace AdoptifySystem.Controllers
 {
@@ -13,12 +15,23 @@ namespace AdoptifySystem.Controllers
     {
         // GET: FosterCare
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
+        static Flexible flex = new Flexible();
         // GET: FosterCare
         public ActionResult AddFosterCareParent()
         {
             List<Foster_Care_Parent> mylist = new List<Foster_Care_Parent>();
             mylist = db.Foster_Care_Parent.ToList();
             return View(mylist);
+        }
+        public JsonResult getProducts(int? categoryID)
+        {
+            List<Foster_Care_Parent> products = new List<Foster_Care_Parent>();
+            using (Wollies_ShelterEntities dc = new Wollies_ShelterEntities())
+            {
+                products = dc.Foster_Care_Parent.Where(z => z.Foster_Parent_ID == categoryID).OrderBy(z => z.Foster_Parent_Name).ToList();
+            }
+
+            return new JsonResult { Data = products, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         [HttpPost]
         public ActionResult AddFosterCareParent(Foster_Care_Parent foster_Care_Parent, string button)
@@ -110,16 +123,26 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult MaintainFosterCareParent(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Foster_Care_Parent foster_Care_Parent = db.Foster_Care_Parent.Find(id);
+                if (foster_Care_Parent == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(foster_Care_Parent);
+
             }
-            Foster_Care_Parent foster_Care_Parent = db.Foster_Care_Parent.Find(id);
-            if (foster_Care_Parent == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                ViewBag.err = e.Message;
+                throw;
             }
-            return View(foster_Care_Parent);
+            
         }
         public ActionResult SearchFosterCareParent()
         {
@@ -142,7 +165,33 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult AddtoFosterCare()
         {
-            return View();
+            try
+            {
+                flex.fostercareparent = db.Foster_Care_Parent.ToList();
+                return View(flex);
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = e.Message;
+                return RedirectToAction("index", "home");
+            }
+            
+        }
+        public async Task<ActionResult> Test(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            flex.parent = await db.Foster_Care_Parent.Where(a => a.Foster_Parent_ID == id).FirstOrDefaultAsync();
+
+            if (flex.parent == null)
+            {
+                return HttpNotFound();
+            }
+
+            return RedirectToAction("AddtoFosterCare", flex.parent);
+
         }
         public ActionResult RemovefromFosterCare()
         {
