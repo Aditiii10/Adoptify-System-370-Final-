@@ -8,28 +8,29 @@
 
 <div class="row">
     <div class="column">
-        @using (Html.BeginForm("Test", "FosterCare"))
+        @using (Html.BeginForm("Test", "FosterCare",FormMethod.Post))
         {
             <datalist name="title" id="exampleList">
 
                 @foreach (var item in Model.fostercareparent)
                 {
                     <option>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
-                    //<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />
+                    <input id="id" name="id" value="@item.Foster_Parent_ID" />
                 }
             </datalist>
+            <h1>Search For Foster Care Parent</h1>
             if (Model.parent != null)
             {
                 @*https://stackoverflow.com/questions/14614702/html-combo-box-with-option-to-type-an-entry*@
                 <input value="@Model.parent.Foster_Parent_Name @Model.parent.Foster_Parent_Surname" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
-                <input id="hide" name="id" value="@Model.parent.Foster_Parent_ID" />
+                //<input id="hide" name="id" value="@Model.parent.Foster_Parent_ID" />
                 <button id="btnSave" class="btn btn-lg btn-success">Search</button>
             }
             else if (Model.parent == null)
             {
-                    <h1>hreddasdfsdfasdfd</h1>
+
                 <input value="" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
-                <input id="hide" name="id" />
+                //<input id="hide" name="id" />
                 <button id="btnSave" class="btn btn-lg btn-success">Search</button>
             }
         }
@@ -39,8 +40,17 @@
         @if (Model.parent != null)
         {
             <div class="card">
-                <h4><b>@Model.parent.Foster_Parent_Name</b></h4>
-                <p>@Model.parent.Foster_Parent_Surname</p>
+                <span class="value">Name:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_Name) <br />
+                <span class="value">Surname:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_Surname) <br />
+                <span class="value">Work number:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_Address) <br />
+                <span class="value">Email:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_Email) <br />
+                <span class="value">ID number:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_IDNumber) <br />
+
             </div>
         }
         else
@@ -51,17 +61,67 @@
 </div>
 <div class="row">
     <div class="column">
+        @using (Html.BeginForm("Test1", "FosterCare",FormMethod.Post))
+        {
+            <datalist name="title" id="exampleList1">
 
+                @foreach (var item in Model.animals)
+                {
+                    <option>@item.Animal_Name</option>
+                    <input id="id" name="id" value="@item.Animal_ID" hidden />
+                }
+            </datalist>
+            <h1>Search For Animal</h1>
+            if (Model.animal != null)
+            {
+                @*https://stackoverflow.com/questions/14614702/html-combo-box-with-option-to-type-an-entry*@
+                <input value="@Model.animal.Animal_Name @Model.animal" id="text" type="text" class="form-control" name="example" list="exampleList1" />
+                //<input id="hide" name="id" value="@Model.parent.Foster_Parent_ID" />
+                <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+            }
+            else if (Model.animal == null)
+            {
+
+                <input value="" id="text" type="text" class="form-control" name="example" list="exampleList1" onchange="Copy()" />
+                //<input id="hide" name="id" />
+                <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+            }
+        }
     </div>
     <div class="column">
+        @*//this will preview of the Foster Care Parent*@
+        @if (Model.animal != null)
+        {
+            <div class="card">
+                <span class="value">Name:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Name) <br />
+                <span class="value">Surname:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Status) <br />
+                <span class="value">Work number:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Status_ID) <br />
+                <span class="value">Email:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Sterilization) <br />
+                <span class="value">ID number:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Coat) <br />
 
+            </div>
+        }
+        else
+        {
+            <h1>Null</h1>
+        }
     </div>
+</div>
+<div>
+    <button>
+        ADD
+    </button>
 </div>
 <div class="row">
     @if (Model.Fostercarelist != null)
     {
 
-        <table>
+        <table class="table table-bordered">
             <thead class="thead-light"></thead>
             <tbody>
                 @foreach (var item in Model.Fostercarelist)
@@ -79,17 +139,24 @@
     }
     else
     {
-        <h1>No results</h1>
+        <table class="table table-bordered">
+            <thead class="thead-light"></thead>
+            <tbody>
+                <tr>No Results</tr>
+            </tbody>
+        </table>
     }
 </div>
 
 <script>
-            function Copy() {
-            var x = document.getElementById("text").value;
-            var hiddenvalue = document.getElementById(x).value;
-            //set the the hidden value to the input that going to call the onchange
-            document.getElementById("hide").value = hiddenvalue;
-            var y = document.getElementById("hide").value;
-            //alert(y);
-        }
+
 </script>
+<style>
+    .row {
+        display: flex;
+    }
+
+    .column {
+        flex: 50%;
+    }
+</style>

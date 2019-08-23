@@ -45,6 +45,8 @@ namespace AdoptifySystem.Controllers
 
                     List<Foster_Care_Parent> foster_Care_Parents = new List<Foster_Care_Parent>();
                     foster_Care_Parents = db.Foster_Care_Parent.ToList();
+                    
+
                     if (foster_Care_Parents.Count != 0)
                     {
                         int count = 0;
@@ -168,6 +170,7 @@ namespace AdoptifySystem.Controllers
             try
             {
                 flex.fostercareparent = db.Foster_Care_Parent.ToList();
+                flex.animals = db.Animals.ToList();
                 return View(flex);
             }
             catch (Exception e)
