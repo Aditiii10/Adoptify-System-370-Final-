@@ -180,12 +180,14 @@ namespace AdoptifySystem.Controllers
             }
             
         }
-        public async Task<ActionResult> Test(int? id)
+        public async Task<ActionResult> Test(string title)
         {
-            if (id == null)
+            if (title == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            int id = Convert.ToInt32(title);
+            id = id +1;
             flex.parent = await db.Foster_Care_Parent.Where(a => a.Foster_Parent_ID == id).FirstOrDefaultAsync();
 
             if (flex.parent == null)

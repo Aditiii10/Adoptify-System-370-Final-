@@ -3,36 +3,71 @@
 @{
     ViewBag.Title = "AddtoFosterCare";
 }
-
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //    var country = ["Australia", "Bangladesh", "Denmark", "Hong Kong", "Indonesia", "Netherlands", "New Zealand", "South Africa"];
+        //    $("#country").select2({
+        //        data: country
+        //    });
+        //});
+    </script>
+</head>
 <h2>AddtoFosterCare</h2>
 
 <div class="row">
     <div class="column">
-        @using (Html.BeginForm("Test", "FosterCare",FormMethod.Post))
+        @*<h1>DropDown with Search using jQuery</h1>
+            <div>
+                <select id="parent">
+                    @foreach (var item in Model.fostercareparent)
+                    {
+                        <option>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
+                    }
+                </select>
+                <button type="button" onclick="myFunction()">Display index</button>
+            </div>*@
+        @using (Html.BeginForm("Test", "FosterCare", FormMethod.Post))
         {
-            <datalist name="title" id="exampleList">
-
-                @foreach (var item in Model.fostercareparent)
-                {
-                    <option>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
-                    <input id="id" name="id" value="@item.Foster_Parent_ID" />
-                }
-            </datalist>
             <h1>Search For Foster Care Parent</h1>
-            if (Model.parent != null)
-            {
-                @*https://stackoverflow.com/questions/14614702/html-combo-box-with-option-to-type-an-entry*@
-                <input value="@Model.parent.Foster_Parent_Name @Model.parent.Foster_Parent_Surname" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
-                //<input id="hide" name="id" value="@Model.parent.Foster_Parent_ID" />
-                <button id="btnSave" class="btn btn-lg btn-success">Search</button>
-            }
-            else if (Model.parent == null)
-            {
+            <select id="parent" onclick="myFunction()">
+                @if (Model.parent != null)
+                {
 
-                <input value="" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
-                //<input id="hide" name="id" />
-                <button id="btnSave" class="btn btn-lg btn-success">Search</button>
-            }
+
+
+                    foreach (var item in Model.fostercareparent)
+                    {
+                        if (item.Foster_Parent_Name == Model.parent.Foster_Parent_Name)
+                        {
+                            <option selected>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
+                        }
+                        else
+                        {
+                            <option>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
+                        }
+
+                    }
+
+                }
+                else if (Model.parent == null)
+                {
+
+                    foreach (var item in Model.fostercareparent)
+                    {
+                        <option class="form-control">@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
+                    }
+
+                    @*<input value="" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="sync()" />
+            <input id="hide" name="id" />*@
+
+                }
+            </select>
+            <input type="text" id="hide" onclick="myFunction()" name="title" hidden />
+            <button id="btnSave" class="btn btn-lg btn-success">Search</button>
         }
     </div>
     <div class="column">
@@ -57,35 +92,14 @@
         {
             <h1>Null</h1>
         }
+        
     </div>
 </div>
 <div class="row">
     <div class="column">
-        @using (Html.BeginForm("Test1", "FosterCare",FormMethod.Post))
+        @using (Html.BeginForm("Test1", "FosterCare", FormMethod.Post))
         {
-            <datalist name="title" id="exampleList1">
-
-                @foreach (var item in Model.animals)
-                {
-                    <option>@item.Animal_Name</option>
-                    <input id="id" name="id" value="@item.Animal_ID" hidden />
-                }
-            </datalist>
             <h1>Search For Animal</h1>
-            if (Model.animal != null)
-            {
-                @*https://stackoverflow.com/questions/14614702/html-combo-box-with-option-to-type-an-entry*@
-                <input value="@Model.animal.Animal_Name @Model.animal" id="text" type="text" class="form-control" name="example" list="exampleList1" />
-                //<input id="hide" name="id" value="@Model.parent.Foster_Parent_ID" />
-                <button id="btnSave" class="btn btn-lg btn-success">Search</button>
-            }
-            else if (Model.animal == null)
-            {
-
-                <input value="" id="text" type="text" class="form-control" name="example" list="exampleList1" onchange="Copy()" />
-                //<input id="hide" name="id" />
-                <button id="btnSave" class="btn btn-lg btn-success">Search</button>
-            }
         }
     </div>
     <div class="column">
@@ -148,8 +162,186 @@
     }
 </div>
 
-<script>
+<script type="text/javascript">
+    function myFunction() {
+        var x = document.getElementById("parent").selectedIndex;
+        var y = document.getElementById("parent").options;
+        var id = y[x].index;
+        document.getElementById("hide").value = id;
+        // alert("Index: " + y[x].index + " is " + y[x].text);
+    }
+    (function ($) {
 
+        $.fn.searchit = function (options) {
+
+            return this.each(function () {
+
+                $.fn.searchit.globals = $.fn.searchit.globals || {
+                    counter: 0
+                }
+                $.fn.searchit.globals.counter++;
+                var $counter = $.fn.searchit.globals.counter;
+
+                var $t = $(this);
+                var opts = $.extend({}, $.fn.searchit.defaults, options);
+
+                // Setup default text field and class
+                if (opts.textField == null) {
+                    $t.before("<input type='textbox' id='__searchit" + $counter + "'><br>");
+                    opts.textField = $('#__searchit' + $counter);
+                }
+                if (opts.textField.length > 1) opts.textField = $(opts.textField[0]);
+
+                if (opts.textFieldClass) opts.textField.addClass(opts.textFieldClass);
+                //MY CODE-------------------------------------------------------------------
+                if (opts.selected) opts.textField.val($(this).find(":selected").val());
+                //MY CODE ENDS HERE -------------------------------------------------------
+                if (opts.dropDown) {
+                    $t.css("padding", "5px")
+                        .css("margin", "-5px -20px -5px -5px");
+
+                    $t.wrap("<div id='__searchitWrapper" + $counter + "' />");
+                    opts.wrp = $('#__searchitWrapper' + $counter);
+                    opts.wrp.css("display", "inline-block")
+                        .css("vertical-align", "top")
+                        .css("overflow", "hidden")
+                        .css("border", "solid grey 1px")
+                        .css("position", "absolute")
+                        .hide();
+                    if (opts.dropDownClass) opts.wrp.addClass(opts.dropDownClass);
+                }
+
+                opts.optionsFiltered = [];
+                opts.optionsCache = [];
+
+                // Save listbox current content
+                $t.find("option").each(function (index) {
+                    opts.optionsCache.push(this);
+                });
+
+                // Save options
+                $t.data('opts', opts);
+
+                // Hook listbox click
+                $t.click(function (event) {
+                    _opts($t).textField.val($(this).find(":selected").text());
+                    _opts($t).wrp.hide();
+                    event.stopPropagation();
+                });
+
+                // Hook html page click to close dropdown
+                $("html").click(function () {
+                    _opts($t).wrp.hide();
+                });
+
+                // Hook the keyboard and we're done
+                _opts($t).textField.keyup(function (event) {
+                    if (event.keyCode == 13) {
+                        $(this).val($t.find(":selected").text());
+                        _opts($t).wrp.hide();
+                        return;
+                    }
+                    setTimeout(_findElementsInListBox($t, $(this)), 50);
+                })
+
+            })
+
+
+            function _findElementsInListBox(lb, txt) {
+
+                if (!lb.is(":visible")) {
+                    _showlb(lb);
+                }
+
+                _opts(lb).optionsFiltered = [];
+                var count = _opts(lb).optionsCache.length;
+                var dropDown = _opts(lb).dropDown;
+                var searchText = txt.val().toLowerCase();
+
+                // find match (just the old classic loop, will make the regexp later)
+                $.each(_opts(lb).optionsCache, function (index, value) {
+                    if ($(value).text().toLowerCase().indexOf(searchText) > -1) {
+                        // save matching items
+                        _opts(lb).optionsFiltered.push(value);
+                    }
+
+                    // Trigger a listbox reload at the end of cycle
+                    if (!--count) {
+                        _filterListBox(lb);
+                    }
+                });
+            }
+
+            function _opts(lb) {
+                return lb.data('opts');
+            }
+
+            function _showlb(lb) {
+                if (_opts(lb).dropDown) {
+                    var tf = _opts(lb).textField;
+                    lb.attr("size", _opts(lb).size);
+                    _opts(lb).wrp.show().offset({
+                        top: tf.offset().top + tf.outerHeight(),
+                        left: tf.offset().left
+                    });
+                    _opts(lb).wrp.css("width", tf.outerWidth() + "px");
+                    lb.css("width", (tf.outerWidth() + 25) + "px");
+                }
+            }
+
+            function _filterListBox(lb) {
+                lb.empty();
+
+                if (_opts(lb).optionsFiltered.length == 0) {
+                    lb.append("<option>" + _opts(lb).noElementText + "</option>");
+                } else {
+                    $.each(_opts(lb).optionsFiltered, function (index, value) {
+                        lb.append(value);
+                    });
+                    lb[0].selectedIndex = 0;
+                }
+            }
+        }
+
+        $.fn.searchit.defaults = {
+            textField: null,
+            textFieldClass: null,
+            dropDown: true,
+            dropDownClass: null,
+            size: 5,
+            filtered: true,
+            noElementText: "No elements found",
+            //MY CODE------------------------------------------
+            selected: false
+            //MY CODE ENDS ------------------------------------
+        }
+
+    }(jQuery))
+
+    $("select").searchit({
+        textFieldClass: 'form-control',
+        selected: true
+    });
+
+  //      //function Copy() {
+  //      //    var x = document.getElementById("text").value;
+
+  //      //    var hiddenvalue = document.getElementById(toString(x)).value;
+  //      //    //set the the hidden value to the input that going to call the onchange
+  //      //    document.getElementById("hide").value = hiddenvalue;
+  //      //    var y = document.getElementById("hide").value;
+  //      //    //alert(y);
+  //      //}
+
+  //  function sync()
+  //  {
+  //       var x = document.getElementById("exampleList").selectedIndex;
+  //var y = document.getElementById("exampleList").options;
+  //alert("Index: " + y[x].index + " is " + y[x].text);
+  ////var n1 = document.getElementById('exampleList1');
+  //      var n2 = document.getElementById('hide');
+  //      n2.value = y[x].index;
+//}
 </script>
 <style>
     .row {
