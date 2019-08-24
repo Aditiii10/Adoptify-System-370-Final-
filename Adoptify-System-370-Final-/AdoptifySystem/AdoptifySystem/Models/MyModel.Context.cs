@@ -15,6 +15,8 @@ namespace AdoptifySystem.Models
     
     public partial class Wollies_ShelterEntities1 : DbContext
     {
+        internal readonly object empTypes;
+
         public Wollies_ShelterEntities1()
             : base("name=Wollies_ShelterEntities1")
         {
