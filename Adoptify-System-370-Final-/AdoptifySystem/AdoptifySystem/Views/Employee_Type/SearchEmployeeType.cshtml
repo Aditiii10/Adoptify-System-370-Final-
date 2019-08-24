@@ -1,0 +1,94 @@
+﻿@model AdoptifySystem.Models.Employee_Type
+@{
+    ViewBag.Title = "SearchEmployeeType";
+}
+
+<h1>Search Employee Type</h1>
+
+
+@using (Html.BeginForm("SearchEmployeeType", "Employee_Type", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-5">
+            <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+            @Html.TextBox("search", "", new { @name = "txtSearch", @placeholder = "Search Criteria" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" value="Search" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+}
+<br />
+<table class="table table-bordered">
+    <tr class="thead-light">
+        <th>
+          Employee Type Name
+        </th>
+        <th>
+            Description
+        </th>
+      
+    </tr>
+
+
+    @if (Model == null)
+    {
+        <tr>
+            <td colspan="8">
+                No results found
+            </td>
+        </tr>
+    }
+    else
+    {
+        //foreach (var item in @Employee_Type)
+        @*{
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_Type_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_Type_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_Type_Description)
+                </td>*@
+                @*<td>
+                    @Html.ActionLink("Edit", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-warning" }) |
+
+                    <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Donation_Type_ID">More info </button> |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Donation_Type_ID }, new { @class = "btn btn-danger" }) |
+                </td>*@
+            @*</tr>*@
+            <div class="modal fade" id="@item.Employee_Type_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">@item.Employee_Type_Name</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="value">ID:</span>
+                            @Html.DisplayFor(modelItem => item.Employee_Type_ID) <br />
+                            <span class="value">Description:</span>
+                            @Html.DisplayFor(modelItem => item.Employee_Type_Description) <br />
+                        </div>
+                        @*<div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            @Html.ActionLink("Maintain", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+
+</table>
+    }
