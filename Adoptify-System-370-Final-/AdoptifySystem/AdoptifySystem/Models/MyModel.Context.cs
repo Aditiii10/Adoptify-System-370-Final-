@@ -15,12 +15,12 @@ namespace AdoptifySystem.Models
     
     public partial class Wollies_ShelterEntities1 : DbContext
     {
-        internal readonly object empTypes;
+        //internal readonly object empTypes;
 
-        public Wollies_ShelterEntities1()
-            : base("name=Wollies_ShelterEntities1")
-        {
-        }
+        //public Wollies_ShelterEntities1()
+        //    : base("name=Wollies_ShelterEntities1")
+        //{
+        //}
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

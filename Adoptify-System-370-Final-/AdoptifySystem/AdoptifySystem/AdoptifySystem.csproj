@@ -194,8 +194,10 @@
     <Compile Include="Controllers\Nickey\StockController.cs" />
     <Compile Include="Controllers\VeterinariansController.cs" />
     <Compile Include="Controllers\Vet_AppointmentController.cs" />
+    <Compile Include="Controllers\Zinhle\AnimalController.cs" />
     <Compile Include="Controllers\Zinhle\EmployeesController.cs" />
     <Compile Include="Controllers\Zinhle\Employee_TypeController.cs" />
+    <Compile Include="Controllers\Zinhle\KennelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -546,6 +548,11 @@
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Employees\AddEmployee.cshtml" />
+    <Content Include="Views\Animal\AddTemporaryAnimal.cshtml" />
+    <Content Include="Views\Kennel\AddKennel.cshtml" />
+    <Content Include="Views\Kennel\MaintainKennel.cshtml" />
+    <Content Include="Views\Kennel\MoveAnimalToKennel.cshtml" />
+    <Content Include="Views\Animal\AddAnimalType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
