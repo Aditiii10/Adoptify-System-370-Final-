@@ -77,7 +77,7 @@
         {
             <h1>Null</h1>
         }
-        
+
     </div>
 </div>
 <div class="row">
@@ -107,7 +107,7 @@
 
                     foreach (var item in Model.animallist)
                     {
-                        <option class="form-control">@item.Animal_Name @item.Animal_Name</option>
+                        <option class="form-control">@item.Animal_Name</option>
                     }
 
 
@@ -125,14 +125,12 @@
             <div class="card">
                 <span class="value">Name:</span>
                 @Html.DisplayFor(modelItem => Model.animal.Animal_Name) <br />
-                <span class="value">Surname:</span>
-                @Html.DisplayFor(modelItem => Model.animal.Animal_Status) <br />
-                <span class="value">Work number:</span>
-                @Html.DisplayFor(modelItem => Model.animal.Animal_Status_ID) <br />
-                <span class="value">Email:</span>
-                @Html.DisplayFor(modelItem => Model.animal.Animal_Sterilization) <br />
-                <span class="value">ID number:</span>
-                @Html.DisplayFor(modelItem => Model.animal.Animal_Coat) <br />
+                <span class="value">Status:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Status.Animal_Status_Name) <br />
+                <span class="value">Age:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Age) <br />
+                <span class="value">Gender:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Gender) <br />
 
             </div>
         }
@@ -155,7 +153,7 @@
             Enter Period
         </label>
         <div class="form-group">
-            <input type="number"  name="Foster_Care_Period" class="form-control" />
+            <input type="number" name="Foster_Care_Period" class="form-control" />
         </div>
         <button class="btn btn-dark btn-lg">
             ADD
@@ -167,7 +165,15 @@
     {
 
         <table class="table table-bordered">
-            <thead class="thead-light"></thead>
+            <thead class="thead-dark">
+                <tr>
+                    <td>Parent_Name</td>
+                    <td>Animal_Name</td>
+                    <td>Start Date</td>
+                    <td>Foster Care Period</td>
+                    <td> </td>
+                </tr>
+            </thead>
             <tbody>
                 @foreach (var item in Model.Fostercarelist)
                 {
@@ -176,12 +182,12 @@
                         <td>@item.Animal.Animal_Name</td>
                         <td>@item.Foster_Start_Date</td>
                         <td>@item.Foster_Care_Period</td>
-                        <td>@Html.ActionLink("Delete", "removefromlist", new { id = item.Animal_ID }, new { @class = "btn btn-danger" })</td>
+                        <td>@Html.ActionLink("Delete", "removefromlist", new { animalid = item.Animal_ID }, new { @class = "btn btn-danger" })</td>
                     </tr>
                 }
             </tbody>
         </table>
-
+        @Html.ActionLink("Save", "savetofostercare", null, new { @class = "btn btn-success" });
     }
     else
     {
@@ -202,7 +208,7 @@
         document.getElementById("pa").value = id;
         // alert("Index: " + y[x].index + " is " + y[x].text);
     }
-        function sync() {
+    function sync() {
         var x = document.getElementById("animal").selectedIndex;
         var y = document.getElementById("animal").options;
         var id = y[x].index;
@@ -226,7 +232,7 @@
 
                 // Setup default text field and class
                 if (opts.textField == null) {
-                    $t.before("<input type='textbox' autocomplete='off' id='__searchit"  + $counter + "'><br>");
+                    $t.before("<input type='textbox' autocomplete='off' id='__searchit" + $counter + "'><br>");
                     opts.textField = $('#__searchit' + $counter);
                 }
                 if (opts.textField.length > 1) opts.textField = $(opts.textField[0]);

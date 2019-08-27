@@ -187,7 +187,7 @@ namespace AdoptifySystem.Controllers
                 return HttpNotFound();
             }
 
-            return RedirectToAction("AddtoFosterCare", flex);
+            return View("AddtoFosterCare", flex);
 
         }
         public ActionResult search_animal(string inid)
@@ -204,10 +204,9 @@ namespace AdoptifySystem.Controllers
                 return HttpNotFound();
             }
 
-            return RedirectToAction("AddtoFosterCare", flex);
+            return View("AddtoFosterCare", flex);
 
         }
-        static int co = 0;
         public ActionResult add(Foster_Care infoster)
         {
             
@@ -221,17 +220,7 @@ namespace AdoptifySystem.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                co++;
-                dynamic foster = new ExpandoObject();
-                foster.Foster_Care_ID = co;
-                foster.Animal_ID = flex.animal.Animal_ID;
-                foster.Animal = flex.animal;
-                foster.Foster_Care_Parent = flex.parent;
-                foster.Foster_Parent_ID = flex.parent.Foster_Parent_ID;
-                foster.Foster_Care_Period = infoster.Foster_Care_Period;
-                foster.Foster_Start_Date = infoster.Foster_Start_Date;
                 Foster_Care foster1 = new Foster_Care();
-                foster1.Foster_Care_ID = co;
                 foster1.Animal_ID = flex.animal.Animal_ID;
                 foster1.Animal = flex.animal;
                 foster1.Foster_Care_Parent = flex.parent;
@@ -239,16 +228,21 @@ namespace AdoptifySystem.Controllers
                 foster1.Foster_Care_Period = infoster.Foster_Care_Period;
                 foster1.Foster_Start_Date = infoster.Foster_Start_Date;
 
-       
                 test.Add(foster1);
-                //if (ModelState.IsValid)
-                //{
-                //    db.Foster_Care.Add(foster);
-                //    db.SaveChanges();
-                //}
-
 
                 flex.Fostercarelist = test;
+                int co = 0;
+                foreach (var item in flex.animallist)
+                {
+
+                    if (item.Animal_ID == flex.animal.Animal_ID)
+                    {
+                        flex.animallist.RemoveAt(co);
+                        flex.animal = null;
+                        break;
+                    }
+                    co++;
+                }
 
             }
             catch (Exception e)
@@ -259,11 +253,51 @@ namespace AdoptifySystem.Controllers
             
             
 
-            return RedirectToAction("AddtoFosterCare", flex);
+            return View("AddtoFosterCare", flex);
 
+        }
+        public ActionResult removefromlist(int? animalid)
+        {
+            if (animalid != null) {
+                Foster_Care test = flex.Fostercarelist.Where(n => n.Animal_ID == animalid).FirstOrDefault();
+                if (test == null)
+                {
+                    return RedirectToAction("AddtoFosterCare", flex);
+                }
+                flex.animallist.Add(test.Animal);
+                flex.Fostercarelist.Remove(test);
+                return View("AddtoFosterCare", flex);
+            }
+            else
+            {
+                return RedirectToAction("AddtoFosterCare", flex);
+            }
+
+           
+        }
+
+        public ActionResult savetofostercare()
+        {
+            foreach (var item in flex.Fostercarelist)
+            {
+                //addthe foster care 
+                item.Animal = null;
+                item.Foster_Care_Parent = null;
+                db.Foster_Care.Add(item);
+                //change animal status to FOster Care
+                var orginal = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
+                var chaghedstatus = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
+                chaghedstatus.Animal_Status_ID = 2;
+                db.Entry(orginal).CurrentValues.SetValues(chaghedstatus);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+
+            }
+            return View("AddtoFosterCare", flex);
         }
         public ActionResult RemovefromFosterCare()
         {
+
             return View();
         }
     }
