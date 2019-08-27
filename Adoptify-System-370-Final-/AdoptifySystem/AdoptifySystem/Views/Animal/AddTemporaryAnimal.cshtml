@@ -9,178 +9,261 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <style>
+
         {
             box-sizing: border-box;
         }
 
-        /* Create three unequal columns that floats next to each other */
+        body {
+            margin: 0;
+        }
+
+
+
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+
         .column {
             float: left;
-            padding: 10px;
-            height: 300px; /* Should be removed. Only for demonstration */
+            width: 33.33%;
+            padding: 15px;
         }
 
-        .left, .right {
-            width: 25%;
-        }
-
-        .middle {
-            width: 50%;
-        }
-
-        /* Clear floats after the columns */
         .row:after {
             content: "";
             display: table;
             clear: both;
         }
+
+
+        screen and (max-width:600px) {
+            .column
+
+        {
+            width: 100%;
+        }
     </style>
 
 </head>
-<div>
-    <div class="col-sm-10" style='background-color: #2ba6cb'><h2 style="color:white;">Add Animal</h2></div>
-
-</div>
 
 @using (Html.BeginForm())
 {
+    <body>
 
-
-    <div class="row">
-        <div class="column left" style="background-color:#aaa;">
-            <div>
-                <label>Upload a different photo...</label>
-                <input type="file" class="text-center center-block file-upload">
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Animal Status<i class="fa fa-link fa-1x"></i></div>
-                <div class="panel-body">Temporary</div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Kennel Location <i class="fa fa-link fa-1x"></i></div>
-                <div class="panel-body">   <input name="Name" type="text" /> </div>
-            </div>
-
-            <div class="form-group">
-                <label>Animal Breed </label>
-                @*//Animal breed type*@
-                @*<div class="col-md-10">
-                    <select>
-                        @if (Model != null)
-                        {
-                            foreach (var item in Model.Titles)
-                            {
-                                <option>@item.Title_Description</option>
-                            }
-
-                        }
-
-
-
-                    </select>*@
-
-            </div>
+        <div>
+            <div class="col-sm-10" style='background-color: #2ba6cb'><h1 style="color:white;">Add Animal</h1></div>
         </div>
+        <div class="row">
 
-        <div class="form-group">
-            <h3>Is Animal Castrated</h3>
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input" id="Yes">
-                <label class="custom-control-label" for="customRadio1">Yes</label>
+            @*start1*@
+            <div class="column">
+                <div class="text-center">
+                    <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                    <h6>Upload an animal photo...</h6>
+                    <input type="file" class="text-center center-block file-upload">
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Kennel Location<i class="fa fa-link fa-1x"></i></div>
+                    <div class="panel-body"><input type="text" placeholder="Enter Kennel Location" /></div>
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Animal Breed</b></label>
+                    <input type="text" name="Animal_Breed" placeholder="Animal Breed">
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Castrated?</b></label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" name="Answer" value="Yes" id="Yes">
+                        <label for="customRadio1"><b>Yes</b></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" name="Answer" value="No" id="No">
+                        <label for="customRadio2"><b>No</b></label>
+                    </div>
+                    <div class="form-group">
+                    </div>
+
+                    <div class="col-xs-6">
+                        <label><b>Animal Microchip Code</b></label>
+                        <input type="text" placeholder="Animal  Microchip Code">
+                    </div>
+
+                    <div class="col-xs-6">
+                        <label><b>Implanteers Pin Number</b></label>
+                        <input type="text" placeholder="Implanteers Pin Number">
+                    </div>
+
+                    <div class="col-xs-6">
+                        <label><h5>Owner Contact Number</h5></label>
+                        <input type="number" placeholder="Owner Contact Number">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                    </div>
+
+
+                </div>
+                @*end1*@
+
+
+                @*start2*@
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <label><b>Animal Name</b></label>
+                        <input type="text" placeholder="Enter Animal Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Animal Description</b></label>
+                        <input type="text" placeholder="Enter Animal Description">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label><b>Animal Gender</b></label>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Gender" value="Male" id="Male">
+                            <label for="customRadio1"><b>Male</b></label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Gender" value="Female" id="Female">
+                            <label for="customRadio2"><b>Female</b></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Animal Size</b></label>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Size" value="Small" id="Small">
+                            <label for="customRadio1"><b>Small</b></label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Size" value="Medium" id="Medium">
+                            <label for="customRadio2"><b>Medium</b></label>
+                        </div>
+
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Size" value="Large" id="Large">
+                            <label for="customRadio2"><b>Large</b></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Entry Date Of Animal</b></label>
+                        <input type="datetime" placeholder="MM/DD/YY" />
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Animal Type</b></label>
+                        <input type="text" placeholder="Animal Type">
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Sterilized?</b></label>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Sterilized" value="Yes" id="Yes">
+                            <label for="customRadio1"><b>Yes</b></label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Sterilized" value="No" id="No">
+                            <label for="customRadio2"><b>No</b></label>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+                @*start2*@
+
+
+                @*start3*@
+                <div class="column">
+
+                </div>
+                @*start3*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
 
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input" id="No">
-                <label class="custom-control-label" for="customRadio1">No</label>
-            </div>
-
-        </div>
-
-    </div>
-    @*End of first class*@
-
-
-    <div class="column middle" style="background-color:#bbb;">
-        <h2>Column 2</h2>
-        <p>Some text..</p>
-    </div>
-    <div class="column right" style="background-color:#ccc;">
-        <h2>Column 3</h2>
-        <p>Some text..</p>
-    </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </body>
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
