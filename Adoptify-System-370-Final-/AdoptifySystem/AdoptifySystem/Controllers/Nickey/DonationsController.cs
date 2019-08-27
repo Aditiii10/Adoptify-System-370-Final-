@@ -128,7 +128,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.err = e.Message;
                 ViewBag.errormessage = "";
             }
-            return View(flex);
+            return View();
         }
         [HttpPost]
         public ActionResult Addmoneytolist(Donation_Line donation_line,string[] checkeds, string button)

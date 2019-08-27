@@ -20,25 +20,12 @@
 
 <div class="row">
     <div class="column">
-        @*<h1>DropDown with Search using jQuery</h1>
-            <div>
-                <select id="parent">
-                    @foreach (var item in Model.fostercareparent)
-                    {
-                        <option>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
-                    }
-                </select>
-                <button type="button" onclick="myFunction()">Display index</button>
-            </div>*@
-        @using (Html.BeginForm("Test", "FosterCare", FormMethod.Post))
+        @using (Html.BeginForm("search_parent", "FosterCare", FormMethod.Post))
         {
             <h1>Search For Foster Care Parent</h1>
             <select id="parent" onclick="myFunction()">
                 @if (Model.parent != null)
                 {
-
-
-
                     foreach (var item in Model.fostercareparent)
                     {
                         if (item.Foster_Parent_Name == Model.parent.Foster_Parent_Name)
@@ -61,12 +48,10 @@
                         <option class="form-control">@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
                     }
 
-                    @*<input value="" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="sync()" />
-            <input id="hide" name="id" />*@
 
                 }
             </select>
-            <input type="text" id="hide" onclick="myFunction()" name="title" hidden />
+            <input type="text" id="pa" onclick="myFunction()" name="inid" hidden />
             <button id="btnSave" class="btn btn-lg btn-success">Search</button>
         }
     </div>
@@ -97,9 +82,40 @@
 </div>
 <div class="row">
     <div class="column">
-        @using (Html.BeginForm("Test1", "FosterCare", FormMethod.Post))
+        @using (Html.BeginForm("search_animal", "FosterCare", FormMethod.Post))
         {
             <h1>Search For Animal</h1>
+            <select id="animal" onclick="sync()">
+                @if (Model.animal != null)
+                {
+                    foreach (var item in Model.animallist)
+                    {
+                        if (item.Animal_Name == Model.animal.Animal_Name)
+                        {
+                            <option selected>@item.Animal_Name</option>
+                        }
+                        else
+                        {
+                            <option>@item.Animal_Name</option>
+                        }
+
+                    }
+
+                }
+                else if (Model.animal == null)
+                {
+
+                    foreach (var item in Model.animallist)
+                    {
+                        <option class="form-control">@item.Animal_Name @item.Animal_Name</option>
+                    }
+
+
+                }
+            </select>
+            <input type="text" id="an" onclick="myFunction()" name="inid" hidden />
+            <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+
         }
     </div>
     <div class="column">
@@ -127,9 +143,24 @@
     </div>
 </div>
 <div>
-    <button>
-        ADD
-    </button>
+    @using (Html.BeginForm("add", "FosterCare", FormMethod.Post))
+    {
+        <label class="form-control">
+            Enter Foster Date
+        </label>
+        <div class="form-group">
+            <input type="datetime" name="Foster_Start_Date" class="form-control" />
+        </div>
+        <label class="form-control">
+            Enter Period
+        </label>
+        <div class="form-group">
+            <input type="number"  name="Foster_Care_Period" class="form-control" />
+        </div>
+        <button class="btn btn-dark btn-lg">
+            ADD
+        </button>
+    }
 </div>
 <div class="row">
     @if (Model.Fostercarelist != null)
@@ -145,6 +176,7 @@
                         <td>@item.Animal.Animal_Name</td>
                         <td>@item.Foster_Start_Date</td>
                         <td>@item.Foster_Care_Period</td>
+                        <td>@Html.ActionLink("Delete", "removefromlist", new { id = item.Animal_ID }, new { @class = "btn btn-danger" })</td>
                     </tr>
                 }
             </tbody>
@@ -167,7 +199,14 @@
         var x = document.getElementById("parent").selectedIndex;
         var y = document.getElementById("parent").options;
         var id = y[x].index;
-        document.getElementById("hide").value = id;
+        document.getElementById("pa").value = id;
+        // alert("Index: " + y[x].index + " is " + y[x].text);
+    }
+        function sync() {
+        var x = document.getElementById("animal").selectedIndex;
+        var y = document.getElementById("animal").options;
+        var id = y[x].index;
+        document.getElementById("an").value = id;
         // alert("Index: " + y[x].index + " is " + y[x].text);
     }
     (function ($) {
@@ -187,7 +226,7 @@
 
                 // Setup default text field and class
                 if (opts.textField == null) {
-                    $t.before("<input type='textbox' id='__searchit" + $counter + "'><br>");
+                    $t.before("<input type='textbox' autocomplete='off' id='__searchit"  + $counter + "'><br>");
                     opts.textField = $('#__searchit' + $counter);
                 }
                 if (opts.textField.length > 1) opts.textField = $(opts.textField[0]);
