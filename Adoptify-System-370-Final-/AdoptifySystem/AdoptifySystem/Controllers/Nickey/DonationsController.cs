@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem.Models;
 using AdoptifySystem.Models.nickeymodel;
-using Flexible = AdoptifySystem.Models.nickeymodel.Flexible;
 
 namespace AdoptifySystem.Controllers
 {
@@ -121,6 +120,7 @@ namespace AdoptifySystem.Controllers
             
             try
             {
+                flex.DonorList = db.Donors.ToList();
                 flex.Stocklist = db.Stocks.ToList();
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.err = e.Message;
                 ViewBag.errormessage = "";
             }
-            return View();
+            return View(flex);
         }
         [HttpPost]
         public ActionResult Addmoneytolist(Donation_Line donation_line,string[] checkeds, string button)
@@ -203,6 +203,134 @@ namespace AdoptifySystem.Controllers
                 return RedirectToAction("AddDonation");
             }
             return RedirectToAction("AddDonation");
+        }
+        public ActionResult search_donor(string inid)
+        {
+            if (inid == "")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            int id = Convert.ToInt32(inid);
+            id = id + 1;
+            flex.donor = flex.DonorList.Where(a => a.Donor_ID == id).FirstOrDefault();
+
+            if (flex.donor == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View("AddtoFosterCare", flex);
+
+        }
+        public ActionResult search_stock(string inid)
+        {
+            if (inid == "")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            int id = Convert.ToInt32(inid);
+            flex.stock = flex.Stocklist.ElementAt(id);
+
+            if (flex.stock == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View("AddtoFosterCare", flex);
+
+        }
+        public ActionResult add(Donation_Line Donline,Donation_Type donation_Type)
+        {
+            static List<Donation_Line> test = new List<Donation_Line>();
+            try
+            {
+                if (flex.donor == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                if (flex.stock == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Donation_Line foster1 = new Donation_Line();
+                foster1.Stock = flex.stock;
+                foster1.Donation.Donor = flex.donor;
+                foster1.Donation.Donation_Date = DateTime.Now;
+                if(donation_Type.Donation_Type_Name == "Money")
+                {
+                    foster1.Donation_Type = donation_Type;
+                }
+
+
+                //money
+
+                test.Add(foster1);
+
+                flex.adddonationlist = test;
+                int co = 0;
+                foreach (var item in flex.animallist)
+                {
+
+                    if (item.Animal_ID == flex.animal.Animal_ID)
+                    {
+                        flex.animallist.RemoveAt(co);
+                        flex.animal = null;
+                        break;
+                    }
+                    co++;
+                }
+
+            }
+            catch (Exception e)
+            {
+                var em = e.Message;
+                return RedirectToAction("AddtoFosterCare");
+            }
+
+
+
+            return View("AddtoFosterCare", flex);
+
+        }
+        public ActionResult removefromlist(int? animalid)
+        {
+            if (animalid != null)
+            {
+                Foster_Care test = flex.Fostercarelist.Where(n => n.Animal_ID == animalid).FirstOrDefault();
+                if (test == null)
+                {
+                    return RedirectToAction("AddtoFosterCare", flex);
+                }
+                flex.animallist.Add(test.Animal);
+                flex.Fostercarelist.Remove(test);
+                return View("AddtoFosterCare", flex);
+            }
+            else
+            {
+                return RedirectToAction("AddtoFosterCare", flex);
+            }
+
+
+        }
+
+        public ActionResult savetofostercare()
+        {
+            foreach (var item in flex.Fostercarelist)
+            {
+                //addthe foster care 
+                item.Animal = null;
+                item.Foster_Care_Parent = null;
+                db.Foster_Care.Add(item);
+                //change animal status to FOster Care
+                var orginal = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
+                var chaghedstatus = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
+                chaghedstatus.Animal_Status_ID = 2;
+                db.Entry(orginal).CurrentValues.SetValues(chaghedstatus);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+
+            }
+            return View("AddtoFosterCare", flex);
         }
         public ActionResult SearchDonor()
         {
