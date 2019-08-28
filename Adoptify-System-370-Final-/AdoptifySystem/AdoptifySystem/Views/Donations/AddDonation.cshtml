@@ -95,7 +95,7 @@
             <div class="form-header">
                 <h1 class="center-align">Enter Stock Details</h1>
             </div>
-            @using (Html.BeginForm("search_donor", "Donations", FormMethod.Post))
+            @using (Html.BeginForm("search_stock", "Donations", FormMethod.Post))
             {
                 <div id="AddtheStock">
                     <label>Enter Stock:</label><br />
@@ -131,34 +131,39 @@
                     <button id="btnSave" class="btn btn-lg btn-primary">Search</button>
                 </div>
             }
-            <div class="form-group">
-                <div class="width">
-                    <label>Enter Quantity</label><br />
-                    <input class="form-control" type="text" name="Donation_Quantity" placeholder="Enter Quantity">
+            @using (Html.BeginForm("add_stock", "Donations", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <div class="width">
+                        <label>Enter Quantity</label><br />
+                        <input class="form-control" type="text" name="Donation_Quantity" placeholder="Enter Quantity">
+                    </div>
+                </div>
+                <div class="col" style="text-align: center; width: 50%; float:left;">
+                    <button name="button" value="Add Stock" class="btn btn-info">Add Stock</button>
+                </div>
+            }
+        </div>
+        @using (Html.BeginForm("add_money", "Donations", FormMethod.Post))
+        {
+            <div id="addmoney" class="column" style="border:1px solid black;">
+                <div class="form-header">
+                    <h1 class="center-align">Money</h1>
+                </div>
+                <div class="form-group">
+                    <div class="width">
+                        <label>Enter Amount</label><br />
+                        <input class="form-control" type="text" name="Donation_Quantity" placeholder="Enter Quantity">
+                    </div>
+                </div>
+                <div class="col" style="text-align: center; width: 50%; float:right;">
+                    <button name="button" value="Add Money" class="btn btn-info">Add Money</button>
                 </div>
             </div>
-            <div class="col" style="text-align: center; width: 50%; float:left;">
-                <button name="button" value="Add Stock" class="btn btn-info">Add Stock</button>
-            </div>
-        </div>
-
-        <div id="addmoney" class="column" style="border:1px solid black;">
-            <div class="form-header">
-                <h1 class="center-align">Money</h1>
-            </div>
-            <div class="form-group">
-                <div class="width">
-                    <label>Enter Amount</label><br />
-                    <input class="form-control" type="text" name="Donation_Quantity" placeholder="Enter Quantity">
-                </div>
-            </div>
-            <div class="col" style="text-align: center; width: 50%; float:right;">
-                <button name="button" value="Add Money" class="btn btn-info">Add Money</button>
-            </div>
-        </div>
-
+        }
     </div>
     <div class="row">
+
         <div class="col" style="text-align: center; width: 50%; float:left;">
             <button name="button" value="Add Stock" class="btn btn-info">Add Stock</button>
         </div>
@@ -209,9 +214,10 @@
                         }
                     </tbody>
                     <tfoot>
-                    <tr>
-                        <td> ths is where the footer of table will appear
-                        </td>
+                        <tr>
+                            <td>
+                                ths is where the footer of table will appear
+                            </td>
                         </tr>
                     </tfoot>
 

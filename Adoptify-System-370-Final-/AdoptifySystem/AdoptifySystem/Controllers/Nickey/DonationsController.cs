@@ -313,23 +313,36 @@ namespace AdoptifySystem.Controllers
 
         }
 
-        public ActionResult savetofostercare()
+        public ActionResult savedonations()
         {
-            foreach (var item in flex.Fostercarelist)
+            try
             {
-                //addthe foster care 
-                item.Animal = null;
-                item.Foster_Care_Parent = null;
-                db.Foster_Care.Add(item);
-                //change animal status to FOster Care
-                var orginal = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
-                var chaghedstatus = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
-                chaghedstatus.Animal_Status_ID = 2;
-                db.Entry(orginal).CurrentValues.SetValues(chaghedstatus);
+                db.Donations.Add(flex.donation);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Home");
 
+                Donation current_donation = db.Donations.Find(flex.donation);
+                foreach (var item in flex.adddonationlist)
+                {
+                    //addthe foster care 
+                    item.Animal = null;
+                    item.Foster_Care_Parent = null;
+                    db.Foster_Care.Add(item);
+                    //change animal status to FOster Care
+                    var orginal = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
+                    var chaghedstatus = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
+                    chaghedstatus.Animal_Status_ID = 2;
+                    db.Entry(orginal).CurrentValues.SetValues(chaghedstatus);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
             return View("AddtoFosterCare", flex);
         }
         public ActionResult SearchDonor()

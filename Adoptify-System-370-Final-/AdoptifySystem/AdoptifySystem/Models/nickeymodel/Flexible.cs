@@ -28,5 +28,6 @@ namespace AdoptifySystem.Models.nickeymodel
         public Foster_Care_Parent parent { get; set; }
         public Animal animal { get; set; }
         public Stock stock { get; set; }
+        public Donation donation { get; set; }
     }
 }
