@@ -253,6 +253,7 @@
           <Property Name="Emp_Date_Employed" Type="date" />
           <Property Name="Title_ID" Type="int" />
           <Property Name="Emp_Type_ID" Type="int" />
+          <Property Name="Emp_Status" Type="int" />
         </EntityType>
         <EntityType Name="Employee_Status">
           <Key>
@@ -512,6 +513,18 @@
           <Property Name="Vol_WorkType_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Vol_WorkType_Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <Association Name="FK_Employee_ToTable">
+          <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Status">
+              <PropertyRef Name="Employee_Status_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Emp_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkado">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
           <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
@@ -1138,6 +1151,10 @@
           <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_ToTable" Association="Self.FK_Employee_ToTable">
+            <End Role="Employee_Status" EntitySet="Employee_Status" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="fkado" Association="Self.fkado">
             <End Role="Title" EntitySet="Title" />
             <End Role="Adopter" EntitySet="Adopter" />
@@ -1634,6 +1651,8 @@
           <NavigationProperty Name="Employee_Type" Relationship="Self.fkemp1" FromRole="Employee" ToRole="Employee_Type" />
           <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
           <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
+          <Property Name="Emp_Status" Type="Int32" />
+          <NavigationProperty Name="Employee_Status" Relationship="Wollies_ShelterModel.FK_Employee_ToTable" FromRole="Employee" ToRole="Employee_Status" />
         </EntityType>
         <EntityType Name="Employee_Status">
           <Key>
@@ -1641,6 +1660,7 @@
           </Key>
           <Property Name="Employee_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Employee_Status_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="Wollies_ShelterModel.FK_Employee_ToTable" FromRole="Employee_Status" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee_Type">
           <Key>
@@ -2756,7 +2776,23 @@
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_ToTable" Association="Wollies_ShelterModel.FK_Employee_ToTable">
+            <End Role="Employee_Status" EntitySet="Employee_Status" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Employee_ToTable">
+          <End Type="Wollies_ShelterModel.Employee_Status" Role="Employee_Status" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Status">
+              <PropertyRef Name="Employee_Status_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Emp_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3021,6 +3057,7 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Emp_Status" ColumnName="Emp_Status" />
                 <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
                 <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
                 <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />

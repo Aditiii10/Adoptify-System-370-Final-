@@ -102,6 +102,7 @@
         <AssociationConnector Association="Wollies_ShelterModel.fkvetapl1" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.FK_Employee_ToTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

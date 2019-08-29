@@ -258,6 +258,7 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult removefromlist(int? animalid)
         {
+            
             if (animalid != null) {
                 Foster_Care test = flex.Fostercarelist.Where(n => n.Animal_ID == animalid).FirstOrDefault();
                 if (test == null)
@@ -307,8 +308,78 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult RemovefromFosterCare()
         {
+            try
+            {
+                List<Foster_Care> list = new List<Foster_Care>();
+                    list = db.Foster_Care.Where(z => z.Animal.Animal_Status.Animal_Status_Name == "Foster Care").ToList();
+                    if (list == null)
+                    {
+                        ViewBag.err = "There are no Animals in Foster Care";
+                        return RedirectToAction("Index", "Home");
+                    }
+                    flex.Fostercarelist = list;
+                    return View(flex);
+                
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = e.Message;
+                throw;
+            }
+            
+        }
+        public ActionResult searchfostercare(string search)
+        {
+            try
+            {
+                if (search != "")
+                {
+                    flex.Fostercarelist = flex.Fostercarelist.Where(z => z.Foster_Care_Parent.Foster_Parent_Name.Equals(search)).ToList();
+                    return View("RemovefromFosterCare", flex);
+                }
+                return RedirectToAction("RemovefromFosterCare",flex);
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = e.Message;
+                return View("RemovefromFosterCare", flex);
+            }
+            
+        }
+        public ActionResult removefromfostercarelist(int? id)
+        {
+            try
+            {
+                if (id != null)
+                {
+                    Foster_Care test = db.Foster_Care.Where(n => n.Foster_Care_ID == id).FirstOrDefault();
+                    if (test == null)
+                    {
+                        return RedirectToAction("RemovefromFosterCare", flex);
+                    }
+                    // now we have to ge
+                    var orginal = db.Animals.Where(n => n.Animal_ID == test.Animal_ID).FirstOrDefault();
+                    var chaghedstatus = db.Animals.Where(n => n.Animal_ID == test.Animal_ID).FirstOrDefault();
+                    chaghedstatus.Animal_Status_ID = 1;
+                    db.Entry(orginal).CurrentValues.SetValues(chaghedstatus);
+                    db.SaveChanges();
 
-            return View();
+                    db.Foster_Care.Remove(test);
+                    db.SaveChanges();
+                    
+                    return RedirectToAction("RemovefromFosterCare", flex);
+                }
+                else
+                {
+                    return RedirectToAction("RemovefromFosterCare", flex);
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = e.Message;
+                return View("RemovefromFosterCare",flex);
+            }
+            
         }
     }
 }

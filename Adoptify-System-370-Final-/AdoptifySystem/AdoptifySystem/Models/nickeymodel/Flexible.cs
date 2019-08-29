@@ -29,5 +29,7 @@ namespace AdoptifySystem.Models.nickeymodel
         public Animal animal { get; set; }
         public Stock stock { get; set; }
         public Donation donation { get; set; }
+
+        public User_ currentuser { get; set; }
     }
 }

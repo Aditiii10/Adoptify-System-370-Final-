@@ -32,6 +32,7 @@ namespace AdoptifySystem.Models
         public Nullable<System.DateTime> Emp_Date_Employed { get; set; }
         public Nullable<int> Title_ID { get; set; }
         public Nullable<int> Emp_Type_ID { get; set; }
+        public Nullable<int> Emp_Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Emp_Kennel> Emp_Kennel { get; set; }
@@ -41,5 +42,6 @@ namespace AdoptifySystem.Models
         public virtual ICollection<TimeSheet> TimeSheets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_> User_ { get; set; }
+        public virtual Employee_Status Employee_Status { get; set; }
     }
 }
