@@ -278,22 +278,32 @@ namespace AdoptifySystem.Controllers
 
         public ActionResult savetofostercare()
         {
-            foreach (var item in flex.Fostercarelist)
+            try
             {
-                //addthe foster care 
-                item.Animal = null;
-                item.Foster_Care_Parent = null;
-                db.Foster_Care.Add(item);
-                //change animal status to FOster Care
-                var orginal = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
-                var chaghedstatus = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
-                chaghedstatus.Animal_Status_ID = 2;
-                db.Entry(orginal).CurrentValues.SetValues(chaghedstatus);
-                db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                foreach (var item in flex.Fostercarelist)
+                {
+                    //addthe foster care 
+                    item.Animal = null;
+                    item.Foster_Care_Parent = null;
+                    db.Foster_Care.Add(item);
+                    //change animal status to FOster Care
+                    var orginal = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
+                    var chaghedstatus = db.Animals.Where(n => n.Animal_ID == item.Animal_ID).FirstOrDefault();
+                    chaghedstatus.Animal_Status_ID = 2;
+                    db.Entry(orginal).CurrentValues.SetValues(chaghedstatus);
+                    db.SaveChanges();
+                    
 
+                }
+                return RedirectToAction("Index", "Home");
             }
-            return View("AddtoFosterCare", flex);
+            catch (Exception)
+            {
+                return View("AddtoFosterCare", flex);
+                throw;
+            }
+            
+            
         }
         public ActionResult RemovefromFosterCare()
         {

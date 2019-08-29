@@ -1,4 +1,5 @@
 ﻿using AdoptifySystem.Models;
+using AdoptifySystem.Models.nickeymodel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,20 @@ namespace AdoptifySystem.Controllers
     {
         // GET: Stock
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
+        public static Flexible flex = new Flexible();
         public ActionResult AddStock()
         {
             List<Stock_Type> Stock_Types = new List<Stock_Type>();
+            List<Packaging_Type> Packaging_Type = new List<Packaging_Type>();
+            List<Unit_Type> unit_Types = new List<Unit_Type>();
             try
             {
                 Stock_Types = db.Stock_Type.ToList();
+                Packaging_Type = db.Packaging_Type.ToList();
+                unit_Types = db.Unit_Type.ToList();
+                flex.Stock_Types = Stock_Types;
+                flex.packaging_Types = Packaging_Type;
+                flex.unit_Types = unit_Types;
             }
             catch (Exception)
             {
@@ -26,12 +35,35 @@ namespace AdoptifySystem.Controllers
             }
 
 
-            return View(Stock_Types);
+            return View(flex);
         }
         [HttpPost]
-        public ActionResult AddStock(Stock stock, string button)
+        public ActionResult AddStock(Stock stock,string button)
         {
-            return View();
+            try
+            {
+                if (button=="Save")
+                {
+                    var searchstock = db.Stocks.Where(z=>z.Packaging_Type_ID == stock.Packaging_Type_ID && z.Stock_Description == stock.Stock_Description && z.Unit_Type_ID == stock.Unit_Type_ID && z.Unit_number == stock.Unit_number).FirstOrDefault();
+                    if (searchstock==null)
+                    {
+                        db.Stocks.Add(stock);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("AddStock");
+                }
+                if (button == "Cancel")
+                {
+
+                }
+            }
+            catch (Exception e)
+            {
+                
+
+                    return RedirectToAction("AddStock");
+            }
+            return View("Index","Home");
         }
         public ActionResult SearchStock()
         {

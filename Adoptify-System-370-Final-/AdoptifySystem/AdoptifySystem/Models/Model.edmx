@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -403,6 +403,7 @@
           <Property Name="Stock_Type_ID" Type="int" />
           <Property Name="Packaging_Type_ID" Type="int" />
           <Property Name="Unit_Type_ID" Type="int" />
+          <Property Name="Unit_number" Type="int" />
         </EntityType>
         <EntityType Name="Stock_Type">
           <Key>
@@ -1330,8 +1331,7 @@
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1806,6 +1806,7 @@
           <NavigationProperty Name="Packaging_Type" Relationship="Self.fkstock1" FromRole="Stock" ToRole="Packaging_Type" />
           <NavigationProperty Name="Stock_Type" Relationship="Self.fkstock" FromRole="Stock" ToRole="Stock_Type" />
           <NavigationProperty Name="Unit_Type" Relationship="Self.fkstock2" FromRole="Stock" ToRole="Unit_Type" />
+          <Property Name="Unit_number" Type="Int32" />
         </EntityType>
         <EntityType Name="Stock_Type">
           <Key>
@@ -3188,6 +3189,7 @@
           <EntitySetMapping Name="Stocks">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Stock">
               <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="Unit_number" ColumnName="Unit_number" />
                 <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
                 <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
                 <ScalarProperty Name="Stock_Quantity" ColumnName="Stock_Quantity" />
