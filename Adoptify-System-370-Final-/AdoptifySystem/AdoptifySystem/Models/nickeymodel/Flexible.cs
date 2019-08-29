@@ -18,5 +18,9 @@ namespace AdoptifySystem.Models.nickeymodel
         public List<Stock> Stocklist { get; set; }
         public List<Stock_Type> Stock_Types { get; set; }
         public List<Donation_Line> adddonationlist { get; set; }
+        public List<Foster_Care> Fostercarelist { get; set; }
+        public List<Foster_Care> animallist { get; set; }
+        public List<Foster_Care_Parent> fostercareparent { get; set; }
+        public Foster_Care_Parent parent { get; set; }
     }
 }

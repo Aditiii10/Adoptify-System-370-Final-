@@ -104,6 +104,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch (Exception e)
                 {
+                    ViewBag.err = e.Message;
                     return RedirectToAction("MaintainDonor", "Donations");
                 }
             }
@@ -124,7 +125,7 @@ namespace AdoptifySystem.Controllers
             }
             catch (Exception e)
             {
-
+                ViewBag.err = e.Message;
                 ViewBag.errormessage = "";
             }
             return View(flex);
@@ -143,7 +144,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch (Exception e)
                 {
-
+                    ViewBag.err = e.Message;
                     ViewBag.errormessage = "";
                 }
                 return RedirectToAction("AddDonation");
@@ -157,7 +158,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch (Exception e)
                 {
-
+                    ViewBag.err = e.Message;
                     ViewBag.errormessage = "";
                 }
                 return RedirectToAction("AddDonation");
@@ -170,7 +171,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch (Exception e)
                 {
-
+                    ViewBag.err = e.Message;
                     ViewBag.errormessage = "";
                 }
                 return RedirectToAction("AddDonation");
@@ -183,7 +184,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch (Exception e)
                 {
-
+                    ViewBag.err = e.Message;
                     ViewBag.errormessage = "";
                 }
                 return RedirectToAction("AddDonation");
@@ -196,7 +197,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch (Exception e)
                 {
-
+                    ViewBag.err = e.Message;
                     ViewBag.errormessage = "";
                 }
                 return RedirectToAction("AddDonation");
@@ -218,6 +219,7 @@ namespace AdoptifySystem.Controllers
             }
             catch (Exception e)
             {
+                ViewBag.err = e.Message;
                 ViewBag.errormessage = "there was a network error: " + e.Message;
                 return View();
             }
@@ -354,6 +356,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch(Exception e)
                 {
+                    ViewBag.err = e.Message;
                     return RedirectToAction("MaintainDonationType","Donations");
                 }
             }

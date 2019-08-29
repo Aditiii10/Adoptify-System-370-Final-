@@ -1,4 +1,4 @@
-﻿using AdoptifySystem.Models;
+﻿using AdoptifySystem.Models.nickeymodel;
 using Google.Authenticator;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
+using AdoptifySystem.Models;
 
 namespace AdoptifySystem.Controllers
 {
@@ -35,7 +36,7 @@ namespace AdoptifySystem.Controllers
         public ActionResult Login(User_ login)
         {
             
-            bool status = false;
+            //bool status = false;
             Wollies_ShelterEntities db = new Wollies_ShelterEntities();
             //check username and password form our database here
             //for demo I am going to use Admin as Username and Password1 as Password static value
@@ -52,7 +53,7 @@ namespace AdoptifySystem.Controllers
             }
             catch (Exception e)
             {
-
+                ViewBag.err = e.Message;
                 throw ;
             }
             
@@ -60,7 +61,7 @@ namespace AdoptifySystem.Controllers
             {
                 if (item.Username == login.Username && item.Password == login.Password)
                 {
-                    status = true; // show 2FA form
+                    //bool status = true; // show 2FA form
                     Session["Username"] = login.Username;
 
                     //2FA Setup
@@ -122,7 +123,7 @@ namespace AdoptifySystem.Controllers
             //Generate Reset password link 
             //Send Email 
             string message = "";
-            bool status = false;
+            //bool status = false;
 
             using (Wollies_ShelterEntities dc = new Wollies_ShelterEntities())
             {
@@ -451,7 +452,7 @@ namespace AdoptifySystem.Controllers
                 mail.From = new MailAddress("u17136319@tuks.co.za");
                 mail.To.Add(emailID);
                 mail.Subject = "Hello World";
-                mail.Body = "<h1>Hello Jem</h1><br><br><p>please find your code attached</p>";
+                mail.Body = "<h1>Hello Jem</h1><br><br><p>Please find your code has been altererd to this: "+activationCode+"</p>";
                 mail.IsBodyHtml = true;
                 //mail.Attachments.Add(new Attachment("C:\\file.zip"));
 
