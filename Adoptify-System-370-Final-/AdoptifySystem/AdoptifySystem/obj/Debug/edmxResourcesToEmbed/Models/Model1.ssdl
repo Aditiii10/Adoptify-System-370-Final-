@@ -35,6 +35,7 @@
     <Property Name="Animal_Allowed" Type="bit" />
     <Property Name="Animal_Captivity" Type="nvarchar" MaxLength="354" />
     <Property Name="Animal_Vaccines_Updated" Type="bit" />
+    <Property Name="Adopter_Occupation" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Adopter_Contract">
     <Key>

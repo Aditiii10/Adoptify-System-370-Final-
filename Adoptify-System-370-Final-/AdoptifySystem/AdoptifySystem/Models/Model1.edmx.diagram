@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Relative" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Status" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Adoption" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Adoption_Status" Width="1.5" PointX="3" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adoption_Status" Width="1.5" PointX="3" PointY="21.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Animal" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Breed" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Kennel_History" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />

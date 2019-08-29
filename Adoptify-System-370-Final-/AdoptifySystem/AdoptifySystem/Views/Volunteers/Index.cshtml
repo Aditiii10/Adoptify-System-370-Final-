@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AdoptifySystem.Volunteer>
+﻿@model IEnumerable<AdoptifySystem.Models.Volunteer>
 
 @{
     ViewBag.Title = "Index";
@@ -9,6 +9,12 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("Index", "Volunteers", FormMethod.Get))
+    {
+        <b>Search by:</b>@Html.RadioButton("Searchby", "Vol_Name", true) <text>Volunteer Name</text>
+        @Html.RadioButton("Searchby", "Vol_Surname")<text>Volunteer Surname</text><br />
+        @Html.TextBox("search")<input type="submit" value="Search" ? />
+    }
 </p>
 <table class="table">
     <tr>

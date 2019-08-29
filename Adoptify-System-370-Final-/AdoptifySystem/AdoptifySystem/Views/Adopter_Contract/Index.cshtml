@@ -1,0 +1,45 @@
+﻿@model IEnumerable<AdoptifySystem.Models.Adopter_Contract>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("Index", "Adopter_Contract", FormMethod.Get))
+    {
+        <b>Search by:</b>@Html.RadioButton("Searchby", "Electronic_Contract", true) <text>Electronic Contract</text>
+        @Html.RadioButton("Searchby", "Adopter_Name")<text>Adopter Name</text><br />
+        @Html.TextBox("search")<input type="submit" value="Search" ? />
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Electronic_Contract)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Adopter.Adopter_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Electronic_Contract)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Contract_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Contract_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Contract_ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -182,7 +182,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Aditi\AdoptersController.cs" />
+    <Compile Include="Controllers\Aditi\Adopter_ContractController.cs" />
+    <Compile Include="Controllers\Aditi\Adopter_RelativeController.cs" />
     <Compile Include="Controllers\Aditi\VolunteersController.cs" />
+    <Compile Include="Controllers\Aditi\Volunteer_HoursController.cs" />
+    <Compile Include="Controllers\Aditi\Volunteer_Work_TypeController.cs" />
     <Compile Include="Controllers\Cassie\ReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -236,6 +240,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Capture_Medical_Card.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ComplexType1.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CrossBreed.cs">
@@ -509,6 +516,26 @@
     <Content Include="Views\Titles\Details.cshtml" />
     <Content Include="Views\Titles\Edit.cshtml" />
     <Content Include="Views\Titles\Index.cshtml" />
+    <Content Include="Views\Volunteer_Work_Type\Create.cshtml" />
+    <Content Include="Views\Volunteer_Work_Type\Delete.cshtml" />
+    <Content Include="Views\Volunteer_Work_Type\Details.cshtml" />
+    <Content Include="Views\Volunteer_Work_Type\Edit.cshtml" />
+    <Content Include="Views\Volunteer_Work_Type\Index.cshtml" />
+    <Content Include="Views\Adopter_Relative\Create.cshtml" />
+    <Content Include="Views\Adopter_Relative\Delete.cshtml" />
+    <Content Include="Views\Adopter_Relative\Details.cshtml" />
+    <Content Include="Views\Adopter_Relative\Edit.cshtml" />
+    <Content Include="Views\Adopter_Relative\Index.cshtml" />
+    <Content Include="Views\Volunteer_Hours\Create.cshtml" />
+    <Content Include="Views\Volunteer_Hours\Delete.cshtml" />
+    <Content Include="Views\Volunteer_Hours\Details.cshtml" />
+    <Content Include="Views\Volunteer_Hours\Edit.cshtml" />
+    <Content Include="Views\Volunteer_Hours\Index.cshtml" />
+    <Content Include="Views\Adopter_Contract\Create.cshtml" />
+    <Content Include="Views\Adopter_Contract\Delete.cshtml" />
+    <Content Include="Views\Adopter_Contract\Details.cshtml" />
+    <Content Include="Views\Adopter_Contract\Edit.cshtml" />
+    <Content Include="Views\Adopter_Contract\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,19 +11,62 @@ namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;  //needed for Display annotation
+    using System.ComponentModel;  //DisplayName annotation
+
     public partial class Adopter_Relative
     {
+        [Display(Name = "Adopter Relative")]
         public int Relative_ID { get; set; }
+
+
+        [Display(Name = "Relative Name")]
+        [Required]
         public string Relative_Name { get; set; }
+
+
+        [Display(Name = "Relative Surname")]
+        [Required]
         public string Relative_Surname { get; set; }
+
+
+        [Display(Name = "Relative Email")]
+        [Required]
+        [EmailAddress]
         public string Relative_Email { get; set; }
+
+
+        [Display(Name = "Relative Address")]
+        [Required]
         public string Relative_Address { get; set; }
+
+
+        [Display(Name = "Relative Postal Address")]
+        [Required]
         public string Relative_PostalAddress { get; set; }
+
+
+        [Display(Name = "Relative Home Number")]
+        [Required]
         public string Relative_Home_Tel { get; set; }
+
+
+        [Display(Name = "Relative Work Number")]
+        [Required]
         public string Relative_Work_Tel { get; set; }
+
+
+        [Display(Name = "Relative Cell Number")]
+        [Required]
         public string Relative_Cell { get; set; }
+
+
+        [Display(Name = "Relative Relationship to Adopter")]
+        [Required]
         public string Relationship { get; set; }
+
+
+        [Display(Name = "Adopter")]
         public Nullable<int> Adopter_ID { get; set; }
     
         public virtual Adopter Adopter { get; set; }

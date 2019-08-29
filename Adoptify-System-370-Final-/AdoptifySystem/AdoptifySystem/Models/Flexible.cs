@@ -9,5 +9,8 @@ namespace AdoptifySystem.Models
     {
         public List<Employee> employeelist { get; set; }
         public Employee employee { get; set; }
+        public Adopter AdoptAdopter { get; set; }
+        public Adopter_Relative ARelative { get; set; }
+        
     }
 }

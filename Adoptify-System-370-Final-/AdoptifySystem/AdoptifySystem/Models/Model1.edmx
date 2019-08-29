@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -40,6 +40,7 @@
           <Property Name="Animal_Allowed" Type="bit" />
           <Property Name="Animal_Captivity" Type="nvarchar" MaxLength="354" />
           <Property Name="Animal_Vaccines_Updated" Type="bit" />
+          <Property Name="Adopter_Occupation" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Adopter_Contract">
           <Key>
@@ -1330,8 +1331,7 @@
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1376,6 +1376,7 @@
           <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt3" FromRole="Adopter" ToRole="Adoption" />
           <NavigationProperty Name="Adopter_Relative" Relationship="Self.fkador" FromRole="Adopter" ToRole="Adopter_Relative" />
           <NavigationProperty Name="Foster_Care_Parent" Relationship="Self.fkfos" FromRole="Adopter" ToRole="Foster_Care_Parent" />
+          <Property Name="Adopter_Occupation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Adopter_Contract">
           <Key>
@@ -2756,6 +2757,9 @@
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
+        <ComplexType Name="ComplexType1">
+          <Property Type="String" Name="Adopter_Occupation" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2765,6 +2769,7 @@
           <EntitySetMapping Name="Adopters">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Adopter">
               <MappingFragment StoreEntitySet="Adopter">
+                <ScalarProperty Name="Adopter_Occupation" ColumnName="Adopter_Occupation" />
                 <ScalarProperty Name="Adopter_ID" ColumnName="Adopter_ID" />
                 <ScalarProperty Name="Adopter_Name" ColumnName="Adopter_Name" />
                 <ScalarProperty Name="Adopter_Surname" ColumnName="Adopter_Surname" />
