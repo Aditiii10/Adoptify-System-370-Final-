@@ -1,0 +1,83 @@
+﻿@model AdoptifySystem.Models.Customer_Event
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer_Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Event_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Event_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Event_Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Event_Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Event_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Event_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Number_of_tickects)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Number_of_tickects)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketFee_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketFee_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketFee_Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketFee_Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event_.Event_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event_.Event_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payment_Type.Payment_Type_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payment_Type.Payment_Type_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Customer_Event_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
