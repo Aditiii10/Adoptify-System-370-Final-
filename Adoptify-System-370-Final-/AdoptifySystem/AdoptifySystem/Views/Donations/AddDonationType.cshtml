@@ -26,7 +26,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                @Html.ActionLink("Cancel", "Searchdonationtype", null, new { @class = "btn btn-warning" })
                 <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
             </div>
         </div>

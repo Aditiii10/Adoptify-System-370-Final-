@@ -25,5 +25,18 @@ namespace AdoptifySystem.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
+        
+        //public int count()
+        //{
+        //    int answer = 0;
+        //    using(Wollies_ShelterEntities db = new Wollies_ShelterEntities)
+        //    {
+        //        var roles = db.UserRoles;
+        //        roles.Local.
+        //    }
+
+
+        //    return answer;
+        //}
     }
 }

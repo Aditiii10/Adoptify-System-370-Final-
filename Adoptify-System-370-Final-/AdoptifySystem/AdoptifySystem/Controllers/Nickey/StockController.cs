@@ -386,5 +386,52 @@ namespace AdoptifySystem.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Deletestock(Stock id)
+        {
+
+            if (id != null)
+            {
+                int count = id.Donation_Line.Count();
+                if (count == 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    return View("SearchUserRole");
+                }
+                else
+                {
+                    db.Stocks.Remove(id);
+                    db.SaveChanges();
+                    return View("Index", "Home");
+                }
+            }
+            //need to send message that cant send message back
+            return View("SearchUserRole");
+
+        }
+        public ActionResult Deletestocktype(Stock_Type id)
+        {
+
+            if (id != null)
+            {
+                int count = id.Stocks.Count();
+                if (count == 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    return View("Searchstocktype");
+                }
+                else
+                {
+                    db.Stock_Type.Remove(id);
+                    db.SaveChanges();
+                    return View("Index", "Home");
+                }
+            }
+            //need to send message that cant send message back
+
+            return View("Searchstocktype");
+
+        }
+        
     }
 }

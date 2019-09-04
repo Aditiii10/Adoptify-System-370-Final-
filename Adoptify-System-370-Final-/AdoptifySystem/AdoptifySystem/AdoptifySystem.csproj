@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Authenticator, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GoogleAuthenticator.1.2.1\lib\net45\Google.Authenticator.dll</HintPath>
     </Reference>
@@ -61,6 +64,7 @@
     <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -185,6 +189,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Aditi\AdoptersController.cs" />
     <Compile Include="Controllers\Aditi\VolunteersController.cs" />
+    <Compile Include="Controllers\Cassie\Animal_Kennel_HistoryController.cs" />
+    <Compile Include="Controllers\Cassie\KennelsController.cs" />
     <Compile Include="Controllers\Cassie\ReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -292,6 +298,7 @@
     <Compile Include="Models\Kennel.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\KennelHistoryViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Microchip.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -386,10 +393,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="CSS\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="JS\bootstrap.min.js" />
+    <Content Include="JS\jquery-3.3.1.min.js" />
+    <Content Include="JS\popper.min.js" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
@@ -1300,6 +1311,16 @@
     <Content Include="Views\Volunteers\Index.cshtml" />
     <Content Include="Views\Home\HomePage.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Kennels\Create.cshtml" />
+    <Content Include="Views\Kennels\Delete.cshtml" />
+    <Content Include="Views\Kennels\Details.cshtml" />
+    <Content Include="Views\Kennels\Edit.cshtml" />
+    <Content Include="Views\Kennels\Index.cshtml" />
+    <Content Include="Views\Animal_Kennel_History\Create.cshtml" />
+    <Content Include="Views\Animal_Kennel_History\Delete.cshtml" />
+    <Content Include="Views\Animal_Kennel_History\Details.cshtml" />
+    <Content Include="Views\Animal_Kennel_History\Edit.cshtml" />
+    <Content Include="Views\Animal_Kennel_History\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

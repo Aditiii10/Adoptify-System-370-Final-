@@ -356,11 +356,58 @@ namespace AdoptifySystem.Controllers
         [HttpPost]
         public ActionResult MaintainUserRole(Role_ role)
         {
-
-            return View();
+            try
+            {
+                List<Role_> temprole = new List<Role_>();
+                Role_ oldrole_ = db.Role_.Find(role.Role_ID);
+                temprole = db.Role_.ToList();
+                foreach (var item in temprole)
+                {
+                    string tempname = item.Role_Name.ToLower();
+                    if (tempname == role.Role_Name.ToLower())
+                    {
+                        ViewBag.err = "User Role name has already been taken. Try Again.";
+                        return RedirectToAction("MaintainUserRole", new { role, ViewBag.err});
+                    }
+                   
+                }
+                db.Entry(oldrole_).CurrentValues.SetValues(role);
+                db.SaveChanges();
+                return View("Index","Home");
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = "Error the Database does not exist at the moment";
+                throw;
+            }
+            
+                
         }
 
-    [NonAction]
+        public ActionResult Delete(Role_ id)
+        {
+
+            if (id != null)
+            {
+                int count = id.UserRoles.Count();
+                if(count == 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    return View("SearchUserRole");
+                }
+                else
+                {
+                    db.Role_.Remove(id);
+                    db.SaveChanges();
+                    return View("Index", "Home");
+                }
+            }
+            return View("SearchUserRole");
+
+        }
+
+
+        [NonAction]
         public void SendVerificationLinkEmail(string emailID, string activationCode, string emailFor = "VerifyAccount")
         {
            using (MailMessage mail = new MailMessage())
