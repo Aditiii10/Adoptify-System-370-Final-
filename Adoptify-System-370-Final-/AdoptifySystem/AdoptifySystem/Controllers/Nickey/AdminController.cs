@@ -159,7 +159,7 @@ namespace AdoptifySystem.Controllers
         public ActionResult Checkin()
         {
             List<Employee> emp = new List<Employee>();
-            emp = db.Employees.Where(z => z.Employee_Status.Employee_Status_Name == "Checked-out").ToList();
+            emp = db.Employees.Where(z => z.Emp_Status_ID == 2).ToList();
             flex.employeelist = emp;
             flex.employee = null;
             return View(flex);
@@ -182,7 +182,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.err = "Employee is not found";
                 return View();
                 }
-            empold.Emp_Status = 1;
+            empold.Emp_Status_ID = 1;
             db.Entry(emp).CurrentValues.SetValues(empold);
             db.SaveChanges();
             return RedirectToAction("Index","Home");
@@ -199,19 +199,21 @@ namespace AdoptifySystem.Controllers
             {
                 return RedirectToAction("Checkin");
             }
-            id++;
+            
             var emp = flex.employeelist.Where(z => z.Emp_ID == id).FirstOrDefault();
-            if (id == null)
+            if (emp == null)
             {
                 ViewBag.err = "Employee not found";
                 return RedirectToAction("Checkin");
             }
             flex.employee = emp;
             if (button == "checkout" ) {
+                ViewBag.Time = DateTime.Now.ToString("dddd, dd MMMM yyyy hh:mm tt");
                 return View("Checkout", flex);
             }
             if (button == "checkin")
             {
+                ViewBag.Time = DateTime.Now.ToString("dddd, dd MMMM yyyy hh:mm tt");
                 return View("Checkin", flex);
             }
             return View("Search");
@@ -219,25 +221,49 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult Checkout()
         {
-            return View();
+
+            List<Employee> emp = new List<Employee>();
+            emp = db.Employees.Where(z => z.Emp_Status_ID == 1).ToList();
+            flex.employeelist = emp;
+            flex.employee = null;
+            return View(flex);
         }
+        [HttpPost]
         public ActionResult Checkout(int? id)
         {
             id++;
             DateTime datenow = DateTime.Now;
-            TimeSheet time = new TimeSheet();
-            time.Emp_ID = flex.employee.Emp_ID;
-            time.Check_out = datenow;
+            TimeSheet Tempnewtimesheet = new TimeSheet();
+            Tempnewtimesheet.Emp_ID = flex.employee.Emp_ID;
+            Tempnewtimesheet.Check_out = datenow;
             //find the timesheet
-            var timesheet = db.TimeSheets.Where(z => z.Emp_ID == time.Emp_ID && time.Check_in.Equals(datenow.Date)).FirstOrDefault() ;
-            var oldtimesheet = db.TimeSheets.Where(z => z.Emp_ID == time.Emp_ID && time.Check_in.Equals(datenow.Date)).FirstOrDefault();
-            if (timesheet == null)
+            var timesheets = db.TimeSheets.Where(z => z.Emp_ID == Tempnewtimesheet.Emp_ID && z.Check_out == null).ToList() ;
+            TimeSheet old_timesheet = new TimeSheet();
+            TimeSheet new_timesheet = new TimeSheet();
+            //var oldtimesheet = db.TimeSheets.Where(z => z.Emp_ID == time.Emp_ID && z.Check_out == null).FirstOrDefault();
+            if (timesheets == null)
             {
                 ViewBag.err = "Timesheet is not found";
                 return View();
             }
-            timesheet.Check_out = time.Check_out;
-            db.Entry(oldtimesheet).CurrentValues.SetValues(timesheet);
+            else{
+
+                foreach (var item in timesheets)
+                {
+                    string Checkin_date = item.Check_in?.ToString("dddd, dd MMMM yyyy");
+                    string temp_datenow = datenow.ToString("dddd, dd MMMM yyyy");
+                    if (Checkin_date == temp_datenow)
+                    {
+                        old_timesheet = item;
+                        new_timesheet = item;
+                        id = item.TimeSheet_ID;
+                        break;
+                    }
+                }
+            }
+
+            new_timesheet.Check_out = Tempnewtimesheet.Check_out;
+            db.Entry(old_timesheet).CurrentValues.SetValues(new_timesheet);
             db.SaveChanges();
             var emp = db.Employees.Where(z => z.Emp_ID == flex.employee.Emp_ID).FirstOrDefault();
             var empold = db.Employees.Where(z => z.Emp_ID == flex.employee.Emp_ID).FirstOrDefault();
@@ -246,7 +272,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.err = "Employee is not found";
                 return View();
             }
-            empold.Emp_Status = 2;
+            empold.Emp_Status_ID = 2;
             db.Entry(emp).CurrentValues.SetValues(empold);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
@@ -377,7 +403,7 @@ namespace AdoptifySystem.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.err = "Error the Database does not exist at the moment";
+                ViewBag.err = e.Message +"Error the Database does not exist at the moment";
                 throw;
             }
             

@@ -26,36 +26,27 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        function Copy() {
-            var x = document.getElementById("text").value;
-            var hiddenvalue = document.getElementById(x).value;
-            //set the the hidden value to the input that going to call the onchange
-            document.getElementById("hide").value = hiddenvalue;
-            var y = document.getElementById("hide").value;
-            //alert(y);
-        }
-    </script>
 </head>
-
-<h1>Clock-in Detail</h1>
+<br />
+<div class="card border-primary mb-3">
+    <h1 class="table-primary" style="width:100%">Clock-in Detail</h1>
     <div class="row">
-        <div class="column">
+        <div class="container column">
             @using (Html.BeginForm("GetUserDetails", "Admin", FormMethod.Post))
             {
-                <h1>Search For Employee</h1>
-                <select id="employee" onclick="myFunction()">
+                <h2 class="text-center">Search For Employee</h2>
+                <select id="employee" name="id" class="custom-select" onclick="myFunction()">
                     @if (Model.employee != null)
                     {
                         foreach (var item in Model.employeelist)
                         {
                             if (item.Emp_ID == Model.employee.Emp_ID)
                             {
-                                <option selected>@item.Emp_Name @item.Emp_Surname</option>
+                                <option value="@item.Emp_ID" selected>@item.Emp_Name @item.Emp_Surname</option>
                             }
                             else
                             {
-                                <option>@item.Emp_Name @item.Emp_Surname</option>
+                                <option value="@item.Emp_ID">@item.Emp_Name @item.Emp_Surname</option>
                             }
 
                         }
@@ -63,67 +54,64 @@
                     }
                     else if (Model.employee == null)
                     {
-
+                        if (Model.employeelist == null)
+                        {
+                            <div class="container" style="max-width: 20rem;">
+                                <h1>There are no employees to Checkin</h1>
+                            </div>
+                        }
                         foreach (var item in Model.employeelist)
                         {
-                            <option class="form-control">@item.Emp_Name @item.Emp_Surname</option>
+                            <option value="@item.Emp_ID" class="form-control">@item.Emp_Name @item.Emp_Surname</option>
                         }
 
 
                     }
-               
+
                 </select>
-                <input type="text" id="pa" onclick="myFunction()" name="id" hidden />
                 <button id="btnSave" name="button" value="checkin" class="btn btn-lg btn-success">Search</button>
             }
-                <br />
-                <h2>Clock-in TimeStamp</h2>
-                <h4 id="clock">
-                </h4>
-            </div>
-            
-            <div class="column">
-                <h2>Current Employee Selected:</h2>
-                @if (Model.employee != null)
-                {
-                    <div id="display" class="card">
-
-                        <div class="container">
-                            <h4><b>@Model.employee.Emp_Name @Model.employee.Emp_Surname </b></h4>
-                            <p>Gender:@Model.employee.Emp_IDNumber</p>
-                            <p>Date of Birth:@Model.employee.Emp_Date_Employed</p>
-                            <p>Employee Type:@Model.employee.Employee_Type</p>
-                        </div>
-                    </div>
-                }
-                else
-                {
-
-                    <h1>Nothing</h1>
-                }
-            </div>
         </div>
-<div class="form-group">
-                @if (Model.employee != null)
-                {
-                    using (Html.BeginForm("Checkin", "Admin"))
-                    {
-                        <div class="col-xs-12">
-                            <br>
-                            <input id="hide" name="id" value="@Model.employee.Emp_ID" hidden />
-                            <button class="btn btn-lg btn-primary pull-left" type="submit"><i class="glyphicon glyphicon-remove-sign"></i> Cancel</button>
-                            <button class="btn btn-lg btn-success pull-right" type="submit"><i class="glyphicon glyphicon-floppy-disk"></i> Clock-in </button>
-                        </div>
-                    }
-                }
-            </div>   
 
-    <script>
-        function myFunction() {
-            var x = document.getElementById("employee").selectedIndex;
-            var y = document.getElementById("employee").options;
-            var id = y[x].index;
-            document.getElementById("pa").value = id;
-            //alert("Index: " + y[x].index + " is " + y[x].text);
+        <div class="column">
+            <h2 class="text-center">Current Employee Selected:</h2>
+            @if (Model.employee != null)
+            {
+                <div class="container card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="container">
+                        <h4><b>@Model.employee.Emp_Name @Model.employee.Emp_Surname </b></h4>
+                        <p><label class="card-title">IDnumber: </label>@Model.employee.Emp_IDNumber</p>
+                        <p><label class="card-title">Email: </label>@Model.employee.Emp_Email</p>
+                        <p><label class="card-title">Employee Type: </label>@Model.employee.Employee_Type.Emp_Type_Name</p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="container" style="max-width: 20rem;">
+                    <h1>None</h1>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+<div class="card border-primary mb-3">
+    <h1 class="table-primary" style="width:100%">Clock-in TimeStamp</h1>
+    <h4 id="clock">@ViewBag.Time</h4>
+</div>
+<div class="form-group">
+    @if (Model.employee != null)
+    {
+        using (Html.BeginForm("Checkin", "Admin"))
+        {
+            <div class="col-xs-12">
+                <br>
+                <input id="hide" name="id" value="@Model.employee.Emp_ID" hidden />
+                <button class="btn btn-lg btn-primary pull-left" type="submit"><i class="glyphicon glyphicon-remove-sign"></i> Cancel</button>
+                <button class="btn btn-lg btn-success pull-right" type="submit"><i class="glyphicon glyphicon-floppy-disk"></i> Clock-in </button>
+            </div>
         }
-    </script>
+    }
+</div>
+

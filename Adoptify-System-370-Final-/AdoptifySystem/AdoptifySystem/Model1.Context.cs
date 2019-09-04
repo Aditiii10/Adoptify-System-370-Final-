@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptifySystem.Models
+namespace AdoptifySystem
 {
     using System;
     using System.Data.Entity;

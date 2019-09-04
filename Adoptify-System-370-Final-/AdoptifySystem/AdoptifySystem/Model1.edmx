@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -97,7 +97,7 @@
             <PropertyRef Name="Animal_ID" />
           </Key>
           <Property Name="Animal_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Animal_Image" Type="varchar(max)" />
+          <Property Name="Animal_Image" Type="varbinary(max)" />
           <Property Name="Animal_Name" Type="varchar" MaxLength="150" />
           <Property Name="Animal_Description" Type="varchar" MaxLength="200" />
           <Property Name="Animal_Gender" Type="varchar" MaxLength="50" />
@@ -108,6 +108,8 @@
           <Property Name="Animal_Entry_Date" Type="datetime" />
           <Property Name="Animal_Coat" Type="varchar" MaxLength="100" />
           <Property Name="Animal_Status_ID" Type="int" />
+          <Property Name="Animal_Image_Name" Type="nvarchar(max)" />
+          <Property Name="Animal_Image_Type" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Animal_Breed">
           <Key>
@@ -249,11 +251,14 @@
           <Property Name="Emp_ContactNumber" Type="nvarchar" MaxLength="12" />
           <Property Name="Emp_IDNumber" Type="nvarchar" MaxLength="150" />
           <Property Name="Emp_Email" Type="nvarchar" MaxLength="254" />
-          <Property Name="Emp_Contract" Type="nvarchar" MaxLength="254" />
+          <Property Name="Emp_Contract" Type="varbinary(max)" />
           <Property Name="Emp_Date_Employed" Type="date" />
           <Property Name="Title_ID" Type="int" />
           <Property Name="Emp_Type_ID" Type="int" />
-          <Property Name="Emp_Status" Type="int" />
+          <Property Name="Emp_Status_ID" Type="int" />
+          <Property Name="Emp_Contract_Name" Type="nvarchar(max)" />
+          <Property Name="Emp_Contract_Type" Type="nvarchar(max)" />
+          <Property Name="BarcodeImageUrl" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Employee_Status">
           <Key>
@@ -521,7 +526,7 @@
               <PropertyRef Name="Employee_Status_ID" />
             </Principal>
             <Dependent Role="Employee">
-              <PropertyRef Name="Emp_Status" />
+              <PropertyRef Name="Emp_Status_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1348,7 +1353,8 @@
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1459,7 +1465,7 @@
             <PropertyRef Name="Animal_ID" />
           </Key>
           <Property Name="Animal_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Animal_Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Animal_Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Animal_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Animal_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Animal_Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1470,6 +1476,8 @@
           <Property Name="Animal_Entry_Date" Type="DateTime" Precision="3" />
           <Property Name="Animal_Coat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Animal_Status_ID" Type="Int32" />
+          <Property Name="Animal_Image_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Animal_Image_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt" FromRole="Animal" ToRole="Adoption" />
           <NavigationProperty Name="Animal_Status" Relationship="Self.fkani" FromRole="Animal" ToRole="Animal_Status" />
           <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh" FromRole="Animal" ToRole="Animal_Kennel_History" />
@@ -1642,17 +1650,20 @@
           <Property Name="Emp_ContactNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="Emp_IDNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Emp_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="Emp_Contract" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Contract" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Emp_Date_Employed" Type="DateTime" Precision="0" />
           <Property Name="Title_ID" Type="Int32" />
           <Property Name="Emp_Type_ID" Type="Int32" />
+          <Property Name="Emp_Status_ID" Type="Int32" />
+          <Property Name="Emp_Contract_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Contract_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BarcodeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk" FromRole="Employee" ToRole="Emp_Kennel" />
+          <NavigationProperty Name="Employee_Status" Relationship="Self.FK_Employee_ToTable" FromRole="Employee" ToRole="Employee_Status" />
           <NavigationProperty Name="Title" Relationship="Self.fkemp" FromRole="Employee" ToRole="Title" />
           <NavigationProperty Name="Employee_Type" Relationship="Self.fkemp1" FromRole="Employee" ToRole="Employee_Type" />
           <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
           <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
-          <Property Name="Emp_Status" Type="Int32" />
-          <NavigationProperty Name="Employee_Status" Relationship="Wollies_ShelterModel.FK_Employee_ToTable" FromRole="Employee" ToRole="Employee_Status" />
         </EntityType>
         <EntityType Name="Employee_Status">
           <Key>
@@ -1660,7 +1671,7 @@
           </Key>
           <Property Name="Employee_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Employee_Status_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employees" Relationship="Wollies_ShelterModel.FK_Employee_ToTable" FromRole="Employee_Status" ToRole="Employee" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_ToTable" FromRole="Employee_Status" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee_Type">
           <Key>
@@ -1822,11 +1833,11 @@
           <Property Name="Stock_Type_ID" Type="Int32" />
           <Property Name="Packaging_Type_ID" Type="Int32" />
           <Property Name="Unit_Type_ID" Type="Int32" />
+          <Property Name="Unit_number" Type="Int32" />
           <NavigationProperty Name="Donation_Line" Relationship="Self.fkdonl" FromRole="Stock" ToRole="Donation_Line" />
           <NavigationProperty Name="Packaging_Type" Relationship="Self.fkstock1" FromRole="Stock" ToRole="Packaging_Type" />
           <NavigationProperty Name="Stock_Type" Relationship="Self.fkstock" FromRole="Stock" ToRole="Stock_Type" />
           <NavigationProperty Name="Unit_Type" Relationship="Self.fkstock2" FromRole="Stock" ToRole="Unit_Type" />
-          <Property Name="Unit_number" Type="Int32" />
         </EntityType>
         <EntityType Name="Stock_Type">
           <Key>
@@ -2330,6 +2341,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_ToTable">
+          <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Status">
+              <PropertyRef Name="Employee_Status_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Emp_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkemp">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -2708,6 +2731,10 @@
             <End Role="Kennel" EntitySet="Kennels" />
             <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_ToTable" Association="Self.FK_Employee_ToTable">
+            <End Role="Employee_Status" EntitySet="Employee_Status" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
           <AssociationSet Name="fkemp" Association="Self.fkemp">
             <End Role="Title" EntitySet="Titles" />
             <End Role="Employee" EntitySet="Employees" />
@@ -2776,23 +2803,7 @@
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_ToTable" Association="Wollies_ShelterModel.FK_Employee_ToTable">
-            <End Role="Employee_Status" EntitySet="Employee_Status" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Employee_ToTable">
-          <End Type="Wollies_ShelterModel.Employee_Status" Role="Employee_Status" Multiplicity="0..1" />
-          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee_Status">
-              <PropertyRef Name="Employee_Status_ID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="Emp_Status" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2907,6 +2918,8 @@
                 <ScalarProperty Name="Animal_Entry_Date" ColumnName="Animal_Entry_Date" />
                 <ScalarProperty Name="Animal_Coat" ColumnName="Animal_Coat" />
                 <ScalarProperty Name="Animal_Status_ID" ColumnName="Animal_Status_ID" />
+                <ScalarProperty Name="Animal_Image_Name" ColumnName="Animal_Image_Name" />
+                <ScalarProperty Name="Animal_Image_Type" ColumnName="Animal_Image_Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3057,7 +3070,6 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Emp_Status" ColumnName="Emp_Status" />
                 <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
                 <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
                 <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />
@@ -3068,6 +3080,10 @@
                 <ScalarProperty Name="Emp_Date_Employed" ColumnName="Emp_Date_Employed" />
                 <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
                 <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
+                <ScalarProperty Name="Emp_Status_ID" ColumnName="Emp_Status_ID" />
+                <ScalarProperty Name="Emp_Contract_Name" ColumnName="Emp_Contract_Name" />
+                <ScalarProperty Name="Emp_Contract_Type" ColumnName="Emp_Contract_Type" />
+                <ScalarProperty Name="BarcodeImageUrl" ColumnName="BarcodeImageUrl" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3226,7 +3242,6 @@
           <EntitySetMapping Name="Stocks">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Stock">
               <MappingFragment StoreEntitySet="Stock">
-                <ScalarProperty Name="Unit_number" ColumnName="Unit_number" />
                 <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
                 <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
                 <ScalarProperty Name="Stock_Quantity" ColumnName="Stock_Quantity" />
@@ -3234,6 +3249,7 @@
                 <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
                 <ScalarProperty Name="Packaging_Type_ID" ColumnName="Packaging_Type_ID" />
                 <ScalarProperty Name="Unit_Type_ID" ColumnName="Unit_Type_ID" />
+                <ScalarProperty Name="Unit_number" ColumnName="Unit_number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

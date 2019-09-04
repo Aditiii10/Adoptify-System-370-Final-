@@ -59,8 +59,8 @@ namespace AdoptifySystem.Controllers
             }
             catch (Exception e)
             {
-                
 
+                ViewBag.err = e.Message;
                     return RedirectToAction("AddStock");
             }
             return View("Index","Home");

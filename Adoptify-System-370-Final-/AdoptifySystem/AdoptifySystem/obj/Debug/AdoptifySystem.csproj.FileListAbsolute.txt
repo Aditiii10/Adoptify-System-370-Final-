@@ -221,3 +221,4 @@ C:\Users\Nickey\Desktop\370\version 2\Adoptify-System-370-Final-\Adoptify-System
 C:\Users\Nickey\Desktop\370\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.csproj.CopyComplete
 C:\Users\Nickey\Desktop\370\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.dll
 C:\Users\Nickey\Desktop\370\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.pdb
+C:\Users\Nickey\Desktop\370\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.csprojAssemblyReference.cache
