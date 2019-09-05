@@ -17,6 +17,7 @@ namespace AdoptifySystem
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Animal_Breed()
         {
+            this.Animals = new HashSet<Animal>();
             this.CrossBreeds = new HashSet<CrossBreed>();
         }
     
@@ -25,6 +26,8 @@ namespace AdoptifySystem
         public string Animal_Breed_Description { get; set; }
         public Nullable<int> Animal_Type_ID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Animal> Animals { get; set; }
         public virtual Animal_Type Animal_Type { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CrossBreed> CrossBreeds { get; set; }

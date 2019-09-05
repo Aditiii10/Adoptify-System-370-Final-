@@ -29,6 +29,7 @@ namespace AdoptifySystem
         public string Event_Location { get; set; }
         public string Event_Description { get; set; }
         public Nullable<int> Event_Type_ID { get; set; }
+        public Nullable<int> TicketAvailable { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer_Event> Customer_Event { get; set; }
