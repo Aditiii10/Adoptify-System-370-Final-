@@ -1,7 +1,89 @@
-﻿
+﻿@model AdoptifySystem.Models.nickeymodel.Flexible
 @{
     ViewBag.Title = "RemovefromFosterCare";
+
 }
 
-<h2>RemovefromFosterCare</h2>
+<mat-toolbar class="form-header">
+    <h1 class="mat-headline center-align">Remove Animal from Foster</h1>
+</mat-toolbar>
+<div>
+    <div>
+        @using (Html.BeginForm("searchfostercare", "FosterCare"))
+        {
+            <div class="form-group" style="padding: 0 20px;">
+                <label>Search Foster Care Parent</label>
+                <br>
+                <input class="form-control" name="search" type="text" placeholder="Search For Foster Care Parent">
+                <button type="submit" class="btn btn-lg btn-primary">Search</button>
+            </div>
+        }
+    </div>
+    <mat-toolbar class="form-header">
+        <h1 class="mat-headline center-align">Current Animals Foster Caring</h1>
+    </mat-toolbar>
+    @if (Model.Fostercarelist != null)
+    {
 
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <td>Parent Name</td>
+                    <td>Parent Surname</td>
+                    <td>Animal Name</td>
+                    <td> </td>
+                </tr>
+            </thead>
+            @foreach (var item in Model.Fostercarelist)
+            {
+                <tr>
+                    <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
+                    <td>@item.Foster_Care_Parent.Foster_Parent_Surname</td>
+                    <td>@item.Animal.Animal_Name</td>
+                    <td><button class="btn btn-danger" data-toggle="modal" data-target="#@item.Foster_Parent_ID">Remove</button></td>
+                </tr>
+                <div class="modal fade" id="@item.Foster_Parent_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">@item.Foster_Care_Parent.Foster_Parent_Name  @item.Foster_Care_Parent.Foster_Parent_Surname</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">Location:</span>
+                                @Html.DisplayFor(modelItem => item.Foster_Care_Parent.Foster_Parent_Address) <br />
+                                <span class="value">Animal Name:</span>
+                                @Html.DisplayFor(modelItem => item.Animal.Animal_Name) <br />
+                                <span class="value">Animal Age:</span>
+                                @Html.DisplayFor(modelItem => item.Animal.Animal_Age) <br />
+                                <span class="value">Date assigned:</span>
+                                @Html.DisplayFor(modelItem => item.Foster_Start_Date) <br />
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                @Html.ActionLink("Remove", "removefromfostercarelist", new { id = item.Foster_Care_ID }, new { @style = "color: white", @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </table>
+
+        @Html.ActionLink("Save", "savetofostercare", null, new { @class = "btn btn-success" });
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead class="thead-light"></thead>
+            <tbody>
+                <tr>No Results</tr>
+            </tbody>
+        </table>
+    }
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
