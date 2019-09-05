@@ -3,94 +3,389 @@
 @{
     ViewBag.Title = "AddtoFosterCare";
 }
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+</head>
+<h2>AddtoFosterCare</h2>
 
-<div id="main">
-    <h2>Add to FosterCare</h2>
-
-    <div class="row">
-        <div class="column">
-            @using (Html.BeginForm("Test", "FosterCare"))
-            {
-                <datalist name="title" id="exampleList">
-
-                    @foreach (var item in Model.fostercareparent)
+<div class="row">
+    <div class="column">
+        @using (Html.BeginForm("search_parent", "FosterCare", FormMethod.Post))
+        {
+            <h1>Search For Foster Care Parent</h1>
+            <select id="parent" onclick="myFunction()">
+                @if (Model.parent != null)
                 {
-                        <option>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
-                        //<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />
+                    foreach (var item in Model.fostercareparent)
+                    {
+                        if (item.Foster_Parent_Name == Model.parent.Foster_Parent_Name)
+                        {
+                            <option selected>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
+                        }
+                        else
+                        {
+                            <option>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
+                        }
+
                     }
-                </datalist>
-                if (Model.parent != null)
-                {
-                    @*https://stackoverflow.com/questions/14614702/html-combo-box-with-option-to-type-an-entry*@
-                    <input value="@Model.parent.Foster_Parent_Name @Model.parent.Foster_Parent_Surname" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
-                    <input id="hide" name="id" value="@Model.parent.Foster_Parent_ID" />
-                    <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+
                 }
                 else if (Model.parent == null)
                 {
-                    <h1>hreddasdfsdfasdfd</h1>
-                    <input value="" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
-                    <input id="hide" name="id" />
-                    <button id="btnSave" class="btn btn-lg btn-success">Search</button>
-                }
-            }
-        </div>
-        <div class="column">
-            @*//this will preview of the Foster Care Parent*@
-            @if (Model.parent != null)
-            {
-                <div class="card">
-                    <h4><b>@Model.parent.Foster_Parent_Name</b></h4>
-                    <p>@Model.parent.Foster_Parent_Surname</p>
-                </div>
-            }
-            else
-            {
-                <h1>Null</h1>
-            }
-        </div>
-    </div>
-    <div class="row">
-        <div class="column">
 
-        </div>
-        <div class="column">
-
-        </div>
-    </div>
-    <div class="row">
-        @if (Model.Fostercarelist != null)
-        {
-
-            <table>
-                <thead class="thead-light"></thead>
-                <tbody>
-                    @foreach (var item in Model.Fostercarelist)
-                {
-                        <tr>
-                            <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
-                            <td>@item.Animal.Animal_Name</td>
-                            <td>@item.Foster_Start_Date</td>
-                            <td>@item.Foster_Care_Period</td>
-                        </tr>
+                    foreach (var item in Model.fostercareparent)
+                    {
+                        <option class="form-control">@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
                     }
-                </tbody>
-            </table>
 
+
+                }
+            </select>
+            <input type="text" id="pa" onclick="myFunction()" name="inid" hidden />
+            <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+        }
+    </div>
+    <div class="column">
+        @*//this will preview of the Foster Care Parent*@
+        @if (Model.parent != null)
+        {
+            <div class="card">
+                <span class="value">Name:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_Name) <br />
+                <span class="value">Surname:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_Surname) <br />
+                <span class="value">Work number:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_Address) <br />
+                <span class="value">Email:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_Email) <br />
+                <span class="value">ID number:</span>
+                @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_IDNumber) <br />
+
+            </div>
         }
         else
         {
-            <h1>No results</h1>
+            <h1>Null</h1>
+        }
+
+    </div>
+</div>
+<div class="row">
+    <div class="column">
+        @using (Html.BeginForm("search_animal", "FosterCare", FormMethod.Post))
+        {
+            <h1>Search For Animal</h1>
+            <select id="animal" onclick="sync()">
+                @if (Model.animal != null)
+                {
+                    foreach (var item in Model.animallist)
+                    {
+                        if (item.Animal_Name == Model.animal.Animal_Name)
+                        {
+                            <option selected>@item.Animal_Name</option>
+                        }
+                        else
+                        {
+                            <option>@item.Animal_Name</option>
+                        }
+
+                    }
+
+                }
+                else if (Model.animal == null)
+                {
+
+                    foreach (var item in Model.animallist)
+                    {
+                        <option class="form-control">@item.Animal_Name</option>
+                    }
+
+
+                }
+            </select>
+            <input type="text" id="an" onclick="myFunction()" name="inid" hidden />
+            <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+
         }
     </div>
-    </div>
-    <script>
-        function Copy() {
-            var x = document.getElementById("text").value;
-            var hiddenvalue = document.getElementById(x).value;
-            //set the the hidden value to the input that going to call the onchange
-            document.getElementById("hide").value = hiddenvalue;
-            var y = document.getElementById("hide").value;
-            //alert(y);
+    <div class="column">
+        @*//this will preview of the Foster Care Parent*@
+        @if (Model.animal != null)
+        {
+            <div class="card">
+                <span class="value">Name:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Name) <br />
+                <span class="value">Status:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Status.Animal_Status_Name) <br />
+                <span class="value">Age:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Age) <br />
+                <span class="value">Gender:</span>
+                @Html.DisplayFor(modelItem => Model.animal.Animal_Gender) <br />
+
+            </div>
         }
-    </script>
+        else
+        {
+            <h1>Null</h1>
+        }
+    </div>
+</div>
+<div>
+    @using (Html.BeginForm("add", "FosterCare", FormMethod.Post))
+    {
+        <label class="form-control">
+            Enter Foster Date
+        </label>
+        <div class="form-group">
+            <input type="datetime" name="Foster_Start_Date" class="form-control" />
+        </div>
+        <label class="form-control">
+            Enter Period
+        </label>
+        <div class="form-group">
+            <input type="number" name="Foster_Care_Period" class="form-control" />
+        </div>
+        <button class="btn btn-dark btn-lg">
+            ADD
+        </button>
+    }
+</div>
+<div class="row">
+    @if (Model.Fostercarelist != null)
+    {
+
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <td>Parent Name</td>
+                    <td>Animal Name</td>
+                    <td>Start Date</td>
+                    <td>Foster Care Period</td>
+                    <td> </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Fostercarelist)
+                {
+                    <tr>
+                        <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
+                        <td>@item.Animal.Animal_Name</td>
+                        <td>@item.Foster_Start_Date</td>
+                        <td>@item.Foster_Care_Period</td>
+                        <td>@Html.ActionLink("Delete", "removefromlist", new { animalid = item.Animal_ID }, new { @class = "btn btn-danger" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.ActionLink("Save", "savetofostercare", null, new { @class = "btn btn-success" });
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead class="thead-light"></thead>
+            <tbody>
+                <tr>No Results</tr>
+            </tbody>
+        </table>
+    }
+</div>
+
+<script type="text/javascript">
+    function myFunction() {
+        var x = document.getElementById("parent").selectedIndex;
+        var y = document.getElementById("parent").options;
+        var id = y[x].index;
+        document.getElementById("pa").value = id;
+        // alert("Index: " + y[x].index + " is " + y[x].text);
+    }
+    function sync() {
+        var x = document.getElementById("animal").selectedIndex;
+        var y = document.getElementById("animal").options;
+        var id = y[x].index;
+        document.getElementById("an").value = id;
+        // alert("Index: " + y[x].index + " is " + y[x].text);
+    }
+    (function ($) {
+
+        $.fn.searchit = function (options) {
+
+            return this.each(function () {
+
+                $.fn.searchit.globals = $.fn.searchit.globals || {
+                    counter: 0
+                }
+                $.fn.searchit.globals.counter++;
+                var $counter = $.fn.searchit.globals.counter;
+
+                var $t = $(this);
+                var opts = $.extend({}, $.fn.searchit.defaults, options);
+
+                // Setup default text field and class
+                if (opts.textField == null) {
+                    $t.before("<input type='textbox' autocomplete='off' id='__searchit" + $counter + "'><br>");
+                    opts.textField = $('#__searchit' + $counter);
+                }
+                if (opts.textField.length > 1) opts.textField = $(opts.textField[0]);
+
+                if (opts.textFieldClass) opts.textField.addClass(opts.textFieldClass);
+                //MY CODE-------------------------------------------------------------------
+                if (opts.selected) opts.textField.val($(this).find(":selected").val());
+                //MY CODE ENDS HERE -------------------------------------------------------
+                if (opts.dropDown) {
+                    $t.css("padding", "5px")
+                        .css("margin", "-5px -20px -5px -5px");
+
+                    $t.wrap("<div id='__searchitWrapper" + $counter + "' />");
+                    opts.wrp = $('#__searchitWrapper' + $counter);
+                    opts.wrp.css("display", "inline-block")
+                        .css("vertical-align", "top")
+                        .css("overflow", "hidden")
+                        .css("border", "solid grey 1px")
+                        .css("position", "absolute")
+                        .hide();
+                    if (opts.dropDownClass) opts.wrp.addClass(opts.dropDownClass);
+                }
+
+                opts.optionsFiltered = [];
+                opts.optionsCache = [];
+
+                // Save listbox current content
+                $t.find("option").each(function (index) {
+                    opts.optionsCache.push(this);
+                });
+
+                // Save options
+                $t.data('opts', opts);
+
+                // Hook listbox click
+                $t.click(function (event) {
+                    _opts($t).textField.val($(this).find(":selected").text());
+                    _opts($t).wrp.hide();
+                    event.stopPropagation();
+                });
+
+                // Hook html page click to close dropdown
+                $("html").click(function () {
+                    _opts($t).wrp.hide();
+                });
+
+                // Hook the keyboard and we're done
+                _opts($t).textField.keyup(function (event) {
+                    if (event.keyCode == 13) {
+                        $(this).val($t.find(":selected").text());
+                        _opts($t).wrp.hide();
+                        return;
+                    }
+                    setTimeout(_findElementsInListBox($t, $(this)), 50);
+                })
+
+            })
+
+
+            function _findElementsInListBox(lb, txt) {
+
+                if (!lb.is(":visible")) {
+                    _showlb(lb);
+                }
+
+                _opts(lb).optionsFiltered = [];
+                var count = _opts(lb).optionsCache.length;
+                var dropDown = _opts(lb).dropDown;
+                var searchText = txt.val().toLowerCase();
+
+                // find match (just the old classic loop, will make the regexp later)
+                $.each(_opts(lb).optionsCache, function (index, value) {
+                    if ($(value).text().toLowerCase().indexOf(searchText) > -1) {
+                        // save matching items
+                        _opts(lb).optionsFiltered.push(value);
+                    }
+
+                    // Trigger a listbox reload at the end of cycle
+                    if (!--count) {
+                        _filterListBox(lb);
+                    }
+                });
+            }
+
+            function _opts(lb) {
+                return lb.data('opts');
+            }
+
+            function _showlb(lb) {
+                if (_opts(lb).dropDown) {
+                    var tf = _opts(lb).textField;
+                    lb.attr("size", _opts(lb).size);
+                    _opts(lb).wrp.show().offset({
+                        top: tf.offset().top + tf.outerHeight(),
+                        left: tf.offset().left
+                    });
+                    _opts(lb).wrp.css("width", tf.outerWidth() + "px");
+                    lb.css("width", (tf.outerWidth() + 25) + "px");
+                }
+            }
+
+            function _filterListBox(lb) {
+                lb.empty();
+
+                if (_opts(lb).optionsFiltered.length == 0) {
+                    lb.append("<option>" + _opts(lb).noElementText + "</option>");
+                } else {
+                    $.each(_opts(lb).optionsFiltered, function (index, value) {
+                        lb.append(value);
+                    });
+                    lb[0].selectedIndex = 0;
+                }
+            }
+        }
+
+        $.fn.searchit.defaults = {
+            textField: null,
+            textFieldClass: null,
+            dropDown: true,
+            dropDownClass: null,
+            size: 5,
+            filtered: true,
+            noElementText: "No elements found",
+            //MY CODE------------------------------------------
+            selected: false
+            //MY CODE ENDS ------------------------------------
+        }
+
+    }(jQuery))
+
+    $("select").searchit({
+        textFieldClass: 'form-control',
+        selected: true
+    });
+
+  //      //function Copy() {
+  //      //    var x = document.getElementById("text").value;
+
+  //      //    var hiddenvalue = document.getElementById(toString(x)).value;
+  //      //    //set the the hidden value to the input that going to call the onchange
+  //      //    document.getElementById("hide").value = hiddenvalue;
+  //      //    var y = document.getElementById("hide").value;
+  //      //    //alert(y);
+  //      //}
+
+  //  function sync()
+  //  {
+  //       var x = document.getElementById("exampleList").selectedIndex;
+  //var y = document.getElementById("exampleList").options;
+  //alert("Index: " + y[x].index + " is " + y[x].text);
+  ////var n1 = document.getElementById('exampleList1');
+  //      var n2 = document.getElementById('hide');
+  //      n2.value = y[x].index;
+//}
+</script>
+<style>
+    .row {
+        display: flex;
+    }
+
+    .column {
+        flex: 50%;
+    }
+</style>

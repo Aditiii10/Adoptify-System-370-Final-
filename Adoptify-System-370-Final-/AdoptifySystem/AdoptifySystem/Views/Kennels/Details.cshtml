@@ -1,44 +1,43 @@
-﻿@model AdoptifySystem.Kennel
+﻿@model AdoptifySystem.Models.Kennel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="main">
-    <h2>Details</h2>
 
-    <div>
-        <h4>Kennel</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Kennel_Name)
-            </dt>
+<h2>Details</h2>
 
-            <dd>
-                @Html.DisplayFor(model => model.Kennel_Name)
-            </dd>
+<div>
+    <h4>Kennel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Kennel_Name)
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Kennel_Number)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Kennel_Name)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Kennel_Number)
-            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Kennel_Number)
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Kennel_Capacity)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Kennel_Number)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Kennel_Capacity)
-            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Kennel_Capacity)
+        </dt>
 
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Kennel_ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-    </div>
+        <dd>
+            @Html.DisplayFor(model => model.Kennel_Capacity)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Kennel_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,41 +1,34 @@
 ﻿@model AdoptifySystem.Role_
-
 @{
     ViewBag.Title = "MaintainUserRole";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="main">
-    <h2>Maintain User Role</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>User Role</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Role_ID)
-            <div class="form-group">
-                @Html.LabelFor(model => "User Role Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Role_Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Role_Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
+@using (Html.BeginForm())
+{<br />
+    <div class="form-horizontal card border-primary" style="width:60%">
+        
+        <h2 class="table-primary">Maintain User Role</h2>
+        <hr />
+        <input name="Role_ID" value="@Model.Role_ID" hidden />
+        <div class="form-group">
+            <label class="form-control-label">Role Name</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="Rolename" value="@Model.Role_Name" name="Role_Name" placeholder="Role Name">
+                <h1 class="invalid-feedback">Already Exists @ViewBag.err</h1>
+                <button type="button" class="btn btn-secondary" title="" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="Popover Title">
+                    Bottom
+                </button>
+                <span class="glyphicon glyphicon-trash"></span>
             </div>
         </div>
-    }
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
 
-</div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Cancel", "SearchUserRole", null, new { @class = "btn btn-warning" })
+                <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+            </div>
+        </div>
+    </div>
+}
