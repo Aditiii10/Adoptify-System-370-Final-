@@ -86,82 +86,79 @@
         //setInterval('clock()', 1000);
     </script>
 </head>
+<div id="main">
+    <h1>Clock-in Detail</h1>
+    <div class="checkin">
+        @if (Model != null)
+        {
+            <datalist name="title" id="exampleList">
+                @foreach (var item in Model.employeelist)
+                {
+                    <option>@item.Emp_Name @item.Emp_Surname</option>
+                    //<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />
+                }
+            </datalist>
 
-<h1>Clock-in Detail</h1>
-<div class="checkin">
-    @if (Model != null)
-    {
-        <datalist name="title" id="exampleList">
 
-            @foreach (var item in Model.employeelist)
-            {
-                <option>@item.Emp_Name @item.Emp_Surname</option>
-                //<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />
-            }
-        </datalist>
-
-
-        <div class="row">
-            <div class="column" style="background-color:dodgerblue;">
-                <h2>Select Employee</h2>
-                @using (Html.BeginForm("GetUserDetails", "Admin"))
+            <div class="row">
+                <div class="column" style="background-color:dodgerblue;">
+                    <h2>Select Employee</h2>
+                    @using (Html.BeginForm("GetUserDetails", "Admin"))
                 {
                     if (Model.employee != null)
                     {
-                        @*https://stackoverflow.com/questions/14614702/html-combo-box-with-option-to-type-an-entry*@
-                        <input value="@Model.employee.Emp_Name @Model.employee.Emp_Surname" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
-                        <input id="hide" name="id" value="@Model.employee.Emp_ID" hidden />
-                        <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+                            @*https://stackoverflow.com/questions/14614702/html-combo-box-with-option-to-type-an-entry*@
+                            <input value="@Model.employee.Emp_Name @Model.employee.Emp_Surname" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
+                            <input id="hide" name="id" value="@Model.employee.Emp_ID" hidden />
+                            <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+                        }
+                        else if (Model.employee == null)
+                        {
+                            @*https://stackoverflow.com/questions/14614702/html-combo-box-with-option-to-type-an-entry*@
+                            <input value="" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
+                            <input id="hide" name="id" hidden />
+                            <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+                        }
                     }
-                    else if (Model.employee == null)
+                    <br />
+                    <h2>Clock-in TimeStamp</h2>
+                    <h4 id="clock"></h4>
+                </div>
+                <div class="column" style="background-color:greenyellow;">
+                    <h2>Current Employee Selected</h2>
+                    @if (Model.employee != null)
+                {
+                        <div id="display" class="card">
+                            <img src="https://i.pinimg.com/originals/4c/cf/da/4ccfdaf6092dc341376e6fdb8130d09d.jpg" alt="Avatar" style="width:500px">
+                            <div class="container">
+                                <h4><b>@Model.employee.Emp_Name @Model.employee.Emp_Surname </b></h4>
+                                <p>Gender:@Model.employee.Emp_IDNumber</p>
+                                <p>Date of Birth:@Model.employee.Emp_Date_Employed</p>
+                                <p>Employee Type:@Model.employee.Employee_Type</p>
+                            </div>
+                        </div>
+                    }
+                    else
                     {
-                        @*https://stackoverflow.com/questions/14614702/html-combo-box-with-option-to-type-an-entry*@
-                        <input value="" id="text" type="text" class="form-control" name="example" list="exampleList" onchange="Copy()" />
-                        <input id="hide" name="id" hidden />
-                        <button id="btnSave" class="btn btn-lg btn-success">Search</button>
-                    }
-                }
 
-                <br />
-                <h2>Clock-in TimeStamp</h2>
-                <h4 id="clock">
-                </h4>
+                        <h1>Nothing</h1>
+                    }
+                </div>
             </div>
-            <div class="column" style="background-color:greenyellow;">
-                <h2>Current Employee Selected</h2>
+            <div class="form-group">
                 @if (Model.employee != null)
                 {
-                    <div id="display" class="card">
-                        <img src="https://i.pinimg.com/originals/4c/cf/da/4ccfdaf6092dc341376e6fdb8130d09d.jpg" alt="Avatar" style="width:500px">
-                        <div class="container">
-                            <h4><b>@Model.employee.Emp_Name @Model.employee.Emp_Surname </b></h4>
-                            <p>Gender:@Model.employee.Emp_IDNumber</p>
-                            <p>Date of Birth:@Model.employee.Emp_Date_Employed</p>
-                            <p>Employee Type:@Model.employee.Employee_Type</p>
+                    using (Html.BeginForm("Checkin", "Admin"))
+                    {
+                        <div class="col-xs-12">
+                            <br>
+                            <input id="hide" name="id" value="@Model.employee.Emp_ID" hidden />
+                            <button class="btn btn-lg btn-primary pull-left" type="submit"><i class="glyphicon glyphicon-remove-sign"></i> Cancel</button>
+                            <button class="btn btn-lg btn-success pull-right" type="submit"><i class="glyphicon glyphicon-floppy-disk"></i> Clock-in </button>
                         </div>
-                    </div>
-                }
-                else
-                {
-
-                    <h1>Nothing</h1>
+                    }
                 }
             </div>
-        </div>
-        <div class="form-group">
-            @if (Model.employee != null)
-            {
-                using (Html.BeginForm("Checkin", "Admin"))
-                {
-                    <div class="col-xs-12">
-                        <br>
-                        <input id="hide" name="id" value="@Model.employee.Emp_ID" hidden />
-                        <button class="btn btn-lg btn-primary pull-left" type="submit"><i class="glyphicon glyphicon-remove-sign"></i> Cancel</button>
-                        <button class="btn btn-lg btn-success pull-right" type="submit"><i class="glyphicon glyphicon-floppy-disk"></i> Clock-in </button>
-                    </div>
-                }
-            }
-        </div>
-    }
+        }
+    </div>
 </div>
-

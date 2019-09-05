@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
-using AdoptifySystem.Models;
+using AdoptifySystem;
 
 namespace AdoptifySystem.Controllers
 {
@@ -23,56 +23,46 @@ namespace AdoptifySystem.Controllers
         public static Flexible flex = new Flexible();
         public ActionResult Login()
         {
-            var time = DateTime.Now;
-            //var nextime = DateTime.Now + 30; 
-            //while (time == )
-            //{
-            
-            //}
-            //ViewBag.Time = await time;
             return View();
         }
         [HttpPost]
         public ActionResult Login(User_ login)
         {
-            
+
             //bool status = false;
             Wollies_ShelterEntities db = new Wollies_ShelterEntities();
-            //check username and password form our database here
-            //for demo I am going to use Admin as Username and Password1 as Password static value
             List<User_> Users;
             try
             {
-                //User_ user = new User_();
-                //user.Username = "Divin";
-                //user.Password = "food";
-                //db.User_.Add(user);
-                //db.SaveChanges();
                 Users = db.User_.ToList();
-
             }
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                throw ;
+                throw;
             }
-            
+
             foreach (var item in Users)
             {
                 if (item.Username == login.Username && item.Password == login.Password)
                 {
-                    //bool status = true; // show 2FA form
                     Session["Username"] = login.Username;
+                    flex.currentuser = item;
 
                     //2FA Setup
                     TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
                     string UserUniqueKey = (login.Username + key);
                     Session["UserUniqueKey"] = UserUniqueKey;
-                    var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", login.Username, UserUniqueKey, 300, 300);
-                    ViewBag.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
-                    ViewBag.SetupCode = setupInfo.ManualEntryKey;
+                    //var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", login.Username, UserUniqueKey, 300, 300);
+                    //ViewBag.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
+                    //ViewBag.SetupCode = setupInfo.ManualEntryKey;
                     //message = "Credentials are correct";
-                    return View("Authorize",setupInfo);
+                    TempData["LoginSuccessMessage"] = "Logged in Successfully";
+                    return View("Authorize", flex);
+                }
+                else
+                {
+                    ViewBag.LoginError = "Incorrect Password or Username!! Please Try Again!";
                 }
             }
             return View();
@@ -142,7 +132,7 @@ namespace AdoptifySystem.Controllers
                 //dc.User_.Add(useremp);
                 //dc.SaveChanges();
                 var account = dc.Employees.Where(a => a.Emp_Email == EmailID).FirstOrDefault();
-                if(account != null)
+                if (account != null)
                 {
                     var user = dc.User_.Where(a => a.Emp_ID == account.Emp_ID).FirstOrDefault();
                     if (user != null)
@@ -155,7 +145,7 @@ namespace AdoptifySystem.Controllers
                         //in our model class in part 1
                         dc.Configuration.ValidateOnSaveEnabled = false;
                         dc.SaveChanges();
-                        message = "Reset password link has been sent to your email id.";
+                        message = "Reset password link has been sent to your email.";
                     }
                     else
                     {
@@ -173,167 +163,99 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult Checkin()
         {
-
-            //Employee emp = new Employee();
-            //emp.Emp_Name = "nick";
-            //emp.Emp_Surname = "Sibanyoni";
-            //db.Employees.Add(emp);
-            //Employee emp1 = new Employee();
-            //emp1.Emp_Name = "james";
-            //emp1.Emp_Surname = "High";
-            //db.Employees.Add(emp1);
-            //Employee emp2 = new Employee();
-            //emp2.Emp_Name = "Mercury";
-            //emp2.Emp_Surname = "Freddy";
-            //db.Employees.Add(emp2);
-            //db.SaveChanges();
-
-            flex.employeelist = db.Employees.ToList();
+            List<Employee> emp = new List<Employee>();
+            emp = db.Employees.Where(z => z.Employee_Status.Employee_Status_Name == "Checked-out").ToList();
+            flex.employeelist = emp;
             flex.employee = null;
             return View(flex);
         }
         [HttpPost]
-        public ActionResult Checkin(string id)
+        public ActionResult Checkin(int? id)
         {
-            if(id != "")
+            id++;
+            DateTime datenow = DateTime.Now;
+            TimeSheet time = new TimeSheet();
+            time.Emp_ID = flex.employee.Emp_ID;
+            time.Check_in = datenow;
+
+            db.TimeSheets.Add(time);
+            db.SaveChanges();
+            var emp = db.Employees.Where(z => z.Emp_ID == flex.employee.Emp_ID).FirstOrDefault();
+            var empold = db.Employees.Where(z => z.Emp_ID == flex.employee.Emp_ID).FirstOrDefault();
+            if (emp == null)
             {
-               DateTime datenow = DateTime.Now;
-               int employeeid = Convert.ToInt32(id);
-                
-                //TimeSheet time1 = new TimeSheet();
-                //time1.Check_in = Convert.ToDateTime("10/06/2019 8:21:00");
-                //time1.Emp_ID = 1;
-                //db.TimeSheets.Add(time1);
-                //db.SaveChanges();
-                //TimeSheet time2 = new TimeSheet();
-                //time2.Check_in = Convert.ToDateTime("10/02/2019 8:21:00");
-                //time2.Emp_ID = 2;
-                //db.TimeSheets.Add(time2);
-                //TimeSheet time3 = new TimeSheet();
-                //time3.Check_in = Convert.ToDateTime("10/01/2019 8:21:00");
-                //time1.Emp_ID = 2;
-                //db.TimeSheets.Add(time3);
-                //TimeSheet time4 = new TimeSheet();
-                //time4.Check_in = Convert.ToDateTime("10/08/2018 8:21:00");
-                //time4.Emp_ID = 1;
-                //db.TimeSheets.Add(time4);
-                //db.SaveChanges();
-                //TimeSheet time5 = new TimeSheet();
-                //time5.Check_in = Convert.ToDateTime("10/09/2018 8:21:00");
-                //time5.Emp_ID = 3;
-                //db.TimeSheets.Add(time5);
-                //TimeSheet time6 = new TimeSheet();
-                //time6.Check_in = Convert.ToDateTime("10/07/2018 8:21:00");
-                //time6.Emp_ID = 4;
-                //db.TimeSheets.Add(time6);
-                //db.SaveChanges();
-
-                //now we search in the timesheet for this person to see if they are already checked in
-                List<TimeSheet> time = db.TimeSheets.Where(a=>a.Emp_ID == employeeid).ToList();
-                if (time.Count !=0)
-                {
-                    List<string> Year = new List<string>();
-                    //here we look at each item to see if they checked in attribute is same as today date.
-                    foreach (var item in time)
-                    {
-                        DateTime date = (DateTime)item.Check_in;//here we get the date
-                        string pastdate = date.ToString("MM/dd/yyyy");
-                        string today = datenow.ToString("MM/dd/yyyy");
-                        //here we compare the current item date with today's date
-                        if (pastdate == today)
-                        {
-                            Year.Add(pastdate);
-                        }
-
-                        
-                    }//I use this to see if the list is populated if is then the peron has already checked in today
-                    if (Year.Count == 0)
-                    {
-                        TimeSheet timeSheet = new TimeSheet();
-                        timeSheet.Emp_ID = employeeid;
-                        timeSheet.Check_in = datenow;
-                        db.TimeSheets.Add(timeSheet);
-                        return RedirectToAction("Checkout");
-                    }
-                    else
-                    {
-
-                    }
-                }
-                else
-                {
-
-                }
-                return RedirectToAction("Login");
+                ViewBag.err = "Employee is not found";
+                return View();
             }
-            else
+            empold.Employee_Status_ID = 1;
+            db.Entry(emp).CurrentValues.SetValues(empold);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Home");
+
+
+        }
+        [HttpPost]
+        public ActionResult GetUserDetails(int? id, string button)
+        {
+            //int userId = Convert.ToInt32(Request.Form["id"]);
+            //fetch the data by userId and assign in a variable, for ex: myUser
+            //Flexible myUser = new Flexible();
+            if (id == null)
             {
                 return RedirectToAction("Checkin");
             }
-            
-        }
-        [HttpPost]
-        public ActionResult GetUserDetails()
-        {
-            int userId = Convert.ToInt32(Request.Form["id"]);
-            //fetch the data by userId and assign in a variable, for ex: myUser
-            //Flexible myUser = new Flexible();
-                flex.employee = db.Employees.Find(userId);
-            return View("Checkin", flex);
+            id++;
+            var emp = flex.employeelist.Where(z => z.Emp_ID == id).FirstOrDefault();
+            if (id == null)
+            {
+                ViewBag.err = "Employee not found";
+                return RedirectToAction("Checkin");
+            }
+            flex.employee = emp;
+            if (button == "checkout")
+            {
+                return View("Checkout", flex);
+            }
+            if (button == "checkin")
+            {
+                return View("Checkin", flex);
+            }
+            return View("Search");
+
         }
         public ActionResult Checkout()
         {
             return View();
         }
-        public ActionResult Checkout(string id)
+        public ActionResult Checkout(int? id)
         {
+            id++;
             DateTime datenow = DateTime.Now;
-            int employeeid = Convert.ToInt32(id);
-
-            List<TimeSheet> time = db.TimeSheets.Where(a => a.Emp_ID == employeeid).ToList();
-            if (time.Count != 0)
+            TimeSheet time = new TimeSheet();
+            time.Emp_ID = flex.employee.Emp_ID;
+            time.Check_out = datenow;
+            //find the timesheet
+            var timesheet = db.TimeSheets.Where(z => z.Emp_ID == time.Emp_ID && time.Check_in.Equals(datenow.Date)).FirstOrDefault();
+            var oldtimesheet = db.TimeSheets.Where(z => z.Emp_ID == time.Emp_ID && time.Check_in.Equals(datenow.Date)).FirstOrDefault();
+            if (timesheet == null)
             {
-                List<string> Year = new List<string>();
-                //here we look at each item to see if they checked in attribute is same as today date.
-                foreach (var item in time)
-                {
-                    //for each item we need to look for the one that has no checkout value but has a checkin value that has same day
-                    DateTime checkin = (DateTime)item.Check_in;//here we get the date
-                    string storeddate = checkin.ToString("MM/dd/yyyy");
-                    string today = datenow.ToString("MM/dd/yyyy");
-                    //here we compare the current item date with today's date
-                    if (storeddate == today)
-                    {
-                        //the date we get here is the one from checkout to see if teh re is a checkout date already
-                        DateTime checkout = (DateTime)item.Check_out;
-                        string pastdate = checkout.ToString("MM/dd/yyyy");
-                        if (pastdate == today)
-                        {
-                            Year.Add(today);
-                        }
-                    }
-
-
-                }//I use this to see if the list is populated if is then the peron has already checked in today
-                if (Year.Count == 0)
-                {
-                    TimeSheet timeSheet = new TimeSheet();
-                    timeSheet.Emp_ID = employeeid;
-                    timeSheet.Check_in = datenow;
-                    db.TimeSheets.Add(timeSheet);
-                    db.SaveChanges();
-                    return RedirectToAction("Checkout");
-                }
-                else
-                {
-
-                }
+                ViewBag.err = "Timesheet is not found";
+                return View();
             }
-            else
+            timesheet.Check_out = time.Check_out;
+            db.Entry(oldtimesheet).CurrentValues.SetValues(timesheet);
+            db.SaveChanges();
+            var emp = db.Employees.Where(z => z.Emp_ID == flex.employee.Emp_ID).FirstOrDefault();
+            var empold = db.Employees.Where(z => z.Emp_ID == flex.employee.Emp_ID).FirstOrDefault();
+            if (emp == null)
             {
-
+                ViewBag.err = "Employee is not found";
+                return View();
             }
-            return View();
+            empold.Employee_Status_ID = 2;
+            db.Entry(emp).CurrentValues.SetValues(empold);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult ChangePassword()
@@ -444,15 +366,15 @@ namespace AdoptifySystem.Controllers
             return View();
         }
 
-    [NonAction]
+        [NonAction]
         public void SendVerificationLinkEmail(string emailID, string activationCode, string emailFor = "VerifyAccount")
         {
-           using (MailMessage mail = new MailMessage())
+            using (MailMessage mail = new MailMessage())
             {
                 mail.From = new MailAddress("u17136319@tuks.co.za");
                 mail.To.Add(emailID);
-                mail.Subject = "Hello World";
-                mail.Body = "<h1>Hello Jem</h1><br><br><p>Please find your code has been altererd to this: "+activationCode+"</p>";
+                mail.Subject = "Wollies Animal Shelter Passeword Reset Code";
+                mail.Body = "<h1>Hello There!</h1><br><h3>Please Use the New Password Below to Login:<br>" + "  " + activationCode + "</h3>";
                 mail.IsBodyHtml = true;
                 //mail.Attachments.Add(new Attachment("C:\\file.zip"));
 
@@ -463,23 +385,23 @@ namespace AdoptifySystem.Controllers
                     smtp.Send(mail);
                 }
             }
-                //var smtp = new SmtpClient
-                //{
-                //    Host = "smtp.gmail.com",
-                //    Port = 587,
-                //    EnableSsl = true,
-                //    DeliveryMethod = SmtpDeliveryMethod.Network,
-                //    UseDefaultCredentials = false,
-                //    Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
-                //};
+            //var smtp = new SmtpClient
+            //{
+            //    Host = "smtp.gmail.com",
+            //    Port = 587,
+            //    EnableSsl = true,
+            //    DeliveryMethod = SmtpDeliveryMethod.Network,
+            //    UseDefaultCredentials = false,
+            //    Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            //};
 
-                //using (var message = new MailMessage(fromEmail, toEmail)
-                //{
-                //    Subject = subject,
-                //    Body = body,
-                //    IsBodyHtml = true
-                //})
-                //    smtp.Send(message);
-            }
+            //using (var message = new MailMessage(fromEmail, toEmail)
+            //{
+            //    Subject = subject,
+            //    Body = body,
+            //    IsBodyHtml = true
+            //})
+            //    smtp.Send(message);
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using AdoptifySystem.Models;
+using AdoptifySystem;
 using AdoptifySystem.Models.nickeymodel;
 
 namespace AdoptifySystem.Controllers

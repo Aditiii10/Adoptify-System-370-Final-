@@ -1,4 +1,5 @@
 ﻿
+
 /*Navigation panes*/
 
 #main {
@@ -7,8 +8,12 @@
     padding: 0px 10px;
 }
 
+tr:nth-child(even) {
+  background-color:cornflowerblue
+}
+
 .sub {
-    background-color: #26282c;
+    background-color: cornflowerblue;
     text-decoration:none;
     color: white;
     cursor: pointer;
@@ -35,7 +40,6 @@ a .sub:hover{
 }
 
 
-
 #menu {
     height: 100vh;
     width: 280px;
@@ -47,7 +51,7 @@ a .sub:hover{
     font-size: 18px;
     font-family: 'Lato', sans-serif;
     padding: 10px;
-    background-color: #26282c;
+    background-color:cornflowerblue;
 }
 
     #menu a {
@@ -57,11 +61,11 @@ a .sub:hover{
         font-weight: 200; 
     }
 #menu a:hover{
-    color:beige;
+    color:black;
 }
 
 .accordion {
-    background-color: #26282c;
+    background-color: cornflowerblue;
     height: 50px;
     color: white;
     cursor: pointer;
@@ -119,43 +123,13 @@ h4 {
     font-family: 'Lato', sans-serif;
     font-size: 17px;
 }
-.newButton {
-    background-color: forestgreen;
-    color: #fff;
-    font-family: 'Lato', sans-serif;
-    font-size: 14.5px;
-    width:120px;
-    height: 40px;
-    text-align:center;
-    padding: 7px; 
-    /*border-radius:1em;*/
-    
-}
-   
 
-input#buttons {
-    background-color: forestgreen;
-    border: solid thin #FF5733; 
-}
+
 .stdSearch {
     position: relative;
     
 }
-input#buttons.newButton.bsearch {
-    width: 120px;
-    height: 40px;
-    border-radius: 0;
-}
-    input#buttons.newButton.bsearch::after {
-        content: "\f002";
-        font-family:'FontAwesome';
-    }
-a.btn.newButton.bsearch {
-    width: 140px;
-    height: 40px;
-    border-radius: 0;
-    padding: 10px; 
-}
+
 
     li {
         font-family: 'Lato', sans-serif;
@@ -164,7 +138,7 @@ a.btn.newButton.bsearch {
     border:none;
 }
 a.navbar-brand {
-    color: #fff;
+    color: white;
 }
 .info_card {
     background-color: #fff; 
@@ -210,8 +184,10 @@ div.data {
 }
 .moreinfo {
     background-color: #FF5733;
+    width: 80px;
     color: #fff;
     border: none;
+    height: 30px;
 }
 
 button.accordion {
@@ -264,3 +240,5 @@ th {
             text-decoration: none;
             color: #FF5733;
         }
+
+        

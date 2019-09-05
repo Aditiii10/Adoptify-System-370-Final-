@@ -3,7 +3,7 @@
 
 /*Search Controls*/
 
-input[type=text], select {
+/*input[type=text], select {
     width: 300px;
     height: 40px;
     font-size: 12px;
@@ -13,9 +13,9 @@ input[type=text], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}
+}*/
 
-input[type=submit] {
+/*input[type=submit] {
     width: 300px;
     height: 40px;
     background-color: forestgreen;
@@ -29,4 +29,4 @@ input[type=submit] {
 
 input[type=submit]:hover {
     background-color: darkgreen;
-}
+}*/

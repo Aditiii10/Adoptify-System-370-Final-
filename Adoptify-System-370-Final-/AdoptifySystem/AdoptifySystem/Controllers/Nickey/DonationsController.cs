@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using AdoptifySystem.Models;
+using AdoptifySystem;
 using AdoptifySystem.Models.nickeymodel;
 using Flexible = AdoptifySystem.Models.nickeymodel.Flexible;
 

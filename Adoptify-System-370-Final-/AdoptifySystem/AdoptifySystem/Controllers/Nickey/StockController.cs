@@ -1,4 +1,5 @@
-﻿using AdoptifySystem.Models;
+﻿using AdoptifySystem;
+using AdoptifySystem.Models.nickeymodel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,20 @@ namespace AdoptifySystem.Controllers
     {
         // GET: Stock
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
+        public static Flexible flex = new Flexible();
         public ActionResult AddStock()
         {
             List<Stock_Type> Stock_Types = new List<Stock_Type>();
+            List<Packaging_Type> Packaging_Type = new List<Packaging_Type>();
+            List<Unit_Type> unit_Types = new List<Unit_Type>();
             try
             {
                 Stock_Types = db.Stock_Type.ToList();
+                Packaging_Type = db.Packaging_Type.ToList();
+                unit_Types = db.Unit_Type.ToList();
+                flex.Stock_Types = Stock_Types;
+                flex.packaging_Types = Packaging_Type;
+                flex.unit_Types = unit_Types;
             }
             catch (Exception)
             {
@@ -26,16 +35,54 @@ namespace AdoptifySystem.Controllers
             }
 
 
-            return View(Stock_Types);
+            return View(flex);
         }
         [HttpPost]
-        public ActionResult AddStock(Stock stock, string button)
+        public ActionResult AddStock(Stock stock,string button)
         {
-            return View();
+            try
+            {
+                if (button=="Save")
+                {
+                    var searchstock = db.Stocks.Where(z=>z.Packaging_Type_ID == stock.Packaging_Type_ID && z.Stock_Description == stock.Stock_Description && z.Unit_Type_ID == stock.Unit_Type_ID && z.Unit_number == stock.Unit_number).FirstOrDefault();
+                    if (searchstock==null)
+                    {
+                        db.Stocks.Add(stock);
+                        db.SaveChanges();
+                    }
+                    return View("SearchStock");
+                }
+                if (button == "Cancel")
+                {
+
+                }
+            }
+            catch (Exception e)
+            {
+                
+
+                    return View("SearchStock");
+            }
+            return View("SearchStock");
         }
         public ActionResult SearchStock()
         {
-            return View();
+            ViewBag.errormessage = "";
+            List<Stock> stock = new List<Stock>();
+            try
+            {
+                stock = db.Stocks.ToList();
+                if (stock.Count == 0)
+                {
+
+                }
+                return View(stock);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "there was a network error: " + e.Message;
+                return View();
+            }
         }
         [HttpPost]
         public ActionResult SearchStock(Stock stock)
@@ -78,14 +125,75 @@ namespace AdoptifySystem.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult CaptureStockTake()
+        public ActionResult CaptureStockTake(int? id)
         {
-            return View();
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                List<Stock_Type> Stock_Types = new List<Stock_Type>();
+                List<Packaging_Type> Packaging_Type = new List<Packaging_Type>();
+                List<Unit_Type> unit_Types = new List<Unit_Type>();
+
+                Stock_Types = db.Stock_Type.ToList();
+                Packaging_Type = db.Packaging_Type.ToList();
+                unit_Types = db.Unit_Type.ToList();
+                flex.Stock_Types = Stock_Types;
+                flex.packaging_Types = Packaging_Type;
+                flex.unit_Types = unit_Types;
+
+                Stock stock_ = db.Stocks.Find(id);
+                if (stock_ == null)
+                {
+                    return HttpNotFound();
+                }
+                flex.stock = stock_;
+                return View(flex);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         [HttpPost]
         public ActionResult CaptureStockTake(Stock stock, string button)
         {
-            return View();
+            try
+            {
+                if (button == "Save")
+                {
+                    Stock oldstock = db.Stocks.Find(stock.Stock_ID);
+                    Stock newstock = db.Stocks.Find(stock.Stock_ID);
+                    if (oldstock == null)
+                    {
+                        ViewBag.err = "Error not found";
+                        return HttpNotFound();
+                    }
+                    if(!(oldstock.Stock_Quantity > stock.Stock_Quantity))
+                    {
+                        ViewBag.err = "Quantity is will be in negatives";
+                        return HttpNotFound(); 
+                    }
+                    newstock.Stock_Quantity -= stock.Stock_Quantity;
+                    db.Entry(oldstock).CurrentValues.SetValues(newstock);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+                if (button == "Cancel")
+                {
+                    return RedirectToAction("searchstock");
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         public ActionResult AddStockType()
         {
@@ -145,14 +253,73 @@ namespace AdoptifySystem.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-        public ActionResult ReceiveStock()
+        public ActionResult ReceiveStock(int? id)
         {
-            return View();
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                List<Stock_Type> Stock_Types = new List<Stock_Type>();
+                List<Packaging_Type> Packaging_Type = new List<Packaging_Type>();
+                List<Unit_Type> unit_Types = new List<Unit_Type>();
+               
+                    Stock_Types = db.Stock_Type.ToList();
+                    Packaging_Type = db.Packaging_Type.ToList();
+                    unit_Types = db.Unit_Type.ToList();
+                    flex.Stock_Types = Stock_Types;
+                    flex.packaging_Types = Packaging_Type;
+                    flex.unit_Types = unit_Types;
+                
+                Stock stock_ = db.Stocks.Find(id);
+                if (stock_ == null)
+                {
+                    return HttpNotFound();
+                }
+                flex.stock = stock_;
+                return View(flex);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
         [HttpPost]
         public ActionResult ReceiveStock(Stock stock, string button)
         {
-            return View();
+            try
+            {
+                if (button == "Save")
+                {
+                    Stock oldstock = db.Stocks.Find(stock.Stock_ID);
+                    Stock newstock = db.Stocks.Find(stock.Stock_ID);
+                    if (oldstock == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    else
+                    {
+                        newstock.Stock_Quantity += stock.Stock_Quantity; 
+                        db.Entry(oldstock).CurrentValues.SetValues(newstock);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("Index","Home");
+                }
+                if (button == "Cancel")
+                {
+                    return RedirectToAction("searchstock");
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         [HttpGet]
         public ActionResult SearchStockType()

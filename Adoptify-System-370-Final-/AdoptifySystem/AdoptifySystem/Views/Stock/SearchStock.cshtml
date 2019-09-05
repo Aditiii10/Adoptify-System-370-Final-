@@ -7,7 +7,7 @@
         <h1>Stock List</h1>
     </div>
     <h1>@ViewBag.errormessage</h1>
-    @Html.ActionLink("Create New", "AddStock", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+    @*@Html.ActionLink("Create New", "AddStock", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })*@
 
     @using (Html.BeginForm("Search", "Stock", FormMethod.Get))
     {
@@ -72,8 +72,10 @@
             <td>
                 @Html.ActionLink("Edit", "MaintainStock", new { id = item.Stock_ID }, new { @class = "btn btn-warning" }) |
 
-                <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Stock_ID">More info </button> |
+                @*<button class="btn moreinfo" data-toggle="modal" data-target="#@item.Stock_ID">More info </button> |*@
                 @Html.ActionLink("Delete", "Delete", new { id = item.Stock_ID }, new { @class = "btn btn-danger" }) |
+                @Html.ActionLink("Receive Stock", "ReceiveStock", new { id = item.Stock_ID }, new { @class = "btn btn-default" }) |
+                @Html.ActionLink("Capture Stock Take", "CaptureStockTake", new { id = item.Stock_ID }, new { @class = "btn btn-primary" }) |
                 <input type="button" value="More Info asdfsfsd" class="btn moreinfo" data-toggle="modal" data-target="#@item.Stock_ID">
             </td>
         </tr>

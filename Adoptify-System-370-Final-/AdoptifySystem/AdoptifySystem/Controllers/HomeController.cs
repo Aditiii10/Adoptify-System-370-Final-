@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using AdoptifySystem;
-using AdoptifySystem.Models;
+
+
 
 namespace AdoptifySystem.Controllers
 {
