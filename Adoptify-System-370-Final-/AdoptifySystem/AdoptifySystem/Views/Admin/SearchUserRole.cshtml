@@ -7,21 +7,22 @@
     <div class="" style="text-align:center;padding-left:120px">
         <h1>User Role List</h1>
     </div>
-    <h1>@ViewBag.errormessage</h1>
+    <h1>@ViewBag.err</h1>
    @* @Html.ActionLink("Create New", "AddUserRole", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })*@
 
-    @using (Html.BeginForm("SearchRole", "Admin", FormMethod.Get))
+    @using (Html.BeginForm("SearchRole", "Admin", FormMethod.Post))
     {
         <div class="row">
             <div class="col-md-5">
                 <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
-                @Html.TextBox("search", "", new { @name = "txtSearch", @placeholder = "Search Criteria" })
+                @Html.TextBox("search",  "", new { @name = "txtSearch", @placeholder = "Search Criteria", @class = "form-control", @autocomplete = "off" })
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
                 <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                @Html.ActionLink("Reset", "SearchUserRole",null, new { @class = "btn btn-secondary" })
             </div>
         </div>
     }
@@ -89,7 +90,7 @@
                                 <div class="modal-footer">
 
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item }, new { @class = "btn btn-danger" }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Role_ID }, new { @class = "btn btn-danger" }) |
                                     @Html.ActionLink("Maintain", "MaintainUserRole", new { id = item.Role_ID }, new { @style = "color: white", @class = "btn btn-warning" })
                                 </div>
                             </div>
@@ -102,6 +103,3 @@
         </table>
 
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

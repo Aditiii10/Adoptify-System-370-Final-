@@ -364,6 +364,35 @@ namespace AdoptifySystem.Controllers
             }
 
         }
+        [HttpPost]
+        public ActionResult SearchRole(string search)
+        {
+            if (search != null)
+            {
+
+                List<Role_> roles = new List<Role_>();
+                try
+                {
+                    roles = db.Role_.Where(z=> z.Role_Name.StartsWith(search)).ToList();
+                    if (roles.Count == 0)
+                    {
+                        @ViewBag.err = "No results found";
+                        return View("SearchUserRole", roles);
+                    }
+                    return View("SearchUserRole", roles);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.errormessage = "there was a network error: " + e.Message;
+                    return View();
+                }
+            }
+            else
+            {
+
+            }
+            return View();
+        }
 
         public ActionResult MaintainUserRole(int? id)
         {
@@ -389,8 +418,8 @@ namespace AdoptifySystem.Controllers
                 temprole = db.Role_.ToList();
                 foreach (var item in temprole)
                 {
-                    string tempname = item.Role_Name.ToLower();
-                    if (tempname == role.Role_Name.ToLower())
+                    
+                    if (item.Role_Name == role.Role_Name)
                     {
                         ViewBag.err = "User Role name has already been taken. Try Again.";
                         return RedirectToAction("MaintainUserRole", new { role, ViewBag.err});
@@ -409,23 +438,25 @@ namespace AdoptifySystem.Controllers
             
                 
         }
-
-        public ActionResult Delete(Role_ id)
+     
+        public ActionResult Delete(int? id)
         {
 
             if (id != null)
             {
-                int count = id.UserRoles.Count();
-                if(count == 0)
+                Role_ roles = db.Role_.Find(id);
+                int count = roles.UserRoles.Count();
+                if(count != 0)
                 {
                     //you cant delete becasue its referenced to another table
+                    ViewBag.err = "You can not delete this";
                     return View("SearchUserRole");
                 }
                 else
                 {
-                    db.Role_.Remove(id);
+                    db.Role_.Remove(roles);
                     db.SaveChanges();
-                    return View("Index", "Home");
+                    return View("SearchUserRole");
                 }
             }
             return View("SearchUserRole");
