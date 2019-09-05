@@ -1,10 +1,10 @@
-﻿@model AdoptifySystem.Donation_Type
+﻿@model AdoptifySystem.Models.Donation_Type
 @{
     ViewBag.Title = "Add Donation Type";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Add Donation Type</h2>
+<h2>Maintain Donation Type</h2>
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.Donation_Type_ID)
@@ -27,7 +27,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                @Html.ActionLink("Cancel", "Searchdonationtype", null, new { @class = "btn btn-warning" })
                 <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
             </div>
         </div>

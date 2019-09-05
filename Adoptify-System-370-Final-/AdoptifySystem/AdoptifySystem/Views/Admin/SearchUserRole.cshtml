@@ -1,31 +1,34 @@
 ﻿@model List<AdoptifySystem.Role_>
 @{
     ViewBag.Title = "Search User Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
         <h1>User Role List</h1>
     </div>
-    <h1>@ViewBag.errormessage</h1>
-    @Html.ActionLink("Create New", "AddUserRole", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+    <h1>@ViewBag.err</h1>
+   @* @Html.ActionLink("Create New", "AddUserRole", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })*@
 
-    @using (Html.BeginForm("SearchRole", "Admin", FormMethod.Get))
+    @using (Html.BeginForm("SearchRole", "Admin", FormMethod.Post))
     {
         <div class="row">
             <div class="col-md-5">
                 <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
-                @Html.TextBox("search", "", new { @name = "txtSearch", @placeholder = "Search Criteria" })
+                @Html.TextBox("search",  "", new { @name = "txtSearch", @placeholder = "Search Criteria", @class = "form-control", @autocomplete = "off" })
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
                 <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                @Html.ActionLink("Reset", "SearchUserRole",null, new { @class = "btn btn-secondary" })
             </div>
         </div>
+    }
         <br />
-        <table class="table table-bordered">
-            <tr class="thead-light">
+        <table class="table table-bordered ">
+            <tr class="table-primary">
                 <th>
                     ID
                 </th>
@@ -60,16 +63,14 @@
                         <td>
                             @Html.ActionLink("Edit", "MaintainUserRole", new { id = item.Role_ID }, new { @class = "btn btn-warning" }) |
 
-                            <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Role_ID">More info </button> |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Role_ID }, new { @class = "btn btn-danger" }) |
-                            <input type="button" value="More Info asdfsfsd" class="btn moreinfo" data-toggle="modal" data-target="#@item.Role_ID">
+                            <input type="button" value="More info" class="btn moreinfo btn-info" data-toggle="modal" data-target="#@item.Role_ID">
                         </td>
                     </tr>
                     <div class="modal fade" id="@item.Role_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">@item.Role_Name</h5>
+                                <div class="modal-header  table-primary">
+                                    <h5 class="modal-title " id="exampleModalLongTitle">@item.Role_Name</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -78,9 +79,18 @@
                                     <span class="value">ID:</span>
                                     @Html.DisplayFor(modelItem => item.Role_ID) <br />
                                 </div>
+                                <div class="modal-body">
+                                    <span class="value">Name:</span>
+                                    @Html.DisplayFor(modelItem => item.Role_Name) <br />
+                                </div>
+                                <div class="modal-body">
+                                    <span class="value">Number of Users Assigned:</span>
+                                    @Html.DisplayFor(modelItem => item.UserRoles.Count) <br />
+                                </div>
                                 <div class="modal-footer">
 
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Role_ID }, new { @class = "btn btn-danger" }) |
                                     @Html.ActionLink("Maintain", "MaintainUserRole", new { id = item.Role_ID }, new { @style = "color: white", @class = "btn btn-warning" })
                                 </div>
                             </div>
@@ -91,76 +101,5 @@
             }
 
         </table>
-    }
 
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-@*<h2>Search Donation Type</h2>
-    @using (Html.BeginForm())
-    {
-
-    }
-    @if (Model !=null)
-    {
-        <table class="table table-bordered">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Donation Type Name</th>
-                    <th scope="col">Donation Description</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <th scope="row">@item.Donation_Type_ID</th>
-                    <td>@item.Donation_Type_Name</td>
-                    <td>@item.Donation_Type_Description</td>
-                    <td>@Html.ActionLink("Edit", "MaintainDonationType", new { id = item.Donation_Type_ID })</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-
-
-
-    }
-    else
-    {
-        <table class="table table-bordered">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>mdo</td>
-                    <td>@Html.ActionLink("Add Donation", "AddDonationType")</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>witter</td>
-                </tr>
-            </tbody>
-        </table>
-    }*@

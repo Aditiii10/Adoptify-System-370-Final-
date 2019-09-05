@@ -16,7 +16,10 @@ namespace AdoptifySystem.Controllers
         {
             return View();
         }
-
+        public ActionResult HomePage()
+        {
+            return View();
+        }
         public JsonResult GetEvents()
         {
             using (Wollies_ShelterEntities dc = new Wollies_ShelterEntities())

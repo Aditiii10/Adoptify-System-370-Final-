@@ -26,7 +26,7 @@ namespace AdoptifySystem
         }
     
         public int Animal_ID { get; set; }
-        public string Animal_Image { get; set; }
+        public byte[] Animal_Image { get; set; }
         public string Animal_Name { get; set; }
         public string Animal_Description { get; set; }
         public string Animal_Gender { get; set; }
@@ -37,6 +37,8 @@ namespace AdoptifySystem
         public Nullable<System.DateTime> Animal_Entry_Date { get; set; }
         public string Animal_Coat { get; set; }
         public Nullable<int> Animal_Status_ID { get; set; }
+        public string Animal_Image_Name { get; set; }
+        public string Animal_Image_Type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Adoption> Adoptions { get; set; }
