@@ -12,6 +12,8 @@ namespace AdoptifySystem
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Wollies_ShelterEntities : DbContext
     {
@@ -74,5 +76,32 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer> Volunteers { get; set; }
         public virtual DbSet<Volunteer_Hours> Volunteer_Hours { get; set; }
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
+    
+        public virtual ObjectResult<Don_SearchDon_Result> Don_SearchDon(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Don_SearchDon_Result>("Don_SearchDon", nameParameter);
+        }
+    
+        public virtual ObjectResult<Donation_Type> SearchDon(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donation_Type>("SearchDon", nameParameter);
+        }
+    
+        public virtual ObjectResult<Donation_Type> SearchDon(string name, MergeOption mergeOption)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donation_Type>("SearchDon", mergeOption, nameParameter);
+        }
     }
 }

@@ -4,52 +4,61 @@
     ViewBag.Title = "Add Donor";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
+<div class="border-primary card mb-3">
+    <h2 class="table-primary">Add Donor</h2>
 
-<h2>Add Donor</h2>
-
-@using (Html.BeginForm())
-{
-    if (Model != null)
+    @using (Html.BeginForm())
     {
-        using (Html.BeginForm())
+        if (Model != null)
         {
-            <select name="Title_ID" id="exampleList">
+            using (Html.BeginForm())
+            {
+                <select name="Title_ID" class="form-control col-md-2" id="exampleList">
 
-                @foreach (var item in Model)
-                {
-                    <option value="@item.Title_ID">@item.Title_Description</option>
-                    @*<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />*@
-                }
-            </select>
-            <br />
-            <label>
-                Donor Name
-            </label>
-            <br />
-            <input name="Donor_Name" type="text" />
-            <br />
-            <label>
-                Donor Surname
-            </label>
-            <br />
-            <input name="Donor_Surname" type="text" />
-            <br />
-            <label>
-                Donor Email
-            </label>
-            <br />
-            <input name="Donor_Email" type="text" />
-            <br />
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Title_ID">@item.Title_Description</option>
+                        @*<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />*@
+                    }
+                </select>
+                <br />
+                <label>
+                    Donor Name
+                </label>
+                <br />
+                <div class="col-md-5">
+                    <input name="Donor_Name" class="form-control" type="text" />
                 </div>
-            </div>
+                <br />
+                <label>
+                    Donor Surname
+                </label>
+                <br />
+                <div class="col-md-5">
+                    <input name="Donor_Surname" class="form-control" type="text" />
+                </div>
+                <br />
+                <label>
+                    Donor Email
+                </label>
+                <br />
+                <div class="col-md-5">
+                    <input name="Donor_Email" class="form-control" type="email" />
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                        <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h1>the Title is empty GO add Titles to the System</h1>
         }
     }
-    else
-    {
-        <h1>the Title is empty</h1>
-    }
-}
+</div>

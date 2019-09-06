@@ -4,17 +4,14 @@
     ViewBag.Title = "Maintain Donor";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Maintain Donor</h2>
-
-@using (Html.BeginForm())
-{
-    if (Model != null)
+<br />
+<div class="border-primary card mb-3">
+    <h1 class="table-primary">Maintain Donor</h1>
+    @if (Model != null)
     {
         using (Html.BeginForm())
         {
-            @Html.HiddenFor(model => model.donor.Donor_ID)
-            <select name="Title_ID" id="exampleList">
+            <select name="Title_ID" class="form-control col-md-2" id="exampleList">
 
                 @foreach (var item in Model.Titles)
                 {
@@ -27,30 +24,38 @@
                 Donor Name
             </label>
             <br />
-            <input name="Donor_Name" type="text" value="@Model.donor.Donor_Name" />
+            <div class="col-md-5">
+                <input name="Donor_Name" value="@Model.donor.Donor_Name" class="form-control" type="text" />
+            </div>
             <br />
             <label>
                 Donor Surname
             </label>
             <br />
-            <input name="Donor_Surname" type="text" value="@Model.donor.Donor_Surname" />
+            <div class="col-md-5">
+                <input name="Donor_Surname" value="@Model.donor.Donor_Surname" class="form-control" type="text" />
+            </div>
             <br />
             <label>
                 Donor Email
             </label>
             <br />
-            <input name="Donor_Email" type="text" value="@Model.donor.Donor_Email" />
+            <div class="col-md-5">
+                <input name="Donor_Email" value="@Model.donor.Donor_Email" class="form-control" type="email" />
+            </div>
+            <input name="Donor_ID" value="@Model.donor.Donor_ID" class="form-control" type="text" hidden/>
             <br />
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Update</button>
+                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
                 </div>
             </div>
         }
     }
     else
     {
-        <h1>the Title is empty</h1>
+        <h1>the Title is empty Go add Titles to the System</h1>
     }
-}
+    
+</div>

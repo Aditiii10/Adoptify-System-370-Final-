@@ -20,7 +20,7 @@
     <div class="loading" align="center">
         Loading. Please wait.<br />
         <br />
-        <img src="~/Images/Loader.gif" />
+        <img src="~/Images/eecb0228d91417e5368c7dc527c16d8f.gif" />
     </div>
     @*The navabar*@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -33,11 +33,11 @@
                 <li class="nav-item dropdown show">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Admin</a>
                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-                        @Html.ActionLink("Login", "AddDonation", "Admin", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Login", "Login", "Admin", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Add User Role", "adduserrole", "Admin", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Change Password", "AddDonor", "Admin", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Checkin", "Checkin", "Admin", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Checkout", "AddDonation", "Admin", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Checkout", "Checkout", "Admin", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Maintain User Role", "maintainuserrole", "Admin", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Search User Role", "searchuserrole", "Admin", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Reset Password", "Reset Password", "Admin", null, new { @class = "dropdown-item" })
@@ -47,7 +47,7 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Donations</a>
                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
                         @Html.ActionLink("Add Donations", "AddDonation", "Donations", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Search Donations", "SearchDonations", "Donations", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Search Donations", "SearchDonation", "Donations", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Add Donor", "AddDonor", "Donations", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Maintain Donor", "maintaindonor", "Donations", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Search Donor", "searchdonor", "Donations", null, new { @class = "dropdown-item" })

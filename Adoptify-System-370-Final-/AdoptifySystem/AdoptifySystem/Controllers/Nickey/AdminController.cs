@@ -113,19 +113,6 @@ namespace AdoptifySystem.Controllers
             using (Wollies_ShelterEntities dc = new Wollies_ShelterEntities())
             {
 
-                //adding a employee
-                //Employee emp = new Employee();
-                //emp.Emp_Name = "jem";
-                //emp.Emp_Email = "jemimakola99@gmail.com";
-                //dc.Employees.Add(emp);
-                //dc.SaveChanges();
-
-                //User_ useremp = new User_();
-                //useremp.Emp_ID = 1;
-                //useremp.Username = "nick";
-                //useremp.Password = "john";
-                //dc.User_.Add(useremp);
-                //dc.SaveChanges();
                 var account = dc.Employees.Where(a => a.Emp_Email == EmailID).FirstOrDefault();
                 if(account != null)
                 {
@@ -185,7 +172,7 @@ namespace AdoptifySystem.Controllers
             empold.Emp_Status_ID = 1;
             db.Entry(emp).CurrentValues.SetValues(empold);
             db.SaveChanges();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("HomePage", "Home");
              
             
         }
@@ -275,7 +262,7 @@ namespace AdoptifySystem.Controllers
             empold.Emp_Status_ID = 2;
             db.Entry(emp).CurrentValues.SetValues(empold);
             db.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("HomePage", "Home");
         }
 
         public ActionResult ChangePassword()
@@ -338,9 +325,9 @@ namespace AdoptifySystem.Controllers
             else if (button == "Cancel")
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("HomePage", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("HomePage", "Home");
         }
 
         public ActionResult SearchUserRole()
@@ -428,7 +415,7 @@ namespace AdoptifySystem.Controllers
                 }
                 db.Entry(oldrole_).CurrentValues.SetValues(role);
                 db.SaveChanges();
-                return View("Index","Home");
+                return View("HomePage", "Home");
             }
             catch (Exception e)
             {
@@ -478,28 +465,11 @@ namespace AdoptifySystem.Controllers
 
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
-                    smtp.Credentials = new NetworkCredential("u17136319@tuks.co.za", "Urahara123");
+                    smtp.Credentials = new NetworkCredential("", "");//need to first add email adress then the password
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
                 }
             }
-                //var smtp = new SmtpClient
-                //{
-                //    Host = "smtp.gmail.com",
-                //    Port = 587,
-                //    EnableSsl = true,
-                //    DeliveryMethod = SmtpDeliveryMethod.Network,
-                //    UseDefaultCredentials = false,
-                //    Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
-                //};
-
-                //using (var message = new MailMessage(fromEmail, toEmail)
-                //{
-                //    Subject = subject,
-                //    Body = body,
-                //    IsBodyHtml = true
-                //})
-                //    smtp.Send(message);
             }
     }
 }

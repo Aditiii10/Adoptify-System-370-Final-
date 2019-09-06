@@ -4,24 +4,30 @@
     ViewBag.Title = "Add User Role";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Add User Role</h2>
 @using (Html.BeginForm())
 {
-<div class="form-horizontal">
-    <h4 style="color:red">@ViewBag.errormessage</h4>
-    <hr />
-    <div class="form-group">
-        <label class="form-control-label">Role Name</label>
-        <div class="col-md-10">
-            <input type="text" class="form-control" id="Rolename" name="Role_Name" placeholder="Role Name">
-            <span class=" btn-info" data-container="body" data-toggle="popover" data-placement="right" data-content="Enter the User Role that is needed for User" data-original-title="User Role Name">Click Me</span>
+    <br />
+    <div class="form-horizontal card border-primary" style="width:60%">
+
+        <h2 class="table-primary">Add User Role</h2>
+        <hr />
+        <div class="form-group">
+            <label class="form-control-label">Role Name</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="Rolename" name="Role_Name" placeholder="Role Name">
+                @*<button type="button" class="btn btn-secondary" title="" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Viva" data-original-title="Popover Title">
+                    Bottom
+                </button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip on bottom">Bottom</button>*@
+                <span class="glyphicon glyphicon-trash"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Cancel", "SearchUserRole", null, new { @class = "btn btn-warning" })
+                <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @Html.ActionLink("Cancel", "SearchUserRole", null, new { @class = "btn btn-warning" })
-            <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
-        </div>
-    </div>
-</div>
 }

@@ -5,8 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using AdoptifySystem.Models;
 using AdoptifySystem.Models.nickeymodel;
+
 
 namespace AdoptifySystem.Controllers
 {
@@ -59,9 +59,13 @@ namespace AdoptifySystem.Controllers
 
                     }
                 }
-                db.Donors.Add(donor);
-                db.SaveChanges();
-                return View();
+                else
+                {
+                    db.Donors.Add(donor);
+                    db.SaveChanges();
+                    
+                }
+                return RedirectToAction("Index", "Home");
             }
             else if (button == "Cancel")
             {
@@ -85,6 +89,7 @@ namespace AdoptifySystem.Controllers
             
             return View(flex);
         }
+        [HttpPost]
         public ActionResult MaintainDonor(Donor donor,string button)
         {
             if (button == "Save")
@@ -288,11 +293,6 @@ namespace AdoptifySystem.Controllers
             //flex.donor
             flex.adddonationlist = donlist;
 
-            if (flex.stock == null)
-            {
-                return HttpNotFound();
-            }
-
             return View("AddDonation", flex);
 
         }
@@ -321,17 +321,18 @@ namespace AdoptifySystem.Controllers
                     {
                         Donation don = new Donation();
                         don.Donation_Date = DateTime.Now;
-                        don.Donor = flex.donor;
+                        don.Donor_ID = flex.donor.Donor_ID;
                         db.Donations.Add(don);
                         db.SaveChanges();
 
-                        var searchDonations = db.Donations.Where(z => z.Donor_ID == flex.donor.Donor_ID && z.Donation_Date == don.Donation_Date).FirstOrDefault();
+                        var searchDonations = db.Donations.Where(z => z.Donation_ID == don.Donation_ID).FirstOrDefault();
+                        var dunking = don;
                         if (searchDonations == null)
                         {
                             //error
                             return View("AddDonation", flex);
                         }
-                        foreach (var item in flex.adddonationlist)
+                        foreach (Donation_Line item in flex.adddonationlist)
                         {
                             item.Donation_ID = searchDonations.Donation_ID;
                             if (item.Stock_ID != null)
@@ -345,12 +346,21 @@ namespace AdoptifySystem.Controllers
                                 searchstock.Stock_Quantity += Convert.ToInt32(item.Donation_Quantity);
                                 db.Entry(old).CurrentValues.SetValues(searchstock);
                                 db.SaveChanges();
-
+                                item.Stock = null;
+                                
                             }
-                            db.Donation_Line.Add(item);
+                            Donation_Line mydonation = new Donation_Line();
+                            mydonation = item;
+                            mydonation.Donation_Type = null;
+                            mydonation.Donation = null;
+                            db.Donation_Line.Add(mydonation);
                             db.SaveChanges();
+                            
 
                         }
+                        flex.adddonationlist = null;
+                        flex.donor = null;
+                        flex.stock = null;
                         return RedirectToAction("Index", "Home");
 
                     }
@@ -365,16 +375,16 @@ namespace AdoptifySystem.Controllers
                 }
                 return RedirectToAction("Index", "Home");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                ViewBag.err = e.Message;
+                return View("AddDonation", flex);
             }
             
 
 
         }
-
+        
         public ActionResult SearchDonor()
         {
             ViewBag.errormessage = "";
@@ -395,6 +405,36 @@ namespace AdoptifySystem.Controllers
                 return View();
             }
           
+        }
+        [HttpPost]
+        public ActionResult SearchDonor(string search)
+        {
+            if (search != null)
+            {
+
+                List<Donor> donor = new List<Donor>();
+                try
+                {
+                    donor = db.Donors.Where(z => z.Donor_Name.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
+                    if (donor.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("SearchDonor", donor);
+                    }
+                    return View("SearchDonor", donor);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    return View("SearchDonor");
+                }
+            }
+            else
+            {
+
+            }
+            return View("SearchDonor");
+
         }
         public ActionResult SearchDonation()
         {
@@ -430,10 +470,11 @@ namespace AdoptifySystem.Controllers
                     List<Donation_Type> donationtypes = new List<Donation_Type>();
                     donationtypes = db.Donation_Type.ToList();
                     if (donationtypes.Count != 0)
-                    {
+                    { 
                         int count = 0;
                         foreach (var item in donationtypes)
                         {
+                            
                             if (item.Donation_Type_Name == donation_Type.Donation_Type_Name)
                             {
                                 count++;
@@ -473,7 +514,7 @@ namespace AdoptifySystem.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-        [HttpGet]
+       
         public ActionResult SearchDonationType()
         {
             ViewBag.errormessage = "";
@@ -493,6 +534,36 @@ namespace AdoptifySystem.Controllers
                 return View();
             }
             
+        }
+        [HttpPost]
+        public ActionResult SearchDonationType(string search)
+        {
+            if (search != null)
+            {
+
+                List<Donation_Type> donation_types = new List<Donation_Type>();
+                try
+                {
+                    donation_types = db.SearchDon(search).ToList();
+                    //donation_types = db.Donation_Type.Where(z => z.Donation_Type_Name.StartsWith(search)|| z.Donation_Type_Description.StartsWith(search) ).ToList();
+                    if (donation_types.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("SearchDonationType", donation_types);
+                    }
+                    return View("SearchDonationType", donation_types);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    return View("SearchDonationType");
+                }
+            }
+            else
+            {
+
+            }
+            return View("SearchDonationType");
         }
         public ActionResult MaintainDonationType(int? id)
         {
@@ -538,5 +609,50 @@ namespace AdoptifySystem.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+        public ActionResult DeleteDonor(int? id)
+        {
+
+            if (id != null)
+            {
+                Donor donor = db.Donors.Find(id);
+                int count = donor.Donations.Count();
+                if (count != 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    ViewBag.err = "You can not delete this";
+                    return View("SearchDonor");
+                }
+                else
+                {
+                    db.Donors.Remove(donor);
+                    db.SaveChanges();
+                    return View("SearchDonor");
+                }
+            }
+            return View("SearchDonor");
+        }
+            public ActionResult DeleteDonationType(int? id)
+            {
+
+                if (id != null)
+                {
+                    Donation_Type donation_type = db.Donation_Type.Find(id);
+                    int count = donation_type.Donation_Line.Count();
+                    if (count != 0)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return View("SearchDonationType");
+                    }
+                    else
+                    {
+                        db.Donation_Type.Remove(donation_type);
+                        db.SaveChanges();
+                        return View("SearchDonationType");
+                    }
+                }
+                return View("SearchDonationType");
+
+            }
     }
 }
