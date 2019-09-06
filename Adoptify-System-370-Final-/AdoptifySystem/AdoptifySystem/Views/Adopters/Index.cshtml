@@ -210,11 +210,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Adopter_Status.Adopter_Status_Name)
                 </td>*@
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Adopter_ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Adopter_ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Adopter_ID }) 
-            </td>
+        <td>
+            <input type="submit" value="Save" class="btn btn-success" />
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.Adopter_ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Adopter_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Adopter_ID })*@
+        </td>
         </tr>
     }
 
