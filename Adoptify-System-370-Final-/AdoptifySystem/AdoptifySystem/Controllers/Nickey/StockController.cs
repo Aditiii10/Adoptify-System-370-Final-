@@ -85,13 +85,68 @@ namespace AdoptifySystem.Controllers
             }
         }
         [HttpPost]
-        public ActionResult SearchStock(Stock stock)
+        public ActionResult SearchStock(string search)
         {
+            if (search != null)
+            {
+
+                List<Stock> stock = new List<Stock>();
+                try
+                {
+                    stock = db.searchstock(search).ToList();
+                    //donation_types = db.Donation_Type.Where(z => z.Donation_Type_Name.StartsWith(search)|| z.Donation_Type_Description.StartsWith(search) ).ToList();
+                    if (stock.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View(stock);
+                    }
+                    return View(stock);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    return View();
+                }
+            }
+            else
+            {
+
+            }
             return View();
         }
-        public ActionResult MaintainStock()
+        public ActionResult MaintainStock(int? id)
         {
-            return View();
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                List<Stock_Type> Stock_Types = new List<Stock_Type>();
+                List<Packaging_Type> Packaging_Type = new List<Packaging_Type>();
+                List<Unit_Type> unit_Types = new List<Unit_Type>();
+
+                Stock_Types = db.Stock_Type.ToList();
+                Packaging_Type = db.Packaging_Type.ToList();
+                unit_Types = db.Unit_Type.ToList();
+                flex.Stock_Types = Stock_Types;
+                flex.packaging_Types = Packaging_Type;
+                flex.unit_Types = unit_Types;
+
+                Stock stock_ = db.Stocks.Find(id);
+                if (stock_ == null)
+                {
+                    return RedirectToAction("SearchStock", "Stock");
+                }
+                flex.stock = stock_;
+                return View(flex);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         [HttpPost]
         public ActionResult MaintainStock(Stock stock2, string button)
@@ -107,6 +162,7 @@ namespace AdoptifySystem.Controllers
                     }
                     else
                     {
+                        stock2.Stock_Quantity = stock1.Stock_Quantity; 
                         db.Entry(stock1).CurrentValues.SetValues(stock2);
                         db.SaveChanges();
                     }
@@ -120,9 +176,9 @@ namespace AdoptifySystem.Controllers
             else if (button == "Cancel")
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SearchStock", "Stock");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SearchStock", "Stock");
         }
 
         public ActionResult CaptureStockTake(int? id)
@@ -171,23 +227,23 @@ namespace AdoptifySystem.Controllers
                     if (oldstock == null)
                     {
                         ViewBag.err = "Error not found";
-                        return HttpNotFound();
+                        return RedirectToAction("SearchStock", "Stock");
                     }
                     if(!(oldstock.Stock_Quantity > stock.Stock_Quantity))
                     {
                         ViewBag.err = "Quantity is will be in negatives";
-                        return HttpNotFound(); 
+                        return View("CaptureStockTake",flex);
                     }
                     newstock.Stock_Quantity -= stock.Stock_Quantity;
                     db.Entry(oldstock).CurrentValues.SetValues(newstock);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("SearchStock", "Stock");
                 }
                 if (button == "Cancel")
                 {
-                    return RedirectToAction("searchstock");
+                    return RedirectToAction("SearchStock");
                 }
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SearchStock", "Stock");
             }
             catch (Exception)
             {
@@ -303,7 +359,10 @@ namespace AdoptifySystem.Controllers
                     }
                     else
                     {
-                        newstock.Stock_Quantity += stock.Stock_Quantity; 
+                        int old_stock = Convert.ToInt32(oldstock.Stock_Quantity);
+                        int added_stock = Convert.ToInt32(stock.Stock_Quantity);
+                        int new_stock = old_stock + added_stock;
+                        newstock.Stock_Quantity = new_stock;
                         db.Entry(oldstock).CurrentValues.SetValues(newstock);
                         db.SaveChanges();
                     }

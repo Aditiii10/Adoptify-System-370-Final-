@@ -8,10 +8,32 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 </head>
-<h2>AddtoFosterCare</h2>
+<style>
+    .row{
+        margin-right: 2px;
+        margin-left: 2px;
+    }
+   .column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+<br />
+<div class="card mb-3 border-primary">
+
+<h1 class=" table-primary">AddtoFosterCare</h1>
 
 <div class="row">
-    <div class="column">
+    <div class="column" >
         @using (Html.BeginForm("search_parent", "FosterCare", FormMethod.Post))
         {
             <h1>Search For Foster Care Parent</h1>
@@ -51,7 +73,7 @@
         @*//this will preview of the Foster Care Parent*@
         @if (Model.parent != null)
         {
-            <div class="card">
+            <div class="card border-primary">
                 <span class="value">Name:</span>
                 @Html.DisplayFor(modelItem => Model.parent.Foster_Parent_Name) <br />
                 <span class="value">Surname:</span>
@@ -67,7 +89,7 @@
         }
         else
         {
-            <h1>Null</h1>
+            <h1></h1>
         }
 
     </div>
@@ -114,7 +136,7 @@
         @*//this will preview of the Foster Care Parent*@
         @if (Model.animal != null)
         {
-            <div class="card">
+            <div class="card border-primary">
                 <span class="value">Name:</span>
                 @Html.DisplayFor(modelItem => Model.animal.Animal_Name) <br />
                 <span class="value">Status:</span>
@@ -128,70 +150,68 @@
         }
         else
         {
-            <h1>Null</h1>
+            <h1></h1>
         }
     </div>
 </div>
-<div>
+<div class="row">
     @using (Html.BeginForm("add", "FosterCare", FormMethod.Post))
     {
-        <label class="form-control">
-            Enter Foster Date
-        </label>
-        <div class="form-group">
-            <input type="datetime" name="Foster_Start_Date" class="form-control" />
+        <div class="column">
+            <label>
+                Enter Foster Date
+            </label>
+                <input type="date" name="Foster_Start_Date" class="form-control" />
         </div>
-        <label class="form-control">
-            Enter Period
-        </label>
-        <div class="form-group">
-            <input type="number" name="Foster_Care_Period" class="form-control" />
-        </div>
-        <button class="btn btn-dark btn-lg">
-            ADD
-        </button>
-    }
-</div>
-<div class="row">
-    @if (Model.Fostercarelist != null)
-    {
-
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <td>Parent Name</td>
-                    <td>Animal Name</td>
-                    <td>Start Date</td>
-                    <td>Foster Care Period</td>
-                    <td> </td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Fostercarelist)
-                {
-                    <tr>
-                        <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
-                        <td>@item.Animal.Animal_Name</td>
-                        <td>@item.Foster_Start_Date</td>
-                        <td>@item.Foster_Care_Period</td>
-                        <td>@Html.ActionLink("Delete", "removefromlist", new { animalid = item.Animal_ID }, new { @class = "btn btn-danger" })</td>
-                    </tr>
+        <div class="column">
+            <label>
+                Enter Period
+            </label>
+                <input type="number" name="Foster_Care_Period" class="form-control" />
+            </div>
+                <button class="btn btn-lg btn-dark">ADD</button>
                 }
-            </tbody>
-        </table>
-        @Html.ActionLink("Save", "savetofostercare", null, new { @class = "btn btn-success" });
-    }
-    else
-    {
-        <table class="table table-bordered">
-            <thead class="thead-light"></thead>
-            <tbody>
-                <tr>No Results</tr>
-            </tbody>
-        </table>
-    }
 </div>
+            <div class="row">
+                @if (Model.Fostercarelist != null)
+                {
 
+                    <table class="table table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <td>Parent Name</td>
+                                <td>Animal Name</td>
+                                <td>Start Date</td>
+                                <td>Foster Care Period</td>
+                                <td> </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Fostercarelist)
+                            {
+                                <tr>
+                                    <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
+                                    <td>@item.Animal.Animal_Name</td>
+                                    <td>@item.Foster_Start_Date</td>
+                                    <td>@item.Foster_Care_Period</td>
+                                    <td>@Html.ActionLink("Delete", "removefromlist", new { animalid = item.Animal_ID }, new { @class = "btn btn-danger" })</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.ActionLink("Save", "savetofostercare", null, new { @class = "btn btn-success" });
+                }
+                else
+                {
+                    <table class="table table-bordered">
+                        <thead class="thead-light"></thead>
+                        <tbody>
+                            <tr>No Results</tr>
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
 <script type="text/javascript">
     function myFunction() {
         var x = document.getElementById("parent").selectedIndex;
@@ -380,12 +400,3 @@
   //      n2.value = y[x].index;
 //}
 </script>
-<style>
-    .row {
-        display: flex;
-    }
-
-    .column {
-        flex: 50%;
-    }
-</style>

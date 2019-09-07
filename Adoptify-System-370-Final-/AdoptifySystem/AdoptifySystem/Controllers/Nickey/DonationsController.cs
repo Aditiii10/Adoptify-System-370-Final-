@@ -415,7 +415,8 @@ namespace AdoptifySystem.Controllers
                 List<Donor> donor = new List<Donor>();
                 try
                 {
-                    donor = db.Donors.Where(z => z.Donor_Name.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
+                    donor = db.searchDonor(search).ToList();
+                    //donor = db.Donors.Where(z => z.Donor_Name.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
                     if (donor.Count == 0)
                     {
                         ViewBag.err = "No results found";
@@ -438,22 +439,53 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult SearchDonation()
         {
-            List<Donation_Line> Donation_Lines = new List<Donation_Line>();
+            List<Donation> donantion = new List<Donation>();
             try
             {
-                Donation_Lines = db.Donation_Line.ToList();
+                donantion = db.Donations.ToList();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                ViewBag.err = e.Message;
                 return RedirectToAction("Index", "Home");
             }
 
 
-            return View(Donation_Lines);
+            return View(donantion);
+        }
+        [HttpPost]
+        public ActionResult SearchDonation(string search)
+        {
+            if (search != null)
+            {
+
+                List<Donation> donantion = new List<Donation>();
+                try
+                {
+                    //donation_types = db.SearchDon(search).ToList();
+                    donantion = db.Donations.Where(z => z.Donor.Donor_Name.StartsWith(search) || z.Donor.Donor_Surname.StartsWith(search) || z.Donor.Donor_Email.StartsWith(search)).ToList();
+                    if (donantion.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View(donantion);
+                    }
+                    return View(donantion);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    return View("SearchDonationType");
+                }
+            }
+            else
+            {
+
+            }
+
+            return View();
         }
 
-        public ActionResult AddDonationType()
+            public ActionResult AddDonationType()
         {
             return View();
         }

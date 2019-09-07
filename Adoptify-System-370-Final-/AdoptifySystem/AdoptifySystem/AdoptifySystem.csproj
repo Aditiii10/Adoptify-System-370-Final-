@@ -206,6 +206,9 @@
     <Compile Include="Animal.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="AnimalType_SearchAnimalType_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Animal_Breed.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -228,6 +231,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Audit_Log.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BreedType_SearchBreedType_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Capture_Medical_Card.cs">
@@ -265,6 +271,9 @@
     <Compile Include="Donor.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Donor_SearchDonor_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Don_SearchDon_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -278,6 +287,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Emp_Kennel.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Emp_SearchEmpType_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Event_.cs">
@@ -334,6 +346,9 @@
     <Compile Include="Packaging_Type.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Parent_SearchParent_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Payment.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -346,6 +361,12 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Stock.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Stock_SearchStockType_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Stock_SearchStock_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Stock_Type.cs">
