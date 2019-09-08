@@ -107,7 +107,7 @@
       <PropertyRef Name="Animal_ID" />
     </Key>
     <Property Name="Animal_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Animal_Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Animal_Image" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="Animal_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="Animal_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="Animal_Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -118,6 +118,8 @@
     <Property Name="Animal_Entry_Date" Type="DateTime" Precision="3" />
     <Property Name="Animal_Coat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Animal_Status_ID" Type="Int32" />
+    <Property Name="Animal_Image_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Animal_Image_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt" FromRole="Animal" ToRole="Adoption" />
     <NavigationProperty Name="Animal_Status" Relationship="Self.fkani" FromRole="Animal" ToRole="Animal_Status" />
     <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh" FromRole="Animal" ToRole="Animal_Kennel_History" />
@@ -290,11 +292,16 @@
     <Property Name="Emp_ContactNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
     <Property Name="Emp_IDNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="Emp_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="Emp_Contract" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="Emp_Contract" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="Emp_Date_Employed" Type="DateTime" Precision="0" />
     <Property Name="Title_ID" Type="Int32" />
     <Property Name="Emp_Type_ID" Type="Int32" />
+    <Property Name="Emp_Status_ID" Type="Int32" />
+    <Property Name="Emp_Contract_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Emp_Contract_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BarcodeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk" FromRole="Employee" ToRole="Emp_Kennel" />
+    <NavigationProperty Name="Employee_Status" Relationship="Self.FK_Employee_ToTable" FromRole="Employee" ToRole="Employee_Status" />
     <NavigationProperty Name="Title" Relationship="Self.fkemp" FromRole="Employee" ToRole="Title" />
     <NavigationProperty Name="Employee_Type" Relationship="Self.fkemp1" FromRole="Employee" ToRole="Employee_Type" />
     <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
@@ -306,6 +313,7 @@
     </Key>
     <Property Name="Employee_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Employee_Status_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_ToTable" FromRole="Employee_Status" ToRole="Employee" />
   </EntityType>
   <EntityType Name="Employee_Type">
     <Key>
@@ -467,6 +475,7 @@
     <Property Name="Stock_Type_ID" Type="Int32" />
     <Property Name="Packaging_Type_ID" Type="Int32" />
     <Property Name="Unit_Type_ID" Type="Int32" />
+    <Property Name="Unit_number" Type="Int32" />
     <NavigationProperty Name="Donation_Line" Relationship="Self.fkdonl" FromRole="Stock" ToRole="Donation_Line" />
     <NavigationProperty Name="Packaging_Type" Relationship="Self.fkstock1" FromRole="Stock" ToRole="Packaging_Type" />
     <NavigationProperty Name="Stock_Type" Relationship="Self.fkstock" FromRole="Stock" ToRole="Stock_Type" />
@@ -974,6 +983,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Employee_ToTable">
+    <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Status">
+        <PropertyRef Name="Employee_Status_ID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Emp_Status_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkemp">
     <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
     <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -1352,6 +1373,10 @@
       <End Role="Kennel" EntitySet="Kennels" />
       <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
     </AssociationSet>
+    <AssociationSet Name="FK_Employee_ToTable" Association="Self.FK_Employee_ToTable">
+      <End Role="Employee_Status" EntitySet="Employee_Status" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
     <AssociationSet Name="fkemp" Association="Self.fkemp">
       <End Role="Title" EntitySet="Titles" />
       <End Role="Employee" EntitySet="Employees" />
@@ -1420,5 +1445,114 @@
       <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
       <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
     </AssociationSet>
+    <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SearchDon" EntitySet="Donation_Type" ReturnType="Collection(Wollies_ShelterModel.Donation_Type)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchParent" EntitySet="Foster_Care_Parent" ReturnType="Collection(Wollies_ShelterModel.Foster_Care_Parent)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchDonor" EntitySet="Donors" ReturnType="Collection(Wollies_ShelterModel.Donor)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchstock" EntitySet="Stocks" ReturnType="Collection(Wollies_ShelterModel.Stock)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchstocktype" EntitySet="Stock_Type" ReturnType="Collection(Wollies_ShelterModel.Stock_Type)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchanimaltype" EntitySet="Animal_Type" ReturnType="Collection(Wollies_ShelterModel.Animal_Type)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchbreed" EntitySet="Animal_Breed" ReturnType="Collection(Wollies_ShelterModel.Animal_Breed)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchemptype" EntitySet="Employee_Type" ReturnType="Collection(Wollies_ShelterModel.Employee_Type)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="AnimalType_SearchAnimalType_Result">
+    <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="BreedType_SearchBreedType_Result">
+    <Property Type="Int32" Name="Animal_Breed_ID" Nullable="false" />
+    <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Don_SearchDon_Result">
+    <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
+    <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
+  </ComplexType>
+  <ComplexType Name="Donor_SearchDonor_Result">
+    <Property Type="Int32" Name="Donor_ID" Nullable="false" />
+    <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Title_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Emp_SearchEmpType_Result">
+    <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Emp_Type_Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Emp_Type_Description" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Parent_SearchParent_Result">
+    <Property Type="Int32" Name="Foster_Parent_ID" Nullable="false" />
+    <Property Type="String" Name="Foster_Parent_Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_Surname" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_Address" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_CellNumber" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_WorkNumber" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_Email" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Foster_Parent_IDNumber" Nullable="true" />
+    <Property Type="DateTime" Name="Foster_Parent_Last_Modified" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="Num_In_Household" Nullable="true" />
+    <Property Type="String" Name="Type_Of_Housing" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
+    <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Stock_SearchStock_Result">
+    <Property Type="Int32" Name="Stock_ID" Nullable="false" />
+    <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Stock_Quantity" Nullable="true" />
+    <Property Type="String" Name="Stock_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Stock_Type_ID" Nullable="true" />
+    <Property Type="Int32" Name="Packaging_Type_ID" Nullable="true" />
+    <Property Type="Int32" Name="Unit_Type_ID" Nullable="true" />
+    <Property Type="Int32" Name="Unit_number" Nullable="true" />
+    <Property Type="Int32" Name="Stock_Type_ID1" Nullable="false" />
+    <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="Stock_SearchStockType_Result">
+    <Property Type="Int32" Name="Stock_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+  </ComplexType>
 </Schema>

@@ -92,7 +92,7 @@
       <PropertyRef Name="Animal_ID" />
     </Key>
     <Property Name="Animal_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Animal_Image" Type="varchar(max)" />
+    <Property Name="Animal_Image" Type="varbinary(max)" />
     <Property Name="Animal_Name" Type="varchar" MaxLength="150" />
     <Property Name="Animal_Description" Type="varchar" MaxLength="200" />
     <Property Name="Animal_Gender" Type="varchar" MaxLength="50" />
@@ -103,6 +103,8 @@
     <Property Name="Animal_Entry_Date" Type="datetime" />
     <Property Name="Animal_Coat" Type="varchar" MaxLength="100" />
     <Property Name="Animal_Status_ID" Type="int" />
+    <Property Name="Animal_Image_Name" Type="nvarchar(max)" />
+    <Property Name="Animal_Image_Type" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Animal_Breed">
     <Key>
@@ -244,10 +246,14 @@
     <Property Name="Emp_ContactNumber" Type="nvarchar" MaxLength="12" />
     <Property Name="Emp_IDNumber" Type="nvarchar" MaxLength="150" />
     <Property Name="Emp_Email" Type="nvarchar" MaxLength="254" />
-    <Property Name="Emp_Contract" Type="nvarchar" MaxLength="254" />
+    <Property Name="Emp_Contract" Type="varbinary(max)" />
     <Property Name="Emp_Date_Employed" Type="date" />
     <Property Name="Title_ID" Type="int" />
     <Property Name="Emp_Type_ID" Type="int" />
+    <Property Name="Emp_Status_ID" Type="int" />
+    <Property Name="Emp_Contract_Name" Type="nvarchar(max)" />
+    <Property Name="Emp_Contract_Type" Type="nvarchar(max)" />
+    <Property Name="BarcodeImageUrl" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Employee_Status">
     <Key>
@@ -398,6 +404,7 @@
     <Property Name="Stock_Type_ID" Type="int" />
     <Property Name="Packaging_Type_ID" Type="int" />
     <Property Name="Unit_Type_ID" Type="int" />
+    <Property Name="Unit_number" Type="int" />
   </EntityType>
   <EntityType Name="Stock_Type">
     <Key>
@@ -506,6 +513,18 @@
     <Property Name="Vol_WorkType_Name" Type="nvarchar" MaxLength="100" />
     <Property Name="Vol_WorkType_Description" Type="nvarchar" MaxLength="200" />
   </EntityType>
+  <Association Name="FK_Employee_ToTable">
+    <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Status">
+        <PropertyRef Name="Employee_Status_ID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Emp_Status_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkado">
     <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
     <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
@@ -1082,6 +1101,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="AnimalType_SearchAnimalType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="BreedType_SearchBreedType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Don_SearchDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Donor_SearchDonor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Emp_SearchEmpType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Parent_SearchParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Stock_SearchStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Stock_SearchStockType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
   <EntityContainer Name="Wollies_ShelterModelStoreContainer">
     <EntitySet Name="Adopter" EntityType="Self.Adopter" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
@@ -1132,6 +1175,10 @@
     <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Employee_ToTable" Association="Self.FK_Employee_ToTable">
+      <End Role="Employee_Status" EntitySet="Employee_Status" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
     <AssociationSet Name="fkado" Association="Self.fkado">
       <End Role="Title" EntitySet="Title" />
       <End Role="Adopter" EntitySet="Adopter" />
