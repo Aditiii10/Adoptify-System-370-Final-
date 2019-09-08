@@ -3,31 +3,32 @@
     ViewBag.Title = "ReceiveStock";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>ReceiveStock</h2>
-@using (Html.BeginForm())
-{
-    <input type="text" name="Stock_ID" value="@Model.stock.Stock_ID" hidden/>
-    <label>Select Stock Type</label><br />
-    if (Model.Stock_Types != null)
+<div id="main">
+    <h2>ReceiveStock</h2>
+    @using (Html.BeginForm())
     {
-
-        <select disabled name="Stock_Type_ID" id="exampleList">
-
-        @foreach (var item in Model.Stock_Types)
+        <input type="text" name="Stock_ID" value="@Model.stock.Stock_ID" hidden />
+        <label>Select Stock Type</label><br />
+        if (Model.Stock_Types != null)
         {
-            if (Model.stock.Stock_Type_ID == item.Stock_Type_ID)
-            {
-                <option selected value="@item.Stock_Type_ID">@item.Stock_Type_Name</option>
-            }
-            else
-            {
-                <option value="@item.Stock_Type_ID">@item.Stock_Type_Name</option>
 
-            }
+            <select disabled name="Stock_Type_ID" id="exampleList">
+
+                @foreach (var item in Model.Stock_Types)
+                {
+                    if (Model.stock.Stock_Type_ID == item.Stock_Type_ID)
+                    {
+                        <option selected value="@item.Stock_Type_ID">@item.Stock_Type_Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Stock_Type_ID">@item.Stock_Type_Name</option>
+
+                    }
+                }
+
+            </select>
         }
-    
-</select>
-    }
         <br />
         <h1>Food Detail</h1>
         <label>Food Packaging Type:</label>
@@ -37,7 +38,7 @@
                 if (Model.stock.Packaging_Type_ID == item.Packaging_Type_ID)
                 {
                     <div class="form-check">
-                        <input disabled  class="form-check-input" type="radio" name="Packaging_Type_ID" value="@item.Packaging_Type_ID" checked>
+                        <input disabled class="form-check-input" type="radio" name="Packaging_Type_ID" value="@item.Packaging_Type_ID" checked>
                         <label class="form-check-label" for="exampleRadios1">
                             @item.Packaging_Type_Name
                         </label>
@@ -48,7 +49,7 @@
 
 
                     <div class="form-check">
-                        <input disabled  class="form-check-input" type="radio" name="Packaging_Type_ID" value="@item.Packaging_Type_ID">
+                        <input disabled class="form-check-input" type="radio" name="Packaging_Type_ID" value="@item.Packaging_Type_ID">
                         <label class="form-check-label" for="exampleRadios1">
                             @item.Packaging_Type_Name
                         </label>
@@ -111,12 +112,13 @@
             <input type="text" readonly name="Stock_Description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="@Model.stock.Stock_Description" placeholder="Enter Description">
             <small id="emailHelp" class="hide form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
-    
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-            <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+            </div>
         </div>
+    }
     </div>
-}

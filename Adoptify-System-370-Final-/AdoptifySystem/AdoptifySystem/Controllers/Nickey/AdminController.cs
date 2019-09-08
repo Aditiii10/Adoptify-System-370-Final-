@@ -164,7 +164,7 @@ namespace AdoptifySystem.Controllers
         public ActionResult Checkin()
         {
             List<Employee> emp = new List<Employee>();
-            emp = db.Employees.Where(z => z.Employee_Status.Employee_Status_Name == "Checked-out").ToList();
+            emp = db.Employees.Where(z => z.Employee_Status.Employee_Status_Name == "Checked-Out").ToList();
             flex.employeelist = emp;
             flex.employee = null;
             return View(flex);
@@ -191,9 +191,8 @@ namespace AdoptifySystem.Controllers
             db.Entry(emp).CurrentValues.SetValues(empold);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
-
-
         }
+
         [HttpPost]
         public ActionResult GetUserDetails(int? id, string button)
         {
@@ -204,9 +203,9 @@ namespace AdoptifySystem.Controllers
             {
                 return RedirectToAction("Checkin");
             }
-            id++;
+
             var emp = flex.employeelist.Where(z => z.Emp_ID == id).FirstOrDefault();
-            if (id == null)
+            if (emp == null)
             {
                 ViewBag.err = "Employee not found";
                 return RedirectToAction("Checkin");
@@ -214,36 +213,62 @@ namespace AdoptifySystem.Controllers
             flex.employee = emp;
             if (button == "checkout")
             {
+                ViewBag.Time = DateTime.Now.ToString("dddd, dd MMMM yyyy hh:mm tt");
                 return View("Checkout", flex);
             }
             if (button == "checkin")
             {
+                ViewBag.Time = DateTime.Now.ToString("dddd, dd MMMM yyyy hh:mm tt");
                 return View("Checkin", flex);
             }
             return View("Search");
 
+
         }
         public ActionResult Checkout()
         {
-            return View();
+            List<Employee> emp = new List<Employee>();
+            emp = db.Employees.Where(z => z.Employee_Status.Employee_Status_Name == "Checked-In").ToList();
+            flex.employeelist = emp;
+            flex.employee = null;
+            return View(flex);
         }
         public ActionResult Checkout(int? id)
         {
             id++;
             DateTime datenow = DateTime.Now;
-            TimeSheet time = new TimeSheet();
-            time.Emp_ID = flex.employee.Emp_ID;
-            time.Check_out = datenow;
+            TimeSheet Tempnewtimesheet = new TimeSheet();
+            Tempnewtimesheet.Emp_ID = flex.employee.Emp_ID;
+            Tempnewtimesheet.Check_out = datenow;
             //find the timesheet
-            var timesheet = db.TimeSheets.Where(z => z.Emp_ID == time.Emp_ID && time.Check_in.Equals(datenow.Date)).FirstOrDefault();
-            var oldtimesheet = db.TimeSheets.Where(z => z.Emp_ID == time.Emp_ID && time.Check_in.Equals(datenow.Date)).FirstOrDefault();
-            if (timesheet == null)
+            var timesheets = db.TimeSheets.Where(z => z.Emp_ID == Tempnewtimesheet.Emp_ID && z.Check_out == null).ToList();
+            TimeSheet old_timesheet = new TimeSheet();
+            TimeSheet new_timesheet = new TimeSheet();
+            //var oldtimesheet = db.TimeSheets.Where(z => z.Emp_ID == time.Emp_ID && z.Check_out == null).FirstOrDefault();
+            if (timesheets == null)
             {
                 ViewBag.err = "Timesheet is not found";
                 return View();
             }
-            timesheet.Check_out = time.Check_out;
-            db.Entry(oldtimesheet).CurrentValues.SetValues(timesheet);
+            else
+            {
+
+                foreach (var item in timesheets)
+                {
+                    string Checkin_date = item.Check_in?.ToString("dddd, dd MMMM yyyy");
+                    string temp_datenow = datenow.ToString("dddd, dd MMMM yyyy");
+                    if (Checkin_date == temp_datenow)
+                    {
+                        old_timesheet = item;
+                        new_timesheet = item;
+                        id = item.TimeSheet_ID;
+                        break;
+                    }
+                }
+            }
+
+            new_timesheet.Check_out = Tempnewtimesheet.Check_out;
+            db.Entry(old_timesheet).CurrentValues.SetValues(new_timesheet);
             db.SaveChanges();
             var emp = db.Employees.Where(z => z.Emp_ID == flex.employee.Emp_ID).FirstOrDefault();
             var empold = db.Employees.Where(z => z.Emp_ID == flex.employee.Emp_ID).FirstOrDefault();
@@ -287,7 +312,7 @@ namespace AdoptifySystem.Controllers
                             if (item.Role_Name == role.Role_Name)
                             {
                                 count++;
-                                ViewBag.errorMessage = "There is a duplicate Donation Type Already";
+                                ViewBag.errorMessage = "There is a duplicate User Role Already";
                                 return View();
                             }
 
@@ -345,6 +370,36 @@ namespace AdoptifySystem.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult SearchRole(string search)
+        {
+            if (search != null)
+            {
+
+                List<Role_> roles = new List<Role_>();
+                try
+                {
+                    roles = db.Role_.Where(z => z.Role_Name.StartsWith(search)).ToList();
+                    if (roles.Count == 0)
+                    {
+                        @ViewBag.err = "No results found";
+                        return View("SearchUserRole", roles);
+                    }
+                    return View("SearchUserRole", roles);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.errormessage = "there was a network error: " + e.Message;
+                    return View();
+                }
+            }
+            else
+            {
+
+            }
+            return View();
+        }
+
         public ActionResult MaintainUserRole(int? id)
         {
 
@@ -363,7 +418,56 @@ namespace AdoptifySystem.Controllers
         public ActionResult MaintainUserRole(Role_ role)
         {
 
-            return View();
+            try
+            {
+                List<Role_> temprole = new List<Role_>();
+                Role_ oldrole_ = db.Role_.Find(role.Role_ID);
+                temprole = db.Role_.ToList();
+                foreach (var item in temprole)
+                {
+
+                    if (item.Role_Name == role.Role_Name)
+                    {
+                        ViewBag.err = "User Role name has already been taken. Try Again.";
+                        return RedirectToAction("MaintainUserRole", new { role, ViewBag.err });
+                    }
+
+                }
+                db.Entry(oldrole_).CurrentValues.SetValues(role);
+                db.SaveChanges();
+                return View("Index", "Home");
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = e.Message + "Error the Database does not exist at the moment";
+                throw;
+            }
+
+
+        }
+
+        public ActionResult Delete(int? id)
+        {
+
+            if (id != null)
+            {
+                Role_ roles = db.Role_.Find(id);
+                int count = roles.UserRoles.Count();
+                if (count != 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    ViewBag.err = "You can not delete this";
+                    return View("SearchUserRole");
+                }
+                else
+                {
+                    db.Role_.Remove(roles);
+                    db.SaveChanges();
+                    return View("SearchUserRole");
+                }
+            }
+            return View("SearchUserRole");
+
         }
 
         [NonAction]

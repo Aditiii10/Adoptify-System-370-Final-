@@ -415,6 +415,15 @@
     <NavigationProperty Name="Adopter" Relationship="Self.fkfos" FromRole="Foster_Care_Parent" ToRole="Adopter" />
     <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc1" FromRole="Foster_Care_Parent" ToRole="Foster_Care" />
   </EntityType>
+  <EntityType Name="GoogleChartData">
+    <Key>
+      <PropertyRef Name="SLID" />
+    </Key>
+    <Property Name="SLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Cats" Type="Int32" Nullable="false" />
+    <Property Name="Dogs" Type="Int32" Nullable="false" />
+  </EntityType>
   <EntityType Name="HomeCheck">
     <Key>
       <PropertyRef Name="HomeCheck_ID" />
@@ -1464,6 +1473,7 @@
     <EntitySet Name="Event_Type" EntityType="Self.Event_Type" />
     <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" />
     <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" />
+    <EntitySet Name="GoogleChartDatas" EntityType="Self.GoogleChartData" />
     <EntitySet Name="HomeChecks" EntityType="Self.HomeCheck" />
     <EntitySet Name="Kennels" EntityType="Self.Kennel" />
     <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" />
@@ -1736,5 +1746,59 @@
       <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
       <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
     </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="VetSearch" EntitySet="Veterinarians" ReturnType="Collection(Wollies_ShelterModel.Veterinarian)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Vet_SearchVet_Result">
+    <Property Type="Int32" Name="Vet_ID" Nullable="false" />
+    <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
+    <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
+  </ComplexType>
 </Schema>

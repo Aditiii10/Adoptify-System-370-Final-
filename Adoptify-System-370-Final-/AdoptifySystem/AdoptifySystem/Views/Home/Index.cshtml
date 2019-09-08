@@ -4,113 +4,183 @@
 }
 
 
-<div id="main">
-<div class="" style="text-align:center;padding-left:120px">
-    <h1>Wollies Animal Shelter Home Page</h1>
-</div>
-<hr />
+@*<div id="main">*@
 <br />
-<div class="panel panel-default" style="width:1200px">
-    <div class="panel-heading">
-        <h3 class="panel-title">Upcoming Events</h3>
-    </div>
-    
-    <div id="calender"></div>
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1>Wollies Animal Shelter Home Page</h1>
+            </div>
+        </div>
+        <hr />
+        <br />
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#schedule">Schedule</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#graph">Graphs and Indicators</a>
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="panel panel-default;tab-pane fade active show" id="schedule" style="width:1200px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Upcoming Events</h3>
+                </div>
 
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><span id="eventTitle"></span></h4>
+                <div id="calender"></div>
+
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"><span id="eventTitle"></span></h4>
+                            </div>
+                            @*<div class="modal-body">
+                        <button id="btnDelete" class="btn btn-danger btn-sm pull-right">
+                            <span class="glyphicon glyphicon-trash"></span> Remove
+                        </button>
+                        <button id="btnEdit" class="btn btn-warning btn-sm pull-right" style="margin-right:5px;">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </button>*@
+                            <p id="pDetails"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
                 </div>
-                @*<div class="modal-body">
-    <button id="btnDelete" class="btn btn-danger btn-sm pull-right">
-        <span class="glyphicon glyphicon-trash"></span> Remove
-    </button>
-    <button id="btnEdit" class="btn btn-warning btn-sm pull-right" style="margin-right:5px;">
-        <span class="glyphicon glyphicon-pencil"></span> Edit
-    </button>*@
-                    <p id="pDetails"></p>
+            </div>
+
+
+            <div id="myModalSave" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Add Events to Schedule</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal">
+                                <input type="hidden" id="hdEventID" value="0" />
+                                <div class="form-group">
+                                    <label>Subject</label>
+                                    <input type="text" id="txtSubject" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Start</label>
+                                    <div class="input-group date" id="dtp1">
+                                        <input type="text" id="txtStart" class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="divEndDate" style="display:none">
+                                    <label>End</label>
+                                    <div class="input-group date" id="dtp2">
+                                        <input type="text" id="txtEnd" class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Theme Color</label>
+                                    <select id="ddThemeColor" class="form-control">
+                                        <option value="">Default</option>
+                                        <option value="red">Red-</option>
+                                        <option value="blue">Blue-Events</option>
+                                        <option value="orange">Orange-HomeCheck</option>
+                                        <option value="black">Black-Other</option>
+                                    </select>
+                                </div>
+                                <button type="button" id="btnSave" class="btn btn-success">Save</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+            @*</div>*@
+
+            <div class="tab-pane fade active show" id="graph">
+                <div id="chart_div" style="width:500px;height:400px">
+                    @*Here Chart Will Load*@
+
                 </div>
             </div>
         </div>
-    </div>
+
+            <script src="~/Scripts/jquery-3.4.1.js"></script>
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+            <script>
+                var chartData; // globar variable for hold chart data
+                google.load("visualization", "1", { packages: ["corechart"] });
+
+                // Here We will fill chartData
+
+                $(document).ready(function () {
+
+                    $.ajax({
+                        url: "Home/GetChartData",
+                        data: "",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; chartset=utf-8",
+                        success: function (data) {
+                            chartData = data.d;
+                        },
+                        error: function () {
+                            alert("Error loading data! Please try again.");
+                        }
+                    }).done(function () {
+                        // after complete loading data
+                        google.setOnLoadCallback(drawChart);
+                        drawChart();
+                    });
+                });
 
 
-    @*<div id="myModalSave" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add Events to Schedule</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <input type="hidden" id="hdEventID" value="0" />
-                        <div class="form-group">
-                            <label>Subject</label>
-                            <input type="text" id="txtSubject" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Start</label>
-                            <div class="input-group date" id="dtp1">
-                                <input type="text" id="txtStart" class="form-control" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
-                            </div>
-                        </div>
-                        <div class="form-group" id="divEndDate" style="display:none">
-                            <label>End</label>
-                            <div class="input-group date" id="dtp2">
-                                <input type="text" id="txtEnd" class="form-control" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea id="txtDescription" rows="3" class="form-control"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Theme Color</label>
-                            <select id="ddThemeColor" class="form-control">
-                                <option value="">Default</option>
-                                <option value="red">Red-</option>
-                                <option value="blue">Blue-Events</option>
-                                <option value="orange">Orange-HomeCheck</option>
-                                <option value="black">Black-Other</option>
-                            </select>
-                        </div>
-                        <button type="button" id="btnSave" class="btn btn-success">Save</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>*@
-</div>
 
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable(chartData);
 
-@section Scripts{
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+                    var options = {
+                        title: "Animal Intake in the Past 5 years",
+                        pointSize: 5,
+                        seriesType: "bars",
+                        series: { 2: { type: "line" } }
+                    };
 
-    <script>
+                    var comboChart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+                    comboChart.draw(data, options);
+
+                }
+
+            </script>
+
+
+            <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+            <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+            @section Scripts{
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+                <script>
             $(document).ready(function () {
                 var events = [];
                 var selectedEvent = null;
@@ -313,12 +383,13 @@
                     alertify.success(successMessage);
             });
 
-        
+
                 $(function () {
                     var successMessage = '@TempData["HomeCheckReportMessage"]'
                     if (successMessage != '')
                         alertify.success(successMessage);
                 });
-    </script>
-}
+                </script>
+            }
+
 

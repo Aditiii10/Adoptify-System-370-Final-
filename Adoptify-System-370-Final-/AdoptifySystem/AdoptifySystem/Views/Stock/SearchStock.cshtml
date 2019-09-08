@@ -1,4 +1,4 @@
-﻿@model List<AdoptifySystem.Models.Stock>
+﻿@model List<AdoptifySystem.Stock>
 @{
     ViewBag.Title = "Search Stock";
 }
@@ -7,7 +7,7 @@
         <h1>Stock List</h1>
     </div>
     <h1>@ViewBag.errormessage</h1>
-    @Html.ActionLink("Create New", "AddStock", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+    @*@Html.ActionLink("Create New", "AddStock", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })*@
 
     @using (Html.BeginForm("Search", "Stock", FormMethod.Get))
     {
@@ -23,7 +23,6 @@
                 <button type="submit" value="Search" class="btn btn-primary">Search</button>
             </div>
         </div>
-    }
         <br />
         <table class="table table-bordered">
             <tr class="thead-light">
@@ -71,12 +70,13 @@
                 @Html.DisplayFor(modelItem => item.Stock_Quantity)
             </td>
             <td>
-                @Html.ActionLink("Receive Stock", "ReceiveStock", new { id = item.Stock_ID }, new { @class = "btn btn-warning" }) |
-                @Html.ActionLink("Capture Stock", "CaptureStockTake", new { id = item.Stock_ID }, new { @class = "btn btn-warning" }) |
-                @Html.ActionLink("Maintain", "MaintainStock", new { id = item.Stock_ID }, new { @class = "btn btn-warning" }) |
-                <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Stock_ID">More info </button> |
+                @Html.ActionLink("Edit", "MaintainStock", new { id = item.Stock_ID }, new { @class = "btn btn-warning" }) |
+
+                @*<button class="btn moreinfo" data-toggle="modal" data-target="#@item.Stock_ID">More info </button> |*@
                 @Html.ActionLink("Delete", "Delete", new { id = item.Stock_ID }, new { @class = "btn btn-danger" }) |
-                
+                @Html.ActionLink("Receive Stock", "ReceiveStock", new { id = item.Stock_ID }, new { @class = "btn btn-default" }) |
+                @Html.ActionLink("Capture Stock Take", "CaptureStockTake", new { id = item.Stock_ID }, new { @class = "btn btn-primary" }) |
+                <input type="button" value="More Info asdfsfsd" class="btn moreinfo" data-toggle="modal" data-target="#@item.Stock_ID">
             </td>
         </tr>
                     <div class="modal fade" id="@item.Stock_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -100,9 +100,7 @@
                                     <span class="value">Stock Type:</span>
                                     @Html.DisplayFor(modelItem => item.Stock_Type.Stock_Type_Name) <br />
                                     <span class="value">Unit Type:</span>
-                                    @Html.DisplayFor(modelItem => item.Unit_number)+ @Html.DisplayFor(modelItem => item.Unit_Type.Unit_Type_Name) <br />
-                                    <span class="value">Unit Number:</span>
-                                    @Html.DisplayFor(modelItem => item.Unit_number) <br />
+                                    @Html.DisplayFor(modelItem => item.Unit_Type.Unit_Type_Name) <br />
                                     <span class="value">Packaging Type:</span>
                                     @Html.DisplayFor(modelItem => item.Packaging_Type.Packaging_Type_Name) <br />
                                 </div>
@@ -119,7 +117,7 @@
             }
 
         </table>
-    
+    }
 
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

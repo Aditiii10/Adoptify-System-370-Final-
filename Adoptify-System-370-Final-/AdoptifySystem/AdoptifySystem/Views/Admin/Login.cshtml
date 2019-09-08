@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Login";
     Layout = null;
+    @* Favicon Adoptify Logo *@
+    <link rel="icon" href="~/AdopifyLogo.ico" />
 }
 <div id="main">
     <div class="login jumbotron container col-lg-4 " style="margin-left:600px; margin-top:150px" >
@@ -20,8 +22,9 @@
                     <label for="Password">Password : </label>
                     @Html.TextBoxFor(a => a.Password, new { @class = "form-control textbox", type = "password", required = "required" })
                 </div>
-                <h4 style="color:red">@ViewBag.LoginError</h4><br />
-                <a style="color:white">@Html.ActionLink("Forgot Password?", "ResetPassword", "Admin")</a>
+                <h3 style="color:white">@ViewBag.LoginError</h3><br />
+               @Html.ActionLink("Forgot Password?", "ResetPassword", "Admin", null, new { @class = "btn btn-default" })
+                <br />
                 <br />
                 <input type="submit" value="Login" class="btn btn-primary btn-block btn-large" />
             }
@@ -134,7 +137,7 @@
 
     html {
         width: 25%;
-        height: 55%;
+        height: 73%;
         /*overflow: hidden;*/
     }
 

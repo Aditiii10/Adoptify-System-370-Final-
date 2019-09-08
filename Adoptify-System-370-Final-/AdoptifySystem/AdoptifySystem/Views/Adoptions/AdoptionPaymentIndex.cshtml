@@ -9,7 +9,7 @@
 
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
-        <h1>Adoption Information for Adoption Payment</h1>
+        <div class="col-sm-10" style='background-color: #2ba6cb'>  <h1>Adoption Information for Adoption Payment</h1></div>
     </div>
 
     <hr />
@@ -76,7 +76,7 @@
                 </td>
                 <td>
                     @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
-                    @Html.ActionLink("Capture Adoption Payment", "CaptureAdoptionPayment", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-info glyphicon glyphicon-usd" })
+                    @Html.ActionLink("Capture Adoption Payment", "CaptureAdoptionPayment", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning glyphicon glyphicon-usd" })
 
                 </td>
             </tr>
@@ -84,7 +84,7 @@
 
 
     </table>
-    @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-remove-sign" })
-    @Html.ActionLink("Refresh", "HomeCheckIndex", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })
+    @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+    @Html.ActionLink("Refresh", "AdoptionPaymentIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
 </div>
         

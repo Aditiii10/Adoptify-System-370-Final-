@@ -1,4 +1,7 @@
 ﻿@model AdoptifySystem.Models.nickeymodel.Flexible
+@{
+    ViewBag.Title = "AddDonation";
+}
 <head>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
@@ -31,11 +34,11 @@
                         {
                             if (item.Donor_Name == Model.donor.Donor_Name && item.Donor_Surname == Model.donor.Donor_Surname)
                             {
-                    <option selected>@item.Donor_Name @item.Donor_Surname</option>
+                                <option selected>@item.Donor_Name @item.Donor_Surname</option>
                             }
                             else
                             {
-                    <option>@item.Donor_Name @item.Donor_Surname</option>
+                                <option>@item.Donor_Name @item.Donor_Surname</option>
                             }
 
                         }
@@ -46,7 +49,7 @@
 
                         foreach (var item in Model.DonorList)
                         {
-                    <option class="form-control">@item.Donor_Name @item.Donor_Surname</option>
+                            <option class="form-control">@item.Donor_Name @item.Donor_Surname</option>
                         }
 
 
@@ -220,17 +223,17 @@
             }
         </div>
     </div>
-<div class="form-group">
-    @using (Html.BeginForm("save", "Donations", FormMethod.Post))
-    {
-        <div class="col-xs-12">
-            <br>
-            <button name="button" value="Save" class="btn btn-lg btn-success pull-right" type="submit">Save</button>
-            <button name="button" value="Cancel" class="btn btn-lg btn-primary pull-left" type="submit">Cancel</button>
-        </div>
-    }
-</div>
-    
+    <div class="form-group">
+        @using (Html.BeginForm("save", "Donations", FormMethod.Post))
+        {
+            <div class="col-xs-12">
+                <br>
+                <button name="button" value="Save" class="btn btn-lg btn-success pull-right" type="submit">Save</button>
+                <button name="button" value="Cancel" class="btn btn-lg btn-primary pull-left" type="submit">Cancel</button>
+            </div>
+        }
+    </div>
+
 </div>
 
 <script type="text/javascript">

@@ -31,9 +31,9 @@
                     <label class="form-check-label" for="exampleRadios1">
                         @item.Packaging_Type_Name
                     </label>
-                    </div>
-                    }
-                    @*<div class="form-check">
+                </div>
+            }
+            @*<div class="form-check">
                     <input class="form-check-input" type="radio" name="Food_Packaging_Type" id="exampleRadios1" value="Tin" checked>
                     <label class="form-check-label" for="exampleRadios1">
                         Tin
@@ -57,19 +57,19 @@
                         Treats
                     </label>
                 </div>*@
+        </div>
+        <label>Unit Type:</label>
+        <div id="RadioUnit_Type">
+            @foreach (var item in Model.unit_Types)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="Unit_Type_ID" id="exampleRadios1" value="@item.Unit_Type_ID" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                        @item.Unit_Type_Name
+                    </label>
                 </div>
-                <label>Unit Type:</label>
-                <div id="RadioUnit_Type">
-                    @foreach (var item in Model.unit_Types)
-                    {
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="Unit_Type_ID" id="exampleRadios1" value="@item.Unit_Type_ID" checked>
-                            <label class="form-check-label" for="exampleRadios1">
-                                @item.Unit_Type_Name
-                            </label>
-                        </div>
-                    }
-                    @*<div class="form-check">
+            }
+            @*<div class="form-check">
                     <input class="form-check-input" type="radio" name="Unit_Type" id="exampleRadios1" value="option1" checked>
                     <label class="form-check-label" for="exampleRadios1">
                         G
@@ -81,29 +81,29 @@
                         KG
                     </label>
                 </div>*@
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Units:</label>
-                    <input type="number" name="Unit_number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Units">
-                    <small id="emailHelp" class="hide text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <h1>Stock Detail</h1>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Number of Items:</label>
-                    <input type="number" name="Stock_Quantity" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Number of Items" />
-                    <small id="emailHelp" class="hide form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Description:</label>
-                    <input type="tel" name="Stock_Description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Description">
-                    <small id="emailHelp" class="hide form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-            }
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Units:</label>
+            <input type="number" name="Unit_number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Units">
+            <small id="emailHelp" class="hide text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <h1>Stock Detail</h1>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Number of Items:</label>
+            <input type="number" name="Stock_Quantity" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Number of Items" />
+            <small id="emailHelp" class="hide form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Description:</label>
+            <input type="tel" name="Stock_Description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Description">
+            <small id="emailHelp" class="hide form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+    }
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
-                </div>
-            </div>
-            }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+            <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+        </div>
+    </div>
+}

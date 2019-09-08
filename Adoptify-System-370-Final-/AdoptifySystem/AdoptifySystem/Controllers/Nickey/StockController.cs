@@ -38,19 +38,19 @@ namespace AdoptifySystem.Controllers
             return View(flex);
         }
         [HttpPost]
-        public ActionResult AddStock(Stock stock,string button)
+        public ActionResult AddStock(Stock stock, string button)
         {
             try
             {
-                if (button=="Save")
+                if (button == "Save")
                 {
-                    var searchstock = db.Stocks.Where(z=>z.Packaging_Type_ID == stock.Packaging_Type_ID && z.Stock_Description == stock.Stock_Description && z.Unit_Type_ID == stock.Unit_Type_ID && z.Unit_number == stock.Unit_number).FirstOrDefault();
-                    if (searchstock==null)
+                    var searchstock = db.Stocks.Where(z => z.Packaging_Type_ID == stock.Packaging_Type_ID && z.Stock_Description == stock.Stock_Description && z.Unit_Type_ID == stock.Unit_Type_ID && z.Unit_number == stock.Unit_number).FirstOrDefault();
+                    if (searchstock == null)
                     {
                         db.Stocks.Add(stock);
                         db.SaveChanges();
                     }
-                    return View("SearchStock");
+                    return RedirectToAction("AddStock");
                 }
                 if (button == "Cancel")
                 {
@@ -59,11 +59,11 @@ namespace AdoptifySystem.Controllers
             }
             catch (Exception e)
             {
-                
 
-                    return View("SearchStock");
+                ViewBag.err = e.Message;
+                return RedirectToAction("AddStock");
             }
-            return View("SearchStock");
+            return View("Index", "Home");
         }
         public ActionResult SearchStock()
         {
@@ -173,10 +173,10 @@ namespace AdoptifySystem.Controllers
                         ViewBag.err = "Error not found";
                         return HttpNotFound();
                     }
-                    if(!(oldstock.Stock_Quantity > stock.Stock_Quantity))
+                    if (!(oldstock.Stock_Quantity > stock.Stock_Quantity))
                     {
                         ViewBag.err = "Quantity is will be in negatives";
-                        return HttpNotFound(); 
+                        return HttpNotFound();
                     }
                     newstock.Stock_Quantity -= stock.Stock_Quantity;
                     db.Entry(oldstock).CurrentValues.SetValues(newstock);
@@ -200,7 +200,7 @@ namespace AdoptifySystem.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddStockType(Stock_Type stock_type,string button)
+        public ActionResult AddStockType(Stock_Type stock_type, string button)
         {
             ViewBag.errorMessage = "";
             if (button == "Save")
@@ -264,14 +264,14 @@ namespace AdoptifySystem.Controllers
                 List<Stock_Type> Stock_Types = new List<Stock_Type>();
                 List<Packaging_Type> Packaging_Type = new List<Packaging_Type>();
                 List<Unit_Type> unit_Types = new List<Unit_Type>();
-               
-                    Stock_Types = db.Stock_Type.ToList();
-                    Packaging_Type = db.Packaging_Type.ToList();
-                    unit_Types = db.Unit_Type.ToList();
-                    flex.Stock_Types = Stock_Types;
-                    flex.packaging_Types = Packaging_Type;
-                    flex.unit_Types = unit_Types;
-                
+
+                Stock_Types = db.Stock_Type.ToList();
+                Packaging_Type = db.Packaging_Type.ToList();
+                unit_Types = db.Unit_Type.ToList();
+                flex.Stock_Types = Stock_Types;
+                flex.packaging_Types = Packaging_Type;
+                flex.unit_Types = unit_Types;
+
                 Stock stock_ = db.Stocks.Find(id);
                 if (stock_ == null)
                 {
@@ -286,7 +286,7 @@ namespace AdoptifySystem.Controllers
 
                 throw;
             }
-            
+
         }
         [HttpPost]
         public ActionResult ReceiveStock(Stock stock, string button)
@@ -303,11 +303,11 @@ namespace AdoptifySystem.Controllers
                     }
                     else
                     {
-                        newstock.Stock_Quantity += stock.Stock_Quantity; 
+                        newstock.Stock_Quantity += stock.Stock_Quantity;
                         db.Entry(oldstock).CurrentValues.SetValues(newstock);
                         db.SaveChanges();
                     }
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 if (button == "Cancel")
                 {
@@ -356,7 +356,7 @@ namespace AdoptifySystem.Controllers
             return View(stock_Type);
         }
         [HttpPost]
-        public ActionResult MaintainStockType(Stock_Type stock_Type,string button)
+        public ActionResult MaintainStockType(Stock_Type stock_Type, string button)
         {
             if (button == "Save")
             {
@@ -386,5 +386,52 @@ namespace AdoptifySystem.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Deletestock(Stock id)
+        {
+
+            if (id != null)
+            {
+                int count = id.Donation_Line.Count();
+                if (count == 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    return View("SearchUserRole");
+                }
+                else
+                {
+                    db.Stocks.Remove(id);
+                    db.SaveChanges();
+                    return View("Index", "Home");
+                }
+            }
+            //need to send message that cant send message back
+            return View("SearchUserRole");
+
+        }
+        public ActionResult Deletestocktype(Stock_Type id)
+        {
+
+            if (id != null)
+            {
+                int count = id.Stocks.Count();
+                if (count == 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    return View("Searchstocktype");
+                }
+                else
+                {
+                    db.Stock_Type.Remove(id);
+                    db.SaveChanges();
+                    return View("Index", "Home");
+                }
+            }
+            //need to send message that cant send message back
+
+            return View("Searchstocktype");
+
+        }
+
     }
 }

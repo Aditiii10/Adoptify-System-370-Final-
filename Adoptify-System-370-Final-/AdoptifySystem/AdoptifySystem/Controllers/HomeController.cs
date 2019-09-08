@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using AdoptifySystem;
+using System.Web.Script.Services;
+using System.Web.Services;
 
 
 
@@ -75,6 +77,35 @@ namespace AdoptifySystem.Controllers
                 }
             }
             return new JsonResult { Data = new { status = status } };
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public static object[] GetChartData()
+        {
+            List<GoogleChartData> data = new List<GoogleChartData>();
+            //Here MyDatabaseEntities  is our dbContext
+            using (Wollies_ShelterEntities dc = new Wollies_ShelterEntities())
+            {
+                data = dc.GoogleChartDatas.ToList();
+            }
+
+            var chartData = new object[data.Count + 1];
+            chartData[0] = new object[]{
+                "Year",
+                "Cats",
+                "Dogs",
+                "Average"
+            };
+
+            int j = 0;
+            foreach (var i in data)
+            {
+                j++;
+                chartData[j] = new object[] {i.Year.ToString(), i.Cats, i.Dogs,
+                    (i.Cats + i.Dogs)/2};
+            }
+            return chartData;
         }
     }
 }

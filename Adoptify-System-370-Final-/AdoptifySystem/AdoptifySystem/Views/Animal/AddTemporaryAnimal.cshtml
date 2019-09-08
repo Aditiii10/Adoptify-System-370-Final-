@@ -5,7 +5,7 @@
 }
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -16,10 +16,10 @@
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
 
     <style>
-        .column {
+        /*.column {
             box-sizing: border-box;
         }
 
@@ -54,7 +54,7 @@
 
         .column {
             width: 100%;
-        }
+        }*/
     </style>
 
 </head>
@@ -239,7 +239,8 @@
 
                         </div>
                         @*end1*@
-
+                        <br />
+                        <br />
 
                         @*start2*@
                         <div class="column">
@@ -248,22 +249,22 @@
                             </div>
                             <div class="col-xs-6">
                                 <label><b>Animal Microchip Code</b></label><br />
-                                <input type="text" name="Animal_Microchip_Code" placeholder="Animal  Microchip Code" required>
+                                <input type="text" name="Animal_Microchip_Code" placeholder="Animal  Microchip Code" >
                             </div>
 
                             <div class="col-xs-6">
                                 <label><b>Implanteers Pin Number</b></label><br />
-                                <input type="text" name="Implanters_PIN_Number" placeholder="Implanteers Pin Number" required>
+                                <input type="text" name="Implanters_PIN_Number" placeholder="Implanteers Pin Number" >
                             </div>
 
                             <div class="col-xs-6">
                                 <label><b>Animal Coat</b></label><br />
-                                <input type="text" name="Animal_Coat" placeholder="Animal Coat" required>
+                                <input type="text" name="Animal_Coat" placeholder="Animal Coat" >
                             </div>
 
                             <div class="col-xs-6">
                                 <label><b>Owner Name</b></label><br />
-                                <input type="text" name="Owner_Name" placeholder="Enter Owner Name" required>
+                                <input type="text" name="Owner_Name" placeholder="Enter Owner Name" >
                             </div>
 
                             <div class="col-xs-6">
@@ -273,12 +274,12 @@
 
                             <div class="col-xs-6">
                                 <label><b>Date Of Implant</b></label><br />
-                                <input type="date" name="Date_of_Implant" class="form-control" placeholder="MM/DD/YY" required>
+                                <input type="date" name="Date_of_Implant" class="form-control" placeholder="MM/DD/YY" >
                             </div>
 
                             <div class="col-xs-6">
                                 <label><b>Owner Address</b></label><br />
-                                <input type="text" name="Owner_Address" class="form-control" placeholder="Enter Owner Address" required>
+                                <input type="text" name="Owner_Address" class="form-control" placeholder="Enter Owner Address" >
                             </div>
 
 
@@ -288,13 +289,15 @@
 
                         </div>
                         @*start2*@
-
+                        
 
                     </div>
                 </div>
+                <br />
+                <br />
                 <div class="form-group">
-                    <button type="submit" name="button" value="Save" onsubmit="myPassword" class="btn btn-success float-right col-md-6">Save</button>
-                    <button type="button" name="button" value="Cancel" class="btn btn-warning col-md-6">Cancel</button>
+                    <button type="submit" name="button" value="Save" onsubmit="" class="btn btn-success float-right col-md-2">Save</button>
+                    <button type="button" name="button" value="Cancel" class="btn btn-warning col-md-2">Cancel</button>
                 </div>
     }
     </div>

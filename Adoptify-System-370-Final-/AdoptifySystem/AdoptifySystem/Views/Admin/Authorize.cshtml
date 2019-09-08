@@ -1,18 +1,25 @@
-﻿@model Google.Authenticator.SetupCode
-@{
+﻿@model AdoptifySystem.Models.nickeymodel.Flexible
+    @{
+        ViewBag.Title = "Authorize";
+        Layout = null;
+        @* Favicon Adoptify Logo *@
+        <link rel="icon" href="~/AdopifyLogo.ico" />
+    }
+    
 
-
-}
 <div class="login">
-
     <h1>Authorize Login</h1>
     @using (Html.BeginForm("Verify2FA", "Admin"))
     {
+        //<img src="@Model.currentuser.Employee" />
+        <div>@ViewBag.Message</div>
         <div class="form-group">
-            <label for="Code">Authorize Login</label>
-            @Html.TextBox("token", "", new { @class = "form-control textbox" })
+            <label for="Code">Authorize Login using Code in Google Authenticator</label>
+            <br />
+            @Html.TextBox("token", "", new { @class = "form-control textbox", required = "required" }) @*<h3 style="color:red">@ViewBag.AuthError</h3><br />*@
         </div>
-        <input type="submit" value="Authorize" class="btn btn-primary btn-block btn-large" />
+        <input type="submit" value="Authorize" class="btn btn-primary btn-block btn-large" /><br />
+        @Html.ActionLink("Back to login", "Login", "Admin", null, new { @class = "btn btn-success" })
     }
 </div>
 
@@ -39,7 +46,7 @@
         background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
         background-image: linear-gradient(top, #ffffff, #e6e6e6);
         background-repeat: repeat-x;
-        filter: progid: dximagetransform.microsoft.gradient(startColorstr =#ffffff, endColorstr=#e6e6e6, GradientType = 0);
+        filter: progid dximagetransform.microsoft.gradient(startColorstr =#ffffff, endColorstr=#e6e6e6, GradientType = 0);
         border-color: #e6e6e6 #e6e6e6 #e6e6e6;
         border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
         border: 1px solid #e6e6e6;
@@ -112,7 +119,7 @@
         display: block;
     }
 
-    * {
+    .login {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         -ms-box-sizing: border-box;
@@ -121,12 +128,18 @@
     }
 
     html {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
+        width: 25%;
+        height: 60%;
+        /*overflow: hidden;*/
     }
 
-    body {
+    .login {
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: 5px 10px #888888;
+    }
+
+    .login {
         width: 100%;
         height: 100%;
         font-family: 'Open Sans', sans-serif;
@@ -185,3 +198,4 @@
         box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2);
     }
 </style>
+

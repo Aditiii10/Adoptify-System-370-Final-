@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -344,6 +344,15 @@
           <Property Name="Ownership_Housing" Type="varchar" MaxLength="200" />
           <Property Name="Hours_Left_Alone" Type="int" />
           <Property Name="Adopter_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="GoogleChartData">
+          <Key>
+            <PropertyRef Name="SLID" />
+          </Key>
+          <Property Name="SLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Cats" Type="int" Nullable="false" />
+          <Property Name="Dogs" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="HomeCheck">
           <Key>
@@ -1317,6 +1326,40 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Vet_SearchVet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="Wollies_ShelterModelStoreContainer">
           <EntitySet Name="Adopter" EntityType="Self.Adopter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
@@ -1347,6 +1390,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Event_Type" EntityType="Self.Event_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoogleChartData" EntityType="Self.GoogleChartData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HomeCheck" EntityType="Self.HomeCheck" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kennel" EntityType="Self.Kennel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" Schema="dbo" store:Type="Tables" />
@@ -1627,8 +1671,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2046,6 +2089,15 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Adopter_ID" Type="Int32" />
           <NavigationProperty Name="Adopter" Relationship="Self.fkfos" FromRole="Foster_Care_Parent" ToRole="Adopter" />
           <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc1" FromRole="Foster_Care_Parent" ToRole="Foster_Care" />
+        </EntityType>
+        <EntityType Name="GoogleChartData">
+          <Key>
+            <PropertyRef Name="SLID" />
+          </Key>
+          <Property Name="SLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Cats" Type="Int32" Nullable="false" />
+          <Property Name="Dogs" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="HomeCheck">
           <Key>
@@ -3096,6 +3148,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Event_Type" EntityType="Self.Event_Type" />
           <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" />
           <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" />
+          <EntitySet Name="GoogleChartDatas" EntityType="Self.GoogleChartData" />
           <EntitySet Name="HomeChecks" EntityType="Self.HomeCheck" />
           <EntitySet Name="Kennels" EntityType="Self.Kennel" />
           <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" />
@@ -3368,7 +3421,61 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VetSearch" EntitySet="Veterinarians" ReturnType="Collection(Wollies_ShelterModel.Veterinarian)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Vet_SearchVet_Result">
+          <Property Type="Int32" Name="Vet_ID" Nullable="false" />
+          <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3744,6 +3851,16 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="GoogleChartDatas">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.GoogleChartData">
+              <MappingFragment StoreEntitySet="GoogleChartData">
+                <ScalarProperty Name="SLID" ColumnName="SLID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Cats" ColumnName="Cats" />
+                <ScalarProperty Name="Dogs" ColumnName="Dogs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="HomeChecks">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheck">
               <MappingFragment StoreEntitySet="HomeCheck">
@@ -3994,6 +4111,42 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Wollies_ShelterModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Wollies_ShelterModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Wollies_ShelterModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Wollies_ShelterModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Wollies_ShelterModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="Vet_SearchVet" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Vet_SearchVet_Result">
+                <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
+                <ScalarProperty Name="Vet_Name" ColumnName="Vet_Name" />
+                <ScalarProperty Name="Vet_Emial" ColumnName="Vet_Emial" />
+                <ScalarProperty Name="Vet_Tel" ColumnName="Vet_Tel" />
+                <ScalarProperty Name="Vet_Address" ColumnName="Vet_Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VetSearch" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

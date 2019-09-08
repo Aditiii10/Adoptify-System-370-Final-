@@ -7,8 +7,13 @@
     margin-top: 50px;
     padding: 0px 10px;
 }
-
-tr:nth-child(even) {
+/*.navbar {
+    overflow: hidden;
+    position: fixed; 
+    top: 0; 
+    width: 100%; 
+}*/
+/*tr:nth-child(even) {
   background-color:cornflowerblue
 }
 
@@ -175,13 +180,8 @@ div.data {
     div.editvals{
         padding:10px;
     }
-.info.products{
-    width:200px; 
 
-}
-.prod_list{
-    margin-top:10px;
-}
+
 .moreinfo {
     background-color: #FF5733;
     width: 80px;
@@ -198,47 +198,3 @@ button.accordion {
     padding-right: 7px;
     color:#fff;
 }
-.usr_buttons {
-    font-family: 'Lato', sans-serif;
-    font-weight: 200;
-    font-size: 12px;
-}
-th {
-    font-family: 'Montserrat', sans-serif;
-    font-size:13px;
-}
-.logo{
-    width: 500px; 
-    height:auto;    
-    padding: 40px;
-    padding-left:0px;
-    display:block;
-    margin-left: auto;  
-}
-.lead {
-    font-family: 'Lato', sans-serif;
-    font-size: 18px;
-    width: 900px; 
-    font-weight: 400;
-    margin-left: auto;
-    padding-left: 100px;
-}
-.learn{
-    position:relative;
-   left:800px;
-}
-.heading {
-    font-family: 'Lato', sans-serif;
-    font-size: 18px;
-    color: #26282C;
-}
-.products a {
-    color: #FF5733;
-    text-decoration: none;
-}
-        .products a:hover {
-            text-decoration: none;
-            color: #FF5733;
-        }
-
-        

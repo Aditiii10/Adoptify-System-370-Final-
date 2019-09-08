@@ -340,6 +340,15 @@
     <Property Name="Hours_Left_Alone" Type="int" />
     <Property Name="Adopter_ID" Type="int" />
   </EntityType>
+  <EntityType Name="GoogleChartData">
+    <Key>
+      <PropertyRef Name="SLID" />
+    </Key>
+    <Property Name="SLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Cats" Type="int" Nullable="false" />
+    <Property Name="Dogs" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="HomeCheck">
     <Key>
       <PropertyRef Name="HomeCheck_ID" />
@@ -1312,6 +1321,40 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Vet_SearchVet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
   <EntityContainer Name="Wollies_ShelterModelStoreContainer">
     <EntitySet Name="Adopter" EntityType="Self.Adopter" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
@@ -1342,6 +1385,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
     <EntitySet Name="Event_Type" EntityType="Self.Event_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GoogleChartData" EntityType="Self.GoogleChartData" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HomeCheck" EntityType="Self.HomeCheck" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Kennel" EntityType="Self.Kennel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" Schema="dbo" store:Type="Tables" />

@@ -17,7 +17,9 @@ namespace AdoptifySystem.Controllers
         // GET: Veterinarians
         public ActionResult Index(string searchBy, string search)
         {
+          
             try {
+                db.VetSearch(searchBy).ToList();
                 if (searchBy == "Vet_Name")
                     return View(db.Veterinarians.Where(x => x.Vet_Name == search || search == null).ToList());
                 else

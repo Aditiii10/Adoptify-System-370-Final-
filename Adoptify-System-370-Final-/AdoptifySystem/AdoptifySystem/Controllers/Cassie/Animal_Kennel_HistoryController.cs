@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem.Models;
+using OfficeOpenXml;
 
 namespace AdoptifySystem.Controllers.Cassie
 {
@@ -17,8 +18,13 @@ namespace AdoptifySystem.Controllers.Cassie
         // GET: Animal_Kennel_History
         public ActionResult Index()
         {
-            var animal_Kennel_History = db.Animal_Kennel_History.Include(a => a.Animal).Include(a => a.Kennel);
-            return View(animal_Kennel_History.ToList());
+            List<KennelHistoryViewModel> kenlist = db.Animal_Kennel_History.Select(x => new KennelHistoryViewModel
+            {
+                Animal_Kennel_History_ID = x.Animal_Kennel_History_ID,
+                Animal_ID = x.Animal_ID,
+                Kennel_ID = x.Kennel_ID,
+            }).ToList();
+            return View(kenlist);
         }
 
         // GET: Animal_Kennel_History/Details/5
@@ -39,7 +45,7 @@ namespace AdoptifySystem.Controllers.Cassie
         // GET: Animal_Kennel_History/Create
         public ActionResult Create()
         {
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image");
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name");
             ViewBag.Kennel_ID = new SelectList(db.Kennels, "Kennel_ID", "Kennel_Name");
             return View();
         }
@@ -58,7 +64,7 @@ namespace AdoptifySystem.Controllers.Cassie
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", animal_Kennel_History.Animal_ID);
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", animal_Kennel_History.Animal_ID);
             ViewBag.Kennel_ID = new SelectList(db.Kennels, "Kennel_ID", "Kennel_Name", animal_Kennel_History.Kennel_ID);
             return View(animal_Kennel_History);
         }
@@ -75,7 +81,7 @@ namespace AdoptifySystem.Controllers.Cassie
             {
                 return HttpNotFound();
             }
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", animal_Kennel_History.Animal_ID);
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", animal_Kennel_History.Animal_ID);
             ViewBag.Kennel_ID = new SelectList(db.Kennels, "Kennel_ID", "Kennel_Name", animal_Kennel_History.Kennel_ID);
             return View(animal_Kennel_History);
         }
@@ -93,7 +99,7 @@ namespace AdoptifySystem.Controllers.Cassie
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", animal_Kennel_History.Animal_ID);
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", animal_Kennel_History.Animal_ID);
             ViewBag.Kennel_ID = new SelectList(db.Kennels, "Kennel_ID", "Kennel_Name", animal_Kennel_History.Kennel_ID);
             return View(animal_Kennel_History);
         }
@@ -131,6 +137,52 @@ namespace AdoptifySystem.Controllers.Cassie
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void ExportToExcel()
+        {
+            List<KennelHistoryViewModel> kenlist = db.Animal_Kennel_History.Select(x => new KennelHistoryViewModel
+            {
+                Animal_Kennel_History_ID = x.Animal_Kennel_History_ID,
+                Animal_ID = x.Animal_ID,
+                Kennel_ID = x.Kennel_ID,
+            }).ToList();
+
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A1"].Value = "Communication";
+            ws.Cells["B1"].Value = "Com1";
+
+            ws.Cells["A2"].Value = "Report";
+            ws.Cells["B2"].Value = "Report1";
+
+            ws.Cells["A3"].Value = "Date";
+            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+
+            ws.Cells["A6"].Value = "Animal_Kennel_History_ID";
+            ws.Cells["B6"].Value = "Animal_ID";
+            ws.Cells["C6"].Value = "Kennel_ID";
+
+            int rowStart = 7;
+            foreach (var item in kenlist)
+            {
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.Animal_Kennel_History_ID;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.Animal_ID;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.Kennel_ID;
+                rowStart++;
+
+
+            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "ExcelReport.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+
+
         }
     }
 }

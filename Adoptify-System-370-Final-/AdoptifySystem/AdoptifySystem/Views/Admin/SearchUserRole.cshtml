@@ -8,98 +8,98 @@
         <h1>User Role List</h1>
     </div>
     <h1>@ViewBag.err</h1>
-   @* @Html.ActionLink("Create New", "AddUserRole", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })*@
+    @* @Html.ActionLink("Create New", "AddUserRole", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })*@
 
     @using (Html.BeginForm("SearchRole", "Admin", FormMethod.Post))
     {
         <div class="row">
             <div class="col-md-5">
                 <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
-                @Html.TextBox("search",  "", new { @name = "txtSearch", @placeholder = "Search Criteria", @class = "form-control", @autocomplete = "off" })
+                @Html.TextBox("search", "", new { @name = "txtSearch", @placeholder = "Search Criteria", @class = "form-control", @autocomplete = "off" })
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
                 <button type="submit" value="Search" class="btn btn-primary">Search</button>
-                @Html.ActionLink("Reset", "SearchUserRole",null, new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Reset", "SearchUserRole", null, new { @class = "btn btn-secondary" })
             </div>
         </div>
     }
-        <br />
-        <table class="table table-bordered ">
-            <tr class="table-primary">
-                <th>
-                    ID
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Action
-                </th>
+    <br />
+    <table class="table table-bordered ">
+        <tr class="table-primary">
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+
+
+        @if (Model == null)
+        {
+            <tr>
+                <td colspan="8">
+                    No results found
+                </td>
             </tr>
-
-
-            @if (Model == null)
+        }
+        else
+        {
+            foreach (var item in Model)
             {
                 <tr>
-                    <td colspan="8">
-                        No results found
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role_Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "MaintainUserRole", new { id = item.Role_ID }, new { @class = "btn btn-warning" }) |
+
+                        <input type="button" value="More info" class="btn moreinfo btn-info" data-toggle="modal" data-target="#@item.Role_ID">
                     </td>
                 </tr>
-            }
-            else
-            {
-                foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Role_ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Role_Name)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "MaintainUserRole", new { id = item.Role_ID }, new { @class = "btn btn-warning" }) |
+                <div class="modal fade" id="@item.Role_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header  table-primary">
+                                <h5 class="modal-title " id="exampleModalLongTitle">@item.Role_Name</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">ID:</span>
+                                @Html.DisplayFor(modelItem => item.Role_ID) <br />
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">Name:</span>
+                                @Html.DisplayFor(modelItem => item.Role_Name) <br />
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">Number of Users Assigned:</span>
+                                @Html.DisplayFor(modelItem => item.UserRoles.Count) <br />
+                            </div>
+                            <div class="modal-footer">
 
-                            <input type="button" value="More info" class="btn moreinfo btn-info" data-toggle="modal" data-target="#@item.Role_ID">
-                        </td>
-                    </tr>
-                    <div class="modal fade" id="@item.Role_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header  table-primary">
-                                    <h5 class="modal-title " id="exampleModalLongTitle">@item.Role_Name</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <span class="value">ID:</span>
-                                    @Html.DisplayFor(modelItem => item.Role_ID) <br />
-                                </div>
-                                <div class="modal-body">
-                                    <span class="value">Name:</span>
-                                    @Html.DisplayFor(modelItem => item.Role_Name) <br />
-                                </div>
-                                <div class="modal-body">
-                                    <span class="value">Number of Users Assigned:</span>
-                                    @Html.DisplayFor(modelItem => item.UserRoles.Count) <br />
-                                </div>
-                                <div class="modal-footer">
-
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Role_ID }, new { @class = "btn btn-danger" }) |
-                                    @Html.ActionLink("Maintain", "MaintainUserRole", new { id = item.Role_ID }, new { @style = "color: white", @class = "btn btn-warning" })
-                                </div>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Role_ID }, new { @class = "btn btn-danger" }) |
+                                @Html.ActionLink("Maintain", "MaintainUserRole", new { id = item.Role_ID }, new { @style = "color: white", @class = "btn btn-warning" })
                             </div>
                         </div>
                     </div>
+                </div>
 
-                }
             }
+        }
 
-        </table>
+    </table>
 
 </div>
