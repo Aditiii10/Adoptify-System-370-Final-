@@ -77,33 +77,6 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer_Hours> Volunteer_Hours { get; set; }
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
     
-        public virtual ObjectResult<Don_SearchDon_Result> Don_SearchDon(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Don_SearchDon_Result>("Don_SearchDon", nameParameter);
-        }
-    
-        public virtual ObjectResult<Donation_Type> SearchDon(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donation_Type>("SearchDon", nameParameter);
-        }
-    
-        public virtual ObjectResult<Donation_Type> SearchDon(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donation_Type>("SearchDon", mergeOption, nameParameter);
-        }
-    
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {
             var nameParameter = name != null ?
@@ -120,6 +93,24 @@ namespace AdoptifySystem
                 new ObjectParameter("Name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BreedType_SearchBreedType_Result>("BreedType_SearchBreedType", nameParameter);
+        }
+    
+        public virtual ObjectResult<Don_SearchDon_Result> Don_SearchDon(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Don_SearchDon_Result>("Don_SearchDon", nameParameter);
+        }
+    
+        public virtual ObjectResult<Donor_SearchDonor_Result> Donor_SearchDonor(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donor_SearchDonor_Result>("Donor_SearchDonor", nameParameter);
         }
     
         public virtual ObjectResult<Emp_SearchEmpType_Result> Emp_SearchEmpType(string name)
@@ -140,87 +131,6 @@ namespace AdoptifySystem
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Parent_SearchParent_Result>("Parent_SearchParent", nameParameter);
         }
     
-        public virtual ObjectResult<Foster_Care_Parent> searchParent(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Foster_Care_Parent>("searchParent", nameParameter);
-        }
-    
-        public virtual ObjectResult<Foster_Care_Parent> searchParent(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Foster_Care_Parent>("searchParent", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Animal_Type> searchAnimalType(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Animal_Type>("searchAnimalType", nameParameter);
-        }
-    
-        public virtual ObjectResult<Animal_Type> searchAnimalType(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Animal_Type>("searchAnimalType", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Animal_Breed> searchBreedType(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Animal_Breed>("searchBreedType", nameParameter);
-        }
-    
-        public virtual ObjectResult<Animal_Breed> searchBreedType(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Animal_Breed>("searchBreedType", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Donor_SearchDonor_Result> Donor_SearchDonor(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donor_SearchDonor_Result>("Donor_SearchDonor", nameParameter);
-        }
-    
-        public virtual ObjectResult<Donor> searchDonor(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donor>("searchDonor", nameParameter);
-        }
-    
-        public virtual ObjectResult<Donor> searchDonor(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donor>("searchDonor", mergeOption, nameParameter);
-        }
-    
         public virtual ObjectResult<Stock_SearchStock_Result> Stock_SearchStock(string name)
         {
             var nameParameter = name != null ?
@@ -237,42 +147,6 @@ namespace AdoptifySystem
                 new ObjectParameter("Name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_SearchStockType_Result>("Stock_SearchStockType", nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock> searchstock(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock>("searchstock", nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock> searchstock(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock>("searchstock", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock_Type> searchstocktype(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_Type>("searchstocktype", nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock_Type> searchstocktype(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_Type>("searchstocktype", mergeOption, nameParameter);
         }
     }
 }

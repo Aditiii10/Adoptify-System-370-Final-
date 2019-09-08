@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -1377,7 +1377,8 @@
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2826,38 +2827,23 @@
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
-          <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SearchDon" EntitySet="Donation_Type" ReturnType="Collection(Wollies_ShelterModel.Donation_Type)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchParent" EntitySet="Foster_Care_Parent" ReturnType="Collection(Wollies_ShelterModel.Foster_Care_Parent)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchAnimalType" EntitySet="Animal_Type" ReturnType="Collection(Wollies_ShelterModel.Animal_Type)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchBreedType" EntitySet="Animal_Breed" ReturnType="Collection(Wollies_ShelterModel.Animal_Breed)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+          <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="searchDonor" EntitySet="Donors" ReturnType="Collection(Wollies_ShelterModel.Donor)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+          <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -2865,18 +2851,7 @@
           <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="searchstock" EntitySet="Stocks" ReturnType="Collection(Wollies_ShelterModel.Stock)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchstocktype" EntitySet="Stock_Type" ReturnType="Collection(Wollies_ShelterModel.Stock_Type)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="Don_SearchDon_Result">
-          <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
-          <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
-        </ComplexType>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
           <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
@@ -2886,6 +2861,18 @@
           <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Don_SearchDon_Result">
+          <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
+          <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
+        </ComplexType>
+        <ComplexType Name="Donor_SearchDonor_Result">
+          <Property Type="Int32" Name="Donor_ID" Nullable="false" />
+          <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Title_ID" Nullable="true" />
         </ComplexType>
         <ComplexType Name="Emp_SearchEmpType_Result">
           <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
@@ -2907,13 +2894,6 @@
           <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
           <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="Donor_SearchDonor_Result">
-          <Property Type="Int32" Name="Donor_ID" Nullable="false" />
-          <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Title_ID" Nullable="true" />
         </ComplexType>
         <ComplexType Name="Stock_SearchStock_Result">
           <Property Type="Int32" Name="Stock_ID" Nullable="false" />
@@ -3501,16 +3481,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Don_SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Don_SearchDon_Result">
-                <ScalarProperty Name="Donation_Type_ID" ColumnName="Donation_Type_ID" />
-                <ScalarProperty Name="Donation_Type_Name" ColumnName="Donation_Type_Name" />
-                <ScalarProperty Name="Donation_Type_Description" ColumnName="Donation_Type_Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon" />
           <FunctionImportMapping FunctionImportName="AnimalType_SearchAnimalType" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Wollies_ShelterModel.AnimalType_SearchAnimalType_Result">
@@ -3526,6 +3496,26 @@
                 <ScalarProperty Name="Animal_Breed_Name" ColumnName="Animal_Breed_Name" />
                 <ScalarProperty Name="Animal_Breed_Description" ColumnName="Animal_Breed_Description" />
                 <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Don_SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Don_SearchDon_Result">
+                <ScalarProperty Name="Donation_Type_ID" ColumnName="Donation_Type_ID" />
+                <ScalarProperty Name="Donation_Type_Name" ColumnName="Donation_Type_Name" />
+                <ScalarProperty Name="Donation_Type_Description" ColumnName="Donation_Type_Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Donor_SearchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Donor_SearchDonor_Result">
+                <ScalarProperty Name="Donor_ID" ColumnName="Donor_ID" />
+                <ScalarProperty Name="Donor_Name" ColumnName="Donor_Name" />
+                <ScalarProperty Name="Donor_Surname" ColumnName="Donor_Surname" />
+                <ScalarProperty Name="Donor_Email" ColumnName="Donor_Email" />
+                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3558,21 +3548,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="searchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent" />
-          <FunctionImportMapping FunctionImportName="searchAnimalType" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType" />
-          <FunctionImportMapping FunctionImportName="searchBreedType" FunctionName="Wollies_ShelterModel.Store.BreedType_SearchBreedType" />
-          <FunctionImportMapping FunctionImportName="Donor_SearchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Donor_SearchDonor_Result">
-                <ScalarProperty Name="Donor_ID" ColumnName="Donor_ID" />
-                <ScalarProperty Name="Donor_Name" ColumnName="Donor_Name" />
-                <ScalarProperty Name="Donor_Surname" ColumnName="Donor_Surname" />
-                <ScalarProperty Name="Donor_Email" ColumnName="Donor_Email" />
-                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="searchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor" />
           <FunctionImportMapping FunctionImportName="Stock_SearchStock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStock_Result">
@@ -3599,8 +3574,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="searchstock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock" />
-          <FunctionImportMapping FunctionImportName="searchstocktype" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
