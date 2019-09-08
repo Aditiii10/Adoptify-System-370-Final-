@@ -480,7 +480,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\3ZzL.gif" />
+    <Content Include="Images\dribbble_loadingbone.gif" />
+    <Content Include="Images\giphy.gif" />
     <Content Include="Images\Loader.gif" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\tenor.gif" />
     <Content Include="MyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MyModel.edmx</DependentUpon>
