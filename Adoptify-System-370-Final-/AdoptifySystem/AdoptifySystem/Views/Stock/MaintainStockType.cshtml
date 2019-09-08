@@ -3,15 +3,13 @@
     ViewBag.Title = "MaintainStockType";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <br />
 <div class=" border-primary card">
-    <h2 class="table-primary">Maintain Stock Type</h2><br />
+    <h2 class="table-primary">Maintain Stock Type</h2>
     @using (Html.BeginForm())
     {
         <div class="form-horizontal">
-            <input hidden value="@Model.Stock_Type_ID" />
-            <h4 style="color:red">@ViewBag.err</h4>
+            <input hidden name="Stock_Type_ID" value="@Model.Stock_Type_ID" />
             <hr />
             <div class="form-group">
                 <label>Stock Type Name</label>
@@ -23,7 +21,7 @@
             <div class="form-group">
                 <label>Stock Type Description</label>
                 <div class="col-md-10">
-                    <textarea type="text" class="form-control" id="StockTypeDescription" value="@Model.Stock_Type_Description" name="Stock_Type_Description" placeholder="Stock Type Description"></textarea>
+                    <textarea type="text" class="form-control" id="StockTypeDescription" value="@Model.Stock_Type_Description" name="Stock_Type_Description" placeholder="Stock Type Description">@Model.Stock_Type_Description</textarea>
                 </div>
             </div>
 
@@ -36,3 +34,20 @@
         </div>
     }
 </div>
+@section scripts{
+    <script>
+        $(function () {
+            var duplicate = '@TempData["error"]'
+            if (duplicate != '')
+                alertify.error(duplicate);
+
+        });
+         $(function () {
+            var exception = '@TempData["exception"]'
+            if (exception != '')
+                alertify.error(exception);
+
+         });
+
+    </script>
+}

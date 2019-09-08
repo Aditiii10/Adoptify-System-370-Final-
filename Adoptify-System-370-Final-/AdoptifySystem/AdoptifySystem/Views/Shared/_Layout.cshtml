@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="~/CSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/alertifyjs/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/alertifyjs/themes/default.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -59,7 +61,7 @@
                 <li class="nav-item dropdown show">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Stock</a>
                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-                        @Html.ActionLink("Add Stock", "AddDonation", "Stock", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Stock", "AddStock", "Stock", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Search Stock", "SearchStock", "Stock", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Maintian Stock", "MaintianStock", "Stock", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Add Stock Type", "AddStockType", "Stock", null, new { @class = "dropdown-item" })
@@ -96,7 +98,9 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/alertify.min.js"></script>
     @RenderSection("scripts", false)
+
 </body>
 </html>
 <script type="text/javascript">

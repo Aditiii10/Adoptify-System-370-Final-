@@ -258,7 +258,7 @@ namespace AdoptifySystem.Controllers
         [HttpPost]
         public ActionResult AddStockType(Stock_Type stock_type,string button)
         {
-            ViewBag.errorMessage = "";
+            
             if (button == "Save")
             {
                 try
@@ -274,7 +274,7 @@ namespace AdoptifySystem.Controllers
                             if (item.Stock_Type_Name == stock_type.Stock_Type_Name && item.Stock_Type_Description == stock_type.Stock_Type_Description)
                             {
                                 count++;
-                                ViewBag.errorMessage = "There is a duplicate Stock Type Already";
+                                TempData["error"] = "There is a duplicate Stock Type Already";
                                 return View();
                             }
 
@@ -297,7 +297,7 @@ namespace AdoptifySystem.Controllers
                 }
                 catch (Exception e)
                 {
-                    ViewBag.errorMessage = "There was an Error with network please try again: " + e.Message;
+                    TempData["exception"] = "There was an Error with network please try again: " + e.Message;
                     return View();
                 }
 
@@ -305,9 +305,11 @@ namespace AdoptifySystem.Controllers
             else if (button == "Cancel")
             {
 
-                return RedirectToAction("Index", "Home");
+                TempData["success"] = "The process has been cancelled succesfully";
+                return RedirectToAction("SearchStockType", "Stock");
             }
-            return RedirectToAction("Index", "Home");
+            TempData["success"] = "The Stock Type has been added Succesfully";
+            return RedirectToAction("SearchStockType", "Stock");
         }
         public ActionResult ReceiveStock(int? id)
         {
@@ -401,6 +403,33 @@ namespace AdoptifySystem.Controllers
             }
 
         }
+        [HttpPost]
+        public ActionResult SearchStockType(string search)
+        {
+
+            if (search != null)
+            {
+
+                List<Stock_Type> stock_type = new List<Stock_Type>();
+                try
+                {
+                    stock_type = db.searchstocktype(search).ToList();
+                    
+                    if (stock_type.Count == 0)
+                    {
+                        TempData["noresult"] = "No results found";
+                        return View(stock_type);
+                    }
+                    return View(stock_type);
+                }
+                catch (Exception e)
+                {
+                    TempData["exception"] = "there was a network error: " + e.Message;
+                    return View();
+                }
+            }
+            return View();
+        }
         public ActionResult MaintainStockType(int? id)
         {
             if (id == null)
@@ -421,6 +450,7 @@ namespace AdoptifySystem.Controllers
             {
                 try
                 {
+                    
                     Stock_Type Stock_Type = db.Stock_Type.Find(stock_Type.Stock_Type_ID);
                     if (Stock_Type == null)
                     {
@@ -428,22 +458,25 @@ namespace AdoptifySystem.Controllers
                     }
                     else
                     {
-                        db.Entry(Stock_Type).CurrentValues.SetValues(stock_Type);
-                        db.SaveChanges();
+                        
+                            db.Entry(Stock_Type).CurrentValues.SetValues(stock_Type);
+                            db.SaveChanges();
+                        
                     }
                 }
                 catch (Exception e)
                 {
-                    ViewBag.err = e.Message;
+                    TempData["exception"] = e.Message;
                     return RedirectToAction("MaintainStockType", "Stock");
                 }
             }
             else if (button == "Cancel")
             {
-
-                return RedirectToAction("Index", "Home");
+                TempData["success"] = "The Maintain process has been cancelled succesfully";
+                return RedirectToAction("SearchStockType", "Stock");
             }
-            return RedirectToAction("Index", "Home");
+            TempData["success"] = "The Stock Type has been maintained succesfully";
+            return RedirectToAction("SearchStockType", "Stock");
         }
 
         public ActionResult Deletestock(Stock id)
