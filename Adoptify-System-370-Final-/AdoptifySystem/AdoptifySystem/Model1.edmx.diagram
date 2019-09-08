@@ -4,56 +4,56 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="593f1967dc344f86915d2967cfd015ac" Name="Diagram1">
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Contract" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Relative" Width="1.5" PointX="5.25" PointY="32.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Status" Width="1.5" PointX="0.75" PointY="16.125" IsExpanded="true" />
+      <Diagram DiagramId="d267b3f328f643ec84b021e8256706c0" Name="Diagram1">
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Contract" Width="1.5" PointX="5.25" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Relative" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adopter_Status" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Adoption" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Adoption_Status" Width="1.5" PointX="3" PointY="22.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Animal" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Adoption_Status" Width="1.5" PointX="3" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Animal" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Breed" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Kennel_History" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Status" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Treatment" Width="1.5" PointX="9.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Animal_Type" Width="1.5" PointX="3.75" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Audit_Log" Width="1.5" PointX="12.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Audit_Log" Width="1.5" PointX="12.5" PointY="23" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Capture_Medical_Card" Width="1.5" PointX="7.5" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.CrossBreed" Width="1.5" PointX="8.25" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Customer_Event" Width="1.5" PointX="15.25" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Donation" Width="1.5" PointX="5.25" PointY="37.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Donation_Line" Width="1.5" PointX="7.5" PointY="37.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Donation_Type" Width="1.5" PointX="5.25" PointY="46.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Donor" Width="1.5" PointX="3" PointY="37.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Emp_Kennel" Width="1.5" PointX="13.25" PointY="21" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee" Width="1.5" PointX="8" PointY="19.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee_Status" Width="1.5" PointX="5.75" PointY="18.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee_Type" Width="1.5" PointX="5.75" PointY="40.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Customer_Event" Width="1.5" PointX="15.25" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Donation" Width="1.5" PointX="5.25" PointY="32.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Donation_Line" Width="1.5" PointX="7.5" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Donation_Type" Width="1.5" PointX="5.25" PointY="41.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Donor" Width="1.5" PointX="3" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Emp_Kennel" Width="1.5" PointX="13.25" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee" Width="1.5" PointX="8" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee_Status" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee_Type" Width="1.5" PointX="5.75" PointY="35.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Event_" Width="1.5" PointX="13" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Event_Schedule" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Event_Schedule" Width="1.5" PointX="10.75" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Event_Type" Width="1.5" PointX="10.75" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Foster_Care" Width="1.5" PointX="8.25" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Foster_Care_Parent" Width="1.5" PointX="6" PointY="27.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.HomeCheck" Width="1.5" PointX="7.5" PointY="15.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Kennel" Width="1.5" PointX="6" PointY="24.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Microchip" Width="1.5" PointX="5.25" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Packaging_Type" Width="1.5" PointX="3" PointY="48.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Payment" Width="1.5" PointX="3" PointY="24.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Payment_Type" Width="1.5" PointX="0.75" PointY="24.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Role_" Width="1.5" PointX="10.25" PointY="31.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Stock" Width="1.5" PointX="5.25" PointY="50.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Stock_Type" Width="1.5" PointX="3" PointY="50.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.TimeSheet" Width="1.5" PointX="10.25" PointY="21.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Title" Width="1.5" PointX="0.75" PointY="18.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Unit_Type" Width="1.5" PointX="3" PointY="53.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.User_" Width="1.5" PointX="10.25" PointY="23.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.UserRole" Width="1.5" PointX="12.5" PointY="27.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Packaging_Type" Width="1.5" PointX="3" PointY="43.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Payment" Width="1.5" PointX="3" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Payment_Type" Width="1.5" PointX="0.75" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Role_" Width="1.5" PointX="10.25" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Stock" Width="1.5" PointX="5.25" PointY="45.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Stock_Type" Width="1.5" PointX="3" PointY="45.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.TimeSheet" Width="1.5" PointX="10.25" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Title" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Unit_Type" Width="1.5" PointX="3" PointY="48.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.User_" Width="1.5" PointX="10.25" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.UserRole" Width="1.5" PointX="12.5" PointY="26.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Vet_Appointment" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Vet_Appointment_Line" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Veterinarian" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Volunteer" Width="1.5" PointX="3" PointY="27.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Volunteer_Hours" Width="1.5" PointX="8.25" PointY="27.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Volunteer_Work_Type" Width="1.5" PointX="6" PointY="43.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Volunteer" Width="1.5" PointX="3" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Volunteer_Hours" Width="1.5" PointX="8.25" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Volunteer_Work_Type" Width="1.5" PointX="6" PointY="38.125" IsExpanded="true" />
         <AssociationConnector Association="Wollies_ShelterModel.fkado" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkado1" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkadoc" ManuallyRouted="false" />
@@ -85,7 +85,6 @@
         <AssociationConnector Association="Wollies_ShelterModel.fkdonor" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkempk" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkempk1" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.FK_Employee_ToTable" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkemp" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkemp1" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fktime" ManuallyRouted="false" />

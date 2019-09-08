@@ -1,0 +1,98 @@
+﻿@model AdoptifySystem.Models.Adopter_Relative
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Adopter Relative</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Relative_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relative_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Relative_Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relative_Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Relative_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relative_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Relative_Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relative_Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Relative_PostalAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relative_PostalAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Relative_Home_Tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relative_Home_Tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Relative_Work_Tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relative_Work_Tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Relative_Cell)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relative_Cell)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Relationship)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relationship)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adopter.Adopter_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adopter.Adopter_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Relative_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

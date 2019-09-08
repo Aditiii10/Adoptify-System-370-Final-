@@ -10,9 +10,28 @@
 namespace AdoptifySystem
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  //needed for Display annotation
+    using System.ComponentModel;  //DisplayName annotation
+
+    public partial class Adopter_Contract
     
     public partial class BreedType_SearchBreedType_Result
     {
+        [Display(Name = "Contract")]
+        public int Contract_ID { get; set; }
+
+        [Display(Name = "Electronic Contract Details")]
+        [Required]
+        public string Electronic_Contract { get; set; }
+
+
+        [Display(Name = "Adopter")]
+        public Nullable<int> Adopter_ID { get; set; }
+
+
+        [Display(Name = "Adopter")]
+        public virtual Adopter Adopter { get; set; }
         public int Animal_Breed_ID { get; set; }
         public string Animal_Breed_Name { get; set; }
         public string Animal_Breed_Description { get; set; }

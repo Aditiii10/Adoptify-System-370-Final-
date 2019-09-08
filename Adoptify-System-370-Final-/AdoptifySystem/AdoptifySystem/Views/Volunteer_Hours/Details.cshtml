@@ -1,0 +1,58 @@
+﻿@model AdoptifySystem.Models.Volunteer_Hours
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Volunteer_Hours</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vol_workDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vol_workDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vol_Start_Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vol_Start_Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vol_End_Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vol_End_Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Volunteer.Vol_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Volunteer.Vol_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Volunteer_Work_Type.Vol_WorkType_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Volunteer_Work_Type.Vol_WorkType_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Vol_Hours_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

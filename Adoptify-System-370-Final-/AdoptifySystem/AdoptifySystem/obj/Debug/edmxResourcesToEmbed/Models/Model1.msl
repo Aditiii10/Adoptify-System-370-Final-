@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Adopters">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Adopter">
         <MappingFragment StoreEntitySet="Adopter">
+          <ScalarProperty Name="Adopter_Occupation" ColumnName="Adopter_Occupation" />
           <ScalarProperty Name="Adopter_ID" ColumnName="Adopter_ID" />
           <ScalarProperty Name="Adopter_Name" ColumnName="Adopter_Name" />
           <ScalarProperty Name="Adopter_Surname" ColumnName="Adopter_Surname" />

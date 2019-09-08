@@ -1,0 +1,63 @@
+﻿@model IEnumerable<AdoptifySystem.Models.Volunteer_Hours>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("Index", "Volunteer_Hours", FormMethod.Get))
+    {
+        <b>Search by:</b>@Html.RadioButton("Searchby", "Vol_workDate", true) <text>Volunteer Work Date</text>
+        <br />
+        @Html.TextBox("search")<input type="submit" value="Search" ? />
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Vol_workDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vol_Start_Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vol_End_Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Volunteer.Vol_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Volunteer_Work_Type.Vol_WorkType_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vol_workDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vol_Start_Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vol_End_Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Volunteer.Vol_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Volunteer_Work_Type.Vol_WorkType_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Vol_Hours_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Vol_Hours_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Vol_Hours_ID })
+        </td>
+    </tr>
+}
+
+</table>
