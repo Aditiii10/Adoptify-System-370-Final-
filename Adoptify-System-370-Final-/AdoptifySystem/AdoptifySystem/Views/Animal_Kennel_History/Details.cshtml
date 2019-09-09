@@ -1,35 +1,37 @@
-﻿@model AdoptifySystem.Models.Animal_Kennel_History
+﻿@model AdoptifySystem.Animal_Kennel_History
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div id="main">
+    <h2>Details</h2>
 
-<div>
-    <h4>Animal_Kennel_History</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Animal.Animal_Image)
-        </dt>
+    <div>
+        <h4>Animal_Kennel_History</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Animal.Animal_Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Animal.Animal_Image)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Animal.Animal_Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Kennel.Kennel_Name)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Kennel.Kennel_Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Kennel.Kennel_Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Kennel.Kennel_Name)
+            </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Animal_Kennel_History_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Animal_Kennel_History_ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    </div>

@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
-using AdoptifySystem.Models;
 
 namespace AdoptifySystem.Controllers
 {
@@ -16,14 +15,25 @@ namespace AdoptifySystem.Controllers
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
         // GET: Veterinarians
-        public ActionResult Index()
+        public ActionResult Index(string searchBy, string search)
         {
+            try {
+                if (searchBy == "Vet_Name")
+                    return View(db.Veterinarians.Where(x => x.Vet_Name == search || search == null).ToList());
+                else
+                    return View(db.Veterinarians.Where(x => x.Vet_Address == search || search == null).ToList());
+            }
+            catch (Exception err)
+            {
+                ViewBag.err = err.Message;
+            }
             return View(db.Veterinarians.ToList());
         }
 
         // GET: Veterinarians/Details/5
         public ActionResult Details(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -49,13 +59,24 @@ namespace AdoptifySystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Vet_ID,Vet_Name,Vet_Emial,Vet_Tel,Vet_Address")] Veterinarian veterinarian)
         {
+            
             if (ModelState.IsValid)
             {
-                db.Veterinarians.Add(veterinarian);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (db.Veterinarians.Any(p => p.Vet_Name == veterinarian.Vet_Name || p.Vet_Emial == veterinarian.Vet_Emial)) //duplicate data
+                {
+                    ViewBag.Message = "Vet already exists";
+                    /*ModelState.AddModelError("txtName", "Vet Name already exists.")*/
+                    
+                }
 
+                else {
+                    db.Veterinarians.Add(veterinarian);
+                    db.SaveChanges();
+                    TempData["SuccessMessage"] = "Saved New Veternarian Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+          
             return View(veterinarian);
         }
 
@@ -83,9 +104,19 @@ namespace AdoptifySystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(veterinarian).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (db.Veterinarians.Any(p => p.Vet_Name == veterinarian.Vet_Name)) //duplicate data
+                {
+                    ViewBag.Message = "Vet already exists";
+                    /*ModelState.AddModelError("txtName", "Vet Name already exists.")*/
+
+                }
+
+                else {
+                    db.Entry(veterinarian).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["EditMessage"] = "Updated Veternarian Details Successfully";
+                    return RedirectToAction("Index");
+                }
             }
             return View(veterinarian);
         }
@@ -109,12 +140,11 @@ namespace AdoptifySystem.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
-
-
         {
             Veterinarian veterinarian = db.Veterinarians.Find(id);
             db.Veterinarians.Remove(veterinarian);
             db.SaveChanges();
+            TempData["DeleteMessage"] = "Deleted Veternarian Successfully";
             return RedirectToAction("Index");
         }
 
@@ -125,19 +155,6 @@ namespace AdoptifySystem.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        public ActionResult Search(string searchBy, string search)
-        {
-            if (searchBy == "Vet_Name")
-            {
-                return View(db.Veterinarians.Where(c => c.Vet_Name.Contains(search) || search == null).ToList());
-            }
-            else
-            {
-                return View(db.Veterinarians.Where(c => c.Vet_Address.Contains(search) || search == null).ToList());
-            }
-
         }
     }
 }

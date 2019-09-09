@@ -1,0 +1,43 @@
+﻿@model AdoptifySystem.Employee_Type
+
+@{
+    ViewBag.Title = "DeleteEmployeeType";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="main">
+<h2>Delete Employee Type</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Employee_Type</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Emp_Type_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Emp_Type_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Emp_Type_Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Emp_Type_Description)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
+    </div>

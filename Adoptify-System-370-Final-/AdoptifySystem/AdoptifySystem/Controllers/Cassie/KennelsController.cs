@@ -6,27 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using AdoptifySystem.Models;
-using OfficeOpenXml;
+using AdoptifySystem;
 
 namespace AdoptifySystem.Controllers.Cassie
 {
     public class KennelsController : Controller
     {
-        Wollies_ShelterEntities db = new Wollies_ShelterEntities();
+        private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
         // GET: Kennels
         public ActionResult Index()
         {
-            List<KennelHistoryViewModel> kenlist = db.Animal_Kennel_History.Select(x => new KennelHistoryViewModel
-            {
-                Animal_Kennel_History_ID = x.Animal_Kennel_History_ID,
-                Animal_ID = x.Animal_ID,
-                Kennel_ID = x.Kennel_ID,
-            }).ToList();
-
-
-            return View(kenlist);
+            return View(db.Kennels.ToList());
         }
 
         // GET: Kennels/Details/5
@@ -52,7 +43,7 @@ namespace AdoptifySystem.Controllers.Cassie
 
         // POST: Kennels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Kennel_ID,Kennel_Name,Kennel_Number,Kennel_Capacity")] Kennel kennel)
@@ -84,7 +75,7 @@ namespace AdoptifySystem.Controllers.Cassie
 
         // POST: Kennels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Kennel_ID,Kennel_Name,Kennel_Number,Kennel_Capacity")] Kennel kennel)
@@ -132,52 +123,5 @@ namespace AdoptifySystem.Controllers.Cassie
             }
             base.Dispose(disposing);
         }
-
-        public void ExportToExcel()
-        {
-            List<KennelHistoryViewModel> kenlist = db.Animal_Kennel_History.Select(x => new KennelHistoryViewModel
-            {
-                Animal_Kennel_History_ID = x.Animal_Kennel_History_ID,
-                Animal_ID = x.Animal_ID,
-                Kennel_ID = x.Kennel_ID,
-            }).ToList();
-
-            ExcelPackage pck = new ExcelPackage();
-            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
-
-            ws.Cells["A1"].Value = "Communication";
-            ws.Cells["B1"].Value = "Com1";
-
-            ws.Cells["A2"].Value = "Report";
-            ws.Cells["B2"].Value = "Report1";
-
-            ws.Cells["A3"].Value = "Date";
-            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
-
-            ws.Cells["A6"].Value = "Animal_Kennel_History_ID";
-            ws.Cells["B6"].Value = "Animal_ID";
-            ws.Cells["C6"].Value = "Kennel_ID";
-
-            int rowStart = 7;
-            foreach (var item in kenlist)
-            {
-                ws.Cells[string.Format("A{0}", rowStart)].Value = item.Animal_Kennel_History_ID;
-                ws.Cells[string.Format("B{0}", rowStart)].Value = item.Animal_ID;
-                ws.Cells[string.Format("C{0}", rowStart)].Value = item.Kennel_ID;
-                rowStart++;
-
-
-            }
-
-            ws.Cells["A:AZ"].AutoFitColumns();
-            Response.Clear();
-            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            Response.AddHeader("content-disposition", "attachment: filename=" + "ExcelReport.xlsx");
-            Response.BinaryWrite(pck.GetAsByteArray());
-            Response.End();
-
-
-        }
     }
 }
-

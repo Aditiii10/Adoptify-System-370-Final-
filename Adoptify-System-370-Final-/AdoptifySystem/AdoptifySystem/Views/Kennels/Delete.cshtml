@@ -1,49 +1,51 @@
-﻿@model AdoptifySystem.Models.Kennel
+﻿@model AdoptifySystem.Kennel
 
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div id="main">
+    <h2>Delete</h2>
 
-<h2>Delete</h2>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Kennel</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Kennel_Name)
+            </dt>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Kennel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Kennel_Name)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Kennel_Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Kennel_Name)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Kennel_Number)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Kennel_Number)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Kennel_Number)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Kennel_Number)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Kennel_Capacity)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Kennel_Capacity)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Kennel_Capacity)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Kennel_Capacity)
-        </dd>
+        </dl>
 
-    </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
-</div>
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+    </div>
