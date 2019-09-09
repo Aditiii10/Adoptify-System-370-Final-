@@ -4,11 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Adopter's List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
+
+    @Html.ActionLink("Add New", "Create", "Adopters", new { @class = "btn btn-success" })
     @using (Html.BeginForm("Index", "Adopters", FormMethod.Get))
+
     {
         <b>Search by:</b>@Html.RadioButton("Searchby", "Adopter_Name", true) <text>Adopter Name</text>
         @Html.RadioButton("Searchby", "Adopter_Surname")<text>Adopter Surname</text><br />
@@ -211,10 +214,10 @@
                     @Html.DisplayFor(modelItem => item.Adopter_Status.Adopter_Status_Name)
                 </td>*@
         <td>
-            <input type="submit" value="Save" class="btn btn-success" />
-            @*@Html.ActionLink("Edit", "Edit", new { id = item.Adopter_ID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Adopter_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Adopter_ID })*@
+            @Html.ActionLink("Update", "Edit", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-success" })
+            @Html.ActionLink("More Info", "Details", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Delete", "Delete", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-danger" })          
+                                                    
         </td>
         </tr>
     }
