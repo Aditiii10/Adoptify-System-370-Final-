@@ -15,5 +15,6 @@ namespace AdoptifySystem
     {
         public int Animal_Type_ID { get; set; }
         public string Animal_Type_Name { get; set; }
+        public Nullable<decimal> Price { get; set; }
     }
 }

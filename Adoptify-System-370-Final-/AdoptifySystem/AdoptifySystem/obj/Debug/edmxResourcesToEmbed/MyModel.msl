@@ -35,6 +35,7 @@
           <ScalarProperty Name="Animal_Allowed" ColumnName="Animal_Allowed" />
           <ScalarProperty Name="Animal_Captivity" ColumnName="Animal_Captivity" />
           <ScalarProperty Name="Animal_Vaccines_Updated" ColumnName="Animal_Vaccines_Updated" />
+          <ScalarProperty Name="Adopter_Occupation" ColumnName="Adopter_Occupation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -78,7 +79,7 @@
           <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
           <ScalarProperty Name="Adoption_Date" ColumnName="Adoption_Date" />
           <ScalarProperty Name="Adoption_Form" ColumnName="Adoption_Form" />
-          <ScalarProperty Name="Payment_ID" ColumnName="Payment_ID" />
+          <ScalarProperty Name="AdoptionPaymentID" ColumnName="AdoptionPaymentID" />
           <ScalarProperty Name="Adopter_ID" ColumnName="Adopter_ID" />
           <ScalarProperty Name="Adopt_Status_ID" ColumnName="Adopt_Status_ID" />
           <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
@@ -94,12 +95,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AdoptionPayments">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.AdoptionPayment">
+        <MappingFragment StoreEntitySet="AdoptionPayment">
+          <ScalarProperty Name="AdoptionPaymentID" ColumnName="AdoptionPaymentID" />
+          <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
+          <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+          <ScalarProperty Name="Payment_Type_ID" ColumnName="Payment_Type_ID" />
+          <ScalarProperty Name="Adoption_Fee" ColumnName="Adoption_Fee" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Animals">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Animal">
         <MappingFragment StoreEntitySet="Animal">
           <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
           <ScalarProperty Name="Animal_Image" ColumnName="Animal_Image" />
           <ScalarProperty Name="Animal_Name" ColumnName="Animal_Name" />
+          <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+          <ScalarProperty Name="Animal_Breed_ID" ColumnName="Animal_Breed_ID" />
           <ScalarProperty Name="Animal_Description" ColumnName="Animal_Description" />
           <ScalarProperty Name="Animal_Gender" ColumnName="Animal_Gender" />
           <ScalarProperty Name="Animal_Age" ColumnName="Animal_Age" />
@@ -145,13 +159,15 @@
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Animal_Treatment">
         <MappingFragment StoreEntitySet="Animal_Treatment">
           <ScalarProperty Name="Treat_ID" ColumnName="Treat_ID" />
+          <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
           <ScalarProperty Name="Treat_StartDate" ColumnName="Treat_StartDate" />
           <ScalarProperty Name="Treat_EndDate" ColumnName="Treat_EndDate" />
           <ScalarProperty Name="Treat_Quantity" ColumnName="Treat_Quantity" />
           <ScalarProperty Name="Treat_Regularity" ColumnName="Treat_Regularity" />
           <ScalarProperty Name="Treat_Name" ColumnName="Treat_Name" />
           <ScalarProperty Name="Treat_cost" ColumnName="Treat_cost" />
-          <ScalarProperty Name="Capture_Medical_Card_ID" ColumnName="Capture_Medical_Card_ID" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -160,6 +176,7 @@
         <MappingFragment StoreEntitySet="Animal_Type">
           <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
           <ScalarProperty Name="Animal_Type_Name" ColumnName="Animal_Type_Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -171,17 +188,6 @@
           <ScalarProperty Name="Transaction_Type" ColumnName="Transaction_Type" />
           <ScalarProperty Name="Critical_Date" ColumnName="Critical_Date" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Capture_Medical_Card">
-      <EntityTypeMapping TypeName="Wollies_ShelterModel.Capture_Medical_Card">
-        <MappingFragment StoreEntitySet="Capture_Medical_Card">
-          <ScalarProperty Name="Capture_Medical_Card_ID" ColumnName="Capture_Medical_Card_ID" />
-          <ScalarProperty Name="Diagnosis_Details" ColumnName="Diagnosis_Details" />
-          <ScalarProperty Name="Capture_Medical_Card_Date" ColumnName="Capture_Medical_Card_Date" />
-          <ScalarProperty Name="Capture_Medical_Card_NextAppointment_Date" ColumnName="Capture_Medical_Card_NextAppointment_Date" />
-          <ScalarProperty Name="Vet_Appoint_Line_ID" ColumnName="Vet_Appoint_Line_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -206,6 +212,7 @@
           <ScalarProperty Name="TicketFee_Total" ColumnName="TicketFee_Total" />
           <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
           <ScalarProperty Name="Payment_ID" ColumnName="Payment_ID" />
+          <ScalarProperty Name="Payment_Type_ID" ColumnName="Payment_Type_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -271,7 +278,7 @@
           <ScalarProperty Name="Emp_Date_Employed" ColumnName="Emp_Date_Employed" />
           <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
           <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
-          <ScalarProperty Name="Emp_Status_ID" ColumnName="Emp_Status_ID" />
+          <ScalarProperty Name="Employee_Status_ID" ColumnName="Employee_Status_ID" />
           <ScalarProperty Name="Emp_Contract_Name" ColumnName="Emp_Contract_Name" />
           <ScalarProperty Name="Emp_Contract_Type" ColumnName="Emp_Contract_Type" />
           <ScalarProperty Name="BarcodeImageUrl" ColumnName="BarcodeImageUrl" />
@@ -307,6 +314,7 @@
           <ScalarProperty Name="Event_Location" ColumnName="Event_Location" />
           <ScalarProperty Name="Event_Description" ColumnName="Event_Description" />
           <ScalarProperty Name="Event_Type_ID" ColumnName="Event_Type_ID" />
+          <ScalarProperty Name="TicketAvailable" ColumnName="TicketAvailable" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -381,6 +389,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Mecidal_Card">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.Mecidal_Card">
+        <MappingFragment StoreEntitySet="Mecidal_Card">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
+          <ScalarProperty Name="Vet_Appointment_ID" ColumnName="Vet_Appointment_ID" />
+          <ScalarProperty Name="Diagnosis_Details" ColumnName="Diagnosis Details" />
+          <ScalarProperty Name="Arrival_from_Vet" ColumnName="Arrival from Vet" />
+          <ScalarProperty Name="Next_Appointment_Date_" ColumnName="Next Appointment Date " />
+          <ScalarProperty Name="MedicalCard" ColumnName="MedicalCard" />
+          <ScalarProperty Name="Animal_Treatment" ColumnName="Animal_Treatment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Microchips">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Microchip">
         <MappingFragment StoreEntitySet="Microchip">
@@ -391,6 +413,7 @@
           <ScalarProperty Name="Owner_Name" ColumnName="Owner_Name" />
           <ScalarProperty Name="Owner_Address" ColumnName="Owner_Address" />
           <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
+          <ScalarProperty Name="Owner_Contact_Number" ColumnName="Owner_Contact_Number" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -502,17 +525,30 @@
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Vet_Appointment">
         <MappingFragment StoreEntitySet="Vet_Appointment">
           <ScalarProperty Name="Vet_Appointment_ID" ColumnName="Vet_Appointment_ID" />
-          <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
+          <ScalarProperty Name="Vet_Appoint_Line_ID" ColumnName="Vet_Appoint_Line_ID" />
+          <ScalarProperty Name="VetAppReasonsID" ColumnName="VetAppReasonsID" />
+          <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Vet_Appointment_Line">
-      <EntityTypeMapping TypeName="Wollies_ShelterModel.Vet_Appointment_Line">
-        <MappingFragment StoreEntitySet="Vet_Appointment_Line">
+    <EntitySetMapping Name="Vet_Appointment_Master">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.Vet_Appointment_Master">
+        <MappingFragment StoreEntitySet="Vet_Appointment_Master">
           <ScalarProperty Name="Vet_Appoint_Line_ID" ColumnName="Vet_Appoint_Line_ID" />
-          <ScalarProperty Name="Vet_Appoint_Line_Status" ColumnName="Vet_Appoint_Line_Status" />
+          <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
+          <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
-          <ScalarProperty Name="Vet_Appointment_ID" ColumnName="Vet_Appointment_ID" />
+          <ScalarProperty Name="VetAppReasonsID" ColumnName="VetAppReasonsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VetAppReasons">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.VetAppReason">
+        <MappingFragment StoreEntitySet="VetAppReasons">
+          <ScalarProperty Name="VetAppReasonsID" ColumnName="VetAppReasonsID" />
+          <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -563,11 +599,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="HomeCheckReports">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheckReport">
+        <MappingFragment StoreEntitySet="HomeCheckReport">
+          <ScalarProperty Name="HomeCheckReportID" ColumnName="HomeCheckReportID" />
+          <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
+          <ScalarProperty Name="HomeCheckStatus" ColumnName="HomeCheckStatus" />
+          <ScalarProperty Name="HCDoc" ColumnName="HCDoc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="AnimalType_SearchAnimalType" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType">
       <ResultMapping>
         <ComplexTypeMapping TypeName="Wollies_ShelterModel.AnimalType_SearchAnimalType_Result">
           <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
           <ScalarProperty Name="Animal_Type_Name" ColumnName="Animal_Type_Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -657,12 +704,9 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon" />
-    <FunctionImportMapping FunctionImportName="searchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent" />
     <FunctionImportMapping FunctionImportName="searchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor" />
+    <FunctionImportMapping FunctionImportName="searchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent" />
     <FunctionImportMapping FunctionImportName="searchstock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock" />
     <FunctionImportMapping FunctionImportName="searchstocktype" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType" />
-    <FunctionImportMapping FunctionImportName="searchanimaltype" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType" />
-    <FunctionImportMapping FunctionImportName="searchbreed" FunctionName="Wollies_ShelterModel.Store.BreedType_SearchBreedType" />
-    <FunctionImportMapping FunctionImportName="searchemptype" FunctionName="Wollies_ShelterModel.Store.Emp_SearchEmpType" />
   </EntityContainerMapping>
 </Mapping>

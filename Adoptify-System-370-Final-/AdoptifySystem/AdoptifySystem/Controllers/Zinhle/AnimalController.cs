@@ -346,7 +346,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-
+                ViewBag.err = e.Message + "";
                 throw;
             }
         }

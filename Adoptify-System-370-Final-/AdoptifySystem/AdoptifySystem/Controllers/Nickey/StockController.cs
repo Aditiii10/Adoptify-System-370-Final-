@@ -382,7 +382,6 @@ namespace AdoptifySystem.Controllers
                 throw;
             }
         }
-        [HttpGet]
         public ActionResult SearchStockType()
         {
             ViewBag.errormessage = "";

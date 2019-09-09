@@ -5,8 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using AdoptifySystem;
-
-
+using AdoptifySystem.Models;
 
 namespace AdoptifySystem.Controllers
 {
@@ -17,7 +16,10 @@ namespace AdoptifySystem.Controllers
         {
             return View();
         }
-
+        public ActionResult HomePage()
+        {
+            return View();
+        }
         public JsonResult GetEvents()
         {
             using (Wollies_ShelterEntities dc = new Wollies_ShelterEntities())

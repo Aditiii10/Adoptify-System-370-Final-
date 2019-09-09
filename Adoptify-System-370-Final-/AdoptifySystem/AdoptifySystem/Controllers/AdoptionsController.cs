@@ -257,7 +257,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
                 ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
                 aaa.Adopt_Status_ID = 6;
-                DateTime dd = new DateTime();
+                //DateTime dd = new DateTime();
                 //    String year = date.Substring(0, 4);
                 //   String month = date.Substring(5, 2);
                 //    String day = date.Substring(8, 2);
