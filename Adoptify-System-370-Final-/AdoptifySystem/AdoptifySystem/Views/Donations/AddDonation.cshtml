@@ -1,19 +1,23 @@
 ﻿@model AdoptifySystem.Models.nickeymodel.Flexible
-@{
-    ViewBag.Title = "AddDonation";
-}
 <head>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 </head>
 <style>
-    .row {
-        display: flex;
+    .column {
+        float: left;
+        width: 50%;
     }
 
-    .column {
-        flex: 50%;
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    #addmoney {
+        margin-top: 130px;
     }
 </style>
 <div class="form-group">
@@ -23,7 +27,7 @@
 @using (Html.BeginForm("search_donor", "Donations", FormMethod.Post))
 {
     <div class="row">
-        <div class="col">
+        <div class="column">
             @if (Model.adddonationlist == null)
             {
                 <select id="donor" onclick="sync(this)">
@@ -57,16 +61,19 @@
                     }
 
                 </select>
+                <input type="text" id="pa" name="inid" hidden />
+                <button id="btnSave" class="btn btn-lg btn-primary">Search</button>
             }
-            else { }
-            <input type="text" id="pa" name="inid" hidden />
-            <button id="btnSave" class="btn btn-lg btn-primary">Search</button>
+            else {
+
+            }
+
         </div>
-        <div class="col">
+        <div class="column">
             @if (Model.donor != null)
             {
 
-                <h3>Current Donor:</h3>
+                <h3 class="table-primary">Current Donor:</h3>
                 <label>Donor Name: @Model.donor.Donor_Name</label>
                 <br />
                 <label>Donor Surname:@Model.donor.Donor_Surname</label>
@@ -74,28 +81,11 @@
         </div>
     </div>
 }
-@*<div id="typeofdonation">
-        <div>
-            <h3 class="center-align">Select type of Donation:</h3>
-        </div>
-        <br>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck1" name="checkeds">
-            <label class="form-check-label" for="gridCheck1">
-                Stock
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck1" name="checkeds" onclick="myFunction()" checked>
-            <label class="form-check-label" for="gridCheck1">
-                Money
-            </label>
-        </div>
-    </div>*@
 <div>
+    <br />
     <div class="row" style="width:100%;">
-        <div class="column" style="border:1px solid black;">
-            <div class="form-header">
+        <div class="column">
+            <div class="form-header table-primary">
                 <h1 class="center-align">Enter Stock Details</h1>
             </div>
             @using (Html.BeginForm("search_stock", "Donations", FormMethod.Post))
@@ -147,43 +137,37 @@
                 </div>
             }
         </div>
-        @using (Html.BeginForm("add_money", "Donations", FormMethod.Post))
-        {
-            <div id="addmoney" class="column" style="border:1px solid black;">
-                <div class="form-header">
-                    <h1 class="center-align">Money</h1>
-                </div>
+        <div class="column">
+            <div class="form-header table-primary">
+                <h1 class="center-align">Money</h1>
+            </div>
+            @using (Html.BeginForm("add_money", "Donations", FormMethod.Post))
+            {
+
                 <div class="form-group">
-                    <div class="width">
+                    <div>
                         <label>Enter Amount</label><br />
                         <input class="form-control" type="text" name="Donation_Quantity" placeholder="Enter Quantity">
                     </div>
                 </div>
-                <div class="col" style="text-align: center; width: 50%; float:right;">
-                    <button name="button" value="Add Money" class="btn btn-info">Add Money</button>
+                <div style="text-align: center; width: 50%; float:right;">
+                    <button id="addmoney" name="button" value="Add Money" class="btn btn-info">Add Money</button>
                 </div>
-            </div>
-        }
+
+            }
+        </div>
     </div>
-    @*<div class="row">
-            <div class="col" style="text-align: center; width: 50%; float:left;">
-                <button name="button" value="Add Stock" class="btn btn-info">Add Stock</button>
-            </div>
-            <div class="col" style="text-align: center; width: 50%; float:right;">
-                <button name="button" value="Add Money" class="btn btn-info">Add Money</button>
-            </div>
-        </div>*@
     <br>
     <div>
         <div class="table">
-            <div class="form-header">
+            <div class="form-header table-primary">
                 <h1 class="center-align">Current Donations</h1>
             </div>
             @if (Model.adddonationlist != null)
             {
                 int count = 0;
                 <table class="table table-bordered">
-                    <thead class="thead-dark">
+                    <thead class="table-primary">
                         <tr>
                             <td>Donor Name</td>
                             <td>Donation Type</td>

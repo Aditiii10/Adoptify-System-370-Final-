@@ -91,13 +91,32 @@ namespace AdoptifySystem.Controllers
                 try
                 {
                     Foster_Care_Parent foster_Care_Parent1 = db.Foster_Care_Parent.Find(foster_Care_Parent.Foster_Parent_ID);
+                    List<Foster_Care_Parent> parentlist = db.Foster_Care_Parent.ToList();
                     if (foster_Care_Parent1 == null)
                     {
 
-                        return HttpNotFound();
+                        return View(foster_Care_Parent);
                     }
                     else
                     {
+                        foreach (var item in parentlist)
+                        {
+                            if (item == foster_Care_Parent1)
+                            {
+
+                            }
+                            else if (item.Foster_Parent_Name == foster_Care_Parent.Foster_Parent_Name
+                                   || item.Foster_Parent_Surname == foster_Care_Parent.Foster_Parent_Surname
+                                   || item.Foster_Parent_Email == foster_Care_Parent.Foster_Parent_Email
+                                  || item.Foster_Parent_CellNumber == foster_Care_Parent.Foster_Parent_CellNumber
+                                  || item.Foster_Parent_IDNumber == foster_Care_Parent.Foster_Parent_IDNumber
+                                  || item.Foster_Parent_WorkNumber == foster_Care_Parent.Foster_Parent_WorkNumber
+                                  || item.Foster_Parent_Address == foster_Care_Parent.Foster_Parent_Address)
+                            {
+                                ViewBag.err = "There is a duplicate Fostercare parent already";
+                                return View(foster_Care_Parent);
+                            }
+                        }
                         db.Entry(foster_Care_Parent1).CurrentValues.SetValues(foster_Care_Parent);
                         db.SaveChanges();
                     }
@@ -157,10 +176,41 @@ namespace AdoptifySystem.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        public ActionResult SearchFosterCareParent(string search)
+        {
+            if (search != null)
+            {
+
+                List<Foster_Care_Parent> foster = new List<Foster_Care_Parent>();
+                try
+                {
+                    //foster = db.searchParent(search).ToList();
+                    //foster = db.Foster_Care_Parent.Where(z => z.Foster_Parent_Email.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
+                    if (foster.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View(foster);
+                    }
+                    return View(foster);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    return View();
+                }
+            }
+            else
+            {
+
+            }
+            return View();
+        }
         public ActionResult AddtoFosterCare()
         {
             try
             {
+                flex.Fostercarelist = null;
                 flex.fostercareparent = db.Foster_Care_Parent.ToList();
                 flex.animallist = db.Animals.Where(z => z.Animal_Status.Animal_Status_Name == "Available").ToList();
                 return View(flex);
@@ -168,7 +218,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                return RedirectToAction("index", "home");
+                return RedirectToAction("Index", "home");
             }
 
         }
@@ -176,7 +226,8 @@ namespace AdoptifySystem.Controllers
         {
             if (inid == "")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.parenterr = "Please search a animal";
+                return View("AddtoFosterCare", flex);
             }
             int id = Convert.ToInt32(inid);
             id = id + 1;
@@ -184,7 +235,8 @@ namespace AdoptifySystem.Controllers
 
             if (flex.parent == null)
             {
-                return HttpNotFound();
+                ViewBag.parenterr = "Please search a animal";
+                return View("AddtoFosterCare", flex);
             }
 
             return View("AddtoFosterCare", flex);
@@ -194,14 +246,16 @@ namespace AdoptifySystem.Controllers
         {
             if (inid == "")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.animalerr = "Please search a animal";
+                return View("AddtoFosterCare", flex);
             }
             int id = Convert.ToInt32(inid);
             flex.animal = flex.animallist.ElementAt(id);
 
             if (flex.animal == null)
             {
-                return HttpNotFound();
+                ViewBag.animalerr = "Please search a animal";
+                return View("AddtoFosterCare", flex);
             }
 
             return View("AddtoFosterCare", flex);
@@ -214,11 +268,13 @@ namespace AdoptifySystem.Controllers
             {
                 if (flex.parent == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    ViewBag.parenterr = "Please search a parent";
+                    return RedirectToAction("AddtoFosterCare");
                 }
                 if (flex.animal == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    ViewBag.animalerr = "Please search a animal";
+                    return RedirectToAction("AddtoFosterCare");
                 }
                 Foster_Care foster1 = new Foster_Care();
                 foster1.Animal_ID = flex.animal.Animal_ID;
@@ -250,9 +306,6 @@ namespace AdoptifySystem.Controllers
                 var em = e.Message;
                 return RedirectToAction("AddtoFosterCare");
             }
-
-
-
             return View("AddtoFosterCare", flex);
 
         }
@@ -297,15 +350,18 @@ namespace AdoptifySystem.Controllers
 
 
                 }
+                flex.Fostercarelist = null;
+                flex.fostercareparent = null;
+                flex.animal = null;
+
                 return RedirectToAction("Index", "Home");
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                ViewBag.err = "complete all the details: " + e.Message;
                 return View("AddtoFosterCare", flex);
                 throw;
             }
-
-
         }
         public ActionResult RemovefromFosterCare()
         {
@@ -364,10 +420,10 @@ namespace AdoptifySystem.Controllers
                     chaghedstatus.Animal_Status_ID = 1;
                     db.Entry(orginal).CurrentValues.SetValues(chaghedstatus);
                     db.SaveChanges();
-
+                    test.Foster_Care_Parent = null;
+                    test.Animal = null;
                     db.Foster_Care.Remove(test);
                     db.SaveChanges();
-
                     return RedirectToAction("RemovefromFosterCare", flex);
                 }
                 else
@@ -381,6 +437,35 @@ namespace AdoptifySystem.Controllers
                 return View("RemovefromFosterCare", flex);
             }
 
+        }
+
+        public ActionResult saveremovefostercare()
+        {
+
+            flex.Fostercarelist = null;
+            return RedirectToAction("Index", "Home");
+        }
+        public ActionResult DeleteParent(int? id)
+        {
+
+            if (id != null)
+            {
+                Foster_Care_Parent parent = db.Foster_Care_Parent.Find(id);
+                int count = parent.Foster_Care.Count();
+                if (count != 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    ViewBag.err = "You can not delete this";
+                    return View("SearchFosterCareParent");
+                }
+                else
+                {
+                    db.Foster_Care_Parent.Remove(parent);
+                    db.SaveChanges();
+                    return View("SearchFosterCareParent");
+                }
+            }
+            return View("SearchFosterCareParent");
         }
     }
 }

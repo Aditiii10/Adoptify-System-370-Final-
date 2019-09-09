@@ -14,9 +14,20 @@ namespace AdoptifySystem.Controllers
 {
     public class HomeController : Controller
     {
+        private Wollies_ShelterEntities dc = new Wollies_ShelterEntities();
         // GET: Home
         public ActionResult Index()
         {
+            var Animals = dc.Animals.Count();
+            ViewBag.Animals = Animals;
+            var Adoptions = dc.Adoptions.Count();
+            ViewBag.Adoptions = Adoptions;
+            var Adopters = dc.Adopters.Count();
+            ViewBag.Adopters = Adopters;
+            var Employees = dc.Employees.Count();
+            ViewBag.Employees = Employees;
+            var Kennels = dc.Kennels.Count();
+            ViewBag.Kennels = Kennels;
             return View();
         }
 

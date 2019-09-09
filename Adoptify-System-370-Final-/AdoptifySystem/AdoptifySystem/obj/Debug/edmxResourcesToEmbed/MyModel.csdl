@@ -1782,6 +1782,30 @@
     <FunctionImport Name="VetSearch" EntitySet="Veterinarians" ReturnType="Collection(Wollies_ShelterModel.Veterinarian)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchDonor">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -1800,5 +1824,67 @@
     <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
     <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
     <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
+  </ComplexType>
+  <ComplexType Name="AnimalType_SearchAnimalType_Result">
+    <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="BreedType_SearchBreedType_Result">
+    <Property Type="Int32" Name="Animal_Breed_ID" Nullable="false" />
+    <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Donor_SearchDonor_Result">
+    <Property Type="Int32" Name="Donor_ID" Nullable="false" />
+    <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Title_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Emp_SearchEmpType_Result">
+    <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Emp_Type_Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Emp_Type_Description" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Parent_SearchParent_Result">
+    <Property Type="Int32" Name="Foster_Parent_ID" Nullable="false" />
+    <Property Type="String" Name="Foster_Parent_Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_Surname" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_Address" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_CellNumber" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_WorkNumber" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_Email" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Foster_Parent_IDNumber" Nullable="true" />
+    <Property Type="DateTime" Name="Foster_Parent_Last_Modified" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="Num_In_Household" Nullable="true" />
+    <Property Type="String" Name="Type_Of_Housing" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
+    <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Stock_SearchStock_Result">
+    <Property Type="Int32" Name="Stock_ID" Nullable="false" />
+    <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Stock_Quantity" Nullable="true" />
+    <Property Type="String" Name="Stock_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Stock_Type_ID" Nullable="true" />
+    <Property Type="Int32" Name="Packaging_Type_ID" Nullable="true" />
+    <Property Type="Int32" Name="Unit_Type_ID" Nullable="true" />
+    <Property Type="Int32" Name="Unit_number" Nullable="true" />
+    <Property Type="Int32" Name="Stock_Type_ID1" Nullable="false" />
+    <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="Stock_SearchStockType_Result">
+    <Property Type="Int32" Name="Stock_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="Don_SearchDon_Result">
+    <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
+    <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
   </ComplexType>
 </Schema>

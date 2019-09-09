@@ -3,12 +3,13 @@
     ViewBag.Title = "Add Stock Type";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="main">
-    <h2>Add Stock Type</h2>
+<br />
+<div class=" border-primary card">
+    <h2 class="table-primary">Add Stock Type</h2>
     @using (Html.BeginForm())
     {
         <div class="form-horizontal">
-            <h4 style="color:red">@ViewBag.errormessage</h4>
+
             <hr />
             <div class="form-group">
                 <label>Stock Type Name</label>
@@ -32,4 +33,19 @@
             </div>
         </div>
     }
-    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var duplicate = '@TempData["error"]'
+            if (duplicate != '')
+                alertify.error(duplicate);
+        });
+         $(function () {
+            var exception = '@TempData["exception"]'
+            if (exception != '')
+                alertify.error(exception);
+         });
+
+    </script>
+}

@@ -3,33 +3,48 @@
     ViewBag.Title = "MaintainStockType";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
+<div class=" border-primary card">
+    <h2 class="table-primary">Maintain Stock Type</h2>
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <input hidden name="Stock_Type_ID" value="@Model.Stock_Type_ID" />
+            <hr />
+            <div class="form-group">
+                <label>Stock Type Name</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="StockTypename" value="@Model.Stock_Type_Name" name="Stock_Type_Name" placeholder="Stock Type Name">
+                </div>
+            </div>
 
-<h2>Maintain Stock Type</h2>
-@using (Html.BeginForm())
-{
-    <div class="form-horizontal">
-        <input hidden value="@Model.Stock_Type_ID" />
-        <h4 style="color:red">@ViewBag.err</h4>
-        <hr />
-        <div class="form-group">
-            <label>Stock Type Name</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" id="StockTypename" value="@Model.Stock_Type_Name" name="Stock_Type_Name" placeholder="Stock Type Name">
+            <div class="form-group">
+                <label>Stock Type Description</label>
+                <div class="col-md-10">
+                    <textarea type="text" class="form-control" id="StockTypeDescription" value="@Model.Stock_Type_Description" name="Stock_Type_Description" placeholder="Stock Type Description">@Model.Stock_Type_Description</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <label>Stock Type Description</label>
-            <div class="col-md-10">
-                <textarea type="text" class="form-control" id="StockTypeDescription" value="@Model.Stock_Type_Description" name="Stock_Type_Description" placeholder="Stock Type Description"></textarea>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
-            </div>
-        </div>
-    </div>
+    }
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var duplicate = '@TempData["error"]'
+            if (duplicate != '')
+                alertify.error(duplicate);
+        });
+         $(function () {
+            var exception = '@TempData["exception"]'
+            if (exception != '')
+                alertify.error(exception);
+         });
+    </script>
 }
