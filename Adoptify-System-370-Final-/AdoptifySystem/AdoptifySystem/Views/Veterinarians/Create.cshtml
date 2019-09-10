@@ -9,7 +9,7 @@
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
         <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1>Create Veterinarian</h1>
+            <h1 style="color:white">Create Veterinarian</h1>
             </div>
         </div>
 
@@ -55,7 +55,8 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-success" class1="glyphicon glyphicon-floppy-disk" />
+                        @Html.ActionLink("Back", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" })
+                        <input type="submit" value="Save" class="btn btn-success" class1="glyphicon glyphicon-floppy-disk" style="float:right" />
                     </div>
                 </div>
             </div>
@@ -63,8 +64,8 @@
 
         <h2 style="color:red">@ViewBag.Message</h2><br />
         <div>
-            @Html.ActionLink("Back", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" })
-            @Html.ActionLink("Refresh", "Create", "Veterinarians", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })
+            
+           
         </div>
     </div>
  

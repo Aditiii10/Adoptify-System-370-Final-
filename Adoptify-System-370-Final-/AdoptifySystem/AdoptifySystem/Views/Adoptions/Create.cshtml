@@ -42,7 +42,8 @@
                     <div class="col-md-10">
                         @Html.DropDownList("Adopter_ID", null, htmlAttributes: new { @class = "form-control", required = "required" })
                         @Html.ValidationMessageFor(model => model.Adopter_ID, "", new { @class = "text-danger" })
-                    </div>
+                    </div><br />
+                    <div style="float:left">@Html.ActionLink("Add Adopter", "Create", "Adopters",null , new { @class = "btn btn-success" })</div>
                 </div>
 
                 <div style="visibility:hidden" class="form-group">

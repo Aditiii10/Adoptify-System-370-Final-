@@ -46,7 +46,7 @@ namespace AdoptifySystem.Controllers
                 if (item.Animal_Status_ID == 2)
                     animals2.Add(item);
             }
-            ViewBag.Animal_ID = new SelectList(animals2, "Animal_Name", "Animal_Name");
+            ViewBag.Animal_ID = new SelectList(animals2, "Animal_ID", "Animal_Name");
             ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name");
             ViewBag.VetAppReasonsID = new SelectList(db.VetAppReasons, "VetAppReasonsID", "Reason");
             return View();
@@ -77,7 +77,7 @@ namespace AdoptifySystem.Controllers
                 if(item.Animal_Status_ID==2)
                 animals2.Add(item);
             }
-            ViewBag.Animal_ID = new SelectList(animals2, "Animal_Name", "Animal_Name", vet_Appointment_Master.Animal_ID);
+            ViewBag.Animal_ID = new SelectList(animals2, "Animal_ID", "Animal_Name", vet_Appointment_Master.Animal_ID);
             ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment_Master.Vet_ID);
             ViewBag.VetAppReasonsID = new SelectList(db.VetAppReasons, "VetAppReasonsID", "Reason", vet_Appointment_Master.VetAppReasonsID);
             return View(vet_Appointment_Master);

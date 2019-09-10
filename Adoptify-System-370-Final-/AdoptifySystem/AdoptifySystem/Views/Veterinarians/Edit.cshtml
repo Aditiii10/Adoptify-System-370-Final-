@@ -8,7 +8,7 @@
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
         <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1>Update Veterinarian</h1></div>
+            <h1 style="color:white">Update Veterinarian</h1></div>
         </div>
 
         @using (Html.BeginForm())
@@ -54,17 +54,18 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-success glyphicon glyphicon-floppy-disk" />
+                        @Html.ActionLink("Back to List", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" })
+                        <input type="submit" value="Save" class="btn btn-success glyphicon glyphicon-floppy-disk" style="float:right"/>
                     </div>
                 </div>
             </div>
         }
     </div>
 <h2 style="color:red">@ViewBag.Message</h2><br />
-<div>
+@*<div>
     @Html.ActionLink("Refresh", "Edit ", "Veterinarians", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })
-</div>
+</div>*@
 
     <div>
-        @Html.ActionLink("Back to List", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" })
+        
     </div>

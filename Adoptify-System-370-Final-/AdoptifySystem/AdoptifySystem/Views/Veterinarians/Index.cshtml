@@ -7,98 +7,132 @@
 
 
 
-
+<div id="main">
     <div class="" style="text-align:center;padding-left:120px">
         <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1>Veterinarian Information</h1></div>
+            <h1 style="color:white">Veterinarian Information</h1>
         </div>
+    </div>
 
-        <div class="newButton">
-            @Html.ActionLink("Add", "Create", "Veterinarians", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus" })
-        </div>
-        <p>
-            @using (Html.BeginForm("Index", "Veterinarians", FormMethod.Get))
+    <div class="newButton">
+        @Html.ActionLink("Create New Vet", "Create", "Veterinarians", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus" })
+    </div>
+    <p>
+        @using (Html.BeginForm("Index", "Veterinarians", FormMethod.Get))
             {
-                <b>Search by:</b>@Html.RadioButton("Searchby", "Vet_Name", true) <text>Vet Name</text>
-                @Html.RadioButton("Searchby", "Vet_Address")<text> Vet Address</text><br />
-                @Html.TextBox("search")<input type="submit" value="Search" ? />
-            }
-        </p>
-        <table class="table-bordered table">
-            <tr class="table-primary">
-                <th>
-                    Name
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Tel
-                </th>
-                <th>
-                    Address
-                </th>
-                <th>
-                    Action
-                </th>
-                
-            </tr>
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                </div>
+            </div>
 
-            @foreach (var item in Model)
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+
+                @*<b>Search by:</b>@Html.RadioButton("Searchby", "Vet_Name", true) <text>Vet Name</text>
+                    @Html.RadioButton("Searchby", "Vet_Address")<text> Vet Address</text><br />
+                    @Html.TextBox("search")<input type="submit" value="Search" ? />*@
+        }
+    </p>
+    <br />
+    <table class="table-bordered table">
+    <tr class="table-primary">
+        <th>
+            Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Tel
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Action
+        </th>
+
+    </tr>
+
+    @if (Model == null)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Vet_Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Vet_Emial)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Vet_Tel)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Vet_Address)
-                    </td>
-                    <td>
-                        @*@Html.ActionLink("Edit", "Edit", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
+        <tr>
+            <td colspan="8">
+                No Vets found
+            </td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vet_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vet_Emial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vet_Tel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vet_Address)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
                         @Html.ActionLink("Details", "Details", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open" })
                         @Html.ActionLink("Delete", "Delete", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })*@
-                        <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Vet_ID)"> More Info</button>
-                    </td>
-                </tr>
+                    <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Vet_ID)"> More Info</button>
+                </td>
+            </tr>
 
-                <div id="@Html.DisplayFor(modelItem => item.Vet_ID)" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="info_card">
-                            <div class="card_inner">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h2>  @Html.DisplayFor(modelItem => item.Vet_Name) </h2>
-                                <hr />
-                            </div>
-                            <div class="data">
+            <div class="modal fade" id="@Html.DisplayFor(modelItem => item.Vet_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header table-primary">
+                            <h5 class="modal-title" id="exampleModalLongTitle" style="text-align:center">  @Html.DisplayFor(modelItem => item.Vet_Name)</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
 
-                                <span class="value">Email:</span>  @Html.DisplayFor(modelItem => item.Vet_Emial) <br />
+                            <span class="value">Email:</span>  @Html.DisplayFor(modelItem => item.Vet_Emial) <br />
 
-                                <span class="value">Tel:</span>@Html.DisplayFor(modelItem => item.Vet_Tel)<br />
+                            <span class="value">Tel:</span>@Html.DisplayFor(modelItem => item.Vet_Tel)<br />
 
-                                <span class="value">Address:</span> @Html.DisplayFor(modelItem => item.Vet_Address)<br />
-                                <br />
-                                @Html.ActionLink("Edit", "Edit", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
-                                @*@Html.ActionLink("Details", "Details", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open" })*@
-                                @Html.ActionLink("Delete", "Delete", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
-                                <br />
-                                <br />
-                                <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
+                            <span class="value">Address:</span> @Html.DisplayFor(modelItem => item.Vet_Address)<br />
+                            <br />
+                            <div class="modal-footer">
+                                <div style="position:center">
+                                   
+                                        @Html.ActionLink("Edit", "Edit", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
+                                        @*@Html.ActionLink("Details", "Details", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open" })*@
+                                        @Html.ActionLink("Delete", "Delete", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                                    </div>
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
+                                </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-            }
+               
+                }
+                }
 
-        </table>
-        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
-        @Html.ActionLink("Refresh", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+</table>
+    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+    @Html.ActionLink("Refresh", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+</div>
+
+
 
 
 
