@@ -104,7 +104,7 @@
                     <div class="frontside">
                         <div class="card">
                             <div class="card-body text-center">
-                                <p><img class="img-fluid" src="" alt="card image"></p>
+                                <p> <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Animal_Image)" style="width:10% ;height:10%;" class="avatar img-circle img-thumbnail" alt="avatar"></p>
                                 <h4 class="card-title">@item.Animal_Name</h4>
                                 <p class="card-text">@item.Animal_Status.Animal_Status_Name</p>
                                 @Html.ActionLink("Maintain", "MaintainAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-primary" })
@@ -118,7 +118,7 @@
                     <div class="frontside">
                         <div class="card">
                             <div class="card-body text-center">
-                                <p><img class="img-fluid" src="data:image/jpeg,@Convert.ToBase64String(item.Animal_Image)" alt="card image"></p>
+                                <p> <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Animal_Image)" class="avatar img-circle img-thumbnail" alt="avatar"></p>
                                 <h4 class="card-title">@item.Animal_Name</h4>
                                 @*<p class="card-text">@item.Animal_Status.Animal_Status_Name</p>*@
                                 @Html.ActionLink("Maintain", "MaintainAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-primary" })
@@ -237,6 +237,3 @@
 
         </script>
     }
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

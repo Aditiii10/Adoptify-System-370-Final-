@@ -212,9 +212,6 @@ namespace AdoptifySystem.Controllers.Zinhle
         [HttpPost]
         public ActionResult AddAnimalType(Animal_Type animal_type, string button)
         {
-
-            ViewBag.errorMessage = "";
-            //Donation_Type asd = new Donation_Type();
             if (button == "Save")
             {
                 try
@@ -230,7 +227,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                             if (item.Animal_Type_Name == animal_type.Animal_Type_Name)
                             {
                                 count++;
-                                ViewBag.errorMessage = "There is a duplicate Donation Type Already";
+                                TempData["DeleteMessage"] = "There is a duplicate Animal Type already";
                                 return View();
                             }
 
@@ -262,21 +259,21 @@ namespace AdoptifySystem.Controllers.Zinhle
             else if (button == "Cancel")
             {
                 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SearchAnimalType", "Animal");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SearchAnimalType", "Animal");
         }
 
         public ActionResult MainatainAnimalType(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("SearchAnimalType", "Animal");
             }
             Animal_Type animal_type = db.Animal_Type.Find(id);
             if (animal_type == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SearchAnimalType", "Animal");
             }
             return View(animal_type);
         }
@@ -307,15 +304,15 @@ namespace AdoptifySystem.Controllers.Zinhle
             else if (button == "Cancel")
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SearchAnimalType", "Animal");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SearchAnimalType", "Animal");
 
         }
 
         public ActionResult SearchAnimalType()
         {
-            ViewBag.errormessage = "";
+           
             List<Animal_Type> animal_Types = new List<Animal_Type>();
             try
             {
@@ -328,16 +325,16 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                ViewBag.errormessage = "there was a network error: "+ e.Message;
+                TempData["EditMessage"] = "there was a network error: "+ e.Message;
                 return View();
             }
         }
-        [HttpGet]
+        [HttpPost]
         public ActionResult SearchAnimalType(string search)
         {
             return View();
         }
-            public ActionResult AddBreedType()
+        public ActionResult AddBreedType()
         {
             try
             {
@@ -346,7 +343,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                ViewBag.err = e.Message + "";
+                TempData["EditMessage"] = e.Message + "";
                 throw;
             }
         }
@@ -369,7 +366,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                             if (item.Animal_Breed_Name == animal_breed.Animal_Breed_Name)
                             {
                                 count++;
-                                ViewBag.errorMessage = "There is a duplicate Donation Type Already";
+                                TempData["EditMessage"] = "There is a duplicate Animal Breed Already";
                                 return View();
                             }
 
@@ -399,10 +396,10 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             else if (button == "Cancel")
             {
-                
-                return RedirectToAction("Index", "Home");
+
+                return RedirectToAction("SearchBreedType", "Animal");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SearchBreedType", "Animal");
         }
 
         public ActionResult MaintainBreedType(int? id)
@@ -415,17 +412,17 @@ namespace AdoptifySystem.Controllers.Zinhle
                     var breed = db.Animal_Breed.Find(id);
                     if (breed == null)
                     {
-                        return View("AddBreedType");
+                        return RedirectToAction("SearchBreedType", "Animal");
                     }
                     innovation.breed = breed;
                     return View(innovation);
                 }
-                return View("AddBreedType");
+                return RedirectToAction("SearchBreedType", "Animal");
             }
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                throw;
+                return RedirectToAction("SearchBreedType", "Animal");
             }
         }
         [HttpPost]
@@ -449,20 +446,34 @@ namespace AdoptifySystem.Controllers.Zinhle
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return RedirectToAction("MaintainDonationType", "Donations");
+                    return RedirectToAction("SearchBreedType", "Animal");
                 }
             }
             else if (button == "Cancel")
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SearchBreedType", "Animal");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SearchBreedType", "Animal");
         }
 
         public ActionResult SearchBreedType()
         {
-            return View();
+            List<Animal_Breed> breeds = new List<Animal_Breed>();
+            try
+            {
+                breeds = db.Animal_Breed.ToList();
+                if (breeds.Count == 0)
+                {
+
+                }
+                return View(breeds);
+            }
+            catch (Exception e)
+            {
+                TempData["EditMessage"] = "there was a network error: " + e.Message;
+                return View();
+            }
         }
 
         //public ActionResult ClaimAnimal()
