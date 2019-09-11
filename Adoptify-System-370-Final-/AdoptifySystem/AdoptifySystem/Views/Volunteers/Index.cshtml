@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Volunteer's List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
-    @using (Html.BeginForm("Index", "Volunteers", FormMethod.Get))
+    @Html.ActionLink("Add New", "Create", "Volunteer", new { @class = "btn btn-success" })
+    @using (Html.BeginForm("Index", "Volunteer", FormMethod.Get))
     {
         <b>Search by:</b>@Html.RadioButton("Searchby", "Vol_Name", true) <text>Volunteer Name</text>
         @Html.RadioButton("Searchby", "Vol_Surname")<text>Volunteer Surname</text><br />
@@ -72,9 +72,9 @@
             @Html.DisplayFor(modelItem => item.Title.Title_Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Vol_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Vol_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Vol_ID })
+            @Html.ActionLink("Update", "Edit", "Volunteer", new { id = item.Vol_ID  }, new { @class = "btn btn-success" })
+            @Html.ActionLink("More Info", "Details", "Volunteer", new { id = item.Vol_ID  }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Delete", "Delete", "Volunteer", new { id = item.Vol_ID  }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }
