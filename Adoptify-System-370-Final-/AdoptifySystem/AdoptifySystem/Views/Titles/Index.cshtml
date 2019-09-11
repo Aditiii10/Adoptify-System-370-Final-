@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Title List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New", "Create", "Titles", new { @class = "btn btn-success" })
 </p>
 <table class="table">
     <tr>
@@ -23,9 +23,9 @@
             @Html.DisplayFor(modelItem => item.Title_Description)      @*gets value*@
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Title_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Title_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Title_ID })
+            @Html.ActionLink("Delete", "Delete", "Titles", new { id = item.Title_ID }, new { @class = "btn btn-danger", style = "float:right" })
+            @Html.ActionLink("More Info", "Details", "Titles", new { id = item.Title_ID }, new { @class = "btn btn-primary", style = "float:right" })
+            @Html.ActionLink("Update", "Edit", "Titles", new { id = item.Title_ID }, new { @class = "btn btn-success", style = "float:right" })
         </td>
     </tr>
 }
