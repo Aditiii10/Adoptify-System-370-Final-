@@ -10,10 +10,10 @@
 
 
     <h1>@ViewBag.errormessage</h1>
-    <div  class="col-sm-10">
+    <div class="col-sm-10">
         @Html.ActionLink("Create New", "AddBreedType", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
     </div>
-      @using (Html.BeginForm("SearchBreedType", "Animal", FormMethod.Get))
+    @using (Html.BeginForm("SearchBreedType", "Animal", FormMethod.Get))
     {
         <div class="row">
             <div class="col-md-5">
@@ -67,7 +67,7 @@
                             @Html.DisplayFor(modelItem => item.Animal_Breed_Description)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Animal_Type)
+                            @Html.DisplayFor(modelItem => item.Animal_Type.Animal_Type_Name)
                         </td>
 
                         <td>
@@ -132,7 +132,3 @@
 
     </script>
 }
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-

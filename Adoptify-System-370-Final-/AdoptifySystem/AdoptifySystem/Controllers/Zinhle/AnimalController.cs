@@ -1,4 +1,4 @@
-﻿using AdoptifySystem.Models;
+﻿using AdoptifySystem;
 using AdoptifySystem.Models.nickeymodel;
 using System;
 using System.Collections.Generic;
@@ -17,30 +17,30 @@ namespace AdoptifySystem.Controllers.Zinhle
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         static public Innovation innovation = new Innovation();
 
-     
+
         public ActionResult AddTemporaryAnimal()
         {
             try
             {
                 innovation.animalTypes = db.Animal_Type.ToList();
                 innovation.breedTypes = db.Animal_Breed.ToList();
-                
+
                 return View(innovation);
             }
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return RedirectToAction("Index","Employees");
+                return RedirectToAction("Index", "Employees");
 
             }
 
         }
         [HttpPost]
-        public ActionResult AddTemporaryAnimal(Animal animal, int[] Animal_Breed,Microchip micro,HttpPostedFileBase animalPicture)
+        public ActionResult AddTemporaryAnimal(Animal animal, int[] Animal_Breed, Microchip micro, HttpPostedFileBase animalPicture)
         {
             try
             {
-                if(animalPicture != null)
+                if (animalPicture != null)
                 {
                     //this is where we convert the contract to add to the database
                     byte[] bytes;
@@ -54,7 +54,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     animal.Animal_Image = bytes;
 
                 }
-                if(animal !=null)
+                if (animal != null)
                 {
                     Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Available").FirstOrDefault();
                     if (status == null)
@@ -89,7 +89,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
 
 
-            
+
         }
 
         public ActionResult SearchAnimal()
@@ -111,18 +111,18 @@ namespace AdoptifySystem.Controllers.Zinhle
         [HttpPost]
         public ActionResult SearchAnimal(string search)
         {
-            
+
             if (!(search == ""))
             {
-                var animallist = db.Animals.Where(z=>z.Animal_Name.Equals(search)).ToList();
+                var animallist = db.Animals.Where(z => z.Animal_Name.Equals(search)).ToList();
                 if (animallist == null)
                 {
                     return RedirectToAction("SearchAnimal");
                 }
                 List<Animal> animals = new List<Animal>();
                 animals = animallist;
-                
-                return View("SearchAnimal",animals);
+
+                return View("SearchAnimal", animals);
 
             }
             TempData["SuccessMessage"] = "Enter Valid Details";
@@ -140,12 +140,12 @@ namespace AdoptifySystem.Controllers.Zinhle
                     TempData["EditMessage"] = "Animal not Found";
                     return View("SearchAnimal");
                 }
-                var micro = db.Microchips.Where(z=>z.Animal_ID ==animals.Animal_ID).FirstOrDefault();
+                var micro = db.Microchips.Where(z => z.Animal_ID == animals.Animal_ID).FirstOrDefault();
                 if (micro != null)
                 {
                     innovation.micro = micro;
                 }
-                
+
                 innovation.animal = animals;
                 var emp = db.Animal_Type.ToList();
                 var breed = db.Animal_Breed.ToList();
@@ -172,7 +172,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         return HttpNotFound();
                     }
-                    if(animalPicture != null)
+                    if (animalPicture != null)
                     {
 
                         //this is where we convert the contract to add to the database
@@ -186,8 +186,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                         animal.Animal_Image_Type = animalPicture.ContentType;
                         animal.Animal_Image = bytes;
                     }
-                        db.Entry(searchanimal).CurrentValues.SetValues(animal);
-                        db.SaveChanges();
+                    db.Entry(searchanimal).CurrentValues.SetValues(animal);
+                    db.SaveChanges();
                     TempData["SuccessMessage"] = "Successfully";
                 }
                 catch (Exception e)
@@ -212,9 +212,6 @@ namespace AdoptifySystem.Controllers.Zinhle
         [HttpPost]
         public ActionResult AddAnimalType(Animal_Type animal_type, string button)
         {
-
-            ViewBag.errorMessage = "";
-            //Donation_Type asd = new Donation_Type();
             if (button == "Save")
             {
                 try
@@ -230,7 +227,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                             if (item.Animal_Type_Name == animal_type.Animal_Type_Name)
                             {
                                 count++;
-                                ViewBag.errorMessage = "There is a duplicate Donation Type Already";
+                                TempData["DeleteMessage"] = "There is a duplicate Animal Type already";
                                 return View();
                             }
 
@@ -261,22 +258,22 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             else if (button == "Cancel")
             {
-                
-                return RedirectToAction("Index", "Home");
+
+                return RedirectToAction("SearchAnimalType", "Animal");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SearchAnimalType", "Animal");
         }
 
         public ActionResult MainatainAnimalType(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("SearchAnimalType", "Animal");
             }
             Animal_Type animal_type = db.Animal_Type.Find(id);
             if (animal_type == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SearchAnimalType", "Animal");
             }
             return View(animal_type);
         }
@@ -307,20 +304,20 @@ namespace AdoptifySystem.Controllers.Zinhle
             else if (button == "Cancel")
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SearchAnimalType", "Animal");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SearchAnimalType", "Animal");
 
         }
 
         public ActionResult SearchAnimalType()
         {
-            ViewBag.errormessage = "";
+
             List<Animal_Type> animal_Types = new List<Animal_Type>();
             try
             {
                 animal_Types = db.Animal_Type.ToList();
-                if(animal_Types.Count == 0)
+                if (animal_Types.Count == 0)
                 {
 
                 }
@@ -328,16 +325,16 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                ViewBag.errormessage = "there was a network error: "+ e.Message;
+                TempData["EditMessage"] = "there was a network error: " + e.Message;
                 return View();
             }
         }
-        [HttpGet]
+        [HttpPost]
         public ActionResult SearchAnimalType(string search)
         {
             return View();
         }
-            public ActionResult AddBreedType()
+        public ActionResult AddBreedType()
         {
             try
             {
@@ -346,7 +343,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-
+                TempData["EditMessage"] = e.Message + "";
                 throw;
             }
         }
@@ -369,7 +366,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                             if (item.Animal_Breed_Name == animal_breed.Animal_Breed_Name)
                             {
                                 count++;
-                                ViewBag.errorMessage = "There is a duplicate Donation Type Already";
+                                TempData["EditMessage"] = "There is a duplicate Animal Breed Already";
                                 return View();
                             }
 
@@ -399,10 +396,10 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             else if (button == "Cancel")
             {
-                
-                return RedirectToAction("Index", "Home");
+
+                return RedirectToAction("SearchBreedType", "Animal");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SearchBreedType", "Animal");
         }
 
         public ActionResult MaintainBreedType(int? id)
@@ -415,17 +412,17 @@ namespace AdoptifySystem.Controllers.Zinhle
                     var breed = db.Animal_Breed.Find(id);
                     if (breed == null)
                     {
-                        return View("AddBreedType");
+                        return RedirectToAction("SearchBreedType", "Animal");
                     }
                     innovation.breed = breed;
                     return View(innovation);
                 }
-                return View("AddBreedType");
+                return RedirectToAction("SearchBreedType", "Animal");
             }
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                throw;
+                return RedirectToAction("SearchBreedType", "Animal");
             }
         }
         [HttpPost]
@@ -449,53 +446,34 @@ namespace AdoptifySystem.Controllers.Zinhle
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return RedirectToAction("MaintainDonationType", "Donations");
+                    return RedirectToAction("SearchBreedType", "Animal");
                 }
             }
             else if (button == "Cancel")
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SearchBreedType", "Animal");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SearchBreedType", "Animal");
         }
 
         public ActionResult SearchBreedType()
         {
-            return View();
+            List<Animal_Breed> breeds = new List<Animal_Breed>();
+            try
+            {
+                breeds = db.Animal_Breed.ToList();
+                if (breeds.Count == 0)
+                {
+
+                }
+                return View(breeds);
+            }
+            catch (Exception e)
+            {
+                TempData["EditMessage"] = "there was a network error: " + e.Message;
+                return View();
+            }
         }
-
-        //public ActionResult ClaimAnimal()
-        //{
-        //    //try
-        //    //{
-        //    //    innovation.animals = db.Animals.Select( x=> new Animal { Animal_Name = x.Animal_Name}).ToList();
-             
-
-        //    //    return View(innovation);
-        //    //}
-        //    //catch (Exception e)
-        //    //{
-        //    //    ViewBag.err = e.Message;
-        //    //    return RedirectToAction("Index", "Employees");
-
-        //    //}
-
-        //}
-
-        //[HttpPost]
-        //public ActionResult ClaimAnimal()
-        //{
-
-
- 
-        //        Animal animal = new Animal();
-        //        Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Temporary").FirstOrDefault();
-        //        animal.Animal_Status_ID = status.Animal_Status_ID;
-        //        db.Animals.Add(animal);
-        //        db.SaveChanges();
-            
-            
-        //}
     }
 }

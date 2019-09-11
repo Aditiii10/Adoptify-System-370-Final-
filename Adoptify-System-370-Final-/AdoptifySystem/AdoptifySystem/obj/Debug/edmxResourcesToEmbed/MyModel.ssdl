@@ -356,6 +356,7 @@
     <Property Name="HomeCheck_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="HomeCheck_Datetime" Type="datetime" />
     <Property Name="Adoption_ID" Type="int" />
+    <Property Name="Emp_ID" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1021,6 +1022,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fkho">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="HomeCheck">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkhoch">
     <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
     <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
@@ -1588,6 +1601,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
     <AssociationSet Name="fkfosc1" Association="Self.fkfosc1">
       <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
       <End Role="Foster_Care" EntitySet="Foster_Care" />
+    </AssociationSet>
+    <AssociationSet Name="fkho" Association="Self.fkho">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="HomeCheck" EntitySet="HomeCheck" />
     </AssociationSet>
     <AssociationSet Name="fkhoch" Association="Self.fkhoch">
       <End Role="Adoption" EntitySet="Adoption" />

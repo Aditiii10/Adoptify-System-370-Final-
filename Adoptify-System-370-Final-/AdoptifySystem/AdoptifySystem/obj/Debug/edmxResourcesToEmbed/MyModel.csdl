@@ -327,6 +327,7 @@
     <NavigationProperty Name="Employee_Status" Relationship="Self.fkemp2" FromRole="Employee" ToRole="Employee_Status" />
     <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
     <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
+    <NavigationProperty Name="HomeChecks" Relationship="Wollies_ShelterModel.fkho" FromRole="Employee" ToRole="HomeCheck" />
   </EntityType>
   <EntityType Name="Employee_Status">
     <Key>
@@ -433,6 +434,8 @@
     <Property Name="Adoption_ID" Type="Int32" />
     <NavigationProperty Name="Adoption" Relationship="Self.fkhoch" FromRole="HomeCheck" ToRole="Adoption" />
     <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="HomeCheck" ToRole="HomeCheckReport" />
+    <Property Name="Emp_ID" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="Wollies_ShelterModel.fkho" FromRole="HomeCheck" ToRole="Employee" />
   </EntityType>
   <EntityType Name="Kennel">
     <Key>
@@ -1821,6 +1824,10 @@
     <FunctionImport Name="VetSearch" EntitySet="Veterinarians" ReturnType="Collection(Wollies_ShelterModel.Veterinarian)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
+    <AssociationSet Name="fkho" Association="Wollies_ShelterModel.fkho">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="HomeCheck" EntitySet="HomeChecks" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="AnimalType_SearchAnimalType_Result">
     <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -1902,4 +1909,16 @@
     <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
     <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
   </ComplexType>
+  <Association Name="fkho">
+    <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="Wollies_ShelterModel.HomeCheck" Role="HomeCheck" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="HomeCheck">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

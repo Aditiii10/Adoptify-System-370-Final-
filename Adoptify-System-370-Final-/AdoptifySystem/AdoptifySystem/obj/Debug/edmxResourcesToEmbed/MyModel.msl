@@ -383,6 +383,7 @@
     <EntitySetMapping Name="HomeChecks">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheck">
         <MappingFragment StoreEntitySet="HomeCheck">
+          <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
           <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
           <ScalarProperty Name="HomeCheck_Datetime" ColumnName="HomeCheck_Datetime" />
           <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />

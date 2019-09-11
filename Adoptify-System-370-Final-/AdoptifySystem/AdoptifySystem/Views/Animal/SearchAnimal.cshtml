@@ -3,6 +3,10 @@
     ViewBag.Title = "SearchAnimal";
     Layout = "~/Views/Shared/_Layout.cshtml ";
 }
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <style>
     #team .card {
         border: none;
@@ -74,7 +78,7 @@
     <br />
     <br />
     <h1>@ViewBag.errormessage</h1>
-    
+
     <div class="col-sm-10">
         @Html.ActionLink("Add Temporary Animal", "AddTemporaryAnimal", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
     </div>
@@ -120,7 +124,7 @@
                             <div class="card-body text-center">
                                 <p><img class="img-fluid" src="data:image/jpeg,@Convert.ToBase64String(item.Animal_Image)" alt="card image"></p>
                                 <h4 class="card-title">@item.Animal_Name</h4>
-                                @*<p class="card-text">@item.Animal_Status.Animal_Status_Name</p>*@
+                                <p class="card-text">@item.Animal_Status.Animal_Status_Name</p>
                                 @Html.ActionLink("Maintain", "MaintainAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-primary" })
                             </div>
                         </div>
@@ -132,93 +136,93 @@
 
         }
     </div>
-    </div>
-    @*<table class="table table-bordered">
-            <tr class="thead-light">
-                <th>
-                    Animals
-                </th>
+</div>
+@*<table class="table table-bordered">
+        <tr class="thead-light">
+            <th>
+                Animals
+            </th>
 
-                <th>
-                    Animal ID
-                </th>
-                <th>
-                    Action
-                </th>
+            <th>
+                Animal ID
+            </th>
+            <th>
+                Action
+            </th>
 
+        </tr>
+
+        @if (Model == null)
+        {
+            <tr>
+                <td colspan="8">
+                    No results found
+                </td>
             </tr>
-
-            @if (Model == null)
+        }
+        else
+        {
+            foreach (var item in Model)
             {
                 <tr>
-                    <td colspan="8">
-                        No results found
+                    <td>
+                        <div class="card">
+                            <div>@item.Animal_Image</div>
+                      <div class="card-block">
+                          <label><b>Animal Name:</b></label><label><b>@item.Animal_Name</b></label><br />
+                          <label><b>Animal Status:</b></label><label><b>@item.Animal_Status</b></label><br />
+                          <label><b>Location:</b></label><label><b>@item.Animal_Location</b></label><br />
+                       </div>
+
+                        </div>
+
+                    </td>
+                    @Html.DisplayFor(modelItem =>item.Animal_ID)
+                    <td>
+
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("MaintainAnimal", "MaintainAnimal", new { id = item.Animal_ID }, new { @class = "btn btn-warning" }) |
+
+                        <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Animal_ID">More info </button> |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Animal_ID}, new { @class = "btn btn-danger" }) |
                     </td>
                 </tr>
-            }
-            else
-            {
-                foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            <div class="card">
-                                <div>@item.Animal_Image</div>
-                          <div class="card-block">
-                              <label><b>Animal Name:</b></label><label><b>@item.Animal_Name</b></label><br />
-                              <label><b>Animal Status:</b></label><label><b>@item.Animal_Status</b></label><br />
-                              <label><b>Location:</b></label><label><b>@item.Animal_Location</b></label><br />
-                           </div>
-
+                <div class="modal fade" id="@item.Animal_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">@item.Animal_ID</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-
-                        </td>
-                        @Html.DisplayFor(modelItem =>item.Animal_ID)
-                        <td>
-
-                        </td>
-
-                        <td>
-                            @Html.ActionLink("MaintainAnimal", "MaintainAnimal", new { id = item.Animal_ID }, new { @class = "btn btn-warning" }) |
-
-                            <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Animal_ID">More info </button> |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Animal_ID}, new { @class = "btn btn-danger" }) |
-                        </td>
-                    </tr>
-                    <div class="modal fade" id="@item.Animal_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">@item.Animal_ID</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <span class="value">ID:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_ID) <br />
-                                    <span class="value">Name:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Name) <br />
-                                    <span class="value">Location:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Location) <br />
-                                    <span class="value">Gender:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Gender) <br />
-                                    <span class="value">Description:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Description)<br />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Maintain", "MaintainDonor", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-warning" })
-                                </div>
+                            <div class="modal-body">
+                                <span class="value">ID:</span>
+                                @Html.DisplayFor(modelItem => item.Animal_ID) <br />
+                                <span class="value">Name:</span>
+                                @Html.DisplayFor(modelItem => item.Animal_Name) <br />
+                                <span class="value">Location:</span>
+                                @Html.DisplayFor(modelItem => item.Animal_Location) <br />
+                                <span class="value">Gender:</span>
+                                @Html.DisplayFor(modelItem => item.Animal_Gender) <br />
+                                <span class="value">Description:</span>
+                                @Html.DisplayFor(modelItem => item.Animal_Description)<br />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                @Html.ActionLink("Maintain", "MaintainDonor", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-warning" })
                             </div>
                         </div>
                     </div>
+                </div>
 
-                }
             }
-        </table>*@
-    @section scripts{
-        <script>
+        }
+    </table>*@
+@section scripts{
+    <script>
             $(function () {
                 var successMessage = '@TempData["SuccessMessage"]'
                 if (successMessage != '')
@@ -235,8 +239,5 @@
                     alertify.error(successMessage);
             });
 
-        </script>
-    }
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </script>
+}
