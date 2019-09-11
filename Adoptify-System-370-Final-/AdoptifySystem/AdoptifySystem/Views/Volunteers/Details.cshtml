@@ -78,6 +78,8 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Vol_ID })
-    @Html.ActionLink("Back to List", "Index", "Volunteer", new { @class = "btn btn-dark" })S
+    <br/>
+    @Html.ActionLink("Update", "Edit", "Volunteers", new { id = Model.Vol_ID }, new { @class = "btn btn-success", style="float:right"})
+    @Html.ActionLink("Back to List", "Index", "Volunteers", new { @class = "btn btn-dark", style="float:right"})
+    <br/>
 </p>
