@@ -361,6 +361,7 @@
           <Property Name="HomeCheck_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HomeCheck_Datetime" Type="datetime" />
           <Property Name="Adoption_ID" Type="int" />
+          <Property Name="Emp_ID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1026,6 +1027,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkho">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="HomeCheck">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkhoch">
           <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
           <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
@@ -1594,6 +1607,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
             <End Role="Foster_Care" EntitySet="Foster_Care" />
           </AssociationSet>
+          <AssociationSet Name="fkho" Association="Self.fkho">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="HomeCheck" EntitySet="HomeCheck" />
+          </AssociationSet>
           <AssociationSet Name="fkhoch" Association="Self.fkhoch">
             <End Role="Adoption" EntitySet="Adoption" />
             <End Role="HomeCheck" EntitySet="HomeCheck" />
@@ -2026,6 +2043,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="Employee_Status" Relationship="Self.fkemp2" FromRole="Employee" ToRole="Employee_Status" />
           <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
           <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
+          <NavigationProperty Name="HomeChecks" Relationship="Wollies_ShelterModel.fkho" FromRole="Employee" ToRole="HomeCheck" />
         </EntityType>
         <EntityType Name="Employee_Status">
           <Key>
@@ -2132,6 +2150,8 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Adoption_ID" Type="Int32" />
           <NavigationProperty Name="Adoption" Relationship="Self.fkhoch" FromRole="HomeCheck" ToRole="Adoption" />
           <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="HomeCheck" ToRole="HomeCheckReport" />
+          <Property Name="Emp_ID" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Wollies_ShelterModel.fkho" FromRole="HomeCheck" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Kennel">
           <Key>
@@ -3445,6 +3465,24 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
+          <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -3475,55 +3513,38 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="VetSearch" EntitySet="Veterinarians" ReturnType="Collection(Wollies_ShelterModel.Veterinarian)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
           <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
           <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="searchDonor">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="searchstock" EntitySet="Stocks" ReturnType="Collection(Wollies_ShelterModel.Stock)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchDon" EntitySet="Donations" ReturnType="Collection(Wollies_ShelterModel.Donation)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="searchDonor" EntitySet="Donors" ReturnType="Collection(Wollies_ShelterModel.Donor)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="searchParent" EntitySet="Foster_Care_Parent" ReturnType="Collection(Wollies_ShelterModel.Foster_Care_Parent)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="searchstocktype" EntitySet="Stock_Type" ReturnType="Collection(Wollies_ShelterModel.Stock_Type)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VetSearch" EntitySet="Veterinarians" ReturnType="Collection(Wollies_ShelterModel.Veterinarian)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <AssociationSet Name="fkho" Association="Wollies_ShelterModel.fkho">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="HomeCheck" EntitySet="HomeChecks" />
+          </AssociationSet>
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="Vet_SearchVet_Result">
-          <Property Type="Int32" Name="Vet_ID" Nullable="false" />
-          <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
-          <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
-        </ComplexType>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
           <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
@@ -3534,6 +3555,11 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Don_SearchDon_Result">
+          <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
+          <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
         </ComplexType>
         <ComplexType Name="Donor_SearchDonor_Result">
           <Property Type="Int32" Name="Donor_ID" Nullable="false" />
@@ -3563,6 +3589,17 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
           <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="Stock_SearchStock_Result">
           <Property Type="Int32" Name="Stock_ID" Nullable="false" />
           <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
@@ -3581,11 +3618,25 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
         </ComplexType>
-        <ComplexType Name="Don_SearchDon_Result">
-          <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
-          <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
+        <ComplexType Name="Vet_SearchVet_Result">
+          <Property Type="Int32" Name="Vet_ID" Nullable="false" />
+          <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
         </ComplexType>
+        <Association Name="fkho">
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.HomeCheck" Role="HomeCheck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="HomeCheck">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3974,6 +4025,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySetMapping Name="HomeChecks">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheck">
               <MappingFragment StoreEntitySet="HomeCheck">
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
                 <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
                 <ScalarProperty Name="HomeCheck_Datetime" ColumnName="HomeCheck_Datetime" />
                 <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
@@ -4221,42 +4273,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Wollies_ShelterModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Wollies_ShelterModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Wollies_ShelterModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Wollies_ShelterModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Wollies_ShelterModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="Vet_SearchVet" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Vet_SearchVet_Result">
-                <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
-                <ScalarProperty Name="Vet_Name" ColumnName="Vet_Name" />
-                <ScalarProperty Name="Vet_Emial" ColumnName="Vet_Emial" />
-                <ScalarProperty Name="Vet_Tel" ColumnName="Vet_Tel" />
-                <ScalarProperty Name="Vet_Address" ColumnName="Vet_Address" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="VetSearch" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet" />
           <FunctionImportMapping FunctionImportName="AnimalType_SearchAnimalType" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Wollies_ShelterModel.AnimalType_SearchAnimalType_Result">
@@ -4273,6 +4289,15 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
                 <ScalarProperty Name="Animal_Breed_Name" ColumnName="Animal_Breed_Name" />
                 <ScalarProperty Name="Animal_Breed_Description" ColumnName="Animal_Breed_Description" />
                 <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Don_SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Don_SearchDon_Result">
+                <ScalarProperty Name="Donation_Type_ID" ColumnName="Donation_Type_ID" />
+                <ScalarProperty Name="Donation_Type_Name" ColumnName="Donation_Type_Name" />
+                <ScalarProperty Name="Donation_Type_Description" ColumnName="Donation_Type_Description" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4316,6 +4341,30 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Wollies_ShelterModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Wollies_ShelterModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Wollies_ShelterModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Wollies_ShelterModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Wollies_ShelterModel.Store.sp_upgraddiagrams" />
           <FunctionImportMapping FunctionImportName="Stock_SearchStock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStock_Result">
@@ -4342,7 +4391,23 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Vet_SearchVet" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Vet_SearchVet_Result">
+                <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
+                <ScalarProperty Name="Vet_Name" ColumnName="Vet_Name" />
+                <ScalarProperty Name="Vet_Emial" ColumnName="Vet_Emial" />
+                <ScalarProperty Name="Vet_Tel" ColumnName="Vet_Tel" />
+                <ScalarProperty Name="Vet_Address" ColumnName="Vet_Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="searchstock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock" />
+          <FunctionImportMapping FunctionImportName="SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon" />
           <FunctionImportMapping FunctionImportName="searchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor" />
+          <FunctionImportMapping FunctionImportName="searchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent" />
+          <FunctionImportMapping FunctionImportName="searchstocktype" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType" />
+          <FunctionImportMapping FunctionImportName="VetSearch" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -329,10 +329,10 @@
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Event</a>
                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
                             @*@Html.ActionLink("Add Foster Care Parent", "AddFostercareParent", "FosterCare", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Search Foster Care Parent", "SearchFosterCareParent", "FosterCare", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Maintain Foster Care Parent", "MaintainFosterCareParent", "FosterCare", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Add to Foster Care", "AddtoFosterCare", "FosterCare", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Remove from Foster Care", "RemoveFromFosterCare", "FosterCare", null, new { @class = "dropdown-item" })*@
+                    @Html.ActionLink("Search Foster Care Parent", "SearchFosterCareParent", "FosterCare", null, new { @class = "dropdown-item" })
+                    @Html.ActionLink("Maintain Foster Care Parent", "MaintainFosterCareParent", "FosterCare", null, new { @class = "dropdown-item" })
+                    @Html.ActionLink("Add to Foster Care", "AddtoFosterCare", "FosterCare", null, new { @class = "dropdown-item" })
+                    @Html.ActionLink("Remove from Foster Care", "RemoveFromFosterCare", "FosterCare", null, new { @class = "dropdown-item" })*@
                         </div>
                     </li>
                     <li class="nav-item dropdown show">
@@ -402,14 +402,16 @@
 
                         </div>
                     </li>
+                    <li>
+                        @*<br /><div><label>||</label></div>*@
+                        <div class="navbar-brand">
+                            @Html.ActionLink("HELP?", "Login", "Admin", null, new { @class = "btn btn-secondary" })
+                        
+                            @Html.ActionLink("Logout", "Login", "Admin", null, new { @class = "btn btn-danger" })
+                            @*<a class="navbar-brand" href="http://localhost:55003/Admin/Login"><i class="fas fa-user" style="color:black"></i><span style="color:black"> Logout</span></a>*@
+                        </div>
+                    </li>
                 </ul>
-                <label></label>
-                <label></label>
-                @*<br /><div><label>||</label></div>*@
-                <div class="navbar-brand">
-                    @Html.ActionLink("Logout", "Login", "Admin", null, new { @class = "btn btn-danger" })
-                    @*<a class="navbar-brand" href="http://localhost:55003/Admin/Login"><i class="fas fa-user" style="color:black"></i><span style="color:black"> Logout</span></a>*@
-                </div>
                 @*<form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>

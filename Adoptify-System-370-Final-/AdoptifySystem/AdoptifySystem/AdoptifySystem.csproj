@@ -578,13 +578,6 @@
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\index.d.ts" />
-    <EntityDeploy Include="MyModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MyModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="MyModel.edmx.diagram">
-      <DependentUpon>MyModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\bootswatch\yeti\_variables.scss" />
     <Content Include="Content\bootswatch\yeti\_bootswatch.scss" />
     <Content Include="Content\bootswatch\united\_variables.scss" />
@@ -635,6 +628,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="MyModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MyModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="MyModel.edmx.diagram">
+      <DependentUpon>MyModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

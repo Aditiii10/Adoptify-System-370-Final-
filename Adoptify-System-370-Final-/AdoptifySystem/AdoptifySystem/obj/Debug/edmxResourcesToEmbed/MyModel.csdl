@@ -1746,6 +1746,24 @@
       <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
       <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
     </AssociationSet>
+    <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="sp_alterdiagram">
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -1776,55 +1794,34 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
-    <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="VetSearch" EntitySet="Veterinarians" ReturnType="Collection(Wollies_ShelterModel.Veterinarian)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="searchDonor">
+    <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchstock" EntitySet="Stocks" ReturnType="Collection(Wollies_ShelterModel.Stock)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SearchDon" EntitySet="Donations" ReturnType="Collection(Wollies_ShelterModel.Donation)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchDonor" EntitySet="Donors" ReturnType="Collection(Wollies_ShelterModel.Donor)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchParent" EntitySet="Foster_Care_Parent" ReturnType="Collection(Wollies_ShelterModel.Foster_Care_Parent)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="searchstocktype" EntitySet="Stock_Type" ReturnType="Collection(Wollies_ShelterModel.Stock_Type)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="VetSearch" EntitySet="Veterinarians" ReturnType="Collection(Wollies_ShelterModel.Veterinarian)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
-  <ComplexType Name="sp_helpdiagramdefinition_Result">
-    <Property Type="Int32" Name="version" Nullable="true" />
-    <Property Type="Binary" Name="definition" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_helpdiagrams_Result">
-    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-    <Property Type="Int32" Name="OwnerID" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="Vet_SearchVet_Result">
-    <Property Type="Int32" Name="Vet_ID" Nullable="false" />
-    <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
-    <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
-    <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
-    <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
-  </ComplexType>
   <ComplexType Name="AnimalType_SearchAnimalType_Result">
     <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
     <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
@@ -1835,6 +1832,11 @@
     <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
     <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
     <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Don_SearchDon_Result">
+    <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
+    <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
   </ComplexType>
   <ComplexType Name="Donor_SearchDonor_Result">
     <Property Type="Int32" Name="Donor_ID" Nullable="false" />
@@ -1864,6 +1866,17 @@
     <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
     <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
   </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
   <ComplexType Name="Stock_SearchStock_Result">
     <Property Type="Int32" Name="Stock_ID" Nullable="false" />
     <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
@@ -1882,9 +1895,11 @@
     <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
     <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
   </ComplexType>
-  <ComplexType Name="Don_SearchDon_Result">
-    <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
-    <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
-    <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
+  <ComplexType Name="Vet_SearchVet_Result">
+    <Property Type="Int32" Name="Vet_ID" Nullable="false" />
+    <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
+    <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
   </ComplexType>
 </Schema>

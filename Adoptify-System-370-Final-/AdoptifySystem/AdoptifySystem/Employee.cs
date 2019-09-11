@@ -20,6 +20,7 @@ namespace AdoptifySystem
             this.Emp_Kennel = new HashSet<Emp_Kennel>();
             this.TimeSheets = new HashSet<TimeSheet>();
             this.User_ = new HashSet<User_>();
+            this.HomeChecks = new HashSet<HomeCheck>();
         }
     
         public int Emp_ID { get; set; }
@@ -46,5 +47,7 @@ namespace AdoptifySystem
         public virtual ICollection<TimeSheet> TimeSheets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_> User_ { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HomeCheck> HomeChecks { get; set; }
     }
 }
