@@ -184,6 +184,7 @@ namespace AdoptifySystem.Models
         public string Adopter_Occupation { get; set; }
 
 
+        [Display(Name = "Title")]
         public virtual Title Title { get; set; }
 
 
