@@ -321,6 +321,8 @@
     <EntitySetMapping Name="Event_Schedule">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Event_Schedule">
         <MappingFragment StoreEntitySet="Event_Schedule">
+          <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
+          <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
           <ScalarProperty Name="EventID" ColumnName="EventID" />
           <ScalarProperty Name="Subject" ColumnName="Subject" />
           <ScalarProperty Name="Description" ColumnName="Description" />

@@ -308,6 +308,8 @@
           <Property Name="EventEnd" Type="datetime" />
           <Property Name="ThemeColour" Type="nchar" MaxLength="10" />
           <Property Name="IsFullDay" Type="bit" />
+          <Property Name="Emp_ID" Type="int" />
+          <Property Name="Adoption_ID" Type="int" />
         </EntityType>
         <EntityType Name="Event_Type">
           <Key>
@@ -916,6 +918,30 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Principal>
             <Dependent Role="Donor">
               <PropertyRef Name="Title_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkech">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkech1">
+          <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adoption">
+              <PropertyRef Name="Adoption_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Adoption_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1571,6 +1597,14 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Title" EntitySet="Title" />
             <End Role="Donor" EntitySet="Donor" />
           </AssociationSet>
+          <AssociationSet Name="fkech" Association="Self.fkech">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="fkech1" Association="Self.fkech1">
+            <End Role="Adoption" EntitySet="Adoption" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
           <AssociationSet Name="fkemp" Association="Self.fkemp">
             <End Role="Title" EntitySet="Title" />
             <End Role="Employee" EntitySet="Employee" />
@@ -1811,6 +1845,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="Adoption_Status" Relationship="Self.fkadopt2" FromRole="Adoption" ToRole="Adoption_Status" />
           <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr1" FromRole="Adoption" ToRole="AdoptionPayment" />
           <NavigationProperty Name="HomeChecks" Relationship="Self.fkhoch" FromRole="Adoption" ToRole="HomeCheck" />
+          <NavigationProperty Name="Event_Schedule" Relationship="Wollies_ShelterModel.fkech1" FromRole="Adoption" ToRole="Event_Schedule" />
         </EntityType>
         <EntityType Name="Adoption_Status">
           <Key>
@@ -2044,6 +2079,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
           <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
           <NavigationProperty Name="HomeChecks" Relationship="Wollies_ShelterModel.fkho" FromRole="Employee" ToRole="HomeCheck" />
+          <NavigationProperty Name="Event_Schedule" Relationship="Wollies_ShelterModel.fkech" FromRole="Employee" ToRole="Event_Schedule" />
         </EntityType>
         <EntityType Name="Employee_Status">
           <Key>
@@ -2090,6 +2126,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="EventEnd" Type="DateTime" Precision="3" />
           <Property Name="ThemeColour" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="IsFullDay" Type="Boolean" />
+          <Property Name="Emp_ID" Type="Int32" />
+          <Property Name="Adoption_ID" Type="Int32" />
+          <NavigationProperty Name="Adoption" Relationship="Wollies_ShelterModel.fkech1" FromRole="Event_Schedule" ToRole="Adoption" />
+          <NavigationProperty Name="Employee" Relationship="Wollies_ShelterModel.fkech" FromRole="Event_Schedule" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Event_Type">
           <Key>
@@ -3544,6 +3584,14 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Employee" EntitySet="Employees" />
             <End Role="HomeCheck" EntitySet="HomeChecks" />
           </AssociationSet>
+          <AssociationSet Name="fkech1" Association="Wollies_ShelterModel.fkech1">
+            <End Role="Adoption" EntitySet="Adoptions" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="fkech" Association="Wollies_ShelterModel.fkech">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -3633,6 +3681,30 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               <PropertyRef Name="Emp_ID" />
             </Principal>
             <Dependent Role="HomeCheck">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkech1">
+          <End Type="Wollies_ShelterModel.Adoption" Role="Adoption" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Event_Schedule" Role="Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adoption">
+              <PropertyRef Name="Adoption_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Adoption_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkech">
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Event_Schedule" Role="Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
               <PropertyRef Name="Emp_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3963,6 +4035,8 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySetMapping Name="Event_Schedule">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Event_Schedule">
               <MappingFragment StoreEntitySet="Event_Schedule">
+                <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

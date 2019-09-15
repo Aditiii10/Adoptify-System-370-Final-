@@ -103,14 +103,13 @@ a .sub:hover{
 }
 
 
-.active, .sub:hover {
-    /*background-color: #ccc; KIM*/ 
-}
+/*.active, .sub:hover {
+    }
 
 
 .active {
     background-color: #FF5733;
-}
+}*/
 
 h2 {
     font-family: 'Montserrat', sans-serif;

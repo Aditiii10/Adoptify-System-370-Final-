@@ -30,10 +30,10 @@
                 Adoption Date
             </th>
             <th>
-                Adopter Name
+                Adopter Details
             </th>
             <th>
-                Animal Name
+                Animal Details
             </th>
             @*<th>
                     Adoption Form
@@ -48,40 +48,42 @@
             <th>
                 Adoption Status
             </th>
-            <th></th>
+            <th>
+                Action
+            </th>
         </tr>
 
         @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adoption_Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Animal.Animal_Name)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Adoption_Form)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Collection_Date)
-                    </td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adoption_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adopter.Adopter_CellNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Age) years old
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Adoption_Form)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Collection_Date)
+        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Payment.Payment_Description)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
-                </td>
-                <td>
-                    @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
-                    @Html.ActionLink("Return Animal", "ReturnAnimal", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning glyphicon glyphicon-transfer" })
+        <td>
+            @Html.DisplayFor(modelItem => item.Payment.Payment_Description)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
+        </td>
+        <td>
+            @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
+            @Html.ActionLink("Return Animal", "ReturnAnimal", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning glyphicon glyphicon-transfer" })
 
-                </td>
-            </tr>
+        </td>
+    </tr>
         }
 
 
@@ -97,5 +99,11 @@
             if (successMessage != '')
                 alertify.success(successMessage);
         });
+
+        function Delete(id) {
+            alertify.confirm('Wollies Adoption Process', ' Are You Sure you want to Return this Animal and cancel The Adoption ?', function () {
+                window.location.href = '@Url.Action("ReturnAnimal","Adoptions")/' + id;
+            }, null);
+        }
 </script>
 }

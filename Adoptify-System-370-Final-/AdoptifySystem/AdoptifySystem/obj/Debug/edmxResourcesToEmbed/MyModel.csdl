@@ -95,6 +95,7 @@
     <NavigationProperty Name="Adoption_Status" Relationship="Self.fkadopt2" FromRole="Adoption" ToRole="Adoption_Status" />
     <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr1" FromRole="Adoption" ToRole="AdoptionPayment" />
     <NavigationProperty Name="HomeChecks" Relationship="Self.fkhoch" FromRole="Adoption" ToRole="HomeCheck" />
+    <NavigationProperty Name="Event_Schedule" Relationship="Wollies_ShelterModel.fkech1" FromRole="Adoption" ToRole="Event_Schedule" />
   </EntityType>
   <EntityType Name="Adoption_Status">
     <Key>
@@ -328,6 +329,7 @@
     <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
     <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
     <NavigationProperty Name="HomeChecks" Relationship="Wollies_ShelterModel.fkho" FromRole="Employee" ToRole="HomeCheck" />
+    <NavigationProperty Name="Event_Schedule" Relationship="Wollies_ShelterModel.fkech" FromRole="Employee" ToRole="Event_Schedule" />
   </EntityType>
   <EntityType Name="Employee_Status">
     <Key>
@@ -374,6 +376,10 @@
     <Property Name="EventEnd" Type="DateTime" Precision="3" />
     <Property Name="ThemeColour" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="IsFullDay" Type="Boolean" />
+    <Property Name="Emp_ID" Type="Int32" />
+    <Property Name="Adoption_ID" Type="Int32" />
+    <NavigationProperty Name="Adoption" Relationship="Wollies_ShelterModel.fkech1" FromRole="Event_Schedule" ToRole="Adoption" />
+    <NavigationProperty Name="Employee" Relationship="Wollies_ShelterModel.fkech" FromRole="Event_Schedule" ToRole="Employee" />
   </EntityType>
   <EntityType Name="Event_Type">
     <Key>
@@ -1828,6 +1834,14 @@
       <End Role="Employee" EntitySet="Employees" />
       <End Role="HomeCheck" EntitySet="HomeChecks" />
     </AssociationSet>
+    <AssociationSet Name="fkech1" Association="Wollies_ShelterModel.fkech1">
+      <End Role="Adoption" EntitySet="Adoptions" />
+      <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+    </AssociationSet>
+    <AssociationSet Name="fkech" Association="Wollies_ShelterModel.fkech">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="AnimalType_SearchAnimalType_Result">
     <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -1917,6 +1931,30 @@
         <PropertyRef Name="Emp_ID" />
       </Principal>
       <Dependent Role="HomeCheck">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkech1">
+    <End Type="Wollies_ShelterModel.Adoption" Role="Adoption" Multiplicity="0..1" />
+    <End Type="Wollies_ShelterModel.Event_Schedule" Role="Event_Schedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adoption">
+        <PropertyRef Name="Adoption_ID" />
+      </Principal>
+      <Dependent Role="Event_Schedule">
+        <PropertyRef Name="Adoption_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkech">
+    <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="Wollies_ShelterModel.Event_Schedule" Role="Event_Schedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="Event_Schedule">
         <PropertyRef Name="Emp_ID" />
       </Dependent>
     </ReferentialConstraint>

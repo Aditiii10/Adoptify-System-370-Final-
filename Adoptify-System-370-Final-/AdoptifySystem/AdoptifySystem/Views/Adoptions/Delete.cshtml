@@ -82,7 +82,7 @@
 
                 <div class="form-actions no-color">
                     @Html.ActionLink("Back", "Index", "Adoptions", null, new { @class = "btn btn-primary pull-left glyphicon glyphicon-remove-sign" })
-                    <input id="Delete" type="submit" value="Cancel Adoprion" name="Delete" class="btn btn-danger" style="float:right" />
+                    <input id="Delete" type="submit" value="Cancel Adoption" name="Delete" class="btn btn-danger" style="float:right" />
 
                 </div>
             }
@@ -92,7 +92,7 @@
     <script>
         function Delete(id) {
             alertify.confirm('Wollies Adoption Process','Are You Sure to Cancel this Adoption?',function(){
-                window.location.href  = '@Url.Action("DeleteConfirmed", "Admin")/'+id;
+                window.location.href  = '@Url.Action("Delete", "Adoptions")/'+id;
             },null );
         }
     </script>

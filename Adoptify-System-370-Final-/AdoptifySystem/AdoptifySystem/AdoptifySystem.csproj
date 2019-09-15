@@ -835,6 +835,9 @@
     <Content Include="Views\Volunteer_Hours\Details.cshtml" />
     <Content Include="Views\Volunteer_Hours\Edit.cshtml" />
     <Content Include="Views\Volunteer_Hours\Index.cshtml" />
+    <Content Include="Views\Adoptions\HomeCheckHistory.cshtml" />
+    <Content Include="Views\Adoptions\HomeCheckReportHistory.cshtml" />
+    <Content Include="Views\Adoptions\AdoptionPayemenHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

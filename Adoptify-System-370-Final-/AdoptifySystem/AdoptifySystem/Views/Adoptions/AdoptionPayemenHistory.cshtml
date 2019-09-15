@@ -1,0 +1,87 @@
+﻿@model IEnumerable<AdoptifySystem.AdoptionPayment>
+
+@{
+    ViewBag.Title = "AdoptionPayemenHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="main">
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1>Adoption Payemen History</h1>
+        </div>
+    </div>
+    @using (Html.BeginForm("AdoptionPayemenHistory", "Adoptions", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-5">
+                <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" value="Search" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    }
+    <br />
+
+    <table class="table table-bordered">
+        <tr class="table-primary">
+            <th>
+                Adoption ID
+            </th>
+            <th>
+                Adopter Details
+            </th>
+            <th>
+                Animal Details
+            </th>
+            <th>
+                Payment Type
+            </th>
+            <th>
+                Adoption Fee
+            </th>
+        </tr>
+
+       @if (Model == null)
+       {
+        <tr>
+            <td colspan="8">
+                No results found
+            </td>
+        </tr>
+       }
+       else
+       {
+           foreach (var item in Model)
+           {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Adoption.Adoption_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_CellNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Age) years old
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Payment_Type.Payment_Type_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adoption_Fee)
+        </td>
+
+    </tr>
+           }
+       }
+
+    </table>
+    @Html.ActionLink("Back to Adoption Home", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+    @Html.ActionLink("Refresh", "AdoptionPayemenHistory", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+</div>

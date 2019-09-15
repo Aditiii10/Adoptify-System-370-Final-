@@ -30,10 +30,10 @@
                 Adoption Date
             </th>
             <th>
-                Adopter Name
+                Adopter Details
             </th>
             <th>
-                Animal Name
+                Animal Details
             </th>
             @*<th>
                     Adoption Form
@@ -48,7 +48,9 @@
             <th>
                 Adoption Status
             </th>
-            <th></th>
+            <th>
+                Action
+            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -58,10 +60,10 @@
                     @Html.DisplayFor(modelItem => item.Adoption_Date)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
+                    @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adopter.Adopter_CellNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Animal.Animal_Name)
+                    @Html.DisplayFor(modelItem => item.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Age) years old
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.Adoption_Form)

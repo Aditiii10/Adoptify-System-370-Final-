@@ -303,6 +303,8 @@
     <Property Name="EventEnd" Type="datetime" />
     <Property Name="ThemeColour" Type="nchar" MaxLength="10" />
     <Property Name="IsFullDay" Type="bit" />
+    <Property Name="Emp_ID" Type="int" />
+    <Property Name="Adoption_ID" Type="int" />
   </EntityType>
   <EntityType Name="Event_Type">
     <Key>
@@ -911,6 +913,30 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
       </Principal>
       <Dependent Role="Donor">
         <PropertyRef Name="Title_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkech">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="Event_Schedule">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkech1">
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+    <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adoption">
+        <PropertyRef Name="Adoption_ID" />
+      </Principal>
+      <Dependent Role="Event_Schedule">
+        <PropertyRef Name="Adoption_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1565,6 +1591,14 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
     <AssociationSet Name="fkdonor" Association="Self.fkdonor">
       <End Role="Title" EntitySet="Title" />
       <End Role="Donor" EntitySet="Donor" />
+    </AssociationSet>
+    <AssociationSet Name="fkech" Association="Self.fkech">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+    </AssociationSet>
+    <AssociationSet Name="fkech1" Association="Self.fkech1">
+      <End Role="Adoption" EntitySet="Adoption" />
+      <End Role="Event_Schedule" EntitySet="Event_Schedule" />
     </AssociationSet>
     <AssociationSet Name="fkemp" Association="Self.fkemp">
       <End Role="Title" EntitySet="Title" />

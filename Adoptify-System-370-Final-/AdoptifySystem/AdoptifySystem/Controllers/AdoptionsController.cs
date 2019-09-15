@@ -94,7 +94,7 @@ namespace AdoptifySystem.Controllers
             TempData["HomeCheckMessage"] = "HomeCheck Successfully Booked";
             //return View("HomeCheckSchedule");
             //return View("Index", myList);
-            return View("ScheduleHomeCheckCalendar");
+            return View("HomeCheckHistory");
 
         }
         public ActionResult HomeCheckReport(int? id)
@@ -139,9 +139,10 @@ namespace AdoptifySystem.Controllers
                     flag1 = false;
                     val = "false";
                     adoption.Adopt_Status_ID = 4;
-
+                    //adoption.Animal.Animal_Status_ID = 2;
                     TempData["HomeCheckReportErrorMessage"] = "HomeCheck Report Failed ";
                     aaa.Adopt_Status_ID = 4;
+                    
                     db.SaveChanges();
                 }
 
@@ -356,7 +357,7 @@ namespace AdoptifySystem.Controllers
 
             foreach (var item in adoptions)
             {
-                if (item.Adopt_Status_ID == 1)
+                if (item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 4)
                 {
                     statusID.Add(item);
                 }
@@ -375,6 +376,34 @@ namespace AdoptifySystem.Controllers
             //}
 
             return View(statusID);
+        }
+
+        public ActionResult AdoptionPayemenHistory()
+        {
+            var statusID = new List<Adoption>();
+            var adoptions = db.AdoptionPayments.Include(a => a.Adoption.Adopter).Include(a => a.Adoption.Animal).Include(a => a.Adoption.AdoptionPayments).ToList();
+            foreach (var item in adoptions)
+            {
+                if (item.Adoption.Adopt_Status_ID == 3)
+                {
+                    //statusID.Add(item);
+                }
+            }
+            return View(statusID);
+        }
+
+        public ActionResult HomeCheckHistory()
+        {
+            var statusID = new List<Adoption>();
+            var adoptions = db.HomeChecks.Include(a => a.Adoption).Include(a => a.Adoption.Animal).Include(a => a.Adoption.Adopter).ToList();
+            return View(statusID);
+        }
+
+        public ActionResult HomeCheckReportHistory()
+        {
+
+
+            return View();
         }
 
         public ActionResult AdoptionPaymentIndex()
@@ -402,7 +431,7 @@ namespace AdoptifySystem.Controllers
 
             foreach (var item in adoptions)
             {
-                if (item.Adopt_Status_ID == 5)
+                if (item.Adopt_Status_ID == 5 || item.Adopt_Status_ID == 6)
                 {
                     statusID.Add(item);
                 }
@@ -448,8 +477,8 @@ namespace AdoptifySystem.Controllers
                 }
 
             }
-            ViewBag.Adopter_ID = new SelectList(db.Adopters, "Adopter_ID", "Adopter_Name");
-            ViewBag.Animal_ID = new SelectList(statusID, "Animal_ID", "Animal_Name");
+            ViewBag.Adopter_ID = new SelectList(db.Adopters, "Adopter_ID", "Adopter_Name", "Adopter_Surname");
+            ViewBag.Animal_ID = new SelectList(statusID, "Animal_ID", "Animal_Name", "Animal_Type");
             ViewBag.Payment_ID = new SelectList(db.Payments, "Payment_ID", "Payment_Description");
             ViewBag.Adopt_Status_ID = new SelectList(db.Adoption_Status, "Adopt_Status_ID", "Adopt_Status_Name");
             return View();
@@ -527,11 +556,12 @@ namespace AdoptifySystem.Controllers
                 List<Adoption> n = new List<Adoption>();
                 Adoption adoption1 = db.Adoptions.Find(Id);
                 adoption1.Animal.Animal_Status_ID = 2;
+                
 
                 db.Adoptions.Remove(adoption1);
             
                 TempData["AdoptionDeleteMessage"] = "Adoption Process Successfully Deleted";
-             
+                
                 db.SaveChanges();
                
             }
@@ -579,6 +609,8 @@ namespace AdoptifySystem.Controllers
                     if (v != null)
                     {
                         v.Subject = e.Subject;
+                        v.Adoption.Adopter.Adopter_Name = e.Adoption.Adopter.Adopter_Name + " " + v.Adoption.Adopter.Adopter_Name +" " + v.Adoption.Adopter.Adopter_Surname;
+                        v.Employee.Emp_Name = e.Employee.Emp_Name + " " + v.Employee.Emp_Surname;
                         v.Start = e.Start;
                         v.EventEnd = e.EventEnd;
                         v.Description = e.Description;

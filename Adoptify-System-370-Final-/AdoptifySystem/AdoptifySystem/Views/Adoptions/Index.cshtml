@@ -30,10 +30,10 @@
                 Adoption Date
             </th>
             <th>
-                Adopter Name
+                Adopter Details
             </th>
             <th>
-                Animal Name
+                Animal Details
             </th>
             @*<th>
                     Adoption Form
@@ -49,43 +49,64 @@
                 Adoption Status
             </th>
             <th>
-                Actions
+                Action
             </th>
         </tr>
         @try
             {
                 foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Adoption_Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Animal.Animal_Name)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Adoption_Form)
-                        </td>*@
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Collection_Date)
-                        </td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adoption_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adopter.Adopter_CellNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Age) years old
+        </td>
+       
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Adoption_Form)
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Collection_Date)
+        </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Payment.Payment_Description)
-                        </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
-                    </td>
-                    <td>
-                        @if (item.Adopt_Status_ID == 1@*|| item.Adopt_Status_ID == 2*@)
-                        {
-                            @Html.ActionLink("Delete", "Delete", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
-                        }
-                    </td>
-                </tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Payment.Payment_Description)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
+        </td>
+        <td>
+            @if (item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 2 || item.Adopt_Status_ID == 3 || item.Adopt_Status_ID == 4 || item.Adopt_Status_ID == 5)
+            {
+                @Html.ActionLink("Delete", "Delete", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+            }
+            @if (item.Adopt_Status_ID == 1)
+            {
+                @Html.ActionLink("Go to Schedule HomeCheck Page", "HomeCheckIndex", "Adoptions",null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
+            }
+            @if (item.Adopt_Status_ID == 2)
+            {
+                @Html.ActionLink("Go to HomeCheck Report Page", "HomeCheckReportIndex", "Adoptions",null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
+            }
+            @if (item.Adopt_Status_ID == 3)
+            {
+                @Html.ActionLink("Go to Adoption Payment Page", "AdoptionPaymentIndex", "Adoptions",null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
+            }
+            @if (item.Adopt_Status_ID == 5)
+            {
+                @Html.ActionLink("Go to Collect Animal Page", "CollectionIndex", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
+            }
+            @if (item.Adopt_Status_ID == 6)
+            {
+                @Html.ActionLink("Go to Finalise Adoption Page", "Finalise", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-success glyphicon glyphicon-trash" })
+            }
+        </td>
+    </tr>
 
             }
         }

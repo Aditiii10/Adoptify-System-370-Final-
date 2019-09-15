@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <br />
     <div class="" style="text-align:center;padding-left:120px">
         <div class="col-sm-10" style='background-color: #2ba6cb'>
@@ -52,6 +53,34 @@
                                 <div class="modal-body">
                                     <form class="form-horizontal">
                                         <input type="hidden" id="hdEventID" value="0" />
+                                            <div class="form-group">
+                                            <label>Adopter</label>
+                                                <div class="col-md-10">
+                                                     <select id="adpoter" class="form-control">
+                                              
+                                                <option value="adpoter"></option>
+                                                
+                                            </select>
+                                                    @*@Html.DropDownList("Adopter_ID", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Adoption.Adopter_ID, "", new { @class = "text-danger" })*@
+                                                </div>
+                                                    
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Employee</label>
+                                            <div class="col-md-10">
+
+                                                <select id="employee" class="form-control">
+
+                                                    <option value="adpoter"></option>
+
+                                                </select>
+
+                                                @*@Html.DropDownList("Emp_ID", null, htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Emp_ID, "", new { @class = "text-danger" })*@
+                                            </div>
+
+                                        </div>
                                         <div class="form-group">
                                             <label>Subject</label>
                                             <input type="text" id="txtSubject" class="form-control" />
@@ -127,6 +156,8 @@
                                         $.each(data, function (i, v) {
                                             events.push({
                                                 eventID: v.EventID,
+                                                adopter: v.Adoption.Adopter.Adopter_Name,
+                                                employee: v.Employee.Emp_Name,
                                                 title: v.Subject,
                                                 description: v.Description,
                                                 start: moment(v.Start),
@@ -175,6 +206,8 @@
                                     select: function (start, end) {
                                         selectedEvent = {
                                             eventID: 0,
+                                            adopter: 0,
+                                            employee:1,
                                             title: '',
                                             description: '',
                                             start: start,
@@ -189,6 +222,8 @@
                                     eventDrop: function (event) {
                                         var data = {
                                             EventID: event.eventID,
+                                            AdopterName: event.adopterName,
+                                            Emp_Name: event.Employee.empName,
                                             Subject: event.title,
                                             Start: event.start.format('DD/MM/YYYY HH:mm A'),
                                             EventEnd: event.end != null ? event.end.format('DD/MM/YYYY HH:mm A') : null,
@@ -209,7 +244,7 @@
                                 if (selectedEvent != null && confirm('Are you sure?')) {
                                     $.ajax({
                                         type: "POST",
-                                        url: '/Home/DeleteEvent',
+                                        url: '/Adoptions/DeleteEvent',
                                         data: { 'eventID': selectedEvent.eventID },
                                         success: function (data) {
                                             if (data.status) {//staus is true
@@ -243,6 +278,8 @@
                             function openAddEditForm() {
                                 if (selectedEvent != null) {
                                     $('#hdEventID').val(selectedEvent.eventID);
+                                    $('adopter').val(selectedEvent.adopterName);
+                                    $('employee').val(selectedEvent.empName);
                                     $('#txtSubject').val(selectedEvent.title);
                                     $('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
                                     $('#chkIsFullDay').prop("checked", selectedEvent.allDay || false);
@@ -280,7 +317,9 @@
 
                                 var data = {
                                     EventID: $('#hdEventID').val(),
-                                    Subject: $('#txtSubject').val().trim(),
+                                    Adopter_Name: $('adopter').val().trim(),
+                                    Emp_Name: $('employee').val(),
+                                    Subject: $('#txtSubject').val(),
                                     Start: $('#txtStart').val().trim(),
                                     EventEnd: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
                                     Description: $('#txtDescription').val(),
@@ -294,7 +333,7 @@
                             function SaveEvent(data) {
                                 $.ajax({
                                     type: "POST",
-                                    url: '/Home/SaveEvent',
+                                    url: '/Adoptions/SaveEvent',
                                     data: data,
                                     success: function (data) {
                                         if (data.status) {
