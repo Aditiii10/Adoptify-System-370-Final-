@@ -7,17 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptifySystem
+namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;
     
     public partial class HomeCheck
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public HomeCheck()
+        {
+            this.HomeCheckReports = new HashSet<HomeCheckReport>();
+        }
+    
         public int HomeCheck_ID { get; set; }
         public Nullable<System.DateTime> HomeCheck_Datetime { get; set; }
         public Nullable<int> Adoption_ID { get; set; }
+        public Nullable<int> Emp_ID { get; set; }
     
         public virtual Adoption Adoption { get; set; }
+        public virtual Employee Employee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HomeCheckReport> HomeCheckReports { get; set; }
     }
 }

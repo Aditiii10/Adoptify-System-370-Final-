@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptifySystem
+namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;
@@ -21,6 +21,7 @@ namespace AdoptifySystem
         public string Owner_Name { get; set; }
         public string Owner_Address { get; set; }
         public Nullable<int> Animal_ID { get; set; }
+        public Nullable<int> Owner_Contact_Number { get; set; }
     
         public virtual Animal Animal { get; set; }
     }

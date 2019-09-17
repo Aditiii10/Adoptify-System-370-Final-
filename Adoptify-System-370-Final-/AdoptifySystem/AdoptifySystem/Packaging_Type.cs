@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptifySystem
+namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;

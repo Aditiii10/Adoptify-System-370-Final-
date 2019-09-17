@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptifySystem
+namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,14 +17,18 @@ namespace AdoptifySystem
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Vet_Appointment()
         {
-            this.Vet_Appointment_Line = new HashSet<Vet_Appointment_Line>();
+            this.Mecidal_Card = new HashSet<Mecidal_Card>();
         }
     
         public int Vet_Appointment_ID { get; set; }
-        public Nullable<int> Vet_ID { get; set; }
+        public Nullable<int> Vet_Appoint_Line_ID { get; set; }
+        public Nullable<int> VetAppReasonsID { get; set; }
+        public Nullable<int> Animal_ID { get; set; }
     
-        public virtual Veterinarian Veterinarian { get; set; }
+        public virtual Animal Animal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vet_Appointment_Line> Vet_Appointment_Line { get; set; }
+        public virtual ICollection<Mecidal_Card> Mecidal_Card { get; set; }
+        public virtual Vet_Appointment_Master Vet_Appointment_Master { get; set; }
+        public virtual VetAppReason VetAppReason { get; set; }
     }
 }

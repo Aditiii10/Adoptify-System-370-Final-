@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptifySystem
+namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;
@@ -23,8 +23,10 @@ namespace AdoptifySystem
         public Nullable<decimal> TicketFee_Total { get; set; }
         public Nullable<int> Event_ID { get; set; }
         public Nullable<int> Payment_ID { get; set; }
+        public Nullable<int> Payment_Type_ID { get; set; }
     
         public virtual Event_ Event_ { get; set; }
         public virtual Payment Payment { get; set; }
+        public virtual Payment_Type Payment_Type { get; set; }
     }
 }

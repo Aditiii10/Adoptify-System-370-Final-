@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptifySystem
+namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;
@@ -27,6 +27,7 @@ namespace AdoptifySystem
         public Nullable<int> Stock_Type_ID { get; set; }
         public Nullable<int> Packaging_Type_ID { get; set; }
         public Nullable<int> Unit_Type_ID { get; set; }
+        public Nullable<int> Unit_number { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Donation_Line> Donation_Line { get; set; }

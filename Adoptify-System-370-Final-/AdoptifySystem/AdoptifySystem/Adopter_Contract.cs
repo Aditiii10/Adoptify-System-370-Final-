@@ -7,17 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptifySystem
+namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;  //needed for Display annotation
+    using System.ComponentModel;  //DisplayName annotation
+
     public partial class Adopter_Contract
     {
+        [Display(Name = "Contract")]
         public int Contract_ID { get; set; }
+
+        [Display(Name = "Electronic Contract Details")]
+        [Required]
         public string Electronic_Contract { get; set; }
+
+
+        [Display(Name = "Adopter")]
         public Nullable<int> Adopter_ID { get; set; }
-    
+
+
+        [Display(Name = "Adopter")]
         public virtual Adopter Adopter { get; set; }
     }
 }

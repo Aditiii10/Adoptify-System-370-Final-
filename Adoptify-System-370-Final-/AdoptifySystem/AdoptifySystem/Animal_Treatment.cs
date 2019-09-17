@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptifySystem
+namespace AdoptifySystem.Models
 {
     using System;
     using System.Collections.Generic;
@@ -15,14 +15,17 @@ namespace AdoptifySystem
     public partial class Animal_Treatment
     {
         public int Treat_ID { get; set; }
+        public Nullable<int> Animal_ID { get; set; }
         public Nullable<System.DateTime> Treat_StartDate { get; set; }
         public Nullable<System.DateTime> Treat_EndDate { get; set; }
         public Nullable<int> Treat_Quantity { get; set; }
         public string Treat_Regularity { get; set; }
         public string Treat_Name { get; set; }
         public Nullable<decimal> Treat_cost { get; set; }
-        public Nullable<int> Capture_Medical_Card_ID { get; set; }
+        public string Comment { get; set; }
+        public Nullable<int> Id { get; set; }
     
-        public virtual Capture_Medical_Card Capture_Medical_Card { get; set; }
+        public virtual Animal Animal { get; set; }
+        public virtual Mecidal_Card Mecidal_Card { get; set; }
     }
 }
