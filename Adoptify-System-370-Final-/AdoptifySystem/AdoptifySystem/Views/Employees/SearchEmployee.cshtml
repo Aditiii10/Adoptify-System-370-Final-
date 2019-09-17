@@ -7,7 +7,7 @@
 <div id="main">
     <div id="main">
         <div class="" style="text-align:center;padding-left:120px">
-            <div class="col-sm-10" style='background-color: #2ba6cb'><h1 style="color:white;">Search Employee</h1></div>
+            <div class="col-sm-12 table-primary"><h1 >Search Employee</h1></div>
         </div>
         <h1>@ViewBag.errormessage</h1>
         @Html.ActionLink("AddEmployee", "AddEmployee", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-md-5">
                     <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
-                    @Html.TextBox("search", "", new { @name = "txtSearch", @placeholder = "Search Criteria" })
+                    @Html.TextBox("search", "", new { @name = "txtSearch",  @autocomplete = "off", @placeholder = "Search Criteria",@class ="form-control" })
                 </div>
             </div>
 
@@ -27,7 +27,7 @@
             </div>
             <br />
             <table class="table table-bordered">
-                <tr class="thead-light">
+                <tr class="table-primary">
 
                     <th>
                         Title

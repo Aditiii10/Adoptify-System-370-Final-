@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Adopter">
     <Key>
       <PropertyRef Name="Adopter_ID" />
@@ -303,6 +303,8 @@
     <Property Name="EventEnd" Type="datetime" />
     <Property Name="ThemeColour" Type="nchar" MaxLength="10" />
     <Property Name="IsFullDay" Type="bit" />
+    <Property Name="Emp_ID" Type="int" />
+    <Property Name="Adoption_ID" Type="int" />
   </EntityType>
   <EntityType Name="Event_Type">
     <Key>
@@ -340,6 +342,15 @@
     <Property Name="Hours_Left_Alone" Type="int" />
     <Property Name="Adopter_ID" Type="int" />
   </EntityType>
+  <EntityType Name="GoogleChartData">
+    <Key>
+      <PropertyRef Name="SLID" />
+    </Key>
+    <Property Name="SLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Cats" Type="int" Nullable="false" />
+    <Property Name="Dogs" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="HomeCheck">
     <Key>
       <PropertyRef Name="HomeCheck_ID" />
@@ -347,9 +358,8 @@
     <Property Name="HomeCheck_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="HomeCheck_Datetime" Type="datetime" />
     <Property Name="Adoption_ID" Type="int" />
+    <Property Name="Emp_ID" Type="int" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="HomeCheckReport">
     <Key>
       <PropertyRef Name="HomeCheckReportID" />
@@ -446,6 +456,15 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
     <Property Name="Stock_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
     <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="tblFiles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContentType" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Data" Type="varbinary(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="TimeSheet">
     <Key>
@@ -557,6 +576,24 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
     <Property Name="Vol_WorkType_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Vol_WorkType_Name" Type="nvarchar" MaxLength="100" />
     <Property Name="Vol_WorkType_Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="database_firewall_rules">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="start_ip_address" />
+      <PropertyRef Name="end_ip_address" />
+      <PropertyRef Name="create_date" />
+      <PropertyRef Name="modify_date" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="create_date" Type="datetime" Nullable="false" />
+    <Property Name="modify_date" Type="datetime" Nullable="false" />
   </EntityType>
   <Association Name="fkado">
     <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
@@ -894,6 +931,30 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fkech">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="Event_Schedule">
+        <PropertyRef Name="Emp_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkech1">
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+    <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adoption">
+        <PropertyRef Name="Adoption_ID" />
+      </Principal>
+      <Dependent Role="Event_Schedule">
+        <PropertyRef Name="Adoption_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkemp">
     <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
     <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -999,6 +1060,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
       </Principal>
       <Dependent Role="Foster_Care">
         <PropertyRef Name="Foster_Parent_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkho">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Emp_ID" />
+      </Principal>
+      <Dependent Role="HomeCheck">
+        <PropertyRef Name="Emp_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1326,6 +1399,9 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
   <Function Name="Stock_SearchStockType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="Vet_SearchVet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
   <EntityContainer Name="Wollies_ShelterModelStoreContainer">
     <EntitySet Name="Adopter" EntityType="Self.Adopter" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
@@ -1356,7 +1432,9 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
     <EntitySet Name="Event_Type" EntityType="Self.Event_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GoogleChartData" EntityType="Self.GoogleChartData" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HomeCheck" EntityType="Self.HomeCheck" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HomeCheckReport" EntityType="Self.HomeCheckReport" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Kennel" EntityType="Self.Kennel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Microchip" EntityType="Self.Microchip" Schema="dbo" store:Type="Tables" />
@@ -1366,6 +1444,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
     <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblFiles" EntityType="Self.tblFiles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />
@@ -1378,13 +1457,15 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
     <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="HomeCheckReport" EntityType="Self.HomeCheckReport" store:Type="Tables" store:Schema="dbo">
+    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
       <DefiningQuery>SELECT 
-    [HomeCheckReport].[HomeCheckReportID] AS [HomeCheckReportID], 
-    [HomeCheckReport].[HomeCheck_ID] AS [HomeCheck_ID], 
-    [HomeCheckReport].[HomeCheckStatus] AS [HomeCheckStatus], 
-    [HomeCheckReport].[HCDoc] AS [HCDoc]
-    FROM [dbo].[HomeCheckReport] AS [HomeCheckReport]</DefiningQuery>
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="fkado" Association="Self.fkado">
       <End Role="Title" EntitySet="Title" />
@@ -1498,6 +1579,14 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
       <End Role="Title" EntitySet="Title" />
       <End Role="Donor" EntitySet="Donor" />
     </AssociationSet>
+    <AssociationSet Name="fkech" Association="Self.fkech">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+    </AssociationSet>
+    <AssociationSet Name="fkech1" Association="Self.fkech1">
+      <End Role="Adoption" EntitySet="Adoption" />
+      <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+    </AssociationSet>
     <AssociationSet Name="fkemp" Association="Self.fkemp">
       <End Role="Title" EntitySet="Title" />
       <End Role="Employee" EntitySet="Employee" />
@@ -1533,6 +1622,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
     <AssociationSet Name="fkfosc1" Association="Self.fkfosc1">
       <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
       <End Role="Foster_Care" EntitySet="Foster_Care" />
+    </AssociationSet>
+    <AssociationSet Name="fkho" Association="Self.fkho">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="HomeCheck" EntitySet="HomeCheck" />
     </AssociationSet>
     <AssociationSet Name="fkhoch" Association="Self.fkhoch">
       <End Role="Adoption" EntitySet="Adoption" />

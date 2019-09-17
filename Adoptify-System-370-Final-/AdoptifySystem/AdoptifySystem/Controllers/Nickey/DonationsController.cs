@@ -6,6 +6,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem.Models.nickeymodel;
+//using Syncfusion.DocIO;
+//using Syncfusion.DocIO.DLS;
 
 
 namespace AdoptifySystem.Controllers
@@ -126,6 +128,10 @@ namespace AdoptifySystem.Controllers
             
             try
             {
+                flex.donor = null;
+                flex.donation = null;
+                flex.stock = null;
+                flex.adddonationlist = null;
                 flex.DonorList = db.Donors.ToList();
                 flex.Stocklist = db.Stocks.ToList();
             }
@@ -136,85 +142,87 @@ namespace AdoptifySystem.Controllers
             }
             return View(flex);
         }
-        [HttpPost]
-        public ActionResult Addmoneytolist(Donation_Line donation_line,string[] checkeds, string button)
-        {
-            ViewBag.errormessage = "";
-            List<Donation_Line> temp = new List<Donation_Line>();
+        //[HttpPost]
+        //public ActionResult Addmoneytolist(Donation_Line donation_line,string[] checkeds, string button)
+        //{
+        //    ViewBag.errormessage = "";
+        //    List<Donation_Line> temp = new List<Donation_Line>();
 
-            if (button == "Select Donor")
-            {
-                try
-                {
-                    flex.donor = db.Donors.Find(donation_line.Donation.Donor.Donor_ID);
-                }
-                catch (Exception e)
-                {
-                    ViewBag.err = e.Message;
-                    ViewBag.errormessage = "";
-                }
-                return RedirectToAction("AddDonation");
-            }
+        //    if (button == "Select Donor")
+        //    {
+        //        try
+        //        {
+        //            flex.donor = db.Donors.Find(donation_line.Donation.Donor.Donor_ID);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            ViewBag.err = e.Message;
+        //            ViewBag.errormessage = "";
+        //        }
+        //        return RedirectToAction("AddDonation");
+        //    }
 
-            if (button == "Add Money")
-            {
-                try
-                {
-                    flex.Stocklist = db.Stocks.ToList();
-                }
-                catch (Exception e)
-                {
-                    ViewBag.err = e.Message;
-                    ViewBag.errormessage = "";
-                }
-                return RedirectToAction("AddDonation");
-            }
-            if (button == "Add Stock")
-            {
-                try
-                {
-                    flex.Stocklist = db.Stocks.ToList();
-                }
-                catch (Exception e)
-                {
-                    ViewBag.err = e.Message;
-                    ViewBag.errormessage = "";
-                }
-                return RedirectToAction("AddDonation");
-            }
-            if (button == "Save")
-            {
-                try
-                {
-                    flex.Stocklist = db.Stocks.ToList();
-                }
-                catch (Exception e)
-                {
-                    ViewBag.err = e.Message;
-                    ViewBag.errormessage = "";
-                }
-                return RedirectToAction("AddDonation");
-            }
-            if (button == "Cancel")
-            {
-                try
-                {
-                    flex.Stocklist = db.Stocks.ToList();
-                }
-                catch (Exception e)
-                {
-                    ViewBag.err = e.Message;
-                    ViewBag.errormessage = "";
-                }
-                return RedirectToAction("AddDonation");
-            }
-            return RedirectToAction("AddDonation");
-        }
+        //    if (button == "Add Money")
+        //    {
+        //        try
+        //        {
+        //            flex.Stocklist = db.Stocks.ToList();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            ViewBag.err = e.Message;
+        //            ViewBag.errormessage = "";
+        //        }
+        //        return RedirectToAction("AddDonation");
+        //    }
+        //    if (button == "Add Stock")
+        //    {
+        //        try
+        //        {
+        //            flex.Stocklist = db.Stocks.ToList();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            ViewBag.err = e.Message;
+        //            ViewBag.errormessage = "";
+        //        }
+        //        return RedirectToAction("AddDonation");
+        //    }
+        //    if (button == "Save")
+        //    {
+        //        try
+        //        {
+        //            flex.Stocklist = db.Stocks.ToList();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            ViewBag.err = e.Message;
+        //            ViewBag.errormessage = "";
+        //        }
+        //        return RedirectToAction("AddDonation");
+        //    }
+        //    if (button == "Cancel")
+        //    {
+        //        try
+        //        {
+        //            flex.Stocklist = db.Stocks.ToList();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            ViewBag.err = e.Message;
+        //            ViewBag.errormessage = "";
+        //        }
+        //        return RedirectToAction("AddDonation");
+        //    }
+        //    return RedirectToAction("AddDonation");
+        //}
+        [HttpGet]
         public ActionResult search_donor(string inid)
         {
             if (inid == "")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                TempData[""] = "Pick a Donor please"; 
+                return View("AddDonation", flex);
             }
             int id = Convert.ToInt32(inid);
             id = id + 1;
@@ -222,9 +230,10 @@ namespace AdoptifySystem.Controllers
 
             if (flex.donor == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SearchDonation");
             }
-
+            ViewBag.Donorname = flex.donor.Donor_Name;
+            ViewBag.Donorsurname = flex.donor.Donor_Surname;
             return View("AddDonation", flex);
 
         }
@@ -232,7 +241,8 @@ namespace AdoptifySystem.Controllers
         {
             if (inid == "")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                TempData[""] = "Pick a Stock please";
+                return View("AddDonation", flex);
             }
             int id = Convert.ToInt32(inid);
             flex.stock = flex.Stocklist.ElementAt(id);
@@ -258,6 +268,7 @@ namespace AdoptifySystem.Controllers
             var Donation_Type = db.Donation_Type.Where(z=> z.Donation_Type_Name == "Stock").FirstOrDefault();
             if (Donation_Type == null)
             {
+                
                 return View("AddDonation", flex);
             }
             dl.Donation_Type = Donation_Type;
@@ -361,7 +372,7 @@ namespace AdoptifySystem.Controllers
                         flex.adddonationlist = null;
                         flex.donor = null;
                         flex.stock = null;
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("SearchDonation");
 
                     }
                     else
@@ -371,9 +382,9 @@ namespace AdoptifySystem.Controllers
                 }
                 if (button == "Cancel")
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("SearchDonation");
                 }
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SearchDonation");
             }
             catch (Exception e)
             {
@@ -474,7 +485,7 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     ViewBag.err = "there was a network error: " + e.Message;
-                    return View("SearchDonationType");
+                    return RedirectToAction("SearchDonation");
                 }
             }
             else
@@ -485,7 +496,7 @@ namespace AdoptifySystem.Controllers
             return View();
         }
 
-            public ActionResult AddDonationType()
+        public ActionResult AddDonationType()
         {
             return View();
         }
@@ -652,18 +663,18 @@ namespace AdoptifySystem.Controllers
                 {
                     //you cant delete becasue its referenced to another table
                     ViewBag.err = "You can not delete this";
-                    return View("SearchDonor");
+                    return RedirectToAction("SearchDonor");
                 }
                 else
                 {
                     db.Donors.Remove(donor);
                     db.SaveChanges();
-                    return View("SearchDonor");
+                    return RedirectToAction("SearchDonor");
                 }
             }
-            return View("SearchDonor");
+            return RedirectToAction("SearchDonor");
         }
-            public ActionResult DeleteDonationType(int? id)
+        public ActionResult DeleteDonationType(int? id)
             {
 
                 if (id != null)
@@ -674,16 +685,16 @@ namespace AdoptifySystem.Controllers
                     {
                         //you cant delete becasue its referenced to another table
                         ViewBag.err = "You can not delete this";
-                        return View("SearchDonationType");
+                        return RedirectToAction("SearchDonationType");
                     }
                     else
                     {
                         db.Donation_Type.Remove(donation_type);
                         db.SaveChanges();
-                        return View("SearchDonationType");
+                        return RedirectToAction("SearchDonationType");
                     }
                 }
-                return View("SearchDonationType");
+                return RedirectToAction("SearchDonationType");
 
             }
     }

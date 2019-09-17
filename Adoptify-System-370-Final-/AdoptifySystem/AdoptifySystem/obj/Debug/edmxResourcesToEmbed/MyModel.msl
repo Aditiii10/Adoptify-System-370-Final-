@@ -328,6 +328,8 @@
           <ScalarProperty Name="EventEnd" ColumnName="EventEnd" />
           <ScalarProperty Name="ThemeColour" ColumnName="ThemeColour" />
           <ScalarProperty Name="IsFullDay" ColumnName="IsFullDay" />
+          <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+          <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -370,12 +372,33 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GoogleChartDatas">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.GoogleChartData">
+        <MappingFragment StoreEntitySet="GoogleChartData">
+          <ScalarProperty Name="SLID" ColumnName="SLID" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Cats" ColumnName="Cats" />
+          <ScalarProperty Name="Dogs" ColumnName="Dogs" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="HomeChecks">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheck">
         <MappingFragment StoreEntitySet="HomeCheck">
           <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
           <ScalarProperty Name="HomeCheck_Datetime" ColumnName="HomeCheck_Datetime" />
           <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
+          <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HomeCheckReports">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheckReport">
+        <MappingFragment StoreEntitySet="HomeCheckReport">
+          <ScalarProperty Name="HomeCheckReportID" ColumnName="HomeCheckReportID" />
+          <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
+          <ScalarProperty Name="HomeCheckStatus" ColumnName="HomeCheckStatus" />
+          <ScalarProperty Name="HCDoc" ColumnName="HCDoc" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -473,6 +496,16 @@
           <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
           <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
           <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblFiles">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFile">
+        <MappingFragment StoreEntitySet="tblFiles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -599,13 +632,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="HomeCheckReports">
-      <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheckReport">
-        <MappingFragment StoreEntitySet="HomeCheckReport">
-          <ScalarProperty Name="HomeCheckReportID" ColumnName="HomeCheckReportID" />
-          <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
-          <ScalarProperty Name="HomeCheckStatus" ColumnName="HomeCheckStatus" />
-          <ScalarProperty Name="HCDoc" ColumnName="HCDoc" />
+    <EntitySetMapping Name="database_firewall_rules">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.database_firewall_rules">
+        <MappingFragment StoreEntitySet="database_firewall_rules">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+          <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+          <ScalarProperty Name="create_date" ColumnName="create_date" />
+          <ScalarProperty Name="modify_date" ColumnName="modify_date" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -700,6 +735,17 @@
           <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
           <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
           <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Vet_SearchVet" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.Vet_SearchVet_Result">
+          <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
+          <ScalarProperty Name="Vet_Name" ColumnName="Vet_Name" />
+          <ScalarProperty Name="Vet_Emial" ColumnName="Vet_Emial" />
+          <ScalarProperty Name="Vet_Tel" ColumnName="Vet_Tel" />
+          <ScalarProperty Name="Vet_Address" ColumnName="Vet_Address" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

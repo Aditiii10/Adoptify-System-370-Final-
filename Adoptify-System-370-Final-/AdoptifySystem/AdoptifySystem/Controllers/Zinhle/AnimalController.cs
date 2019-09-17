@@ -16,15 +16,29 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         static public Innovation innovation = new Innovation();
+        [HttpGet]
+        public JsonResult animalbreed(int categoryID)
+        {
+            //List<Animal_Breed> breeds = new List<Animal_Breed>();
+            
 
-     
+            int id = Convert.ToInt32(categoryID);
+            var sbreeds = db.Animal_Breed.Where(a => a.Animal_Type_ID == id).OrderBy(a => a.Animal_Breed_Name).ToList();
+            var breeds = db.Animal_Breed.Select(x => new
+            {
+                Animal_Breed_ID = x.Animal_Breed_ID,
+                Animal_Breed_Name = x.Animal_Breed_Name,
+                Animal_Type_ID = x.Animal_Type_ID,
+            }).ToList();
+            breeds = breeds.Where(z => z.Animal_Type_ID == id).ToList();
+            ViewBag.breed = breeds;
+            return Json(breeds, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult AddTemporaryAnimal()
         {
             try
             {
                 innovation.animalTypes = db.Animal_Type.ToList();
-                innovation.breedTypes = db.Animal_Breed.ToList();
-                
                 return View(innovation);
             }
             catch (Exception e)
@@ -36,7 +50,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
         [HttpPost]
-        public ActionResult AddTemporaryAnimal(Animal animal, int[] Animal_Breed,Microchip micro,HttpPostedFileBase animalPicture)
+        public ActionResult AddTemporaryAnimal(bool Cross_Breed, Animal animal, int[] breed, Microchip micro,HttpPostedFileBase animalPicture)
         {
             try
             {
@@ -54,19 +68,28 @@ namespace AdoptifySystem.Controllers.Zinhle
                     animal.Animal_Image = bytes;
 
                 }
-                if(animal !=null)
+                
+                if (animal !=null)
                 {
                     Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Available").FirstOrDefault();
                     if (status == null)
                     {
-                        TempData["EditMessage"] = "";
+                        TempData["EditMessage"] = "there are no status available.";
                         return RedirectToAction("AddTemporaryAnimal");
                     }
                     animal.Animal_Status_ID = status.Animal_Status_ID;
                     db.Animals.Add(animal);
                     db.SaveChanges();
                 }
-
+                if (Cross_Breed)
+                {
+                    foreach(var item in breed)
+                    {
+                        CrossBreed cross = new CrossBreed();
+                        cross.Animal_ID = animal.Animal_ID;
+                        cross.Animal_Breed_ID = item;
+                    }
+                }
                 if (micro != null)
                 {
                     Animal animalid = db.Animals.Where(zz => zz.Animal_Name == animal.Animal_Name && zz.Animal_Size == animal.Animal_Size && zz.Animal_Age == animal.Animal_Age && zz.Animal_Entry_Date == animal.Animal_Entry_Date).FirstOrDefault();
@@ -74,22 +97,15 @@ namespace AdoptifySystem.Controllers.Zinhle
                     db.Microchips.Add(micro);
                     db.SaveChanges();
                 }
-                TempData["SuccessMessage"] = "";
-
-
-
-
-                return RedirectToAction("Index", "Employees");
+                TempData["SuccessMessage"] = "The animal is Stored";
+                return RedirectToAction("SearchAnimal");
             }
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return RedirectToAction("Index", "Employees");
+                return RedirectToAction("SearchAnimal");
 
-            }
-
-
-            
+            }            
         }
 
         public ActionResult SearchAnimal()
@@ -475,38 +491,84 @@ namespace AdoptifySystem.Controllers.Zinhle
                 return View();
             }
         }
+        public ActionResult DeleteBreedType(int? id)
+        {
 
-        //public ActionResult ClaimAnimal()
-        //{
-        //    //try
-        //    //{
-        //    //    innovation.animals = db.Animals.Select( x=> new Animal { Animal_Name = x.Animal_Name}).ToList();
-             
+            if (id != null)
+            {
+                Animal_Breed breeds = db.Animal_Breed.Find(id);
+                int count = breeds.CrossBreeds.Count();
+                if (count != 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    ViewBag.err = "You can not delete this";
+                    return RedirectToAction("SearchDonationType");
+                }
+                else
+                {
+                    db.Animal_Breed.Remove(breeds);
+                    db.SaveChanges();
+                    return RedirectToAction("SearchBreedType");
+                }
+            }
+            return RedirectToAction("SearchBreedType");
 
-        //    //    return View(innovation);
-        //    //}
-        //    //catch (Exception e)
-        //    //{
-        //    //    ViewBag.err = e.Message;
-        //    //    return RedirectToAction("Index", "Employees");
+        }
+        public ActionResult DeleteAnimalType(int? id)
+        {
 
-        //    //}
+            if (id != null)
+            {
+                Animal_Type animal_type = db.Animal_Type.Find(id);
+                int count = animal_type.Animal_Breed.Count();
+                if (count != 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    ViewBag.err = "You can not delete this";
+                    return RedirectToAction("SearchAnimalType");
+                }
+                else
+                {
+                    db.Animal_Type.Remove(animal_type);
+                    db.SaveChanges();
+                    return RedirectToAction("SearchAnimalType");
+                }
+            }
+            return RedirectToAction("SearchAnimalType");
 
-        //}
+        }
 
-        //[HttpPost]
-        //public ActionResult ClaimAnimal()
-        //{
+        /*public ActionResult ClaimAnimal()
+         {
+             try
+             {
+                 innovation.animals = db.Animals.Select( x=> new Animal { Animal_Name = x.Animal_Name}).ToList();
 
 
- 
-        //        Animal animal = new Animal();
-        //        Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Temporary").FirstOrDefault();
-        //        animal.Animal_Status_ID = status.Animal_Status_ID;
-        //        db.Animals.Add(animal);
-        //        db.SaveChanges();
-            
-            
-        //}
+                 return View(innovation);
+             }
+             catch (Exception e)
+             {
+                 ViewBag.err = e.Message;
+                 return RedirectToAction("Index", "Employees");
+
+             }
+
+         }
+
+         [HttpPost]
+         public ActionResult ClaimAnimal()
+         {
+
+
+
+             Animal animal = new Animal();
+             Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Temporary").FirstOrDefault();
+             animal.Animal_Status_ID = status.Animal_Status_ID;
+             db.Animals.Add(animal);
+             db.SaveChanges();
+
+
+         }*/
     }
 }

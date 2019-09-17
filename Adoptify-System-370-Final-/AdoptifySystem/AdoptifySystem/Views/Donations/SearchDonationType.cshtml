@@ -1,4 +1,4 @@
-﻿@model List<AdoptifySystem.Models.Donation_Type>
+﻿@model List<AdoptifySystem.Donation_Type>
 @{
     ViewBag.Title = "Search Donation Type";
 }
@@ -67,7 +67,7 @@
                         <td>
                             @Html.ActionLink("Edit", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-warning" }) |
 
-                            <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Donation_Type_ID">More info </button> |
+                            <button class="btn btn-info" data-toggle="modal" data-target="#@item.Donation_Type_ID">More info </button> |
                             @Html.ActionLink("Delete", "DeleteDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-danger" }) |                            
                         </td>
                     </tr>

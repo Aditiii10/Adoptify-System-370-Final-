@@ -56,7 +56,9 @@ namespace AdoptifySystem
         public virtual DbSet<Event_Type> Event_Type { get; set; }
         public virtual DbSet<Foster_Care> Foster_Care { get; set; }
         public virtual DbSet<Foster_Care_Parent> Foster_Care_Parent { get; set; }
+        public virtual DbSet<GoogleChartData> GoogleChartDatas { get; set; }
         public virtual DbSet<HomeCheck> HomeChecks { get; set; }
+        public virtual DbSet<HomeCheckReport> HomeCheckReports { get; set; }
         public virtual DbSet<Kennel> Kennels { get; set; }
         public virtual DbSet<Mecidal_Card> Mecidal_Card { get; set; }
         public virtual DbSet<Microchip> Microchips { get; set; }
@@ -66,6 +68,7 @@ namespace AdoptifySystem
         public virtual DbSet<Role_> Role_ { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Stock_Type> Stock_Type { get; set; }
+        public virtual DbSet<tblFile> tblFiles { get; set; }
         public virtual DbSet<TimeSheet> TimeSheets { get; set; }
         public virtual DbSet<Title> Titles { get; set; }
         public virtual DbSet<Unit_Type> Unit_Type { get; set; }
@@ -78,7 +81,7 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer> Volunteers { get; set; }
         public virtual DbSet<Volunteer_Hours> Volunteer_Hours { get; set; }
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
-        public virtual DbSet<HomeCheckReport> HomeCheckReports { get; set; }
+        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {
@@ -150,6 +153,15 @@ namespace AdoptifySystem
                 new ObjectParameter("Name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_SearchStockType_Result>("Stock_SearchStockType", nameParameter);
+        }
+    
+        public virtual ObjectResult<Vet_SearchVet_Result> Vet_SearchVet(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vet_SearchVet_Result>("Vet_SearchVet", nameParameter);
         }
     
         public virtual ObjectResult<Donation_Type> SearchDon(string name)

@@ -11,6 +11,7 @@ using Google.Authenticator;
 using System.Net;
 using AdoptifySystem;
 using System.Security.Cryptography;
+using System.Web.Helpers;
 
 namespace AdoptifySystem.Controllers.Zinhle
 {
@@ -95,6 +96,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 }
                 user.Emp_ID = searchemp.Emp_ID;
                 TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
+                
                 string UserUniqueKey = (user.Username + key);
                 Session["UserUniqueKey"] = UserUniqueKey;
                 var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", user.Username, UserUniqueKey, 300, 300);
@@ -298,7 +300,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                             if (item.Emp_Type_Name == employee_type.Emp_Type_Name)
                             {
                                 count++;
-                                TempData["EditMessage"]  = "There is a duplicate Donation Type Already";
+                                TempData["EditMessage"]  = "There is a duplicate Employee Type Already";
                                 return View();
                             }
                         }
@@ -311,6 +313,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     else
                     {
                         db.Employee_Type.Add(employee_type);
+                        db.SaveChanges();
                     }
                 }
                 catch (Exception e)
@@ -323,10 +326,10 @@ namespace AdoptifySystem.Controllers.Zinhle
             else if (button == "Cancel")
             {
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SearchEmployeeType");
             }
-            TempData["SuccessMessage"] = "Employee Succesfully Updated";
-            return RedirectToAction("Index", "Home");
+            TempData["SuccessMessage"] = "Employee Succesfully Added";
+            return RedirectToAction("SearchEmployeeType");
         }
 
         public ActionResult SearchEmployee()
@@ -455,28 +458,25 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         public ActionResult DeleteEmployeeType(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Employee_Type employeetype = db.Employee_Type.Find(id);
-            if (employeetype == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employeetype);
-        }
 
-        // POST: Veterinarians/Delete/5
-        [HttpPost, ActionName("DeleteEmployeeType")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteEmployeeTypeConfirmed(int id)
-        {
-            Employee_Type employeetype = db.Employee_Type.Find(id);
-            db.Employee_Type.Remove(employeetype);
-            db.SaveChanges();
-            TempData["DeleteMessage"] = "Deleted Veternarian Successfully";
-            return RedirectToAction("Index");
+            if (id != null)
+            {
+                Employee_Type employee_type = db.Employee_Type.Find(id);
+                int count = employee_type.Employees.Count();
+                if (count != 0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    ViewBag.err = "You can not delete this";
+                    return RedirectToAction("SearchEmployeeType");
+                }
+                else
+                {
+                    db.Employee_Type.Remove(employee_type);
+                    db.SaveChanges();
+                    return RedirectToAction("SearchEmployeeType");
+                }
+            }
+            return RedirectToAction("SearchEmployeeType");
         }
         public ActionResult BarCodeGenerated()
         {

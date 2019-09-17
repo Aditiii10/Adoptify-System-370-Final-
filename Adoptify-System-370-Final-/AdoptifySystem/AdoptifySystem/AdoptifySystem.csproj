@@ -290,6 +290,9 @@
     <Compile Include="Customer_Event.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="database_firewall_rules.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Donation.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -340,6 +343,9 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GoogleChartData.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HomeCheck.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
@@ -409,6 +415,9 @@
     <Compile Include="Stock_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tblFile.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="TimeSheet.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -434,6 +443,9 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Vet_Appointment_Master.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vet_SearchVet_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Volunteer.cs">
