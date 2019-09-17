@@ -21,7 +21,7 @@ namespace AdoptifySystem.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("Wollies_ShelterEntities", throwIfV1Schema: false)
         {
         }
 

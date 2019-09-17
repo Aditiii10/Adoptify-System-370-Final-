@@ -19,7 +19,7 @@ namespace AdoptifySystem.Controllers
         {
           
             try {
-                db.VetSearch(searchBy).ToList();
+                //db.VetSearch(searchBy).ToList();
                 if (searchBy == "Vet_Name")
                     return View(db.Veterinarians.Where(x => x.Vet_Name == search || search == null).ToList());
                 else

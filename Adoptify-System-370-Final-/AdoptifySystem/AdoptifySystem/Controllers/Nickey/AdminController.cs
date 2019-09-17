@@ -80,7 +80,7 @@ namespace AdoptifySystem.Controllers
                 return RedirectToAction("Login");
             }
 
-            ViewBag.Message = "Welcome " + Session["Username"].ToString();
+            ViewBag.Username = "Welcome " + Session["Username"].ToString();
             return View();
         }
         [HttpPost]
@@ -475,7 +475,7 @@ namespace AdoptifySystem.Controllers
         {
             using (MailMessage mail = new MailMessage())
             {
-                mail.From = new MailAddress("u17136319@tuks.co.za");
+                mail.From = new MailAddress("u16052642@tuks.co.za");
                 mail.To.Add(emailID);
                 mail.Subject = "Wollies Animal Shelter Passeword Reset Code";
                 mail.Body = "<h1>Hello There!</h1><br><h3>Please Use the New Password Below to Login:<br>" + "  " + activationCode + "</h3>";
@@ -484,7 +484,7 @@ namespace AdoptifySystem.Controllers
 
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
-                    smtp.Credentials = new NetworkCredential("u17136319@tuks.co.za", "Urahara123");
+                    smtp.Credentials = new NetworkCredential("u16052642@tuks.co.za", "Divinlonji08");
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
                 }
@@ -507,5 +507,7 @@ namespace AdoptifySystem.Controllers
             //})
             //    smtp.Send(message);
         }
+
+
     }
 }

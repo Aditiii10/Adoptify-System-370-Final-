@@ -18,8 +18,8 @@ namespace AdoptifySystem
         public Adoption()
         {
             this.AdoptionPayments = new HashSet<AdoptionPayment>();
-            this.HomeChecks = new HashSet<HomeCheck>();
             this.Event_Schedule = new HashSet<Event_Schedule>();
+            this.HomeChecks = new HashSet<HomeCheck>();
         }
     
         public int Adoption_ID { get; set; }
@@ -38,8 +38,8 @@ namespace AdoptifySystem
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdoptionPayment> AdoptionPayments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HomeCheck> HomeChecks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event_Schedule> Event_Schedule { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HomeCheck> HomeChecks { get; set; }
     }
 }

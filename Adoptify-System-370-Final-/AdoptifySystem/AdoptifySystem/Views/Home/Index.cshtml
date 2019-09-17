@@ -29,12 +29,12 @@
 
                 /* Change background color of buttons on hover */
                 .tab button:hover {
-                    background-color:skyblue;
+                    background-color: dodgerblue;
                 }
 
                 /* Create an active/current tablink class */
                 .tab button.active {
-                    background-color: dodgerblue;
+                    background-color:#2ba6cb ;
                 }
 
         /* Style the tab content */
@@ -101,7 +101,7 @@
     <div id="DashBoard" class="tabcontent">
         @*<div div class="tab-pane fade show active" id="DashBoard">*@
             <div class="container active" style="width:100%; margin-left:30px">
-                <div class="jumbotron" style="width:190px;height:250px; background-color:deeppink; float:left; margin-left:100px">
+                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
                     <i class="glyphicon glyphicon-heart" style="font-size:80px; color:black; margin-left:-10px">
                     </i>
                     <label style="font-size:15px; text-align:left">
@@ -111,7 +111,7 @@
                         @ViewBag.Animals
                     </button>
                 </div>
-                <div class="jumbotron" style="width:190px;height:250px; background-color:aqua; float:left; margin-left:100px">
+                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
                     <i class="glyphicon glyphicon-shopping-cart" style="font-size:80px; color:black; margin-left:-10px">
                     </i>
                     <label style="font-size:15px">
@@ -121,7 +121,7 @@
                         @ViewBag.Adoptions
                     </button>
                 </div>
-                <div class="jumbotron" style="width:190px;height:250px; background-color:burlywood; float:left; margin-left:100px">
+                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
                     <i class="glyphicon glyphicon-user" style="font-size:80px; color:black; margin-left:-10px">
                     </i>
                     <label style="font-size:15px">
@@ -132,7 +132,7 @@
                     </button>
                 </div>
 
-                <div class="jumbotron" style="width:190px;height:250px; background-color:orchid; float:left; margin-left:100px">
+                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
                     <i class="glyphicon glyphicon-home" style="font-size:80px; color:black; margin-left:-10px">
                     </i>
                     <label style="font-size:15px;">
@@ -142,7 +142,7 @@
                         @ViewBag.Kennels
                     </button>
                 </div>
-                <div class="jumbotron" style="width:190px;height:250px; background-color:mediumspringgreen; float:left; margin-left:100px">
+                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
                     <i class="glyphicon glyphicon-user" style="font-size:80px; color:black; margin-left:-10px">
                     </i>
                     <label style="font-size:15px">
@@ -267,54 +267,9 @@
 
     @*</div>*@
 
-    @*<script src="~/Scripts/jquery-3.4.1.js"></script>
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
-        <script>
-            var chartData; // globar variable for hold chart data
-            google.load("visualization", "1", { packages: ["corechart"] });
-
-            // Here We will fill chartData
-
-            $(document).ready(function () {
-
-                $.ajax({
-                    url: "Home/GetChartData",
-                    data: "",
-                    dataType: "json",
-                    type: "POST",
-                    contentType: "application/json; chartset=utf-8",
-                    success: function (data) {
-                        chartData = data.d;
-                    },
-                    error: function () {
-                        alert("Error loading data! Please try again.");
-                    }
-                }).done(function () {
-                    // after complete loading data
-                    google.setOnLoadCallback(drawChart);
-                    drawChart();
-                });
-            });
-
-
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable(chartData);
-
-                var options = {
-                    title: "Animal Intake in the Past 5 years",
-                    pointSize: 5,
-                    seriesType: "bars",
-                    series: { 2: { type: "line" } }
-                };
-
-                var comboChart = new google.visualization.ComboChart(document.getElementById('chart_div'));
-                comboChart.draw(data, options);
-
-            }
-
-        </script>*@
+    
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
@@ -325,6 +280,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+     
 
         <script>
             $(document).ready(function () {
@@ -535,6 +491,50 @@
                 if (successMessage != '')
                     alertify.success(successMessage);
             });
+
+            //var chartData; // globar variable for hold chart data
+            //google.load("visualization", "1", { packages: ["corechart"] });
+
+            //// Here We will fill chartData
+
+            //$(document).ready(function () {
+
+            //    $.ajax({
+            //        url: "Home/GetChartData",
+            //        data: "",
+            //        dataType: "json",
+            //        type: "POST",
+            //        contentType: "application/json; chartset=utf-8",
+            //        success: function (data) {
+            //            chartData = data.d;
+            //        },
+            //        error: function () {
+            //            alert("Error loading data! Please try again.");
+            //        }
+            //    }).done(function () {
+            //        // after complete loading data
+            //        google.setOnLoadCallback(drawChart);
+            //        drawChart();
+            //    });
+            //});
+
+
+
+            //function drawChart() {
+            //    var data = google.visualization.arrayToDataTable(chartData);
+
+            //    var options = {
+            //        title: "Animal Intake in the Past 5 years",
+            //        pointSize: 5,
+            //        seriesType: "bars",
+            //        series: { 2: { type: "line" } }
+            //    };
+
+            //    var comboChart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+            //    comboChart.draw(data, options);
+
+            //}
+
         </script>
     }
 

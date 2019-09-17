@@ -149,7 +149,7 @@
             if (successMessage != '')
                 alertify.error(successMessage);
         });
-        
+
         $(function () {
             var successMessage = '@TempData["PaymentMessage"]'
             if (successMessage != '')
@@ -165,12 +165,18 @@
             if (successMessage != '')
                 alertify.success(successMessage);
         });
-        
+
         $(function () {
             var successMessage = '@TempData["ReturnMessage"]'
             if (successMessage != '')
                 alertify.error(successMessage);
         });
-        
+
+        $(function () {
+            var successMessage = '@TempData["FileUploadMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+
     </script>
 }

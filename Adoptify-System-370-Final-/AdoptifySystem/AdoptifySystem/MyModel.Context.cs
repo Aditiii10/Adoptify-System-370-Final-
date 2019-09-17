@@ -58,6 +58,7 @@ namespace AdoptifySystem
         public virtual DbSet<Foster_Care_Parent> Foster_Care_Parent { get; set; }
         public virtual DbSet<GoogleChartData> GoogleChartDatas { get; set; }
         public virtual DbSet<HomeCheck> HomeChecks { get; set; }
+        public virtual DbSet<HomeCheckReport> HomeCheckReports { get; set; }
         public virtual DbSet<Kennel> Kennels { get; set; }
         public virtual DbSet<Mecidal_Card> Mecidal_Card { get; set; }
         public virtual DbSet<Microchip> Microchips { get; set; }
@@ -67,7 +68,7 @@ namespace AdoptifySystem
         public virtual DbSet<Role_> Role_ { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Stock_Type> Stock_Type { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<tblFile> tblFiles { get; set; }
         public virtual DbSet<TimeSheet> TimeSheets { get; set; }
         public virtual DbSet<Title> Titles { get; set; }
         public virtual DbSet<Unit_Type> Unit_Type { get; set; }
@@ -80,7 +81,7 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer> Volunteers { get; set; }
         public virtual DbSet<Volunteer_Hours> Volunteer_Hours { get; set; }
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
-        public virtual DbSet<HomeCheckReport> HomeCheckReports { get; set; }
+        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {
@@ -136,109 +137,6 @@ namespace AdoptifySystem
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Parent_SearchParent_Result>("Parent_SearchParent", nameParameter);
         }
     
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
-    
         public virtual ObjectResult<Stock_SearchStock_Result> Stock_SearchStock(string name)
         {
             var nameParameter = name != null ?
@@ -265,113 +163,7 @@ namespace AdoptifySystem
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vet_SearchVet_Result>("Vet_SearchVet", nameParameter);
         }
-    
-        public virtual ObjectResult<Stock> searchstock(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock>("searchstock", nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock> searchstock(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock>("searchstock", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Donation> SearchDon(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donation>("SearchDon", nameParameter);
-        }
-    
-        public virtual ObjectResult<Donation> SearchDon(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donation>("SearchDon", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Donor> searchDonor(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donor>("searchDonor", nameParameter);
-        }
-    
-        public virtual ObjectResult<Donor> searchDonor(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donor>("searchDonor", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Foster_Care_Parent> searchParent(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Foster_Care_Parent>("searchParent", nameParameter);
-        }
-    
-        public virtual ObjectResult<Foster_Care_Parent> searchParent(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Foster_Care_Parent>("searchParent", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock_Type> searchstocktype(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_Type>("searchstocktype", nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock_Type> searchstocktype(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_Type>("searchstocktype", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Veterinarian> VetSearch(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Veterinarian>("VetSearch", nameParameter);
-        }
-    
-        public virtual ObjectResult<Veterinarian> VetSearch(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Veterinarian>("VetSearch", mergeOption, nameParameter);
-        }
     }
+
+   
 }

@@ -18,10 +18,10 @@ namespace AdoptifySystem
         public Employee()
         {
             this.Emp_Kennel = new HashSet<Emp_Kennel>();
+            this.Event_Schedule = new HashSet<Event_Schedule>();
+            this.HomeChecks = new HashSet<HomeCheck>();
             this.TimeSheets = new HashSet<TimeSheet>();
             this.User_ = new HashSet<User_>();
-            this.HomeChecks = new HashSet<HomeCheck>();
-            this.Event_Schedule = new HashSet<Event_Schedule>();
         }
     
         public int Emp_ID { get; set; }
@@ -41,16 +41,16 @@ namespace AdoptifySystem
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Emp_Kennel> Emp_Kennel { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event_Schedule> Event_Schedule { get; set; }
         public virtual Title Title { get; set; }
         public virtual Employee_Type Employee_Type { get; set; }
         public virtual Employee_Status Employee_Status { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HomeCheck> HomeChecks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TimeSheet> TimeSheets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_> User_ { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HomeCheck> HomeChecks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Event_Schedule> Event_Schedule { get; set; }
     }
 }

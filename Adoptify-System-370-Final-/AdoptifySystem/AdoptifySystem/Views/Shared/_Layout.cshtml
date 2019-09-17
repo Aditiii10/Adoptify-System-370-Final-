@@ -255,6 +255,25 @@
             </nav>*@
     @*The navabar*@
 
+    <script>
+        window.onscroll = function () { myFunction() };
+
+        // Get the navbar
+        var navbar = document.getElementById("navbar");
+
+        // Get the offset position of the navbar
+        var sticky = navbar.offsetTop;
+
+        // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="top:0; width:100%">
         <a href="http://localhost:55003/Home/Index">
             <img src="~/AdoptifyLogo.PNG" width="80" height="80" alt="Adoptify" />
@@ -281,7 +300,7 @@
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Admin</a>
                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
                             @Html.ActionLink("Logout", "Login", "Admin", null, new { @class = "dropdown-item" })
-                            @*@Html.ActionLink("Change Password", "AddDonor", "Admin", null, new { @class = "dropdown-item" })*@
+                            @*@Html.ActionLink("Change Password", "ChangePassword", "Manage", null, new { @class = "dropdown-item" })*@
                             @Html.ActionLink("Checkin Employee", "Checkin", "Admin", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("Checkout Employee", "Checkout", "Admin", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("Add User Role", "AddUserRole", "Admin", null, new { @class = "dropdown-item" })
@@ -350,8 +369,11 @@
                             @Html.ActionLink("Adoption Home", "Index", "Adoptions", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("Create Adoption", "Create", "Adoptions", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("HomeCheck Home", "HomeCheckIndex", "Adoptions", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("HomeCheck History", "HomeCheckHistory", "Adoptions", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("HomeCheck Report Home", "HomeCheckReportIndex", "Adoptions", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("HomeCheck Report History", "HomeCheckReportHistory", "Adoptions", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("Adoption Payment Home", "AdoptionPaymentIndex", "Adoptions", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Adoption Payment History", "AdoptionPaymentHistory", "Adoptions", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("Animal Collection Home", "CollectionIndex", "Adoptions", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("Return Animal From Adoption", "ReturnIndex", "Adoptions", null, new { @class = "dropdown-item" })
                         </div>
@@ -406,16 +428,14 @@
                         @*<br /><div><label>||</label></div>*@
                         <div class="navbar-brand">
                             @Html.ActionLink("HELP?", "Login", "Admin", null, new { @class = "btn btn-secondary" })
-                        
+
                             @Html.ActionLink("Logout", "Login", "Admin", null, new { @class = "btn btn-danger" })
                             @*<a class="navbar-brand" href="http://localhost:55003/Admin/Login"><i class="fas fa-user" style="color:black"></i><span style="color:black"> Logout</span></a>*@
                         </div>
                     </li>
                 </ul>
-                @*<form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                </form>*@
+                @*@Html.Partial("_LoginPartial")*@
+                @ViewBag.Username
             </div>
 </nav>
 
