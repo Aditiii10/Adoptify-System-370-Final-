@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AdoptifySystem;
 
 namespace AdoptifySystem.Controllers
 {
@@ -93,7 +94,7 @@ namespace AdoptifySystem.Controllers
                 List<Stock> stock = new List<Stock>();
                 try
                 {
-                    stock = db.searchstock(search).ToList();
+                    //stock = db.searchstock(search).ToList();
                     //donation_types = db.Donation_Type.Where(z => z.Donation_Type_Name.StartsWith(search)|| z.Donation_Type_Description.StartsWith(search) ).ToList();
                     if (stock.Count == 0)
                     {
@@ -412,7 +413,7 @@ namespace AdoptifySystem.Controllers
                 List<Stock_Type> stock_type = new List<Stock_Type>();
                 try
                 {
-                    stock_type = db.searchstocktype(search).ToList();
+                    //stock_type = db.searchstocktype(search).ToList();
                     
                     if (stock_type.Count == 0)
                     {

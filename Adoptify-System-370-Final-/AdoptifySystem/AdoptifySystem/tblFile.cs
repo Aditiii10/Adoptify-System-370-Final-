@@ -10,13 +10,13 @@
 namespace AdoptifySystem
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class Donor_SearchDonor_Result
+    public partial class tblFile
     {
-        public int Donor_ID { get; set; }
-        public string Donor_Name { get; set; }
-        public string Donor_Surname { get; set; }
-        public string Donor_Email { get; set; }
-        public Nullable<int> Title_ID { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ContentType { get; set; }
+        public byte[] Data { get; set; }
     }
 }

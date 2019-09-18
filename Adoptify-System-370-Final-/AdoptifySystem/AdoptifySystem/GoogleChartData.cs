@@ -10,12 +10,13 @@
 namespace AdoptifySystem
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class BreedType_SearchBreedType_Result
+    public partial class GoogleChartData
     {
-        public int Animal_Breed_ID { get; set; }
-        public string Animal_Breed_Name { get; set; }
-        public string Animal_Breed_Description { get; set; }
-        public Nullable<int> Animal_Type_ID { get; set; }
+        public int SLID { get; set; }
+        public int Year { get; set; }
+        public int Cats { get; set; }
+        public int Dogs { get; set; }
     }
 }

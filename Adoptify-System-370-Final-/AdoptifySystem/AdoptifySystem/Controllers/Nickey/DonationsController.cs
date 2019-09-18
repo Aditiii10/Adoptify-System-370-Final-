@@ -6,6 +6,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem.Models.nickeymodel;
+using AdoptifySystem;
 
 
 namespace AdoptifySystem.Controllers
@@ -415,7 +416,7 @@ namespace AdoptifySystem.Controllers
                 List<Donor> donor = new List<Donor>();
                 try
                 {
-                    donor = db.searchDonor(search).ToList();
+                   // donor = db.searchDonor(search).ToList();
                     //donor = db.Donors.Where(z => z.Donor_Name.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
                     if (donor.Count == 0)
                     {
@@ -576,7 +577,7 @@ namespace AdoptifySystem.Controllers
                 List<Donation_Type> donation_types = new List<Donation_Type>();
                 try
                 {
-                    donation_types = db.SearchDon(search).ToList();
+                    //donation_types = db.SearchDon(search).ToList();
                     //donation_types = db.Donation_Type.Where(z => z.Donation_Type_Name.StartsWith(search)|| z.Donation_Type_Description.StartsWith(search) ).ToList();
                     if (donation_types.Count == 0)
                     {

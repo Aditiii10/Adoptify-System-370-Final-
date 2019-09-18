@@ -201,6 +201,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Aditi\AdoptersController.cs" />
+    <Compile Include="Controllers\Aditi\Adopter_ContractController.cs" />
+    <Compile Include="Controllers\Aditi\Adopter_RelativeController.cs" />
+    <Compile Include="Controllers\Aditi\VolunteersController.cs" />
+    <Compile Include="Controllers\Aditi\Volunteer_HoursController.cs" />
+    <Compile Include="Controllers\Aditi\Volunteer_Work_TypeController.cs" />
     <Compile Include="Adopter.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -219,13 +231,11 @@
     <Compile Include="AdoptionPayment.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdoptionsController.cs" />
     <Compile Include="Adoption_Status.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Animal.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AnimalType_SearchAnimalType_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Animal_Breed.cs">
@@ -240,29 +250,13 @@
     <Compile Include="Animal_Treatment.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Animal_TreatmentController.cs" />
     <Compile Include="Animal_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Audit_Log.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="BreedType_SearchBreedType_Result.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Aditi\AdoptersController.cs" />
-    <Compile Include="Controllers\Aditi\Adopter_ContractController.cs" />
-    <Compile Include="Controllers\Aditi\Adopter_RelativeController.cs" />
-    <Compile Include="Controllers\Aditi\VolunteersController.cs" />
-    <Compile Include="Controllers\Aditi\Volunteer_HoursController.cs" />
-    <Compile Include="Controllers\Aditi\Volunteer_Work_TypeController.cs" />
-    <Compile Include="Controllers\AdoptionsController.cs" />
-    <Compile Include="Controllers\Animal_TreatmentController.cs" />
     <Compile Include="Controllers\Cassie\AnimalsDetailsReportController.cs" />
     <Compile Include="Controllers\Cassie\Animal_Kennel_HistoryController.cs" />
     <Compile Include="Controllers\Cassie\Customer_EventController.cs" />
@@ -272,18 +266,10 @@
     <Compile Include="Controllers\Cassie\ReportController.cs" />
     <Compile Include="Controllers\Cassie\ReportScreenController.cs" />
     <Compile Include="Controllers\Cassie\VetAppointReportController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Mecidal_CardController.cs" />
-    <Compile Include="Controllers\Nickey\AdminController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\Nickey\DonationsController.cs" />
-    <Compile Include="Controllers\Nickey\FosterCareController.cs" />
-    <Compile Include="Controllers\Nickey\StockController.cs" />
-    <Compile Include="Controllers\VetAppointmentController.cs" />
-    <Compile Include="Controllers\VeterinariansController.cs" />
-    <Compile Include="Controllers\Zinhle\AnimalController.cs" />
-    <Compile Include="Controllers\Zinhle\EmployeesController.cs" />
-    <Compile Include="Controllers\Zinhle\KennelController.cs" />
+    <Compile Include="Controllers\Zinhle\Audit_LogController.cs" />
+    <Compile Include="Controllers\Zinhle\Packaging_TypeController.cs" />
+    <Compile Include="Controllers\Zinhle\TimerController.cs" />
+    <Compile Include="Controllers\Zinhle\Unit_TypeController.cs" />
     <Compile Include="CrossBreed.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -302,12 +288,6 @@
     <Compile Include="Donor.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Donor_SearchDonor_Result.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Don_SearchDon_Result.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Employee.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -318,9 +298,6 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Emp_Kennel.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Emp_SearchEmpType_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Event_.cs">
@@ -338,8 +315,8 @@
     <Compile Include="Foster_Care_Parent.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
+    <Compile Include="GoogleChartData.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HomeCheck.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
@@ -347,23 +324,17 @@
     <Compile Include="HomeCheckReport.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Kennel.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Mecidal_Card.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Mecidal_CardController.cs" />
     <Compile Include="Microchip.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\KennelHistoryViewModel.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\myLists.cs" />
-    <Compile Include="Models\nickeymodel\Innovation.cs" />
-    <Compile Include="Models\patients.cs" />
-    <Compile Include="Models\VetAppointReport.cs" />
-    <Compile Include="Models\nickeymodel\Flexible.cs" />
     <Compile Include="MyModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -379,34 +350,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Nickey\AdminController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Nickey\DonationsController.cs" />
+    <Compile Include="Controllers\Nickey\FosterCareController.cs" />
+    <Compile Include="Controllers\Nickey\StockController.cs" />
     <Compile Include="Packaging_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Parent_SearchParent_Result.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="patients.cs" />
     <Compile Include="Payment.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Payment_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role_.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Startup.cs" />
     <Compile Include="Stock.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Stock_SearchStockType_Result.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Stock_SearchStock_Result.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Stock_Type.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFile.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TimeSheet.cs">
@@ -424,12 +391,14 @@
     <Compile Include="User_.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\VetAppointmentController.cs" />
     <Compile Include="VetAppReason.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Veterinarian.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\VeterinariansController.cs" />
     <Compile Include="Vet_Appointment.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -445,6 +414,23 @@
     <Compile Include="Volunteer_Work_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Zinhle\AnimalController.cs" />
+    <Compile Include="Controllers\Zinhle\EmployeesController.cs" />
+    <Compile Include="Controllers\Zinhle\KennelController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\KennelHistoryViewModel.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\myLists.cs" />
+    <Compile Include="Models\nickeymodel\Innovation.cs" />
+    <Compile Include="Models\patients.cs" />
+    <Compile Include="Models\VetAppointReport.cs" />
+    <Compile Include="Models\nickeymodel\Flexible.cs" />
+    <Compile Include="patients.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdoptifyStyleSheet.css" />
@@ -528,14 +514,6 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Images\eecb0228d91417e5368c7dc527c16d8f.gif" />
-    <Content Include="JS\bootstrap.min.js" />
-    <Content Include="JS\jquery.min.js" />
-    <Content Include="JS\popper.min.js" />
     <Content Include="MyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MyModel.edmx</DependentUpon>
@@ -546,6 +524,14 @@
       <DependentUpon>MyModel.edmx</DependentUpon>
       <LastGenOutput>MyModel.cs</LastGenOutput>
     </Content>
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Images\eecb0228d91417e5368c7dc527c16d8f.gif" />
+    <Content Include="JS\bootstrap.min.js" />
+    <Content Include="JS\jquery.min.js" />
+    <Content Include="JS\popper.min.js" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\angular-animate.js" />
@@ -1545,6 +1531,23 @@
     <Content Include="Views\Volunteer_Hours\Details.cshtml" />
     <Content Include="Views\Volunteer_Hours\Edit.cshtml" />
     <Content Include="Views\Volunteer_Hours\Index.cshtml" />
+    <Content Include="Views\Foster Care Parent Dates\FosterCareDates.cshtml" />
+    <Content Include="Views\Audit_Log\Create.cshtml" />
+    <Content Include="Views\Audit_Log\Delete.cshtml" />
+    <Content Include="Views\Audit_Log\Details.cshtml" />
+    <Content Include="Views\Audit_Log\Edit.cshtml" />
+    <Content Include="Views\Audit_Log\Index.cshtml" />
+    <Content Include="Views\Packaging_Type\Create.cshtml" />
+    <Content Include="Views\Packaging_Type\Delete.cshtml" />
+    <Content Include="Views\Packaging_Type\Details.cshtml" />
+    <Content Include="Views\Packaging_Type\Edit.cshtml" />
+    <Content Include="Views\Packaging_Type\Index.cshtml" />
+    <Content Include="Views\Unit_Type\Create.cshtml" />
+    <Content Include="Views\Unit_Type\Delete.cshtml" />
+    <Content Include="Views\Unit_Type\Details.cshtml" />
+    <Content Include="Views\Unit_Type\Edit.cshtml" />
+    <Content Include="Views\Unit_Type\Index.cshtml" />
+    <Content Include="Views\Timer\AddTimer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

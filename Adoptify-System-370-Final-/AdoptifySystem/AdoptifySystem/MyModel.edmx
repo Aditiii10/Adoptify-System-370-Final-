@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -308,6 +308,8 @@
           <Property Name="EventEnd" Type="datetime" />
           <Property Name="ThemeColour" Type="nchar" MaxLength="10" />
           <Property Name="IsFullDay" Type="bit" />
+          <Property Name="Emp_ID" Type="int" />
+          <Property Name="Adoption_ID" Type="int" />
         </EntityType>
         <EntityType Name="Event_Type">
           <Key>
@@ -345,6 +347,15 @@
           <Property Name="Hours_Left_Alone" Type="int" />
           <Property Name="Adopter_ID" Type="int" />
         </EntityType>
+        <EntityType Name="GoogleChartData">
+          <Key>
+            <PropertyRef Name="SLID" />
+          </Key>
+          <Property Name="SLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Cats" Type="int" Nullable="false" />
+          <Property Name="Dogs" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="HomeCheck">
           <Key>
             <PropertyRef Name="HomeCheck_ID" />
@@ -352,9 +363,8 @@
           <Property Name="HomeCheck_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HomeCheck_Datetime" Type="datetime" />
           <Property Name="Adoption_ID" Type="int" />
+          <Property Name="Emp_ID" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="HomeCheckReport">
           <Key>
             <PropertyRef Name="HomeCheckReportID" />
@@ -451,6 +461,15 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Stock_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tblFiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Data" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeSheet">
           <Key>
@@ -899,6 +918,30 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkech">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkech1">
+          <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adoption">
+              <PropertyRef Name="Adoption_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Adoption_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkemp">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -1004,6 +1047,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Principal>
             <Dependent Role="Foster_Care">
               <PropertyRef Name="Foster_Parent_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkho">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="HomeCheck">
+              <PropertyRef Name="Emp_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1307,30 +1362,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="AnimalType_SearchAnimalType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="BreedType_SearchBreedType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Don_SearchDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Donor_SearchDonor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Emp_SearchEmpType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Parent_SearchParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Stock_SearchStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Stock_SearchStockType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
         <EntityContainer Name="Wollies_ShelterModelStoreContainer">
           <EntitySet Name="Adopter" EntityType="Self.Adopter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
@@ -1361,7 +1392,9 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Event_Type" EntityType="Self.Event_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoogleChartData" EntityType="Self.GoogleChartData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HomeCheck" EntityType="Self.HomeCheck" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HomeCheckReport" EntityType="Self.HomeCheckReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kennel" EntityType="Self.Kennel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Microchip" EntityType="Self.Microchip" Schema="dbo" store:Type="Tables" />
@@ -1371,6 +1404,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFiles" EntityType="Self.tblFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />
@@ -1383,14 +1417,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HomeCheckReport" EntityType="Self.HomeCheckReport" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [HomeCheckReport].[HomeCheckReportID] AS [HomeCheckReportID], 
-    [HomeCheckReport].[HomeCheck_ID] AS [HomeCheck_ID], 
-    [HomeCheckReport].[HomeCheckStatus] AS [HomeCheckStatus], 
-    [HomeCheckReport].[HCDoc] AS [HCDoc]
-    FROM [dbo].[HomeCheckReport] AS [HomeCheckReport]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="fkado" Association="Self.fkado">
             <End Role="Title" EntitySet="Title" />
             <End Role="Adopter" EntitySet="Adopter" />
@@ -1503,6 +1529,14 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Title" EntitySet="Title" />
             <End Role="Donor" EntitySet="Donor" />
           </AssociationSet>
+          <AssociationSet Name="fkech" Association="Self.fkech">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="fkech1" Association="Self.fkech1">
+            <End Role="Adoption" EntitySet="Adoption" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
           <AssociationSet Name="fkemp" Association="Self.fkemp">
             <End Role="Title" EntitySet="Title" />
             <End Role="Employee" EntitySet="Employee" />
@@ -1538,6 +1572,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <AssociationSet Name="fkfosc1" Association="Self.fkfosc1">
             <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
             <End Role="Foster_Care" EntitySet="Foster_Care" />
+          </AssociationSet>
+          <AssociationSet Name="fkho" Association="Self.fkho">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="HomeCheck" EntitySet="HomeCheck" />
           </AssociationSet>
           <AssociationSet Name="fkhoch" Association="Self.fkhoch">
             <End Role="Adoption" EntitySet="Adoption" />
@@ -1739,6 +1777,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="AdoptionPayment" Relationship="Self.fkadopt1" FromRole="Adoption" ToRole="AdoptionPayment" />
           <NavigationProperty Name="Adoption_Status" Relationship="Self.fkadopt2" FromRole="Adoption" ToRole="Adoption_Status" />
           <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr1" FromRole="Adoption" ToRole="AdoptionPayment" />
+          <NavigationProperty Name="Event_Schedule" Relationship="Self.fkech1" FromRole="Adoption" ToRole="Event_Schedule" />
           <NavigationProperty Name="HomeChecks" Relationship="Self.fkhoch" FromRole="Adoption" ToRole="HomeCheck" />
         </EntityType>
         <EntityType Name="Adoption_Status">
@@ -1967,9 +2006,11 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Emp_Contract_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BarcodeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk" FromRole="Employee" ToRole="Emp_Kennel" />
+          <NavigationProperty Name="Event_Schedule" Relationship="Self.fkech" FromRole="Employee" ToRole="Event_Schedule" />
           <NavigationProperty Name="Title" Relationship="Self.fkemp" FromRole="Employee" ToRole="Title" />
           <NavigationProperty Name="Employee_Type" Relationship="Self.fkemp1" FromRole="Employee" ToRole="Employee_Type" />
           <NavigationProperty Name="Employee_Status" Relationship="Self.fkemp2" FromRole="Employee" ToRole="Employee_Status" />
+          <NavigationProperty Name="HomeChecks" Relationship="Self.fkho" FromRole="Employee" ToRole="HomeCheck" />
           <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
           <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
         </EntityType>
@@ -2018,6 +2059,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="EventEnd" Type="DateTime" Precision="3" />
           <Property Name="ThemeColour" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="IsFullDay" Type="Boolean" />
+          <Property Name="Emp_ID" Type="Int32" />
+          <Property Name="Adoption_ID" Type="Int32" />
+          <NavigationProperty Name="Adoption" Relationship="Self.fkech1" FromRole="Event_Schedule" ToRole="Adoption" />
+          <NavigationProperty Name="Employee" Relationship="Self.fkech" FromRole="Event_Schedule" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Event_Type">
           <Key>
@@ -2060,6 +2105,15 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="Adopter" Relationship="Self.fkfos" FromRole="Foster_Care_Parent" ToRole="Adopter" />
           <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc1" FromRole="Foster_Care_Parent" ToRole="Foster_Care" />
         </EntityType>
+        <EntityType Name="GoogleChartData">
+          <Key>
+            <PropertyRef Name="SLID" />
+          </Key>
+          <Property Name="SLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Cats" Type="Int32" Nullable="false" />
+          <Property Name="Dogs" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="HomeCheck">
           <Key>
             <PropertyRef Name="HomeCheck_ID" />
@@ -2067,8 +2121,20 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="HomeCheck_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HomeCheck_Datetime" Type="DateTime" Precision="3" />
           <Property Name="Adoption_ID" Type="Int32" />
+          <Property Name="Emp_ID" Type="Int32" />
           <NavigationProperty Name="Adoption" Relationship="Self.fkhoch" FromRole="HomeCheck" ToRole="Adoption" />
+          <NavigationProperty Name="Employee" Relationship="Self.fkho" FromRole="HomeCheck" ToRole="Employee" />
           <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="HomeCheck" ToRole="HomeCheckReport" />
+        </EntityType>
+        <EntityType Name="HomeCheckReport">
+          <Key>
+            <PropertyRef Name="HomeCheckReportID" />
+          </Key>
+          <Property Name="HomeCheckReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HomeCheck_ID" Type="Int32" />
+          <Property Name="HomeCheckStatus" Type="Boolean" />
+          <Property Name="HCDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HomeCheck" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="HomeCheck" />
         </EntityType>
         <EntityType Name="Kennel">
           <Key>
@@ -2175,6 +2241,15 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Stock_Type_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Stock_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Stocks" Relationship="Self.fkstock" FromRole="Stock_Type" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="tblFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContentType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeSheet">
           <Key>
@@ -2315,16 +2390,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Vol_WorkType_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Volunteer_Hours" Relationship="Self.fkvolhrs1" FromRole="Volunteer_Work_Type" ToRole="Volunteer_Hours" />
         </EntityType>
-        <EntityType Name="HomeCheckReport">
-          <Key>
-            <PropertyRef Name="HomeCheckReportID" />
-          </Key>
-          <Property Name="HomeCheckReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HomeCheck_ID" Type="Int32" />
-          <Property Name="HomeCheckStatus" Type="Boolean" />
-          <Property Name="HCDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="HomeCheck" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="HomeCheck" />
-        </EntityType>
         <Association Name="fkado">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
           <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
@@ -2441,6 +2506,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               <PropertyRef Name="Adoption_ID" />
             </Principal>
             <Dependent Role="AdoptionPayment">
+              <PropertyRef Name="Adoption_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkech1">
+          <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adoption">
+              <PropertyRef Name="Adoption_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
               <PropertyRef Name="Adoption_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2805,6 +2882,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkech">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkemp">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -2838,6 +2927,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="Employee_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkho">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="HomeCheck">
+              <PropertyRef Name="Emp_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3099,7 +3200,9 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Event_Type" EntityType="Self.Event_Type" />
           <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" />
           <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" />
+          <EntitySet Name="GoogleChartDatas" EntityType="Self.GoogleChartData" />
           <EntitySet Name="HomeChecks" EntityType="Self.HomeCheck" />
+          <EntitySet Name="HomeCheckReports" EntityType="Self.HomeCheckReport" />
           <EntitySet Name="Kennels" EntityType="Self.Kennel" />
           <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" />
           <EntitySet Name="Microchips" EntityType="Self.Microchip" />
@@ -3109,6 +3212,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Role_" EntityType="Self.Role_" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" />
+          <EntitySet Name="tblFiles" EntityType="Self.tblFile" />
           <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
           <EntitySet Name="Titles" EntityType="Self.Title" />
           <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" />
@@ -3121,7 +3225,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Volunteers" EntityType="Self.Volunteer" />
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" />
-          <EntitySet Name="HomeCheckReports" EntityType="Self.HomeCheckReport" />
           <AssociationSet Name="fkado" Association="Self.fkado">
             <End Role="Title" EntitySet="Titles" />
             <End Role="Adopter" EntitySet="Adopters" />
@@ -3161,6 +3264,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <AssociationSet Name="fkcr1" Association="Self.fkcr1">
             <End Role="Adoption" EntitySet="Adoptions" />
             <End Role="AdoptionPayment" EntitySet="AdoptionPayments" />
+          </AssociationSet>
+          <AssociationSet Name="fkech1" Association="Self.fkech1">
+            <End Role="Adoption" EntitySet="Adoptions" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
           </AssociationSet>
           <AssociationSet Name="fkhoch" Association="Self.fkhoch">
             <End Role="Adoption" EntitySet="Adoptions" />
@@ -3282,6 +3389,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Kennel" EntitySet="Kennels" />
             <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
           </AssociationSet>
+          <AssociationSet Name="fkech" Association="Self.fkech">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
           <AssociationSet Name="fkemp" Association="Self.fkemp">
             <End Role="Title" EntitySet="Titles" />
             <End Role="Employee" EntitySet="Employees" />
@@ -3293,6 +3404,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <AssociationSet Name="fkemp2" Association="Self.fkemp2">
             <End Role="Employee_Status" EntitySet="Employee_Status" />
             <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="fkho" Association="Self.fkho">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="HomeCheck" EntitySet="HomeChecks" />
           </AssociationSet>
           <AssociationSet Name="fktime" Association="Self.fktime">
             <End Role="Employee" EntitySet="Employees" />
@@ -3370,108 +3485,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
-          <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SearchDon" EntitySet="Donation_Type" ReturnType="Collection(Wollies_ShelterModel.Donation_Type)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchDonor" EntitySet="Donors" ReturnType="Collection(Wollies_ShelterModel.Donor)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchParent" EntitySet="Foster_Care_Parent" ReturnType="Collection(Wollies_ShelterModel.Foster_Care_Parent)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchstock" EntitySet="Stocks" ReturnType="Collection(Wollies_ShelterModel.Stock)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchstocktype" EntitySet="Stock_Type" ReturnType="Collection(Wollies_ShelterModel.Stock_Type)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="AnimalType_SearchAnimalType_Result">
-          <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
-        </ComplexType>
-        <ComplexType Name="BreedType_SearchBreedType_Result">
-          <Property Type="Int32" Name="Animal_Breed_ID" Nullable="false" />
-          <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="Don_SearchDon_Result">
-          <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
-          <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
-        </ComplexType>
-        <ComplexType Name="Donor_SearchDonor_Result">
-          <Property Type="Int32" Name="Donor_ID" Nullable="false" />
-          <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Title_ID" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="Emp_SearchEmpType_Result">
-          <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Emp_Type_Name" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Emp_Type_Description" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="Parent_SearchParent_Result">
-          <Property Type="Int32" Name="Foster_Parent_ID" Nullable="false" />
-          <Property Type="String" Name="Foster_Parent_Name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_Surname" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_Address" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_CellNumber" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_WorkNumber" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_Email" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Foster_Parent_IDNumber" Nullable="true" />
-          <Property Type="DateTime" Name="Foster_Parent_Last_Modified" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="Num_In_Household" Nullable="true" />
-          <Property Type="String" Name="Type_Of_Housing" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
-          <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="Stock_SearchStock_Result">
-          <Property Type="Int32" Name="Stock_ID" Nullable="false" />
-          <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Stock_Quantity" Nullable="true" />
-          <Property Type="String" Name="Stock_Description" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Stock_Type_ID" Nullable="true" />
-          <Property Type="Int32" Name="Packaging_Type_ID" Nullable="true" />
-          <Property Type="Int32" Name="Unit_Type_ID" Nullable="true" />
-          <Property Type="Int32" Name="Unit_number" Nullable="true" />
-          <Property Type="Int32" Name="Stock_Type_ID1" Nullable="false" />
-          <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="Stock_SearchStockType_Result">
-          <Property Type="Int32" Name="Stock_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3805,6 +3819,8 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
                 <ScalarProperty Name="EventEnd" ColumnName="EventEnd" />
                 <ScalarProperty Name="ThemeColour" ColumnName="ThemeColour" />
                 <ScalarProperty Name="IsFullDay" ColumnName="IsFullDay" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+                <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3847,12 +3863,33 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="GoogleChartDatas">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.GoogleChartData">
+              <MappingFragment StoreEntitySet="GoogleChartData">
+                <ScalarProperty Name="SLID" ColumnName="SLID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Cats" ColumnName="Cats" />
+                <ScalarProperty Name="Dogs" ColumnName="Dogs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="HomeChecks">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheck">
               <MappingFragment StoreEntitySet="HomeCheck">
                 <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
                 <ScalarProperty Name="HomeCheck_Datetime" ColumnName="HomeCheck_Datetime" />
                 <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HomeCheckReports">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheckReport">
+              <MappingFragment StoreEntitySet="HomeCheckReport">
+                <ScalarProperty Name="HomeCheckReportID" ColumnName="HomeCheckReportID" />
+                <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
+                <ScalarProperty Name="HomeCheckStatus" ColumnName="HomeCheckStatus" />
+                <ScalarProperty Name="HCDoc" ColumnName="HCDoc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3950,6 +3987,16 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
                 <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
                 <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
                 <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFiles">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFile">
+              <MappingFragment StoreEntitySet="tblFiles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4076,115 +4123,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HomeCheckReports">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheckReport">
-              <MappingFragment StoreEntitySet="HomeCheckReport">
-                <ScalarProperty Name="HomeCheckReportID" ColumnName="HomeCheckReportID" />
-                <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
-                <ScalarProperty Name="HomeCheckStatus" ColumnName="HomeCheckStatus" />
-                <ScalarProperty Name="HCDoc" ColumnName="HCDoc" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AnimalType_SearchAnimalType" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.AnimalType_SearchAnimalType_Result">
-                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
-                <ScalarProperty Name="Animal_Type_Name" ColumnName="Animal_Type_Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="BreedType_SearchBreedType" FunctionName="Wollies_ShelterModel.Store.BreedType_SearchBreedType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.BreedType_SearchBreedType_Result">
-                <ScalarProperty Name="Animal_Breed_ID" ColumnName="Animal_Breed_ID" />
-                <ScalarProperty Name="Animal_Breed_Name" ColumnName="Animal_Breed_Name" />
-                <ScalarProperty Name="Animal_Breed_Description" ColumnName="Animal_Breed_Description" />
-                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Don_SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Don_SearchDon_Result">
-                <ScalarProperty Name="Donation_Type_ID" ColumnName="Donation_Type_ID" />
-                <ScalarProperty Name="Donation_Type_Name" ColumnName="Donation_Type_Name" />
-                <ScalarProperty Name="Donation_Type_Description" ColumnName="Donation_Type_Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Donor_SearchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Donor_SearchDonor_Result">
-                <ScalarProperty Name="Donor_ID" ColumnName="Donor_ID" />
-                <ScalarProperty Name="Donor_Name" ColumnName="Donor_Name" />
-                <ScalarProperty Name="Donor_Surname" ColumnName="Donor_Surname" />
-                <ScalarProperty Name="Donor_Email" ColumnName="Donor_Email" />
-                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Emp_SearchEmpType" FunctionName="Wollies_ShelterModel.Store.Emp_SearchEmpType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Emp_SearchEmpType_Result">
-                <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
-                <ScalarProperty Name="Emp_Type_Name" ColumnName="Emp_Type_Name" />
-                <ScalarProperty Name="Emp_Type_Description" ColumnName="Emp_Type_Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Parent_SearchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Parent_SearchParent_Result">
-                <ScalarProperty Name="Foster_Parent_ID" ColumnName="Foster_Parent_ID" />
-                <ScalarProperty Name="Foster_Parent_Name" ColumnName="Foster_Parent_Name" />
-                <ScalarProperty Name="Foster_Parent_Surname" ColumnName="Foster_Parent_Surname" />
-                <ScalarProperty Name="Foster_Parent_Address" ColumnName="Foster_Parent_Address" />
-                <ScalarProperty Name="Foster_Parent_CellNumber" ColumnName="Foster_Parent_CellNumber" />
-                <ScalarProperty Name="Foster_Parent_WorkNumber" ColumnName="Foster_Parent_WorkNumber" />
-                <ScalarProperty Name="Foster_Parent_Email" ColumnName="Foster_Parent_Email" />
-                <ScalarProperty Name="Foster_Parent_IDNumber" ColumnName="Foster_Parent_IDNumber" />
-                <ScalarProperty Name="Foster_Parent_Last_Modified" ColumnName="Foster_Parent_Last_Modified" />
-                <ScalarProperty Name="Num_In_Household" ColumnName="Num_In_Household" />
-                <ScalarProperty Name="Type_Of_Housing" ColumnName="Type_Of_Housing" />
-                <ScalarProperty Name="Ownership_Housing" ColumnName="Ownership_Housing" />
-                <ScalarProperty Name="Hours_Left_Alone" ColumnName="Hours_Left_Alone" />
-                <ScalarProperty Name="Adopter_ID" ColumnName="Adopter_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Stock_SearchStock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStock_Result">
-                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
-                <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
-                <ScalarProperty Name="Stock_Quantity" ColumnName="Stock_Quantity" />
-                <ScalarProperty Name="Stock_Description" ColumnName="Stock_Description" />
-                <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
-                <ScalarProperty Name="Packaging_Type_ID" ColumnName="Packaging_Type_ID" />
-                <ScalarProperty Name="Unit_Type_ID" ColumnName="Unit_Type_ID" />
-                <ScalarProperty Name="Unit_number" ColumnName="Unit_number" />
-                <ScalarProperty Name="Stock_Type_ID1" ColumnName="Stock_Type_ID1" />
-                <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
-                <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Stock_SearchStockType" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStockType_Result">
-                <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
-                <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
-                <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon" />
-          <FunctionImportMapping FunctionImportName="searchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor" />
-          <FunctionImportMapping FunctionImportName="searchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent" />
-          <FunctionImportMapping FunctionImportName="searchstock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock" />
-          <FunctionImportMapping FunctionImportName="searchstocktype" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

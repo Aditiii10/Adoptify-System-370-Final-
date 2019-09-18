@@ -114,7 +114,7 @@ namespace AdoptifySystem.Controllers
         public ActionResult HomeCheckReport(int? id, string val ="")
         {
             List<Adoption> adoption1 = db.Adoptions.ToList();
-            bool flag1 = false;
+            //bool flag1 = false;
             Id = Convert.ToInt32(id);
             Adoption adoption = db.Adoptions.Find(id);
             Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
@@ -125,7 +125,7 @@ namespace AdoptifySystem.Controllers
                 if (val== "true")
                 {
                     val = "true";
-                    flag1 = true;
+                    //flag1 = true;
                     adoption.Adopt_Status_ID = 3;
 
                     TempData["HomeCheckReportMessage"] = "HomeCheck Report Success ";
@@ -136,7 +136,7 @@ namespace AdoptifySystem.Controllers
                 }
                 else
                 {
-                    flag1 = false;
+                    //flag1 = false;
                     val = "false";
                     adoption.Adopt_Status_ID = 4;
 

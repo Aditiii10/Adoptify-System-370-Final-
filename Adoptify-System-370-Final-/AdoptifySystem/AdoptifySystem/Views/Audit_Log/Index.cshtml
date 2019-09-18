@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AdoptifySystem.Audit_Log>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+
+<div class="form-group">
+    <label>Search Criteria:</label><br />
+  
+        <select name="Search" onchange=''>
+            <option>Select Option </option>
+            <option value="User_Type">User Type</option>
+            <option value="Date">Date</option>
+            <option value="Transaction Type">Transaction Type</option>
+        </select>
+        <input type="text" name="othercolor" id="othercolor" style='display:none;' />
+</div>
+
+
+    
+
+    <table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Auditlog_DateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Transaction_Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Critical_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_.Username)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.Auditlog_ID }) |*@
+                    @Html.ActionLink("Details", "Details", new { id = item.Auditlog_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Auditlog_ID })
+                </td>
+            </tr>
+        }
+
+    </table>

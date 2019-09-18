@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AdoptifySystem;
 
 namespace AdoptifySystem.Models.nickeymodel
 {
     public class Innovation
     {
+        //Employee
         public List<Employee_Type> empTypes { get; set; }
         public List<Employee> empList { get; set; }
 
