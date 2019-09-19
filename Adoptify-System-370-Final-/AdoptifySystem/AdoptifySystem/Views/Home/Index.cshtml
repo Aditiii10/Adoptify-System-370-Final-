@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
-   //Layout = "~/Views/Shared/_Layout.cshtml";
-    
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 <head>
     @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />*@
@@ -92,82 +92,101 @@
     document.getElementById("defaultOpen").click();
 </script>
 
-<div class="tab">
+@*<div class="tab">
     <button class="tablinks" onclick="homeTab(event, 'DashBoard')" id="defaultOpen">Home Dashboard</button>
     <button class="tablinks" onclick="homeTab(event, 'schedule')">Schedule Calendar</button>
-</div>
+</div>*@
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#home">Home Dashboard</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#profile">Schedule Calendar</a>
+    </li>
+    @*<li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+    </li>*@
+</ul>
 
-    
-    <div id="DashBoard" class="tabcontent">
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade show active" id="home">
+        @*<div id="DashBoard" class="tabcontent">*@
         @*<div div class="tab-pane fade show active" id="DashBoard">*@
-            <div class="container active" style="width:100%; margin-left:30px">
-                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
-                    <i class="glyphicon glyphicon-heart" style="font-size:80px; color:black; margin-left:-10px">
-                    </i>
-                    <label style="font-size:15px; text-align:left">
-                        Animals in Shelter
-                    </label>
-                    <button class="btn btn-default btn-lg" type="button" style="border-radius:20px; margin-left:5px">
+        <br />
+        <div class="container active" style="width:100%; margin-left:30px">
+            <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
+                <i class="glyphicon glyphicon-heart" style="font-size:80px; color:black; margin-left:-10px">
+                </i>
+                <label style="font-size:15px; text-align:left">
+                    Animals in Shelter
+                </label>
+                <a href="http://localhost:55003/Animal/SearchAnimal">
+                    <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
                         @ViewBag.Animals
-                    </button>
-                </div>
-                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
-                    <i class="glyphicon glyphicon-shopping-cart" style="font-size:80px; color:black; margin-left:-10px">
-                    </i>
-                    <label style="font-size:15px">
-                        Adoptions Completed
-                    </label>
-                    <button class="btn btn-default btn-lg" type="button" style="border-radius:20px; margin-left:5px">
+                    </button></a>
+</div>
+            <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
+                <i class="glyphicon glyphicon-shopping-cart" style="font-size:80px; color:black; margin-left:-10px">
+                </i>
+                <label style="font-size:15px">
+                    Adoptions Completed
+                </label>
+                <a href="http://localhost:55003/Adoptions/Index">
+                    <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
                         @ViewBag.Adoptions
-                    </button>
-                </div>
-                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
-                    <i class="glyphicon glyphicon-user" style="font-size:80px; color:black; margin-left:-10px">
-                    </i>
-                    <label style="font-size:15px">
-                        Adopters that have Adopted
-                    </label>
-                    <button class="btn btn-default btn-lg" type="button" style="border-radius:20px; margin-left:5px">
-                        @ViewBag.Adopters
-                    </button>
-                </div>
-
-                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
-                    <i class="glyphicon glyphicon-home" style="font-size:80px; color:black; margin-left:-10px">
-                    </i>
-                    <label style="font-size:15px;">
-                        Kennels At Wollies
-                    </label>
-                    <button class="btn btn-default btn-lg" type="button" style="border-radius:20px; margin-left:5px">
-                        @ViewBag.Kennels
-                    </button>
-                </div>
-                <div class="jumbotron" style="width:190px;height:250px; background-color:#2ba6cb; float:left; margin-left:100px">
-                    <i class="glyphicon glyphicon-user" style="font-size:80px; color:black; margin-left:-10px">
-                    </i>
-                    <label style="font-size:15px">
-                        Employees
-                    </label>
-                    <button class="btn btn-default btn-lg" type="button" style="border-radius:20px; margin-left:5px">
-                        @ViewBag.Employees
-                    </button>
-                </div>
-
-
+                    </button></a>
             </div>
+            <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
+                <i class="glyphicon glyphicon-user" style="font-size:80px; color:black; margin-left:-10px">
+                </i>
+                <label style="font-size:15px">
+                    Adopters that have Adopted
+                </label>
+                <a href="http://localhost:55003/Adopters/Index">
+                    <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
+                        @ViewBag.Adopters
+                    </button></a>
+            </div>
+
+            <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
+                <i class="glyphicon glyphicon-home" style="font-size:80px; color:black; margin-left:-10px">
+                </i>
+                <label style="font-size:15px;">
+                    Kennels At Wollies
+                </label>
+                <a href="http://localhost:55003/Kennels/SearchAnimal">
+                    <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
+                        @ViewBag.Kennels
+                    </button></a>
+            </div>
+            <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
+                <i class="glyphicon glyphicon-user" style="font-size:80px; color:black; margin-left:-10px">
+                </i>
+                <label style="font-size:15px">
+                    Employees
+                </label>
+                <a href="http://localhost:55003/Employees/SearchEmployee">
+                    <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
+                        @ViewBag.Employees
+                    </button></a>
+            </div>
+
+
         </div>
+    </div>
     @*</div>*@
 
     @*<br />
-<br />
-<hr />*@
+        <br />
+        <hr />*@
 
-@*<div id="chart_div" style="width:500px;height:400px">
-    <%-- Here Chart Will Load --%>
-</div>*@
-
-<div id="schedule" class="tabcontent">
-        @*<div class="tab-pane fade" id="schedule">*@
+    @*<div id="chart_div" style="width:500px;height:400px">
+            <%-- Here Chart Will Load --%>
+        </div>*@
+    <div class="tab-pane fade" id="profile">
+        <br />
+            @*<div id="schedule" class="tabcontent">*@
+            @*<div class="tab-pane fade" id="schedule">*@
             <div class="panel panel-default" id="" style="width:1200px">
                 <div class="panel-heading">
                     <h3 class="panel-title">Upcoming Events</h3>
@@ -263,13 +282,13 @@
                 </div>
             </div>
         </div>
-    @*</div>*@
+    </div>
 
     @*</div>*@
 
-    
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
@@ -280,7 +299,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-     
+
 
         <script>
             $(document).ready(function () {

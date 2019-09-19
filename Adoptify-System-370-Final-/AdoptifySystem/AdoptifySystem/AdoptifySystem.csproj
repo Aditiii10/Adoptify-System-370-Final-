@@ -264,6 +264,7 @@
     <Compile Include="Controllers\Cassie\ReportController.cs" />
     <Compile Include="Controllers\Cassie\ReportScreenController.cs" />
     <Compile Include="Controllers\Cassie\VetAppointReportController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -356,6 +357,7 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AdoptionFileUpload.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KennelHistoryViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -679,6 +681,8 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\vetAppointmentScripts.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Email\Index.cshtml" />
+    <Content Include="Views\Email\SendEmailView.cshtml" />
     <None Include="Views\ErrorPage\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -862,6 +866,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

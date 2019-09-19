@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "SendEmailView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="main">
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Email Sent Confirmation</h1>
+        </div>
+    </div>
+    @{
+        try
+        {
+            //parameters to send email
+            string ToEmail, FromOrSenderEmail = "YourGamilId@gmail.com", SubJect, Body, cc, Bcc;
+
+            //Reading values from form collection (Querystring) and assigning values to parameters
+            ToEmail = Request["ToEmail"].ToString();
+            SubJect = Request["EmailSubject"].ToString();
+            Body = Request["EMailBody"].ToString();
+            cc = Request["EmailCC"].ToString();
+            Bcc = Request["EmailBCC"].ToString();
+            //Configuring webMail class to send emails
+            WebMail.SmtpServer = "smtp.gmail.com"; //gmail smtp server
+            WebMail.SmtpPort = 587; //gmail port to send emails
+            WebMail.SmtpUseDefaultCredentials = true;
+            WebMail.EnableSsl = true; //sending emails with secure protocol
+            WebMail.UserName = "u16052642@tuks.co.za";//EmailId used to send emails from application
+            WebMail.Password = "Divinlonji08";
+            WebMail.From = FromOrSenderEmail; //email sender email address.
+
+            //Sending email
+            WebMail.Send(to: ToEmail, subject: SubJect, body: Body, cc: cc, bcc: Bcc, isBodyHtml: true);
+            TempData["EmailSucessMessage"] = "Email Successfully Sent";
+
+            <hr />
+
+            <div class="align-middle " style="text-align:center; background-color:darkorange; color:white">
+                Email Sent Successfully.
+            </div>
+        }
+        catch (Exception)
+        {
+            TempData["EmailErrorMessage"] = "Email Unseccessfully Sent";
+            <div class="text-danger">
+                Problem while sending email, please check gmail server details.
+            </div>
+        }
+
+    }
+    <br />
+    @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-primary glyphicon glyphicon-remove-sign" })
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["EmailSucessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+
+        $(function () {
+            var successMessage = '@TempData["EmailErrorMessage"]'
+            if (successMessage != '')
+                alertify.error(successMessage);
+        });
+    </script>>
+    }
