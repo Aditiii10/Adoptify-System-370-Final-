@@ -264,6 +264,7 @@
     <Compile Include="Controllers\Cassie\ReportController.cs" />
     <Compile Include="Controllers\Cassie\ReportScreenController.cs" />
     <Compile Include="Controllers\Cassie\VetAppointReportController.cs" />
+    <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Mecidal_CardController.cs" />
@@ -521,6 +522,7 @@
     <Content Include="Content\bootswatch\united\bootstrap.min.css" />
     <Content Include="Content\bootswatch\yeti\bootstrap.css" />
     <Content Include="Content\bootswatch\yeti\bootstrap.min.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -569,6 +571,7 @@
     <Content Include="JS\bootstrap.min.js" />
     <Content Include="JS\jquery.min.js" />
     <Content Include="JS\popper.min.js" />
+    <Content Include="JS\script.js" />
     <Content Include="MyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MyModel.edmx</DependentUpon>
@@ -676,6 +679,7 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\vetAppointmentScripts.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="Views\ErrorPage\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
