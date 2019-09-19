@@ -68,7 +68,6 @@ namespace AdoptifySystem
         public virtual DbSet<Role_> Role_ { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Stock_Type> Stock_Type { get; set; }
-        public virtual DbSet<tblFile> tblFiles { get; set; }
         public virtual DbSet<TimeSheet> TimeSheets { get; set; }
         public virtual DbSet<Title> Titles { get; set; }
         public virtual DbSet<Unit_Type> Unit_Type { get; set; }
@@ -82,6 +81,7 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer_Hours> Volunteer_Hours { get; set; }
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<tblFileDetail> tblFileDetails { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {
@@ -164,6 +164,4 @@ namespace AdoptifySystem
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vet_SearchVet_Result>("Vet_SearchVet", nameParameter);
         }
     }
-
-   
 }

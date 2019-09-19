@@ -559,15 +559,6 @@
     <Property Name="Stock_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Stocks" Relationship="Self.fkstock" FromRole="Stock_Type" ToRole="Stock" />
   </EntityType>
-  <EntityType Name="tblFile">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="ContentType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-  </EntityType>
   <EntityType Name="TimeSheet">
     <Key>
       <PropertyRef Name="TimeSheet_ID" />
@@ -1545,7 +1536,6 @@
     <EntitySet Name="Role_" EntityType="Self.Role_" />
     <EntitySet Name="Stocks" EntityType="Self.Stock" />
     <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" />
-    <EntitySet Name="tblFiles" EntityType="Self.tblFile" />
     <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
     <EntitySet Name="Titles" EntityType="Self.Title" />
     <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" />
@@ -1846,6 +1836,8 @@
     <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="tblFileDetails" EntityType="Wollies_ShelterModel.tblFileDetail" />
+    <EntitySet Name="tblFileDetail1" EntityType="Wollies_ShelterModel.tblFileDetail1" />
   </EntityContainer>
   <ComplexType Name="AnimalType_SearchAnimalType_Result">
     <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -1916,4 +1908,20 @@
     <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
     <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
   </ComplexType>
+  <EntityType Name="tblFileDetail">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblFileDetail1">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

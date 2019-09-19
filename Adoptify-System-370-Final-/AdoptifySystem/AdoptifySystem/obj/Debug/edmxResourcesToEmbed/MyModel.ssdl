@@ -457,14 +457,21 @@
     <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
     <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
   </EntityType>
-  <EntityType Name="tblFiles">
+  <EntityType Name="tblFileDetail">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="SQLID" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="ContentType" Type="nvarchar" MaxLength="200" Nullable="false" />
-    <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+    <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+    <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
+  </EntityType>
+  <EntityType Name="tblFileDetails">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+    <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
   </EntityType>
   <EntityType Name="TimeSheet">
     <Key>
@@ -1444,7 +1451,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblFiles" EntityType="Self.tblFiles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblFileDetail" EntityType="Self.tblFileDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />

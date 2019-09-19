@@ -252,6 +252,7 @@
     <Compile Include="Controllers\Aditi\VolunteersController.cs" />
     <Compile Include="Controllers\Aditi\Volunteer_HoursController.cs" />
     <Compile Include="Controllers\Aditi\Volunteer_Work_TypeController.cs" />
+    <Compile Include="Controllers\AdoptionFileController.cs" />
     <Compile Include="Controllers\AdoptionsController.cs" />
     <Compile Include="Controllers\Animal_TreatmentController.cs" />
     <Compile Include="Controllers\Cassie\AnimalsDetailsReportController.cs" />
@@ -353,7 +354,7 @@
     <Compile Include="Microchip.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Models\AdoptionFileUpload.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KennelHistoryViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -407,7 +408,7 @@
     <Compile Include="Stock_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblFile.cs">
+    <Compile Include="tblFileDetail.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TimeSheet.cs">
@@ -559,6 +560,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\3ZzL.gif" />
+    <Content Include="Images\download.png" />
     <Content Include="Images\dribbble_loadingbone.gif" />
     <Content Include="Images\giphy.gif" />
     <Content Include="Images\Loader.gif" />
@@ -851,9 +853,11 @@
     <Content Include="Views\Adoptions\HomeCheckReportHistory.cshtml" />
     <Content Include="Views\Adoptions\AdoptionPayemenHistory.cshtml" />
     <Content Include="Views\Adoptions\FileView.cshtml" />
+    <Content Include="Views\AdoptionFile\FileView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

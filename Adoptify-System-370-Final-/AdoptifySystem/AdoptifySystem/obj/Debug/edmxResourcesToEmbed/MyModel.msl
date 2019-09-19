@@ -499,16 +499,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tblFiles">
-      <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFile">
-        <MappingFragment StoreEntitySet="tblFiles">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-          <ScalarProperty Name="Data" ColumnName="Data" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TimeSheets">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.TimeSheet">
         <MappingFragment StoreEntitySet="TimeSheet">
@@ -749,5 +739,23 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="tblFileDetails">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail">
+        <MappingFragment StoreEntitySet="tblFileDetails">
+          <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
+          <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+          <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblFileDetail1">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail1">
+        <MappingFragment StoreEntitySet="tblFileDetail">
+          <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
+          <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+          <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

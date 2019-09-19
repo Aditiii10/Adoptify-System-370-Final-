@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -462,14 +462,21 @@
           <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
-        <EntityType Name="tblFiles">
+        <EntityType Name="tblFileDetail">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="SQLID" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ContentType" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+          <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
+        </EntityType>
+        <EntityType Name="tblFileDetails">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
         </EntityType>
         <EntityType Name="TimeSheet">
           <Key>
@@ -1449,7 +1456,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblFiles" EntityType="Self.tblFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFileDetail" EntityType="Self.tblFileDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />
@@ -1733,8 +1741,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2296,15 +2303,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Stock_Type_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Stock_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Stocks" Relationship="Self.fkstock" FromRole="Stock_Type" ToRole="Stock" />
-        </EntityType>
-        <EntityType Name="tblFile">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ContentType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeSheet">
           <Key>
@@ -3283,7 +3281,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Role_" EntityType="Self.Role_" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" />
-          <EntitySet Name="tblFiles" EntityType="Self.tblFile" />
           <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
           <EntitySet Name="Titles" EntityType="Self.Title" />
           <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" />
@@ -3558,32 +3555,34 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
           <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblFileDetails" EntityType="Wollies_ShelterModel.tblFileDetail" />
+          <EntitySet Name="tblFileDetail1" EntityType="Wollies_ShelterModel.tblFileDetail1" />
         </EntityContainer>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -3654,6 +3653,22 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
         </ComplexType>
+        <EntityType Name="tblFileDetail">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblFileDetail1">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4158,16 +4173,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblFiles">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFile">
-              <MappingFragment StoreEntitySet="tblFiles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TimeSheets">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.TimeSheet">
               <MappingFragment StoreEntitySet="TimeSheet">
@@ -4408,6 +4413,24 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblFileDetails">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail">
+              <MappingFragment StoreEntitySet="tblFileDetails">
+                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFileDetail1">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail1">
+              <MappingFragment StoreEntitySet="tblFileDetail">
+                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
