@@ -1,0 +1,67 @@
+﻿@model AdoptifySystem.Wolly
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Wolly</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_ContactNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_ContactNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_FaxNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_FaxNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Co_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

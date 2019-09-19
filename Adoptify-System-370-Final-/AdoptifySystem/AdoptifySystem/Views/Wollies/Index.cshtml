@@ -1,0 +1,64 @@
+﻿@model IEnumerable<AdoptifySystem.Wolly>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Wolllies Information</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Org_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Org_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Org_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Org_ContactNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Org_FaxNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Org_Email)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Org_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Org_Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Org_Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Org_ContactNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Org_FaxNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Org_Email)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Co_ID },new { @class = "btn btn-warning" }) @*|
+            @Html.ActionLink("Details", "Details", new { id=item.Co_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Co_ID })*@
+        </td>
+    </tr>
+}
+
+</table>

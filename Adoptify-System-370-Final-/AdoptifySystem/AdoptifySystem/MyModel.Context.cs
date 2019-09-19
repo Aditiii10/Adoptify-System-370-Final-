@@ -79,5 +79,6 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer> Volunteers { get; set; }
         public virtual DbSet<Volunteer_Hours> Volunteer_Hours { get; set; }
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
+        public virtual DbSet<Wolly> Wollies { get; set; }
     }
 }

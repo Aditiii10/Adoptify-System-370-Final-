@@ -499,16 +499,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tblFiles">
-      <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFile">
-        <MappingFragment StoreEntitySet="tblFiles">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-          <ScalarProperty Name="Data" ColumnName="Data" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TimeSheets">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.TimeSheet">
         <MappingFragment StoreEntitySet="TimeSheet">
@@ -629,6 +619,19 @@
           <ScalarProperty Name="Vol_WorkType_ID" ColumnName="Vol_WorkType_ID" />
           <ScalarProperty Name="Vol_WorkType_Name" ColumnName="Vol_WorkType_Name" />
           <ScalarProperty Name="Vol_WorkType_Description" ColumnName="Vol_WorkType_Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Wollies">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.Wolly">
+        <MappingFragment StoreEntitySet="Wollies">
+          <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
+          <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
+          <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
+          <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
+          <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
+          <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
+          <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

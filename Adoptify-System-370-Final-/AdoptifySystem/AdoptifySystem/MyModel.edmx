@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -462,15 +462,6 @@
           <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
-        <EntityType Name="tblFiles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ContentType" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Data" Type="varbinary(max)" Nullable="false" />
-        </EntityType>
         <EntityType Name="TimeSheet">
           <Key>
             <PropertyRef Name="TimeSheet_ID" />
@@ -581,6 +572,18 @@
           <Property Name="Vol_WorkType_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Vol_WorkType_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Vol_WorkType_Description" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Wollies">
+          <Key>
+            <PropertyRef Name="Co_ID" />
+          </Key>
+          <Property Name="Co_ID" Type="int" Nullable="false" />
+          <Property Name="Org_Name" Type="nvarchar(max)" />
+          <Property Name="Org_Address" Type="nvarchar(max)" />
+          <Property Name="Org_Type" Type="varchar" MaxLength="50" />
+          <Property Name="Org_ContactNumber" Type="int" />
+          <Property Name="Org_FaxNumber" Type="int" />
+          <Property Name="Org_Email" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="fkado">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
@@ -1404,7 +1407,6 @@
           <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblFiles" EntityType="Self.tblFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />
@@ -1417,6 +1419,7 @@
           <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wollies" EntityType="Self.Wollies" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fkado" Association="Self.fkado">
             <End Role="Title" EntitySet="Title" />
             <End Role="Adopter" EntitySet="Adopter" />
@@ -1678,8 +1681,7 @@
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3485,7 +3487,20 @@
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
+          <EntitySet Name="Wollies" EntityType="Wollies_ShelterModel.Wolly" />
         </EntityContainer>
+        <EntityType Name="Wolly">
+          <Key>
+            <PropertyRef Name="Co_ID" />
+          </Key>
+          <Property Name="Co_ID" Type="Int32" Nullable="false" />
+          <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Org_ContactNumber" Type="Int32" />
+          <Property Name="Org_FaxNumber" Type="Int32" />
+          <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3990,16 +4005,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblFiles">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFile">
-              <MappingFragment StoreEntitySet="tblFiles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TimeSheets">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.TimeSheet">
               <MappingFragment StoreEntitySet="TimeSheet">
@@ -4120,6 +4125,19 @@
                 <ScalarProperty Name="Vol_WorkType_ID" ColumnName="Vol_WorkType_ID" />
                 <ScalarProperty Name="Vol_WorkType_Name" ColumnName="Vol_WorkType_Name" />
                 <ScalarProperty Name="Vol_WorkType_Description" ColumnName="Vol_WorkType_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wollies">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.Wolly">
+              <MappingFragment StoreEntitySet="Wollies">
+                <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
+                <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
+                <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
+                <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
+                <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
+                <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
+                <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -267,9 +267,11 @@
     <Compile Include="Controllers\Cassie\ReportScreenController.cs" />
     <Compile Include="Controllers\Cassie\VetAppointReportController.cs" />
     <Compile Include="Controllers\Zinhle\Audit_LogController.cs" />
+    <Compile Include="Controllers\Zinhle\FosterCarePeriodsController.cs" />
     <Compile Include="Controllers\Zinhle\Packaging_TypeController.cs" />
     <Compile Include="Controllers\Zinhle\TimerController.cs" />
     <Compile Include="Controllers\Zinhle\Unit_TypeController.cs" />
+    <Compile Include="Controllers\Zinhle\WolliesController.cs" />
     <Compile Include="CrossBreed.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -431,6 +433,9 @@
     <Compile Include="patients.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Wolly.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdoptifyStyleSheet.css" />
@@ -1548,6 +1553,16 @@
     <Content Include="Views\Unit_Type\Edit.cshtml" />
     <Content Include="Views\Unit_Type\Index.cshtml" />
     <Content Include="Views\Timer\AddTimer.cshtml" />
+    <Content Include="Views\Wollies\Create.cshtml" />
+    <Content Include="Views\Wollies\Delete.cshtml" />
+    <Content Include="Views\Wollies\Details.cshtml" />
+    <Content Include="Views\Wollies\Edit.cshtml" />
+    <Content Include="Views\Wollies\Index.cshtml" />
+    <Content Include="Views\Timer\Index.cshtml" />
+    <Content Include="Views\Timer\MaintainTimer.cshtml" />
+    <Content Include="Views\FosterCareDates\AddFosterCareDates.cshtml" />
+    <Content Include="Views\FosterCarePeriods\MaintainFosterCareDates.cshtml" />
+    <Content Include="Views\FosterCarePeriods\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

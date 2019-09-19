@@ -1802,5 +1802,18 @@
       <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
       <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
     </AssociationSet>
+    <EntitySet Name="Wollies" EntityType="Wollies_ShelterModel.Wolly" />
   </EntityContainer>
+  <EntityType Name="Wolly">
+    <Key>
+      <PropertyRef Name="Co_ID" />
+    </Key>
+    <Property Name="Co_ID" Type="Int32" Nullable="false" />
+    <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Org_ContactNumber" Type="Int32" />
+    <Property Name="Org_FaxNumber" Type="Int32" />
+    <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

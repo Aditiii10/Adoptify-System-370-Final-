@@ -457,15 +457,6 @@
     <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
     <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
   </EntityType>
-  <EntityType Name="tblFiles">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="ContentType" Type="nvarchar" MaxLength="200" Nullable="false" />
-    <Property Name="Data" Type="varbinary(max)" Nullable="false" />
-  </EntityType>
   <EntityType Name="TimeSheet">
     <Key>
       <PropertyRef Name="TimeSheet_ID" />
@@ -576,6 +567,18 @@
     <Property Name="Vol_WorkType_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Vol_WorkType_Name" Type="nvarchar" MaxLength="100" />
     <Property Name="Vol_WorkType_Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Wollies">
+    <Key>
+      <PropertyRef Name="Co_ID" />
+    </Key>
+    <Property Name="Co_ID" Type="int" Nullable="false" />
+    <Property Name="Org_Name" Type="nvarchar(max)" />
+    <Property Name="Org_Address" Type="nvarchar(max)" />
+    <Property Name="Org_Type" Type="varchar" MaxLength="50" />
+    <Property Name="Org_ContactNumber" Type="int" />
+    <Property Name="Org_FaxNumber" Type="int" />
+    <Property Name="Org_Email" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <Association Name="fkado">
     <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
@@ -1399,7 +1402,6 @@
     <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblFiles" EntityType="Self.tblFiles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />
@@ -1412,6 +1414,7 @@
     <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Wollies" EntityType="Self.Wollies" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="fkado" Association="Self.fkado">
       <End Role="Title" EntitySet="Title" />
       <End Role="Adopter" EntitySet="Adopter" />

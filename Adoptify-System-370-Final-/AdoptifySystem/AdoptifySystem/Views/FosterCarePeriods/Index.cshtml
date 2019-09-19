@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Foster Care Period List</h2>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-bordered">
+    <tr class="thead-light">
+
+        <th>
+            Times
+        </th>
+
+        <th>
+            Action Result
+        </th>
+    </tr>
+
+    @*@if (Model == null)
+        {
+            <tr>
+                <td colspan="8">
+                    No results found
+                </td>
+            </tr>
+        }
+        else
+        {*@
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+            </td>
+
+
+            <td>
+
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.Auditlog_ID }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Auditlog_ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+
+
+
+</table>
+
+

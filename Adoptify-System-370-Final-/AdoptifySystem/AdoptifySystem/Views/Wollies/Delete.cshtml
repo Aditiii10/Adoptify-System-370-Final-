@@ -1,0 +1,73 @@
+﻿@model AdoptifySystem.Wolly
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Wolly</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_ContactNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_ContactNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_FaxNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_FaxNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Org_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Org_Email)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
