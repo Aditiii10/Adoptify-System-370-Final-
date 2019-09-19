@@ -5,32 +5,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2> Add Packaging Type </h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Packaging_Type</h4>
+    
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Packaging_Type_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Packaging_Type_Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Packaging_Type_Name, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        <label>Enter Packaging Type Name:</label>
+        @*@Html.LabelFor(model => model.Packaging_Type_Name, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Packaging_Type_Name, new { htmlAttributes = new { @class = "form-control" }, placeholder="Enter Packaging Type Name", required = "required" })
+            @Html.ValidationMessageFor(model => model.Packaging_Type_Name, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+            <button type="submit" name="button" value="Save" class="btn btn-success float-right">Save</button>
         </div>
+    </div>
     </div>
 }
 
-<div>
+@*<div>
     @Html.ActionLink("Back to List", "Index")
-</div>
+</div>*@
