@@ -80,8 +80,7 @@
         </td>
         <td>
             @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
-            @Html.ActionLink("Return Animal", "ReturnAnimal", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning glyphicon glyphicon-transfer" })
-
+            @Html.ActionLink("Return Animal", "ReturnAnimal", "Adoptions", new { id = item.Adoption_ID}, new {@class = "btn btn-warning" , onclick = "return confirm('Are you sure want to Return Animal? this with Cancel the Adoption that has taken place!');" }) 
         </td>
     </tr>
         }
