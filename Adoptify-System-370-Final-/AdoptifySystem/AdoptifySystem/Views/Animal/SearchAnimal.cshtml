@@ -99,7 +99,7 @@
             {
                 if (item.Animal_Image_Type != null)
                 {
-                 
+
                     <div class="box eight">
                         <div class="date">
                             <h1>@item.Animal_Name</h1>
@@ -110,117 +110,117 @@
                             @Html.ActionLink("Maintain", "MaintainAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-primary" })
                         </div>
                     </div>
-            <br />
-        }
-        else
-        {
-            <h1>hello</h1>
-            <br />
-        }
-        <br />
-    }
+                    <br />
+                }
+                else
+                {
+                    <h1>hello</h1>
+                    <br />
+                }
+                <br />
+            }
 
-}
-</div>
+        }
+    </div>
 </div>
 <div>
     @*<div class="frontside">
-        <div class="card">
-            <div class="card-body text-center">
-                <p> <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Animal_Image)" style="width:50% ;height:50%;" class="img-thumbnail" alt="avatar"></p>
-                <h4 class="card-title">@item.Animal_Name</h4>
-                <p class="card-text">@item.Animal_Status.Animal_Status_Name</p>
-                @Html.ActionLink("Maintain", "MaintainAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-primary" })
+            <div class="card">
+                <div class="card-body text-center">
+                    <p> <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Animal_Image)" style="width:50% ;height:50%;" class="img-thumbnail" alt="avatar"></p>
+                    <h4 class="card-title">@item.Animal_Name</h4>
+                    <p class="card-text">@item.Animal_Status.Animal_Status_Name</p>
+                    @Html.ActionLink("Maintain", "MaintainAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-primary" })
+                </div>
             </div>
         </div>
-    </div>
-    <table class="table table-bordered">
-            <tr class="thead-light">
-                <th>
-                    Animals
-                </th>
+        <table class="table table-bordered">
+                <tr class="thead-light">
+                    <th>
+                        Animals
+                    </th>
 
-                <th>
-                    Animal ID
-                </th>
-                <th>
-                    Action
-                </th>
+                    <th>
+                        Animal ID
+                    </th>
+                    <th>
+                        Action
+                    </th>
 
-            </tr>
-
-            @if (Model == null)
-            {
-                <tr>
-                    <td colspan="8">
-                        No results found
-                    </td>
                 </tr>
-            }
-            else
-            {
-                foreach (var item in Model)
+
+                @if (Model == null)
                 {
                     <tr>
-                        <td>
-                            <div class="card">
-                                <div>@item.Animal_Image</div>
-                          <div class="card-block">
-                              <label><b>Animal Name:</b></label><label><b>@item.Animal_Name</b></label><br />
-                              <label><b>Animal Status:</b></label><label><b>@item.Animal_Status</b></label><br />
-                              <label><b>Location:</b></label><label><b>@item.Animal_Location</b></label><br />
-                           </div>
-
-                            </div>
-
-                        </td>
-                        @Html.DisplayFor(modelItem =>item.Animal_ID)
-                        <td>
-
-                        </td>
-
-                        <td>
-                            @Html.ActionLink("MaintainAnimal", "MaintainAnimal", new { id = item.Animal_ID }, new { @class = "btn btn-warning" }) |
-
-                            <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Animal_ID">More info </button> |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Animal_ID}, new { @class = "btn btn-danger" }) |
+                        <td colspan="8">
+                            No results found
                         </td>
                     </tr>
-                    <div class="modal fade" id="@item.Animal_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">@item.Animal_ID</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="card">
+                                    <div>@item.Animal_Image</div>
+                              <div class="card-block">
+                                  <label><b>Animal Name:</b></label><label><b>@item.Animal_Name</b></label><br />
+                                  <label><b>Animal Status:</b></label><label><b>@item.Animal_Status</b></label><br />
+                                  <label><b>Location:</b></label><label><b>@item.Animal_Location</b></label><br />
+                               </div>
+
                                 </div>
-                                <div class="modal-body">
-                                    <span class="value">ID:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_ID) <br />
-                                    <span class="value">Name:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Name) <br />
-                                    <span class="value">Location:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Location) <br />
-                                    <span class="value">Gender:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Gender) <br />
-                                    <span class="value">Description:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Description)<br />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Maintain", "MaintainDonor", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+
+                            </td>
+                            @Html.DisplayFor(modelItem =>item.Animal_ID)
+                            <td>
+
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("MaintainAnimal", "MaintainAnimal", new { id = item.Animal_ID }, new { @class = "btn btn-warning" }) |
+
+                                <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Animal_ID">More info </button> |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Animal_ID}, new { @class = "btn btn-danger" }) |
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="@item.Animal_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">@item.Animal_ID</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span class="value">ID:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_ID) <br />
+                                        <span class="value">Name:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_Name) <br />
+                                        <span class="value">Location:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_Location) <br />
+                                        <span class="value">Gender:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_Gender) <br />
+                                        <span class="value">Description:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_Description)<br />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        @Html.ActionLink("Maintain", "MaintainDonor", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                    }
                 }
-            }
-        </table>*@
+            </table>*@
 </div>
-        @section scripts{
-            <script>
+@section scripts{
+    <script>
             $(function () {
                 var successMessage = '@TempData["SuccessMessage"]'
                 if (successMessage != '')
@@ -237,54 +237,54 @@
                     alertify.error(successMessage);
             });
 
-            </script>
+    </script>
+}
+<style>
+    .box {
+        margin: 10px;
+        width: 300px;
+        height: 490px;
+        text-align: center;
+        border-radius: 3px;
+        -webkit-transition: 200ms ease-in-out;
+        -o-transition: 200ms ease-in-out;
+        transition: 200ms ease-in-out;
+        -webkit-box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+        .box:hover {
+            margin-bottom: -10px;
+            -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.7);
+            box-shadow: 0 0 5px rgba(0,0,0,0.7);
         }
-        <style>
-            .box {
-                margin: 10px;
-                width: 300px;
-                height: 490px;
-                text-align: center;
-                border-radius: 3px;
-                -webkit-transition: 200ms ease-in-out;
-                -o-transition: 200ms ease-in-out;
-                transition: 200ms ease-in-out;
-                -webkit-box-shadow: 0 0 15px rgba(0,0,0,0.3);
-                box-shadow: 0 0 15px rgba(0,0,0,0.3);
-            }
 
-                .box:hover {
-                    margin-bottom: -10px;
-                    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.7);
-                    box-shadow: 0 0 5px rgba(0,0,0,0.7);
-                }
+        .box h1 {
+            color: #fff;
+            padding: 30px;
+            /*margin-top: 100px;*/
+            text-align: center;
+            font-weight: 100;
+            font-size: 25px;
+            background: rgba(0,0,0,0.8);
+            -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.7);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
 
-                .box h1 {
-                    color: #fff;
-                    padding: 30px;
-                    /*margin-top: 100px;*/
-                    text-align: center;
-                    font-weight: 100;
-                    font-size: 25px;
-                    background: rgba(0,0,0,0.8);
-                    -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.7);
-                    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-                }
+    .poster {
+        width: 130px;
+        height: 130px;
+        margin: 120px auto;
+        position: relative;
+        border-radius: 100px;
+    }
 
-            .poster {
-                width: 130px;
-                height: 130px;
-                margin: 120px auto;
-                position: relative;
-                border-radius: 100px;
-            }
-
-                .poster h4 {
-                    top: 16px;
-                    color: #fff;
-                    position: relative;
-                    font-size: 80px;
-                    text-align: center;
-                    font-weight: 100;
-                }
-        </style>
+        .poster h4 {
+            top: 16px;
+            color: #fff;
+            position: relative;
+            font-size: 80px;
+            text-align: center;
+            font-weight: 100;
+        }
+</style>

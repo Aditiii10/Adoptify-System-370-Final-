@@ -48,24 +48,14 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
         [HttpPost]
-        public ActionResult AddEmployee(int? Title, int? EmployeeType, Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract)
+        public JsonResult AddEmployeein(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract)
         {
-            Employee saveEmp = new Employee();
-
             try
             {
-                if (Title == null || EmployeeType == null || emp == null)
-
-                {
-                    TempData["EditMessage"] = "Please Complete all the relevant information";
-                    return View("AddEmployee", innovation);
-                }
-
+                Employee saveEmp = new Employee();
+                HttpFileCollectionBase files = Request.Files;
+                HttpPostedFileBase file = files[0];
                 saveEmp = emp;
-                //saveEmp.Emp_Gender = Gender;
-                saveEmp.Title_ID = Title;
-                saveEmp.Emp_Type_ID = EmployeeType;
-
                 //this is where we convert the contract to add to the database
                 byte[] bytes;
                 using (BinaryReader br = new BinaryReader(Contract.InputStream))
@@ -87,21 +77,21 @@ namespace AdoptifySystem.Controllers.Zinhle
                 if (searchemp == null)
                 {
                     TempData["SuccessMessage"] = "Successfully added the employee";
-                    return View("AddEmployee", innovation);
+                    return new JsonResult { Data = new { status = false } };
                 }
                 if (user == null || Role == null)
                 {
                     TempData["SuccessMessage"] = "Succesfully added the employee";
-                    return View("AddEmployee", innovation);
+                    return new JsonResult { Data = new { status = false } };
                 }
                 user.Emp_ID = searchemp.Emp_ID;
                 TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
-                
+
                 string UserUniqueKey = (user.Username + key);
                 Session["UserUniqueKey"] = UserUniqueKey;
                 var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", user.Username, UserUniqueKey, 300, 300);
                 searchemp.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
-                ViewBag.Qr= setupInfo.QrCodeSetupImageUrl;
+                ViewBag.Qr = setupInfo.QrCodeSetupImageUrl;
                 db.Entry(old).CurrentValues.SetValues(searchemp);
                 db.SaveChanges();
                 //var md5 = new MD5CryptoServiceProvider();
@@ -117,7 +107,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 if (searchuser == null)
                 {
 
-                    return View("AddEmployee", innovation);
+                    return new JsonResult { Data = new { status = true } };
                 }
 
                 foreach (var item in Role)
@@ -130,9 +120,10 @@ namespace AdoptifySystem.Controllers.Zinhle
                     TempData["SuccessMessage"] = "Succesfully added the User";
                 }
                 user = searchuser;
-                
+
                 TempData["SuccessMessage"] = "Succesfully added the User";
-                return View("BarCodeGenerated", user);
+                //return View("BarCodeGenerated", user);
+                return new JsonResult { Data = new { status = true } };
 
             }
 
@@ -140,10 +131,108 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return RedirectToAction("AddEmployee");
+                //return RedirectToAction("AddEmployee");
+                return new JsonResult { Data = new { status = false } };
             }
-
+           // return new JsonResult { Data = new { status = status } };
         }
+
+        //    public ActionResult AddEmployee(int? Title, int? EmployeeType, Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract)
+        //{
+        //    Employee saveEmp = new Employee();
+
+        //    try
+        //    {
+        //        if (Title == null || EmployeeType == null || emp == null)
+
+        //        {
+        //            TempData["EditMessage"] = "Please Complete all the relevant information";
+        //            return View("AddEmployee", innovation);
+        //        }
+
+        //        saveEmp = emp;
+        //        //saveEmp.Emp_Gender = Gender;
+        //        saveEmp.Title_ID = Title;
+        //        saveEmp.Emp_Type_ID = EmployeeType;
+
+        //        //this is where we convert the contract to add to the database
+        //        byte[] bytes;
+        //        using (BinaryReader br = new BinaryReader(Contract.InputStream))
+        //        {
+
+        //            bytes = br.ReadBytes(Contract.ContentLength);
+        //        }
+        //        saveEmp.Emp_Contract_Name = Path.GetFileName(Contract.FileName);
+        //        saveEmp.Emp_Contract_Type = Contract.ContentType;
+        //        saveEmp.Emp_Contract = bytes;
+
+        //        db.Employees.Add(saveEmp);
+        //        db.SaveChanges();
+        //        //Now we have to store the user
+        //        //first look for the employee that we just added
+        //        Employee searchemp = db.Employees.Where(z => z.Title_ID == saveEmp.Title_ID && z.Emp_Type_ID == saveEmp.Emp_Type_ID && z.Emp_Name == saveEmp.Emp_Name && z.Emp_Email == saveEmp.Emp_Email && z.Emp_Surname == saveEmp.Emp_Surname && z.Emp_IDNumber == saveEmp.Emp_IDNumber).FirstOrDefault();
+        //        Employee old = db.Employees.Where(z => z.Title_ID == saveEmp.Title_ID && z.Emp_Type_ID == saveEmp.Emp_Type_ID && z.Emp_Name == saveEmp.Emp_Name && z.Emp_Email == saveEmp.Emp_Email && z.Emp_Surname == saveEmp.Emp_Surname && z.Emp_IDNumber == saveEmp.Emp_IDNumber).FirstOrDefault();
+        //        //then we add the employee id to the user that we created at the top
+        //        if (searchemp == null)
+        //        {
+        //            TempData["SuccessMessage"] = "Successfully added the employee";
+        //            return View("AddEmployee", innovation);
+        //        }
+        //        if (user == null || Role == null)
+        //        {
+        //            TempData["SuccessMessage"] = "Succesfully added the employee";
+        //            return View("AddEmployee", innovation);
+        //        }
+        //        user.Emp_ID = searchemp.Emp_ID;
+        //        TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
+                
+        //        string UserUniqueKey = (user.Username + key);
+        //        Session["UserUniqueKey"] = UserUniqueKey;
+        //        var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", user.Username, UserUniqueKey, 300, 300);
+        //        searchemp.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
+        //        ViewBag.Qr= setupInfo.QrCodeSetupImageUrl;
+        //        db.Entry(old).CurrentValues.SetValues(searchemp);
+        //        db.SaveChanges();
+        //        //var md5 = new MD5CryptoServiceProvider();
+        //        //var pass = md5.ComputeHash(Convert.FromBase64String(user.Password));
+        //        //user.Password = pass;
+        //        //we store the info
+
+        //        db.User_.Add(user);
+        //        db.SaveChanges();
+        //        //we store the User acces that is needed
+        //        User_ searchuser = db.User_.Where(z => z.Emp_ID == searchemp.Emp_ID).FirstOrDefault();
+
+        //        if (searchuser == null)
+        //        {
+
+        //            return View("AddEmployee", innovation);
+        //        }
+
+        //        foreach (var item in Role)
+        //        {
+        //            UserRole userRole = new UserRole();
+        //            userRole.UserID = searchuser.UserID;
+        //            userRole.Role_ID = item;
+        //            db.UserRoles.Add(userRole);
+        //            db.SaveChanges();
+        //            TempData["SuccessMessage"] = "Succesfully added the User";
+        //        }
+        //        user = searchuser;
+                
+        //        TempData["SuccessMessage"] = "Succesfully added the User";
+        //        return View("BarCodeGenerated", user);
+
+        //    }
+
+
+        //    catch (Exception e)
+        //    {
+        //        TempData["EditMessage"] = e.Message;
+        //        return RedirectToAction("AddEmployee");
+        //    }
+
+        //}
 
         public ActionResult MaintainEmployees(int? id)
         {
