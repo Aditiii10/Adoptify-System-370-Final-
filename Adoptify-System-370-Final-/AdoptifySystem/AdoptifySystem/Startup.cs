@@ -1,5 +1,7 @@
 ﻿using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
 using Owin;
+using System.Web.Security;
 
 [assembly: OwinStartupAttribute(typeof(AdoptifySystem.Startup))]
 namespace AdoptifySystem
@@ -8,7 +10,12 @@ namespace AdoptifySystem
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = "ApplicationCookie",
+                LoginPath = new PathString("/Admin/Login")
+            });
+            //ConfigureAuth(app);
         }
     }
 }

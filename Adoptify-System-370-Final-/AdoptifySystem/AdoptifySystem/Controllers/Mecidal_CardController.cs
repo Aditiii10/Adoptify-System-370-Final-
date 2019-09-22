@@ -17,7 +17,7 @@ namespace AdoptifySystem.Controllers
         // GET: Mecidal_Card
         public ActionResult Index()
         {
-            var mecidal_Card = db.Mecidal_Card.Include(m => m.Animal).Include(m => m.Vet_Appointment);
+            var mecidal_Card = db.Mecidal_Card.Include(m => m.Animal).Include(m => m.Vet_Appointment_Master);
             return View(mecidal_Card.ToList());
         }
 
@@ -39,40 +39,30 @@ namespace AdoptifySystem.Controllers
         // GET: Mecidal_Card/Create
         public ActionResult Create()
         {
-            List<Animal> animals = db.Animals.ToList();
-            List<Animal> animals2 = new List<Animal>();
-            foreach (Animal item in animals)
-            {
-                if (item.Animal_Status_ID == 2)
-                    animals2.Add(item);
-            }
-            ViewBag.Animal_ID = new SelectList(animals2, "Animal_ID", "Animal_Name");
-            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment, "Vet_Appointment_ID", "Vet_Appointment_ID");
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name");
+            ViewBag.Vet_Appoint_Line_ID = new SelectList(db.Vet_Appointment_Master, "Vet_Appoint_Line_ID", "Description");
             return View();
         }
 
         // POST: Mecidal_Card/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Animal_ID,Vet_Appointment_ID,Diagnosis_Details,Arrival_from_Vet,Next_Appointment_Date_,MedicalCard,Animal_Treatment")] Mecidal_Card mecidal_Card)
+        public ActionResult Create([Bind(Include = "Id,Animal_ID,Vet_Appointment_ID,Diagnosis_Details,Arrival_from_Vet,Next_Appointment_Date_,MedicalCard,Animal_Treatment,Vet_Appoint_Line_ID")] Mecidal_Card mecidal_Card, DateTime? date)
         {
             if (ModelState.IsValid)
             {
+                mecidal_Card.Arrival_from_Vet = date.Value;
+                mecidal_Card.Next_Appointment_Date_ = date.Value;
                 db.Mecidal_Card.Add(mecidal_Card);
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Saved New Medical Card Successfully";
                 return RedirectToAction("Index");
             }
-            List<Animal> animals = db.Animals.ToList();
-            List<Animal> animals2 = new List<Animal>();
-            foreach (Animal item in animals)
-            {
-                if (item.Animal_Status_ID == 2)
-                    animals2.Add(item);
-            }
-            ViewBag.Animal_ID = new SelectList(animals2, "Animal_ID", "Animal_Name", mecidal_Card.Animal_ID);
-            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment, "Vet_Appointment_ID", "Vet_Appointment_ID", mecidal_Card.Vet_Appointment_ID);
+
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", mecidal_Card.Animal_ID);
+            ViewBag.Vet_Appoint_Line_ID = new SelectList(db.Vet_Appointment_Master, "Vet_Appoint_Line_ID", "Description", mecidal_Card.Vet_Appoint_Line_ID);
             return View(mecidal_Card);
         }
 
@@ -88,26 +78,29 @@ namespace AdoptifySystem.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", mecidal_Card.Animal_ID);
-            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment, "Vet_Appointment_ID", "Vet_Appointment_ID", mecidal_Card.Vet_Appointment_ID);
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", mecidal_Card.Animal_ID);
+            ViewBag.Vet_Appoint_Line_ID = new SelectList(db.Vet_Appointment_Master, "Vet_Appoint_Line_ID", "Description", mecidal_Card.Vet_Appoint_Line_ID);
             return View(mecidal_Card);
         }
 
         // POST: Mecidal_Card/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Animal_ID,Vet_Appointment_ID,Diagnosis_Details,Arrival_from_Vet,Next_Appointment_Date_,MedicalCard,Animal_Treatment")] Mecidal_Card mecidal_Card)
+        public ActionResult Edit([Bind(Include = "Id,Animal_ID,Vet_Appointment_ID,Diagnosis_Details,Arrival_from_Vet,Next_Appointment_Date_,MedicalCard,Animal_Treatment,Vet_Appoint_Line_ID")] Mecidal_Card mecidal_Card, DateTime? date)
         {
             if (ModelState.IsValid)
             {
+                mecidal_Card.Arrival_from_Vet = date.Value;
+                mecidal_Card.Next_Appointment_Date_ = date.Value;
                 db.Entry(mecidal_Card).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["EditMessage"] = "Updated Medical Card Details Successfully";
                 return RedirectToAction("Index");
             }
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", mecidal_Card.Animal_ID);
-            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment, "Vet_Appointment_ID", "Vet_Appointment_ID", mecidal_Card.Vet_Appointment_ID);
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", mecidal_Card.Animal_ID);
+            ViewBag.Vet_Appoint_Line_ID = new SelectList(db.Vet_Appointment_Master, "Vet_Appoint_Line_ID", "Description", mecidal_Card.Vet_Appoint_Line_ID);
             return View(mecidal_Card);
         }
 
@@ -134,6 +127,7 @@ namespace AdoptifySystem.Controllers
             Mecidal_Card mecidal_Card = db.Mecidal_Card.Find(id);
             db.Mecidal_Card.Remove(mecidal_Card);
             db.SaveChanges();
+            TempData["DeleteMessage"] = "Deleted Veternarian Successfully";
             return RedirectToAction("Index");
         }
 

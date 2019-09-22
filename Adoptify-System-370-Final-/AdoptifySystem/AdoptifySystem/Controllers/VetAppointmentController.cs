@@ -66,7 +66,7 @@ namespace AdoptifySystem.Controllers
 
                 vet_Appointment_Master.AppointmentDate = date.Value;
                 db.Vet_Appointment_Master.Add(vet_Appointment_Master);
-                
+                TempData["SuccessMessage"] = "Created Veternarian Appointment Successfully";
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -106,12 +106,14 @@ namespace AdoptifySystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Vet_Appoint_Line_ID,Vet_ID,AppointmentDate,Description,Animal_ID,VetAppReasonsID")] Vet_Appointment_Master vet_Appointment_Master)
+        public ActionResult Edit([Bind(Include = "Vet_Appoint_Line_ID,Vet_ID,AppointmentDate,Description,Animal_ID,VetAppReasonsID")] Vet_Appointment_Master vet_Appointment_Master, DateTime? date)
         {
             if (ModelState.IsValid)
             {
+                vet_Appointment_Master.AppointmentDate = date.Value;
                 db.Entry(vet_Appointment_Master).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["EditMessage"] = "Updated Veternarian Appointment Successfully";
                 return RedirectToAction("Index");
             }
             ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", vet_Appointment_Master.Animal_ID);
@@ -143,6 +145,7 @@ namespace AdoptifySystem.Controllers
             Vet_Appointment_Master vet_Appointment_Master = db.Vet_Appointment_Master.Find(id);
             db.Vet_Appointment_Master.Remove(vet_Appointment_Master);
             db.SaveChanges();
+            TempData["DeleteMessage"] = "Deleted Veternarian Appointment Successfully";
             return RedirectToAction("Index");
         }
 

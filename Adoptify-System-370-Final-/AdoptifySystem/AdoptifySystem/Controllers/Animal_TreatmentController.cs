@@ -39,7 +39,7 @@ namespace AdoptifySystem.Controllers
         // GET: Animal_Treatment/Create
         public ActionResult Create()
         {
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image");
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name");
             ViewBag.Id = new  SelectList(db.Mecidal_Card, "Id", "Diagnosis_Details");
             return View();
         }

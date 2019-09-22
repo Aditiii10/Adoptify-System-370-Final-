@@ -5,104 +5,130 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="main">
-    <div class="" style="text-align:center;padding-left:120px">
-        <h1>Medical card Information</h1>
-    </div>
+    <div id="main">
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Medical Card</h1>
+            </div>
+        </div>
 
-    <div class="newButton">
-        @Html.ActionLink("Add", "Create", "Mecidal_Card", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus" })
-    </div>
+        <p>
+            @Html.ActionLink("Add Medical Card", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+        </p>
 
-    <table class="table">
-        <tr>
-            <th>
-                Animal
-            </th>
-            <th>
-                Vet Appointment
-            </th>
-            <th>
-                Diagnosis Details
-            </th>
-            <th>
-                Arrival from Vet Date
-            </th>
-            <th>
-                Next Appointment Date
-            </th>
-            <th>
-                Upload Medical Card
-            </th>
-            <th>
-                Animal Treatment
-            </th>
-
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
+        @using (Html.BeginForm("SearchMedicalCard", "Donations", FormMethod.Post))
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Animal.Animal_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vet_Appointment.Vet_Appointment_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Diagnosis_Details)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Arrival_from_Vet)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Next_Appointment_Date_)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MedicalCard)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Animal_Treatment)
-                </td>
-               
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vet_Appointment.Vet_Appointment_ID)
-                </td>
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-                    <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Animal_ID)"> More Info</button>
-                </td>
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        }
+        <br />
+        <table class="table table-bordered">
+            <tr class="table-primary">
+                <th>
+                    Vet Appointment
+                </th>
+                <th>
+                    Diagnosis Details
+                </th>
+                <th>
+                    Arrival from Vet
+                </th>
+                <th>
+                    Next Appointment Date
+                </th>
+
+                <th>
+                    Animal Treatment
+                </th>
+                <th>
+                    Animal Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th></th>
             </tr>
 
-            <div /id="@Html.DisplayFor(modelItem => item.Animal_ID)" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="info_card">
-                    <div class="card_inner">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h2> Medical Card Details of :</h2>
-                        <h2> @Html.DisplayFor(modelItem => item.Animal.Animal_Name)  </h2>
-                        <hr />
-                    </div>
-                    <div class="data">
-
-                        <span class="value">Diagnosis Details:</span>  @Html.DisplayFor(modelItem => item.Diagnosis_Details) <br />
-
-                        <span class="value">Arrival from Vet Date:</span>@Html.DisplayFor(modelItem => item.Arrival_from_Vet)<br />
-
-                        <span class="value">Animal Treatment (Yes/No):</span>@Html.DisplayFor(modelItem => item.Animal_Treatment)<br />
-                        
-                        <br />
-                        <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
-                    </div>
-                </div>
-
-            </div>
-    </div>
-        }
+            @if (Model == null)
+            {
+                <tr>
+                    <td colspan="8">
+                        No results found
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vet_Appoint_Line_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Diagnosis_Details)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Arrival_from_Vet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Next_Appointment_Date_)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Animal_Treatment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Animal.Animal_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vet_Appointment_Master.Description)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Mecidal_Card", new { id = item.Id }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
+                            @Html.ActionLink("Delete", "Delete", "Mecidal_Card", new { id = item.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                        </td>
+                    </tr>
+                }
+            }
 
         </table>
-        @Html.ActionLink("Refresh", "Index", "Mecidal_Card", null, new { @class = "btn btn-primary 	glyphicon glyphicon-refresh" })
-        </div>
+        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+        @Html.ActionLink("Refresh", "Index", "Mecidal_Card", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+    </div>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+         $(function () {
+            var successMessage = '@TempData["EditMessage"]'
+            if (successMessage != '')
+                alertify.warning(successMessage);
+         });
+        $(function () {
+            var successMessage = '@TempData["DeleteMessage"]'
+            if (successMessage != '')
+                alertify.error(successMessage);
+        });
+
+        @*function Delete(id) {
+            alertify.confirm('Web Api CRUD Operations','Are You Sure to Delete this Record ?',function(){
+                window.location.href  = '@Url.Action("Delete","Employee")/'+id;
+            },null );
+        }*@
+    </script>
+}

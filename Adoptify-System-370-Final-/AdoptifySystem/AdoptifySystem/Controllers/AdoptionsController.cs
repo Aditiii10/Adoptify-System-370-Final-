@@ -14,8 +14,10 @@ using AdoptifySystem;
 
 namespace AdoptifySystem.Controllers
 {
+    [AllowAnonymous]
     public class AdoptionsController : Controller
     {
+        
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
        static  List<Adoption> myList = new List<Adoption>();
        static List<Animal> animal2 = new List<Animal>();
@@ -596,6 +598,8 @@ namespace AdoptifySystem.Controllers
             using (Wollies_ShelterEntities dc = new Wollies_ShelterEntities())
             {
                 var events = dc.Event_Schedule.ToList();
+                var adoption = dc.Adoptions.ToList();
+                ViewBag.Adoption = adoption;
                 return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }

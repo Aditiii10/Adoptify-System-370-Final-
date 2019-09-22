@@ -73,7 +73,6 @@ namespace AdoptifySystem
         public virtual DbSet<Unit_Type> Unit_Type { get; set; }
         public virtual DbSet<User_> User_ { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<Vet_Appointment> Vet_Appointment { get; set; }
         public virtual DbSet<Vet_Appointment_Master> Vet_Appointment_Master { get; set; }
         public virtual DbSet<VetAppReason> VetAppReasons { get; set; }
         public virtual DbSet<Veterinarian> Veterinarians { get; set; }
@@ -82,6 +81,9 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
         public virtual DbSet<tblFileDetail> tblFileDetails { get; set; }
+        public virtual DbSet<tblFileDetail1> tblFileDetail1 { get; set; }
+        public virtual DbSet<Table> Tables { get; set; }
+        public virtual DbSet<Wolly> Wollies { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {

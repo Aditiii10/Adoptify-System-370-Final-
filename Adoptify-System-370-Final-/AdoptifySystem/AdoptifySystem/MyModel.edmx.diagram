@@ -51,7 +51,6 @@
         <EntityTypeShape EntityType="Wollies_ShelterModel.Unit_Type" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.User_" Width="1.5" PointX="12.75" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.UserRole" Width="1.5" PointX="15" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Vet_Appointment" Width="1.5" PointX="10.5" PointY="28.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Vet_Appointment_Master" Width="1.5" PointX="7.5" PointY="30.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.VetAppReason" Width="1.5" PointX="3" PointY="33.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Veterinarian" Width="1.5" PointX="5.25" PointY="30.5" IsExpanded="true" />
@@ -82,7 +81,6 @@
         <AssociationConnector Association="Wollies_ShelterModel.fkmedcard" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkmicro" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fktreat" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkvetap4" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvetapl5" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkanibreed" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkcrb1" ManuallyRouted="false" />
@@ -110,7 +108,6 @@
         <AssociationConnector Association="Wollies_ShelterModel.fkevnt" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkfosc1" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkhoch1" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkmedcard1" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkstock1" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkpay" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkuserol1" ManuallyRouted="false" />
@@ -118,14 +115,15 @@
         <AssociationConnector Association="Wollies_ShelterModel.fkstock2" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvol" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkuserol" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkvetap2" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkvetap3" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvetapl3" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvetapl4" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.tblFileDetail" Width="1.5" PointX="15.375" PointY="13.75" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.tblFileDetail1" Width="1.5" PointX="16.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Table" Width="1.5" PointX="16.375" PointY="3.75" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Wolly" Width="1.5" PointX="17.375" PointY="7.75" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkmedcard1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

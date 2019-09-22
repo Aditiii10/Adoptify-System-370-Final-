@@ -12,15 +12,21 @@ using System.Web.Services;
 
 namespace AdoptifySystem.Controllers
 {
+   
     public class HomeController : Controller
     {
         private Wollies_ShelterEntities dc = new Wollies_ShelterEntities();
         // GET: Home
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            var Animals = dc.Animals.Count();
-            ViewBag.Animals = Animals;
-            var Adoptions = dc.Adoptions.Count();
+            Wollies_ShelterEntities dc = new Wollies_ShelterEntities();
+
+            var AnimalsDogs = dc.Animals.Where(x => x.Animal_Type.Animal_Type_ID == 1).Count();
+            ViewBag.AnimalsDogs = AnimalsDogs;
+            var AnimalsCats = dc.Animals.Where(x => x.Animal_Type.Animal_Type_ID == 2).Count();
+            ViewBag.AnimalsCats = AnimalsCats;
+            var Adoptions = dc.Adoptions.Where(x => x.Adoption_Status.Adopt_Status_ID ==1 || x.Adoption_Status.Adopt_Status_ID==2 || x.Adoption_Status.Adopt_Status_ID == 3 || x.Adoption_Status.Adopt_Status_ID == 4 || x.Adoption_Status.Adopt_Status_ID == 5).Count();
             ViewBag.Adoptions = Adoptions;
             var Adopters = dc.Adopters.Count();
             ViewBag.Adopters = Adopters;
@@ -30,7 +36,7 @@ namespace AdoptifySystem.Controllers
             ViewBag.Kennels = Kennels;
             return View();
         }
-
+        
         public JsonResult GetEvents()
         {
             using (Wollies_ShelterEntities dc = new Wollies_ShelterEntities())
@@ -39,7 +45,7 @@ namespace AdoptifySystem.Controllers
                 return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
-
+        
         [HttpPost]
         public JsonResult SaveEvent(Event_Schedule e)
         {
@@ -73,6 +79,7 @@ namespace AdoptifySystem.Controllers
             }
             return new JsonResult { Data = new { status = status } };
         }
+        
         [HttpPost]
         public JsonResult DeleteEvent(int eventID)
         {
@@ -89,7 +96,7 @@ namespace AdoptifySystem.Controllers
             }
             return new JsonResult { Data = new { status = status } };
         }
-
+      
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public static object[] GetChartData()

@@ -77,9 +77,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.Payment.Payment_Description)
         </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
-        </td>
+    <td>
+        @if (item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 2 || item.Adopt_Status_ID == 3 || item.Adopt_Status_ID == 5 || item.Adopt_Status_ID == 6)
+        {
+            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name, new { @class = "text-warning" })
+        }
+        @if (item.Adopt_Status_ID == 7)
+        {
+            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name, new { @class = "text-success" })
+        }
+        @if (item.Adopt_Status_ID == 4 || item.Adopt_Status_ID == 8)
+        {
+            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name, new { @class = "text-danger" })
+        }
+    </td>
         <td>
             @if (item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 2 || item.Adopt_Status_ID == 3 || item.Adopt_Status_ID == 4 || item.Adopt_Status_ID == 5)
             {
@@ -115,7 +126,7 @@
 
         }
 
-
+        
     </table>
     @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
     @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })

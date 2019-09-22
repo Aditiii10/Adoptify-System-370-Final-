@@ -356,6 +356,7 @@
     <Compile Include="Microchip.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MedCardFileUpload.cs" />
     <Compile Include="Models\AdoptionFileUpload.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -381,6 +382,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MyRoleProvider.cs" />
     <Compile Include="Packaging_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -411,7 +413,13 @@
     <Compile Include="Stock_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Table.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblFileDetail.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFileDetail1.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TimeSheet.cs">
@@ -435,9 +443,6 @@
     <Compile Include="Veterinarian.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Vet_Appointment.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Vet_Appointment_Master.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -451,6 +456,9 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Volunteer_Work_Type.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Wolly.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -796,7 +804,6 @@
     <Content Include="Views\Adoptions\ScheduleHomeCheckCalendar.cshtml" />
     <Content Include="Views\VetAppointment\Create.cshtml" />
     <Content Include="Views\VetAppointment\Delete.cshtml" />
-    <Content Include="Views\VetAppointment\Details.cshtml" />
     <Content Include="Views\VetAppointment\Edit.cshtml" />
     <Content Include="Views\VetAppointment\Index.cshtml" />
     <Content Include="Views\Animal_Kennel_History\Create.cshtml" />
@@ -862,11 +869,12 @@
     <Content Include="Views\Adoptions\AdoptionPayemenHistory.cshtml" />
     <Content Include="Views\Adoptions\FileView.cshtml" />
     <Content Include="Views\AdoptionFile\FileView.cshtml" />
+    <Content Include="Views\Mecidal_Card\Delete.cshtml" />
+    <Content Include="Views\Mecidal_Card\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadedFiles\" />
-    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

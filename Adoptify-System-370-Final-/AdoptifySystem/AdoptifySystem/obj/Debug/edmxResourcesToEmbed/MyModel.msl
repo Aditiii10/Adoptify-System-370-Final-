@@ -415,9 +415,9 @@
     <EntitySetMapping Name="Mecidal_Card">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Mecidal_Card">
         <MappingFragment StoreEntitySet="Mecidal_Card">
+          <ScalarProperty Name="Vet_Appoint_Line_ID" ColumnName="Vet_Appoint_Line_ID" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
-          <ScalarProperty Name="Vet_Appointment_ID" ColumnName="Vet_Appointment_ID" />
           <ScalarProperty Name="Diagnosis_Details" ColumnName="Diagnosis Details" />
           <ScalarProperty Name="Arrival_from_Vet" ColumnName="Arrival from Vet" />
           <ScalarProperty Name="Next_Appointment_Date_" ColumnName="Next Appointment Date " />
@@ -541,16 +541,6 @@
           <ScalarProperty Name="UserRole_ID" ColumnName="UserRole_ID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Vet_Appointment">
-      <EntityTypeMapping TypeName="Wollies_ShelterModel.Vet_Appointment">
-        <MappingFragment StoreEntitySet="Vet_Appointment">
-          <ScalarProperty Name="Vet_Appointment_ID" ColumnName="Vet_Appointment_ID" />
-          <ScalarProperty Name="Vet_Appoint_Line_ID" ColumnName="Vet_Appoint_Line_ID" />
-          <ScalarProperty Name="VetAppReasonsID" ColumnName="VetAppReasonsID" />
-          <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -754,6 +744,32 @@
           <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
           <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
           <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tables">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.Table">
+        <MappingFragment StoreEntitySet="Table">
+          <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
+          <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
+          <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
+          <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
+          <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
+          <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
+          <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Wollies">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.Wolly">
+        <MappingFragment StoreEntitySet="Wollies">
+          <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
+          <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
+          <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
+          <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
+          <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
+          <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
+          <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

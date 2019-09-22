@@ -34,7 +34,7 @@
 
                 /* Create an active/current tablink class */
                 .tab button.active {
-                    background-color:#2ba6cb ;
+                    background-color: #2ba6cb;
                 }
 
         /* Style the tab content */
@@ -48,26 +48,30 @@
 </head>
 
 
-    @*<div id="main">*@
-    <br />
-    <div class="" style="text-align:center;padding-left:120px">
-        <div class="col-sm-10">
-            <h1  style="background-color: #2ba6cb; color:white">Wollies Animal Shelter Home Page</h1>
-        </div>
+@*<div id="main">*@
+<br />
+<div class="" style="text-align:center;padding-left:120px">
+    <div class="col-sm-10">
+        <h1 style="background-color: #2ba6cb; color:white">Wollies Animal Shelter Home Page</h1>
     </div>
+</div>
+@*@if (Request.IsAuthenticated)
+{
+    <h1>@HttpContext.Current.User.Identity.Name</h1>
+}*@
 <br />
 <br />
 
-    <hr />
-        @*<ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#DashBoard">Home Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#schedule">Schedule</a>
-                </li>
+<hr />
+@*<ul class="nav nav-tabs">
+           <li class="nav-item">
+               <a class="nav-link active" data-toggle="tab" href="#DashBoard">Home Dashboard</a>
+           </li>
+           <li class="nav-item">
+               <a class="nav-link" data-toggle="tab" href="#schedule">Schedule</a>
+           </li>
 
-         </ul>*@
+    </ul>*@
 <script>
     function homeTab(evt, home) {
         // Declare all variables
@@ -93,9 +97,9 @@
 </script>
 
 @*<div class="tab">
-    <button class="tablinks" onclick="homeTab(event, 'DashBoard')" id="defaultOpen">Home Dashboard</button>
-    <button class="tablinks" onclick="homeTab(event, 'schedule')">Schedule Calendar</button>
-</div>*@
+        <button class="tablinks" onclick="homeTab(event, 'DashBoard')" id="defaultOpen">Home Dashboard</button>
+        <button class="tablinks" onclick="homeTab(event, 'schedule')">Schedule Calendar</button>
+    </div>*@
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#home">Home Dashboard</a>
@@ -104,8 +108,8 @@
         <a class="nav-link" data-toggle="tab" href="#profile">Schedule Calendar</a>
     </li>
     @*<li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-    </li>*@
+            <a class="nav-link disabled" href="#">Disabled</a>
+        </li>*@
 </ul>
 
 <div id="myTabContent" class="tab-content">
@@ -118,73 +122,55 @@
                 <i class="glyphicon glyphicon-heart" style="font-size:80px; color:black; margin-left:-10px">
                 </i>
                 <label style="font-size:15px; text-align:left">
-                    Animals in Shelter
+                    Dogs in Shelter
                 </label>
                 <a href="http://localhost:55003/Animal/SearchAnimal">
                     <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
-                        @ViewBag.Animals
-                    </button></a>
-</div>
+                        @ViewBag.AnimalsDogs
+                    </button>
+                </a>
+            </div>
+        @*</div>*@
+        @*<div class="container active" style="width:100%; margin-left:30px">*@
+            <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
+                <i class="glyphicon glyphicon-heart-empty" style="font-size:80px; color:black; margin-left:-10px">
+                </i>
+                <label style="font-size:15px; text-align:left">
+                    Cats in Shelter
+                </label>
+                <a href="http://localhost:55003/Animal/SearchAnimal">
+                    <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
+                        @ViewBag.AnimalsCats
+                    </button>
+                </a>
+            </div>
+        @*</div>*@
+        @*<div class="container active" style="width:100%; margin-left:30px">*@
             <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
                 <i class="glyphicon glyphicon-shopping-cart" style="font-size:80px; color:black; margin-left:-10px">
                 </i>
                 <label style="font-size:15px">
-                    Adoptions Completed
+                    Adoptions In Progress
                 </label>
                 <a href="http://localhost:55003/Adoptions/Index">
                     <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
                         @ViewBag.Adoptions
-                    </button></a>
+                    </button>
+                </a>
             </div>
-            <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
-                <i class="glyphicon glyphicon-user" style="font-size:80px; color:black; margin-left:-10px">
-                </i>
-                <label style="font-size:15px">
-                    Adopters that have Adopted
-                </label>
-                <a href="http://localhost:55003/Adopters/Index">
-                    <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
-                        @ViewBag.Adopters
-                    </button></a>
-            </div>
-
-            <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
-                <i class="glyphicon glyphicon-home" style="font-size:80px; color:black; margin-left:-10px">
-                </i>
-                <label style="font-size:15px;">
-                    Kennels At Wollies
-                </label>
-                <a href="http://localhost:55003/Kennels/SearchAnimal">
-                    <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
-                        @ViewBag.Kennels
-                    </button></a>
-            </div>
-            <div class="jumbotron" style="width:190px;height:255px; background-color:#2ba6cb; float:left; margin-left:100px">
-                <i class="glyphicon glyphicon-user" style="font-size:80px; color:black; margin-left:-10px">
-                </i>
-                <label style="font-size:15px">
-                    Employees
-                </label>
-                <a href="http://localhost:55003/Employees/SearchEmployee">
-                    <button class="btn btn-warning btn-lg" type="button" style="border-radius:20px; margin-left:5px">
-                        @ViewBag.Employees
-                    </button></a>
-            </div>
-
 
         </div>
-    </div>
-    @*</div>*@
+        </div>
 
-    @*<br />
+        @*<br />
         <br />
         <hr />*@
 
-    @*<div id="chart_div" style="width:500px;height:400px">
+        @*<div id="chart_div" style="width:500px;height:400px">
             <%-- Here Chart Will Load --%>
         </div>*@
-    <div class="tab-pane fade" id="profile">
-        <br />
+        <div class="tab-pane fade" id="profile">
+            <br />
             @*<div id="schedule" class="tabcontent">*@
             @*<div class="tab-pane fade" id="schedule">*@
             <div class="panel panel-default" id="" style="width:1200px">
@@ -284,24 +270,24 @@
         </div>
     </div>
 
-    @*</div>*@
+@*</div>*@
 
 
-    <script src="~/Scripts/jquery-3.4.1.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 
-    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
-    @section Scripts{
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 
-        <script>
+    <script>
             $(document).ready(function () {
                 var events = [];
                 var selectedEvent = null;
@@ -554,8 +540,8 @@
 
             //}
 
-        </script>
-    }
+    </script>
+}
 
 
 

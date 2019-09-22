@@ -1,22 +1,23 @@
 ﻿@model IEnumerable<AdoptifySystem.Vet_Appointment_Master>
 
 @{
-ViewBag.Title = "Index";
-//Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
         <div class="col-sm-10" style='background-color: #2ba6cb'>
             <h1 style="color:white">Vet Appointment List</h1>
         </div>
     </div>
-    <d
+
     <h1>@ViewBag.err</h1>
     <div>
         @Html.ActionLink("Create New Vet Appointment", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
     </div>
     <br />
-    @using (Html.BeginForm("SearchDonationType", "Donations", FormMethod.Post))
+    @using (Html.BeginForm("SearchAppointment", "Vet_Appointment_Master", FormMethod.Post))
     {
         <div class="row">
             <div class="col-md-5">
@@ -33,94 +34,123 @@ ViewBag.Title = "Index";
     }
     <br />
     <table class="table table-bordered">
-    <tr class="table-primary">
+        <tr class="table-primary">
 
-        <th>
-            Appointment Date
-        </th>
-        <th>
-            Appointment Description
-        </th>
-        <th>
-            Animal Name
-        </th>
-        <th>
-            Vet Name
-        </th>
-        <th>
-            Appointment Reason
-        </th>
-        <th></th>
-    </tr>
-
-    @if (Model == null)
-    {
-        <tr>
-            <td colspan="8">
-                No results found
-            </td>
+            <th>
+                Appointment Date
+            </th>
+            <th>
+                Appointment Description
+            </th>
+            <th>
+                Animal Name
+            </th>
+            <th>
+                Vet Name
+            </th>
+            <th>
+                Appointment Reason
+            </th>
+            <th></th>
         </tr>
-    }
 
-    else
-    {
-        foreach (var item in Model)
+        @if (Model == null)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Animal.Animal_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Veterinarian.Vet_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VetAppReason.Reason)
-                </td>
-                <td>
-                    <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Vet_Appoint_Line_ID)"> More Info</button>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Vet_Appoint_Line_ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Vet_Appoint_Line_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Vet_Appoint_Line_ID })*@
+                <td colspan="8">
+                    No results found
                 </td>
             </tr>
-                    <div class="modal fade" id="@Html.DisplayFor(modelItem => item.Vet_Appoint_Line_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header table-primary">
-                                    <h5 class="modal-title" id="exampleModalLongTitle" style="text-align:center"> Vet Appointment Details for: @Html.DisplayFor(modelItem => item.Animal.Animal_Name)</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                            <div class="modal-body">
-                                                <span class="value">Appointment Date:</span>  @Html.DisplayFor(modelItem => item.AppointmentDate) <br />
+        }
 
-                                                <span class="value">Vet Name:</span>  @Html.DisplayFor(modelItem => item.Veterinarian.Vet_Name) <br />
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AppointmentDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Animal.Animal_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Veterinarian.Vet_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VetAppReason.Reason)
+                    </td>
+                    <td>
+                        <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Vet_Appoint_Line_ID)"> More Info</button>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Vet_Appoint_Line_ID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Vet_Appoint_Line_ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Vet_Appoint_Line_ID })*@
+                    </td>
+                </tr>
+                <div class="modal fade" id="@Html.DisplayFor(modelItem => item.Vet_Appoint_Line_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header table-primary">
+                                <h5 class="modal-title" id="exampleModalLongTitle" style="text-align:center"> Vet Appointment Details for: @Html.DisplayFor(modelItem => item.Animal.Animal_Name)</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">Appointment Date:</span>  @Html.DisplayFor(modelItem => item.AppointmentDate) <br />
 
-                                                <span class="value">Reason:</span> @Html.DisplayFor(modelItem => item.VetAppReason.Reason)<br />
-                                                <span class="value">Appointment Description:</span>@Html.DisplayFor(modelItem => item.Description)<br />
+                                <span class="value">Vet Name:</span>  @Html.DisplayFor(modelItem => item.Veterinarian.Vet_Name) <br />
 
-                                                <div class="modal-footer">
-                                                    <div style="position:center">
+                                <span class="value">Reason:</span> @Html.DisplayFor(modelItem => item.VetAppReason.Reason)<br />
+                                <span class="value">Appointment Description:</span>@Html.DisplayFor(modelItem => item.Description)<br />
 
-                                                        @Html.ActionLink("Edit", "Edit", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
-                                                        @*@Html.ActionLink("Details", "Details", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open" })*@
-                                                        @Html.ActionLink("Delete", "Delete", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
-                                                    </div>
-                                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
-                                                </div>
-                                                </div>
-                                        </div>
+                                <div class="modal-footer">
+                                    <div style="position:center">
 
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
+                                        @*@Html.ActionLink("Details", "Details", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open" })*@
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
                                     </div>
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
                                 </div>
-                                }
-                                }
-                </table>
-    </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+    </table>
+    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+    @Html.ActionLink("Refresh", "Index", "VetAppointment", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+</div>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+         $(function () {
+            var successMessage = '@TempData["EditMessage"]'
+            if (successMessage != '')
+                alertify.warning(successMessage);
+         });
+        $(function () {
+            var successMessage = '@TempData["DeleteMessage"]'
+            if (successMessage != '')
+                alertify.error(successMessage);
+        });
+
+        @*function Delete(id) {
+            alertify.confirm('Web Api CRUD Operations','Are You Sure to Delete this Record ?',function(){
+                window.location.href  = '@Url.Action("Delete","Employee")/'+id;
+            },null );
+        }*@
+    </script>
+}

@@ -24,7 +24,6 @@ namespace AdoptifySystem
             this.Mecidal_Card = new HashSet<Mecidal_Card>();
             this.Microchips = new HashSet<Microchip>();
             this.Animal_Treatment = new HashSet<Animal_Treatment>();
-            this.Vet_Appointment = new HashSet<Vet_Appointment>();
             this.Vet_Appointment_Master = new HashSet<Vet_Appointment_Master>();
         }
     
@@ -62,8 +61,6 @@ namespace AdoptifySystem
         public virtual ICollection<Microchip> Microchips { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Animal_Treatment> Animal_Treatment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vet_Appointment> Vet_Appointment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vet_Appointment_Master> Vet_Appointment_Master { get; set; }
     }

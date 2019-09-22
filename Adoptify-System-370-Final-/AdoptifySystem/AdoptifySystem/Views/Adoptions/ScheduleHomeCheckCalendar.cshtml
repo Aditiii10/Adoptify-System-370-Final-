@@ -53,19 +53,31 @@
                                 <div class="modal-body">
                                     <form class="form-horizontal">
                                         <input type="hidden" id="hdEventID" value="0" />
-                                            <div class="form-group">
+                                        <div class="form-group">
                                             <label>Adopter</label>
-                                                <div class="col-md-10">
-                                                     <select id="adpoter" class="form-control">
-                                              
-                                                <option value="adpoter"></option>
-                                                
-                                            </select>
-                                                    @*@Html.DropDownList("Adopter_ID", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.Adoption.Adopter_ID, "", new { @class = "text-danger" })*@
-                                                </div>
-                                                    
+                                            <div class="col-md-10">
+                                                <select id="adpoter" class="form-control">
+
+                                                    <option value="adpoter"></option>
+
+                                                </select>
+                                                @*@Html.DropDownList("Adopter_ID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Adoption.Adopter_ID, "", new { @class = "text-danger" })*@
+                                            </div>
+
                                         </div>
+                                        <div class="form-group">
+                                            <label>Theme Color</label>
+                                            <select id="ddThemeColor" class="form-control">
+                                                @foreach(Adoption item in @ViewBag.Adoption)
+                                                {
+                                                <option>@item.Adopter.Adopter_Name</option>
+                                                }
+                                            <option value="orange">Orange-HomeCheck</option>
+                                                @*<option value="black">Black-Other</option>*@
+                                            </select>
+                                        </div>
+
                                         <div class="form-group">
                                             <label>Employee</label>
                                             <div class="col-md-10">
@@ -77,7 +89,7 @@
                                                 </select>
 
                                                 @*@Html.DropDownList("Emp_ID", null, htmlAttributes: new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.Emp_ID, "", new { @class = "text-danger" })*@
+                @Html.ValidationMessageFor(model => model.Emp_ID, "", new { @class = "text-danger" })*@
                                             </div>
 
                                         </div>
@@ -116,8 +128,8 @@
                                             <label>Theme Color</label>
                                             <select id="ddThemeColor" class="form-control">
                                                 @*<option value="">Default</option>
-                                                    <option value="red">Red-</option>
-                                                    <option value="blue">Blue-Events</option>*@
+                <option value="red">Red-</option>
+                <option value="blue">Blue-Events</option>*@
                                                 <option value="orange">Orange-HomeCheck</option>
                                                 @*<option value="black">Black-Other</option>*@
                                             </select>

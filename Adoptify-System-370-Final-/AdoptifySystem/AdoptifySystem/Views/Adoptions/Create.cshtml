@@ -9,7 +9,7 @@
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
         <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1>Create Adoption</h1></div>
+            <h1 style='color:white'>Create Adoption</h1></div>
         </div>
         @using (Html.BeginForm())
         {
@@ -80,11 +80,12 @@
                         <input type="file" name="file" class="form-control" required="required" />
                     </div>
                 </div>
+
                 <br />
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         @Html.ActionLink("Back", "Index", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" })
-                        <input type="submit" value="Create" class="btn pull-right btn-success " style="float:right" />
+                        <input type="submit" value="Create" class="btn pull-right btn-success text-warning " style="float:right" />
                     </div>
                 </div>
             </div>

@@ -278,7 +278,7 @@
         <a href="http://localhost:55003/Home/Index">
             <img src="~/AdoptifyLogo.PNG" width="80" height="80" alt="Adoptify" />
             </a>
-            <a class="navbar-brand" href="http://localhost:55003/Home/Index" style="color:yellow">Wollies Animal Shelter</a>
+            <a class="navbar-brand" href="http://localhost:55003/Home/Index" style="color:black">Wollies Animal Shelter</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -436,10 +436,17 @@
                         </div>
                     </li>
                 </ul>
-                @*@Html.Partial("_LoginPartial")*@
-                @ViewBag.Username
+                @if (Request.IsAuthenticated)
+                {
+                    <h1>@HttpContext.Current.User.Identity.Name</h1>
+                }
             </div>
 </nav>
+
+    @if(Request.IsAuthenticated)
+    {
+        <h1>@HttpContext.Current.User.Identity.Name</h1>
+    }
 
     @*//the Loader*@
     <div class="loading" align="center">
