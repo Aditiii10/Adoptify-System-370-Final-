@@ -48,10 +48,11 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
         [HttpPost]
-        public JsonResult AddEmployeein(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract)
+        public ContentResult AddEmployeein(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract, FormCollection form)
         {
             try
             {
+                db.Database.CommandTimeout = 150;
                 Employee saveEmp = new Employee();
                 HttpFileCollectionBase files = Request.Files;
                 HttpPostedFileBase file = files[0];
@@ -71,28 +72,23 @@ namespace AdoptifySystem.Controllers.Zinhle
                 db.SaveChanges();
                 //Now we have to store the user
                 //first look for the employee that we just added
-                Employee searchemp = db.Employees.Where(z => z.Title_ID == saveEmp.Title_ID && z.Emp_Type_ID == saveEmp.Emp_Type_ID && z.Emp_Name == saveEmp.Emp_Name && z.Emp_Email == saveEmp.Emp_Email && z.Emp_Surname == saveEmp.Emp_Surname && z.Emp_IDNumber == saveEmp.Emp_IDNumber).FirstOrDefault();
                 Employee old = db.Employees.Where(z => z.Title_ID == saveEmp.Title_ID && z.Emp_Type_ID == saveEmp.Emp_Type_ID && z.Emp_Name == saveEmp.Emp_Name && z.Emp_Email == saveEmp.Emp_Email && z.Emp_Surname == saveEmp.Emp_Surname && z.Emp_IDNumber == saveEmp.Emp_IDNumber).FirstOrDefault();
                 //then we add the employee id to the user that we created at the top
-                if (searchemp == null)
-                {
-                    TempData["SuccessMessage"] = "Successfully added the employee";
-                    return new JsonResult { Data = new { status = false } };
-                }
+                
                 if (user == null || Role == null)
                 {
                     TempData["SuccessMessage"] = "Succesfully added the employee";
-                    return new JsonResult { Data = new { status = false } };
+                    return Content("Succesfully added the employee");
                 }
-                user.Emp_ID = searchemp.Emp_ID;
+                user.Emp_ID = saveEmp.Emp_ID;
                 TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
 
                 string UserUniqueKey = (user.Username + key);
                 Session["UserUniqueKey"] = UserUniqueKey;
                 var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", user.Username, UserUniqueKey, 300, 300);
-                searchemp.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
+                saveEmp.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
                 ViewBag.Qr = setupInfo.QrCodeSetupImageUrl;
-                db.Entry(old).CurrentValues.SetValues(searchemp);
+                db.Entry(old).CurrentValues.SetValues(saveEmp);
                 db.SaveChanges();
                 //var md5 = new MD5CryptoServiceProvider();
                 //var pass = md5.ComputeHash(Convert.FromBase64String(user.Password));
@@ -102,28 +98,21 @@ namespace AdoptifySystem.Controllers.Zinhle
                 db.User_.Add(user);
                 db.SaveChanges();
                 //we store the User acces that is needed
-                User_ searchuser = db.User_.Where(z => z.Emp_ID == searchemp.Emp_ID).FirstOrDefault();
-
-                if (searchuser == null)
-                {
-
-                    return new JsonResult { Data = new { status = true } };
-                }
 
                 foreach (var item in Role)
                 {
                     UserRole userRole = new UserRole();
-                    userRole.UserID = searchuser.UserID;
+                    userRole.UserID = user.UserID;
                     userRole.Role_ID = item;
                     db.UserRoles.Add(userRole);
                     db.SaveChanges();
                     TempData["SuccessMessage"] = "Succesfully added the User";
                 }
-                user = searchuser;
+                
 
                 TempData["SuccessMessage"] = "Succesfully added the User";
                 //return View("BarCodeGenerated", user);
-                return new JsonResult { Data = new { status = true } };
+                return Content("Succesfully added the User");
 
             }
 
@@ -132,7 +121,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             {
                 TempData["EditMessage"] = e.Message;
                 //return RedirectToAction("AddEmployee");
-                return new JsonResult { Data = new { status = false } };
+                return Content("");
             }
            // return new JsonResult { Data = new { status = status } };
         }
@@ -238,10 +227,10 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
-                //innovation.Titles = db.Titles.ToList();
-                //innovation.empTypes = db.Employee_Type.ToList();
-                //innovation.Roles = db.Role_.ToList();
-
+                innovation.Titles = db.Titles.ToList();
+                innovation.empTypes = db.Employee_Type.ToList();
+                innovation.Roles = db.Role_.ToList();
+                db.Database.CommandTimeout = 150;
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -251,7 +240,6 @@ namespace AdoptifySystem.Controllers.Zinhle
                 {
                     return HttpNotFound();
                 }
-
                 innovation.employee = employee;
 
 
@@ -265,69 +253,53 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
         }
         [HttpPost]
-        public ActionResult MaintainEmployees(int? Title, int? EmployeeType, Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract ,string button)
+        public ActionResult MaintainEmployees(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract)
         {
-            if (button == "Save")
-            {
+            
                 try
                 {
+                db.Database.CommandTimeout = 150;
                     Employee searchemployee_type = db.Employees.Find(emp.Emp_ID);
                     if (searchemployee_type == null)
                     {
                         return HttpNotFound();
                     }
-                    //saveEmp = emp;
-                    //saveEmp.Emp_Gender = Gender;
-                    emp.Title_ID = Title;
-                    emp.Emp_Type_ID = EmployeeType;
 
-                    //this is where we convert the contract to add to the database
-                    byte[] bytes;
+                searchemployee_type.Emp_Name = emp.Emp_Name;
+                searchemployee_type.Emp_Surname = emp.Emp_Surname;
+                searchemployee_type.Emp_Email = emp.Emp_Email;
+                searchemployee_type.Emp_IDNumber = emp.Emp_IDNumber;
+                searchemployee_type.Emp_ContactNumber = emp.Emp_ContactNumber;
+                searchemployee_type.Emp_Type_ID = emp.Emp_Type_ID;
+                searchemployee_type.Title_ID = emp.Title_ID;
+                //this is where we convert the contract to add to the database
+                byte[] bytes;
+                if (Contract !=null) {
                     using (BinaryReader br = new BinaryReader(Contract.InputStream))
                     {
 
                         bytes = br.ReadBytes(Contract.ContentLength);
                     }
-                    emp.Emp_Contract_Name = Path.GetFileName(Contract.FileName);
-                    emp.Emp_Contract_Type = Contract.ContentType;
-                    emp.Emp_Contract = bytes;
-                    db.Entry(searchemployee_type).CurrentValues.SetValues(emp);
-                        db.SaveChanges();
-
-                    //first look for the employee that we just added
-                    Employee searchemp = db.Employees.Where(z => z.Title_ID == emp.Title_ID && z.Emp_Type_ID == emp.Emp_Type_ID && z.Emp_Name == emp.Emp_Name && z.Emp_Email == emp.Emp_Email && z.Emp_Surname == emp.Emp_Surname && z.Emp_IDNumber == emp.Emp_IDNumber).FirstOrDefault();
-                    Employee old = db.Employees.Where(z => z.Title_ID == emp.Title_ID && z.Emp_Type_ID == emp.Emp_Type_ID && z.Emp_Name == emp.Emp_Name && z.Emp_Email == emp.Emp_Email && z.Emp_Surname == emp.Emp_Surname && z.Emp_IDNumber == emp.Emp_IDNumber).FirstOrDefault();
-                    //then we add the employee id to the user that we created at the top
-                    //if (searchemp == null)
-                    //{
-                    //    return View("AddEmployee", innovation);
-                    //}
-                    if (user == null || Role == null)
+                    searchemployee_type.Emp_Contract_Name = Path.GetFileName(Contract.FileName);
+                    searchemployee_type.Emp_Contract_Type = Contract.ContentType;
+                    searchemployee_type.Emp_Contract = bytes;
+                }
+                        db.SaveChanges();                   
+                //now i have to update user 
+                    if (searchemployee_type.User_.Count == 0)
                     {
                         TempData["EditMessage"] = "Employee Succesfully Updated";
-                        return View("AddEmployee", innovation);
-                    }
-                    //user.Emp_ID = searchemp.Emp_ID;
+                        return View("SearchEmployee", innovation);
+                    };
                     TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
                     string UserUniqueKey = (user.Username + key);
                     Session["UserUniqueKey"] = UserUniqueKey;
                     var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", user.Username, UserUniqueKey, 300, 300);
-                    searchemp.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
+                    searchemployee_type.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
 
-                    db.Entry(old).CurrentValues.SetValues(searchemp);
                     db.SaveChanges();
-                    var olduser = db.User_.Where(Zinhle => Zinhle.Emp_ID == searchemp.Emp_ID).FirstOrDefault();
-                    //var md5 = new MD5CryptoServiceProvider();
-                    //var pass = md5.ComputeHash(Convert.FromBase64String(user.Password));
-                    //user.Password = pass;
-                    //we store the info
 
-                    db.Entry(olduser).CurrentValues.SetValues(user);
-                    db.SaveChanges();
-                    //we store the User acces that is needed
-                    User_ searchuser = db.User_.Where(z => z.Emp_ID == searchemp.Emp_ID).FirstOrDefault();
-
-                    if (searchuser == null)
+                    if (searchemployee_type.User_.Count == 0)
                     {
                         TempData["EditMessage"] = "Employee Succesfully Updated";
                         return View("AddEmployee", innovation);
@@ -335,14 +307,15 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                     foreach (var item in Role)
                     {
+                       
                         UserRole userRole = new UserRole();
-                        userRole.UserID = searchuser.UserID;
+                        userRole.UserID = user.UserID;
                         userRole.Role_ID = item;
                         db.UserRoles.Add(userRole);
                         db.SaveChanges();
                         TempData["EditMessage"] = "Employee Succesfully Updated";
                     }
-                    user = searchuser;
+                   
                     TempData["EditMessage"] = "Employee Succesfully Updated";
                     return View("BarCodeGenerated", user);
                     
@@ -356,12 +329,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     
                     return RedirectToAction("Index", "Home");
                 }
-            }
-            else if (button == "Cancel")
-            {
-                TempData["ErrorMessage"] = "Succesfully Cancelled";
-                return RedirectToAction("Index", "Home");
-            }
+
             return RedirectToAction("Index", "Home");
           
         }
@@ -423,14 +391,15 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         public ActionResult SearchEmployee()
        {
-            List<Employee> employees= new List<Employee>();
+            List<Employee> employees = new List<Employee>();
             try
             {
+                db.Database.CommandTimeout = 300;
                 employees = db.Employees.ToList();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                TempData["EditMessage"] = e.Message;
                 return RedirectToAction("Index", "Home");
             }
 
@@ -438,41 +407,55 @@ namespace AdoptifySystem.Controllers.Zinhle
             return View(employees);
         }
 
-         public ActionResult Delete(int? id)
+         public ActionResult DeleteEmployee(int? id)
         {
-            if (id == null)
+            if (id != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Employee emp = db.Employees.Find(id);
+                int timesheet = emp.TimeSheets.Count();
+                int kennel = emp.Emp_Kennel.Count();
+                int homechecks = emp.HomeChecks.Count();
+                int audit = 0;
+                if (emp.User_.Count != 0)
+                {
+                    User_ user = emp.User_.FirstOrDefault();
+                    audit = user.Audit_Log.Count();
+                   
+                    
+                    
+                }
+                if (timesheet != 0 || kennel != 0|| homechecks != 0 || audit !=0)
+                {
+                    //you cant delete becasue its referenced to another table
+                    ViewBag.err = "You can not delete this";
+                    return RedirectToAction("SearchEmployee");
+                }
+                else
+                {
+                    db.Database.CommandTimeout = 150;
+
+                    if (emp.User_.Count != 0)
+                    {
+                        User_ user = emp.User_.FirstOrDefault();
+                        foreach (var item in user.UserRoles)
+                        {
+                            db.UserRoles.Remove(item);
+                            if (user.UserRoles.Count == 0)
+                            {
+                                break;
+                            }
+                        }
+                        db.User_.Remove(user);
+                        db.SaveChanges();
+                    }
+                    
+                    db.Employees.Remove(emp);
+                    db.SaveChanges();
+                    return RedirectToAction("SearchEmployee");
+                }
             }
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employee);
+            return RedirectToAction("SearchEmployee");
         }
-
-        // POST: Veterinarians/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            try {
-                Employee employee = db.Employees.Find(id);
-                db.Employees.Remove(employee);
-                db.SaveChanges();
-                TempData["DeleteMessage"] = "Deleted Veternarian Successfully";
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-
-            }
-
-            return RedirectToAction("Index");
-        }
-
-
         public ActionResult MaintainEmployeeType(int? id)
         {
             if (id == null)

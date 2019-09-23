@@ -30,22 +30,19 @@
                 <tr class="table-primary">
 
                     <th>
-                        Title
+                        Type of Employee
                     </th>
                     <th>
                         Name
-
                     </th>
                     <th>
                         Surname
 
                     </th>
-
                     <th>
                         Employee ID/Passport Number
 
                     </th>
-
                     <th>
                         Action
                     </th>
@@ -65,7 +62,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Emp_Type_ID)
+                                @Html.DisplayFor(modelItem => item.Employee_Type.Emp_Type_Name)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Emp_Name)
@@ -77,16 +74,16 @@
                                 @Html.DisplayFor(modelItem => item.Emp_IDNumber)
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "MaintainEmployees", new { id = item.Emp_ID }, new { @class = "btn btn-warning" }) |
+                                @Html.ActionLink("Maintain", "MaintainEmployees", new { id = item.Emp_ID }, new { @class = "btn btn-warning" }) |
 
-                                <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Emp_ID">More info </button> |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Emp_ID }, new { @class = "btn btn-danger" }) |
+                                <button class="btn btn-info" data-toggle="modal" data-target="#@item.Emp_ID">More info </button> |
+                                @Html.ActionLink("Delete", "DeleteEmployee", new { id = item.Emp_ID }, new { @class = "btn btn-danger" }) |
                             </td>
                         </tr>
                         <div class="modal fade" id="@item.Emp_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header table-primary">
                                         <h5 class="modal-title" id="exampleModalLongTitle">@item.Emp_Name</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -106,7 +103,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        @Html.ActionLink("Maintain", "MaintainDonor", new { id = item.Emp_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                                        @Html.ActionLink("Maintain", "MaintainEmployees", new { id = item.Emp_ID }, new { @style = "color: white", @class = "btn btn-warning" })
                                     </div>
                                 </div>
                             </div>
@@ -138,6 +135,3 @@
 
         </script>
     }
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

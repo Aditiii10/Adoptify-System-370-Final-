@@ -49,12 +49,70 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
 
         }
+        //[HttpPost]
+        //public ActionResult AddTemporaryAnimal(bool Cross_Breed, Animal animal, int[] breed, Microchip micro,HttpPostedFileBase animalPicture)
+        //{
+        //    try
+        //    {
+        //        if(animalPicture != null)
+        //        {
+        //            //this is where we convert the contract to add to the database
+        //            byte[] bytes;
+        //            using (BinaryReader br = new BinaryReader(animalPicture.InputStream))
+        //            {
+
+        //                bytes = br.ReadBytes(animalPicture.ContentLength);
+        //            }
+        //            animal.Animal_Image_Name = Path.GetFileName(animalPicture.FileName);
+        //            animal.Animal_Image_Type = animalPicture.ContentType;
+        //            animal.Animal_Image = bytes;
+
+        //        }
+                
+        //        if (animal !=null)
+        //        {
+        //            Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Available").FirstOrDefault();
+        //            if (status == null)
+        //            {
+        //                TempData["EditMessage"] = "there are no status available.";
+        //                return RedirectToAction("AddTemporaryAnimal");
+        //            }
+        //            animal.Animal_Status_ID = status.Animal_Status_ID;
+        //            db.Animals.Add(animal);
+        //            db.SaveChanges();
+        //        }
+        //        if (Cross_Breed)
+        //        {
+        //            foreach(var item in breed)
+        //            {
+        //                CrossBreed cross = new CrossBreed();
+        //                cross.Animal_ID = animal.Animal_ID;
+        //                cross.Animal_Breed_ID = item;
+        //            }
+        //        }
+        //        if (micro != null)
+        //        {
+        //            Animal animalid = db.Animals.Where(zz => zz.Animal_Name == animal.Animal_Name && zz.Animal_Size == animal.Animal_Size && zz.Animal_Age == animal.Animal_Age && zz.Animal_Entry_Date == animal.Animal_Entry_Date).FirstOrDefault();
+        //            micro.Animal_ID = animalid.Animal_ID;
+        //            db.Microchips.Add(micro);
+        //            db.SaveChanges();
+        //        }
+        //        TempData["SuccessMessage"] = "The animal is Stored";
+        //        return RedirectToAction("SearchAnimal");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        TempData["EditMessage"] = e.Message;
+        //        return RedirectToAction("SearchAnimal");
+
+        //    }            
+        //}
         [HttpPost]
-        public ActionResult AddTemporaryAnimal(bool Cross_Breed, Animal animal, int[] breed, Microchip micro,HttpPostedFileBase animalPicture)
+        public ContentResult AddTemporaryAnimalin(bool Cross_Breed, Animal animal, int[] breed, Microchip micro, HttpPostedFileBase animalPicture)
         {
             try
             {
-                if(animalPicture != null)
+                if (animalPicture != null)
                 {
                     //this is where we convert the contract to add to the database
                     byte[] bytes;
@@ -68,14 +126,14 @@ namespace AdoptifySystem.Controllers.Zinhle
                     animal.Animal_Image = bytes;
 
                 }
-                
-                if (animal !=null)
+
+                if (animal != null)
                 {
                     Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Available").FirstOrDefault();
                     if (status == null)
                     {
                         TempData["EditMessage"] = "there are no status available.";
-                        return RedirectToAction("AddTemporaryAnimal");
+                        return Content("AddTemporaryAnimal");
                     }
                     animal.Animal_Status_ID = status.Animal_Status_ID;
                     db.Animals.Add(animal);
@@ -83,7 +141,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 }
                 if (Cross_Breed)
                 {
-                    foreach(var item in breed)
+                    foreach (var item in breed)
                     {
                         CrossBreed cross = new CrossBreed();
                         cross.Animal_ID = animal.Animal_ID;
@@ -98,16 +156,15 @@ namespace AdoptifySystem.Controllers.Zinhle
                     db.SaveChanges();
                 }
                 TempData["SuccessMessage"] = "The animal is Stored";
-                return RedirectToAction("SearchAnimal");
+                return Content("SearchAnimal");
             }
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return RedirectToAction("SearchAnimal");
+                return Content("SearchAnimal");
 
-            }            
+            }
         }
-
         public ActionResult SearchAnimal()
         {
             List<Animal> animals = new List<Animal>();
