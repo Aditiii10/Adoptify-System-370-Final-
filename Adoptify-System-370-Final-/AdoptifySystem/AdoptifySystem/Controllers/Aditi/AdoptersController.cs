@@ -35,6 +35,8 @@ namespace AdoptifySystem.Controllers.Aditi
                 Value = t.Title_ID.ToString()
             });
             ViewData["Titles"] = Titles;
+
+            
         }
 
         public ActionResult Index()
