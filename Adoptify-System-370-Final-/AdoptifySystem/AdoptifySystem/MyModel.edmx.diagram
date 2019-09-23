@@ -124,6 +124,9 @@
         <EntityTypeShape EntityType="Wollies_ShelterModel.Table" Width="1.5" PointX="16.375" PointY="3.75" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Wolly" Width="1.5" PointX="17.375" PointY="7.75" />
         <AssociationConnector Association="Wollies_ShelterModel.fkmedcard1" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.MedCardFile" Width="1.5" PointX="17.375" PointY="11.75" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.AnimalTypePrice" Width="1.5" PointX="3" PointY="40.125" />
+        <AssociationConnector Association="Wollies_ShelterModel.fk2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

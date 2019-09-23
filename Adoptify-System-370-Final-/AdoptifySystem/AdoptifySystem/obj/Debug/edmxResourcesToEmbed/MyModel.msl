@@ -268,6 +268,7 @@
     <EntitySetMapping Name="Employees">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee">
         <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="Emp_Gender" ColumnName="Emp_Gender" />
           <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
           <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
           <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />
@@ -770,6 +771,25 @@
           <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
           <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
           <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MedCardFiles">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.MedCardFile">
+        <MappingFragment StoreEntitySet="MedCardFile">
+          <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
+          <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+          <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AnimalTypePrices">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.AnimalTypePrice">
+        <MappingFragment StoreEntitySet="AnimalTypePrice">
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+          <ScalarProperty Name="AnimalTypePrice_ID" ColumnName="AnimalTypePrice_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

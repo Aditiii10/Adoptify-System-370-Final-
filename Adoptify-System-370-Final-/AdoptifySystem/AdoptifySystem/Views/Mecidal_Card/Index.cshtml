@@ -15,6 +15,9 @@
         <p>
             @Html.ActionLink("Add Medical Card", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
         </p>
+        <p>
+            @Html.ActionLink("Upload/Download Medical Cards", "FileView", "MedCardFile", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+        </p>
 
         @using (Html.BeginForm("SearchMedicalCard", "Donations", FormMethod.Post))
         {
@@ -110,20 +113,20 @@
 @section scripts{
     <script>
         $(function () {
-            var successMessage = '@TempData["SuccessMessage"]'
+                    var successMessage = '@TempData["SuccessMessage"]'
             if (successMessage != '')
-                alertify.success(successMessage);
-        });
+                        alertify.success(successMessage);
+                });
          $(function () {
-            var successMessage = '@TempData["EditMessage"]'
+                    var successMessage = '@TempData["EditMessage"]'
             if (successMessage != '')
-                alertify.warning(successMessage);
-         });
+                        alertify.warning(successMessage);
+                });
         $(function () {
-            var successMessage = '@TempData["DeleteMessage"]'
+                    var successMessage = '@TempData["DeleteMessage"]'
             if (successMessage != '')
-                alertify.error(successMessage);
-        });
+                        alertify.error(successMessage);
+                });
 
         @*function Delete(id) {
             alertify.confirm('Web Api CRUD Operations','Are You Sure to Delete this Record ?',function(){

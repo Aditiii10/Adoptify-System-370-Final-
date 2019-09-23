@@ -216,6 +216,9 @@
     <Compile Include="Animal.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AnimalTypePrice.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="AnimalType_SearchAnimalType_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -269,6 +272,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Mecidal_CardController.cs" />
+    <Compile Include="Controllers\MedCardFileController.cs" />
     <Compile Include="Controllers\Nickey\AdminController.cs" />
     <Compile Include="Controllers\Nickey\DonationsController.cs" />
     <Compile Include="Controllers\Nickey\FosterCareController.cs" />
@@ -353,15 +357,18 @@
     <Compile Include="Mecidal_Card.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MedCardFile.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Microchip.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MedCardFileUpload.cs" />
     <Compile Include="Models\AdoptionFileUpload.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KennelHistoryViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MedCardFileUpload.cs" />
     <Compile Include="Models\myLists.cs" />
     <Compile Include="Models\nickeymodel\Flexible.cs" />
     <Compile Include="Models\nickeymodel\Innovation.cs" />
@@ -871,9 +878,11 @@
     <Content Include="Views\AdoptionFile\FileView.cshtml" />
     <Content Include="Views\Mecidal_Card\Delete.cshtml" />
     <Content Include="Views\Mecidal_Card\Edit.cshtml" />
+    <Content Include="Views\MedCardFile\FileView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFilesMedCard\" />
     <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>

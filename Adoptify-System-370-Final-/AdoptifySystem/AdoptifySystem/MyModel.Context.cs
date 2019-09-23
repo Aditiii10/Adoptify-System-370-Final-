@@ -84,6 +84,8 @@ namespace AdoptifySystem
         public virtual DbSet<tblFileDetail1> tblFileDetail1 { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
         public virtual DbSet<Wolly> Wollies { get; set; }
+        public virtual DbSet<MedCardFile> MedCardFiles { get; set; }
+        public virtual DbSet<AnimalTypePrice> AnimalTypePrices { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {

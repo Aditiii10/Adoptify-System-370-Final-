@@ -166,6 +166,15 @@
     <Property Name="Animal_Type_Name" Type="nvarchar" MaxLength="50" />
     <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
+  <EntityType Name="AnimalTypePrice">
+    <Key>
+      <PropertyRef Name="AnimalTypePrice_ID" />
+    </Key>
+    <Property Name="AnimalTypePrice_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Animal_Type_ID" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
   <EntityType Name="Audit_Log">
     <Key>
       <PropertyRef Name="Auditlog_ID" />
@@ -250,6 +259,7 @@
     <Property Name="Emp_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Emp_Name" Type="nvarchar" MaxLength="150" />
     <Property Name="Emp_Surname" Type="varchar" MaxLength="150" />
+    <Property Name="Emp_Gender" Type="varchar" MaxLength="150" />
     <Property Name="Emp_ContactNumber" Type="nvarchar" MaxLength="12" />
     <Property Name="Emp_IDNumber" Type="nvarchar" MaxLength="150" />
     <Property Name="Emp_Email" Type="nvarchar" MaxLength="254" />
@@ -390,6 +400,14 @@
     <Property Name="Next Appointment Date " Type="date" />
     <Property Name="MedicalCard" Type="nvarchar(max)" />
     <Property Name="Animal_Treatment" Type="bit" />
+  </EntityType>
+  <EntityType Name="MedCardFile">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+    <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
   </EntityType>
   <EntityType Name="Microchip">
     <Key>
@@ -617,6 +635,18 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <Property Name="create_date" Type="datetime" Nullable="false" />
     <Property Name="modify_date" Type="datetime" Nullable="false" />
   </EntityType>
+  <Association Name="fk2">
+    <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="1" />
+    <End Role="AnimalTypePrice" Type="Self.AnimalTypePrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal_Type">
+        <PropertyRef Name="Animal_Type_ID" />
+      </Principal>
+      <Dependent Role="AnimalTypePrice">
+        <PropertyRef Name="Animal_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkado">
     <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
     <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
@@ -1402,6 +1432,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnimalTypePrice" EntityType="Self.AnimalTypePrice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Audit_Log" EntityType="Self.Audit_Log" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CrossBreed" EntityType="Self.CrossBreed" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer_Event" EntityType="Self.Customer_Event" Schema="dbo" store:Type="Tables" />
@@ -1423,6 +1454,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="HomeCheckReport" EntityType="Self.HomeCheckReport" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Kennel" EntityType="Self.Kennel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MedCardFile" EntityType="Self.MedCardFile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Microchip" EntityType="Self.Microchip" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Packaging_Type" EntityType="Self.Packaging_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
@@ -1455,6 +1487,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     [database_firewall_rules].[modify_date] AS [modify_date]
     FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="fk2" Association="Self.fk2">
+      <End Role="Animal_Type" EntitySet="Animal_Type" />
+      <End Role="AnimalTypePrice" EntitySet="AnimalTypePrice" />
+    </AssociationSet>
     <AssociationSet Name="fkado" Association="Self.fkado">
       <End Role="Title" EntitySet="Title" />
       <End Role="Adopter" EntitySet="Adopter" />

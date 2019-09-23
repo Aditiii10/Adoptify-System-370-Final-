@@ -38,6 +38,7 @@ namespace AdoptifySystem
         public string Emp_Contract_Name { get; set; }
         public string Emp_Contract_Type { get; set; }
         public string BarcodeImageUrl { get; set; }
+        public string Emp_Gender { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Emp_Kennel> Emp_Kennel { get; set; }

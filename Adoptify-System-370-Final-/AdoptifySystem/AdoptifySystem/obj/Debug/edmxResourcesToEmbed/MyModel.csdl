@@ -209,6 +209,7 @@
     <NavigationProperty Name="Animals" Relationship="Self.fkani1" FromRole="Animal_Type" ToRole="Animal" />
     <NavigationProperty Name="Animal_Breed" Relationship="Self.fkanibreed" FromRole="Animal_Type" ToRole="Animal_Breed" />
     <NavigationProperty Name="VetAppReasons" Relationship="Self.fkvetreasonl" FromRole="Animal_Type" ToRole="VetAppReasons" />
+    <NavigationProperty Name="AnimalTypePrices" Relationship="Wollies_ShelterModel.fk2" FromRole="Animal_Type" ToRole="AnimalTypePrice" />
   </EntityType>
   <EntityType Name="Audit_Log">
     <Key>
@@ -329,6 +330,7 @@
     <NavigationProperty Name="HomeChecks" Relationship="Self.fkho" FromRole="Employee" ToRole="HomeCheck" />
     <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
     <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
+    <Property Name="Emp_Gender" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Employee_Status">
     <Key>
@@ -1764,6 +1766,12 @@
       <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
       <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
     </AssociationSet>
+    <EntitySet Name="MedCardFiles" EntityType="Wollies_ShelterModel.MedCardFile" />
+    <EntitySet Name="AnimalTypePrices" EntityType="Wollies_ShelterModel.AnimalTypePrice" />
+    <AssociationSet Name="fk2" Association="Wollies_ShelterModel.fk2">
+      <End Role="Animal_Type" EntitySet="Animal_Type" />
+      <End Role="AnimalTypePrice" EntitySet="AnimalTypePrices" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="AnimalType_SearchAnimalType_Result">
     <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -1883,6 +1891,36 @@
       </Principal>
       <Dependent Role="Mecidal_Card">
         <PropertyRef Name="Vet_Appoint_Line_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="MedCardFile">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AnimalTypePrice">
+    <Key>
+      <PropertyRef Name="AnimalTypePrice_ID" />
+    </Key>
+    <Property Name="AnimalTypePrice_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Animal_Type_ID" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Animal_Type" Relationship="Wollies_ShelterModel.fk2" FromRole="AnimalTypePrice" ToRole="Animal_Type" />
+  </EntityType>
+  <Association Name="fk2">
+    <End Type="Wollies_ShelterModel.Animal_Type" Role="Animal_Type" Multiplicity="1" />
+    <End Type="Wollies_ShelterModel.AnimalTypePrice" Role="AnimalTypePrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal_Type">
+        <PropertyRef Name="Animal_Type_ID" />
+      </Principal>
+      <Dependent Role="AnimalTypePrice">
+        <PropertyRef Name="Animal_Type_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

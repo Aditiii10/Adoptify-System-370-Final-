@@ -21,6 +21,7 @@ namespace AdoptifySystem
             this.Animals = new HashSet<Animal>();
             this.Animal_Breed = new HashSet<Animal_Breed>();
             this.VetAppReasons = new HashSet<VetAppReason>();
+            this.AnimalTypePrices = new HashSet<AnimalTypePrice>();
         }
     
         public int Animal_Type_ID { get; set; }
@@ -35,5 +36,7 @@ namespace AdoptifySystem
         public virtual ICollection<Animal_Breed> Animal_Breed { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VetAppReason> VetAppReasons { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AnimalTypePrice> AnimalTypePrices { get; set; }
     }
 }
