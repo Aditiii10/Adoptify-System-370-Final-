@@ -12,17 +12,17 @@ using AdoptifySystem;
 
 namespace AdoptifySystem.Controllers
 {
-    public class MedCardFileController : Controller
+    public class HCReportFileController : Controller
     {
         string conString = "Data Source=wollies.database.windows.net;Initial Catalog =Wollies_Shelter; integrated security=true; persist security info=True;user id=user;password=Wollies123;Trusted_Connection=false;Encrypt=True";
 
-        public ActionResult FileView(MedCardFileUpload model)
+        public ActionResult FileView(HCReportFileUpload model)
         {
-            List<MedCardFileUpload> list = new List<MedCardFileUpload>();
+            List<HCReportFileUpload> list = new List<HCReportFileUpload>();
             DataTable dtFiles = GetFileDetails();
             foreach (DataRow dr in dtFiles.Rows)
             {
-                list.Add(new MedCardFileUpload
+                list.Add(new HCReportFileUpload
                 {
                     FileId = @dr["SQLID"].ToString(),
                     FileName = @dr["FILENAME"].ToString(),
@@ -32,15 +32,16 @@ namespace AdoptifySystem.Controllers
             model.FileList = list;
             return View(model);
         }
+
         [HttpPost]
         public ActionResult FileView(HttpPostedFileBase files)
         {
-            MedCardFileUpload model = new MedCardFileUpload();
-            List<MedCardFileUpload> list = new List<MedCardFileUpload>();
+            HCReportFileUpload model = new HCReportFileUpload();
+            List<HCReportFileUpload> list = new List<HCReportFileUpload>();
             DataTable dtFiles = GetFileDetails();
             foreach (DataRow dr in dtFiles.Rows)
             {
-                list.Add(new MedCardFileUpload
+                list.Add(new HCReportFileUpload
                 {
                     FileId = @dr["SQLID"].ToString(),
                     FileName = @dr["FILENAME"].ToString(),
@@ -52,16 +53,16 @@ namespace AdoptifySystem.Controllers
             if (files != null)
             {
                 var Extension = Path.GetExtension(files.FileName);
-                var fileName = "MedCardFile-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + Extension;
-                string path = Path.Combine(Server.MapPath("~/UploadedFilesMedCard"), fileName);
-                model.FileUrl = Url.Content(Path.Combine("~/UploadedFilesMedCard/", fileName));
+                var fileName = "HCReportFile-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + Extension;
+                string path = Path.Combine(Server.MapPath("~/UploadedFilesHCReport"), fileName);
+                model.FileUrl = Url.Content(Path.Combine("~/UploadedFilesHCReport/", fileName));
                 model.FileName = fileName;
 
                 if (SaveFile(model))
                 {
                     files.SaveAs(path);
-                    TempData["AlertMessage"] = "Uploaded Medical Card Successfully !!";
-                    return RedirectToAction("FileView", "MedCardFile");
+                    TempData["AlertMessage"] = "Uploaded HomeCheck Report Successfully !!";
+                    return RedirectToAction("FileView", "HCReportFile");
                 }
                 else
                 {
@@ -73,23 +74,24 @@ namespace AdoptifySystem.Controllers
                 ModelState.AddModelError("", "Please Choose Correct File Type !!");
                 return View(model);
             }
-            return RedirectToAction("FileView", "MedCardFile");
+            return RedirectToAction("FileView", "HCReportFile");
         }
+
         private DataTable GetFileDetails()
         {
             DataTable dtData = new DataTable();
             SqlConnection con = new SqlConnection(conString);
             con.Open();
-            SqlCommand command = new SqlCommand("Select * From MedCardFile", con);
+            SqlCommand command = new SqlCommand("Select * From tblFileDetails", con);
             SqlDataAdapter da = new SqlDataAdapter(command);
             da.Fill(dtData);
             con.Close();
             return dtData;
         }
 
-        private bool SaveFile(MedCardFileUpload model)
+        private bool SaveFile(HCReportFileUpload model)
         {
-            string strQry = "INSERT INTO MedCardFile (FileName,FileUrl) VALUES('" +
+            string strQry = "INSERT INTO tblFileDetails (FileName,FileUrl) VALUES('" +
                 model.FileName + "','" + model.FileUrl + "')";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
@@ -120,5 +122,6 @@ namespace AdoptifySystem.Controllers
                 throw new System.IO.IOException(s);
             return data;
         }
+
     }
 }

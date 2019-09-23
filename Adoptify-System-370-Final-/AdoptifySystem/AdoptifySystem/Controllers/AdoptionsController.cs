@@ -137,8 +137,8 @@ namespace AdoptifySystem.Controllers
                     TempData["HomeCheckReportMessage"] = "HomeCheck Report Success ";
                     aaa.Adopt_Status_ID = 3;
                     db.SaveChanges();
-
-                    return View("Index",db.Adoptions);
+                    return View("FileView", "HCReportFile");
+                    //return View("Index",db.Adoptions);
                 }
                 else
                 {
@@ -157,10 +157,10 @@ namespace AdoptifySystem.Controllers
                 ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
                 ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
 
-               
-                
 
-                return View("Index",db.Adoptions);
+                return View("FileView", "HCReportFile");
+
+                //return View("Index",db.Adoptions);
             }
            
             if (id == null)
@@ -526,7 +526,7 @@ namespace AdoptifySystem.Controllers
                 adoption.Animal.Animal_Status_ID = 3;
                 db.SaveChanges();
                 TempData["AdoptionCreateMessage"] = "Adoption Process Successfully Created";
-                return RedirectToAction("FileView");
+                return RedirectToAction("Index");
             }
 
             ViewBag.Adopter_ID = new SelectList(db.Adopters, "Adopter_ID", "Adopter_Name", adoption.Adopter_ID);

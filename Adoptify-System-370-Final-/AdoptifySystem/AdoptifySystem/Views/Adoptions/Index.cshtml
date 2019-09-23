@@ -8,7 +8,7 @@
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
         <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1>Adoption Information</h1>
+            <h1 style='color:white'>Adoption Information</h1>
         </div>
     </div>
 
@@ -78,45 +78,45 @@
             @Html.DisplayFor(modelItem => item.Payment.Payment_Description)
         </td>*@
     <td>
-        @if (item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 2 || item.Adopt_Status_ID == 3 || item.Adopt_Status_ID == 5 || item.Adopt_Status_ID == 6)
+        
+            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
+
+    </td>
+    <td>
+        @if (item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 2 || item.Adopt_Status_ID == 3 || item.Adopt_Status_ID == 4 || item.Adopt_Status_ID == 5)
         {
-            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name, new { @class = "text-warning" })
+            @Html.ActionLink("Delete", "Delete", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
         }
-        @if (item.Adopt_Status_ID == 7)
+        @if (item.Adopt_Status_ID == 1)
         {
-            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name, new { @class = "text-success" })
+            @Html.ActionLink("Upload Doctuments", "FileView", "Adoptionfile", null, new { @class = "btn btn-primary glyphicon glyphicon-trash" })
         }
-        @if (item.Adopt_Status_ID == 4 || item.Adopt_Status_ID == 8)
+        @if (item.Adopt_Status_ID == 1)
         {
-            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name, new { @class = "text-danger" })
+            @Html.ActionLink("Go to Schedule HomeCheck Page", "HomeCheckIndex", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
+        }
+
+        @if (item.Adopt_Status_ID == 2)
+        {
+            @Html.ActionLink("Go to HomeCheck Report Page", "HomeCheckReportIndex", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
+        }
+        @if (item.Adopt_Status_ID == 3)
+        {
+            @Html.ActionLink("Go to Adoption Payment Page", "AdoptionPaymentIndex", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
+        }
+        @if (item.Adopt_Status_ID == 4)
+        {
+            @Html.ActionLink("ReSchedule HomeCheck", "HomeCheckIndex", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-trash" })
+        }
+        @if (item.Adopt_Status_ID == 5)
+        {
+            @Html.ActionLink("Go to Collect Animal Page", "CollectionIndex", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
+        }
+        @if (item.Adopt_Status_ID == 6)
+        {
+            @Html.ActionLink("Go to Finalise Adoption Page", "Finalise", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-success glyphicon glyphicon-trash" })
         }
     </td>
-        <td>
-            @if (item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 2 || item.Adopt_Status_ID == 3 || item.Adopt_Status_ID == 4 || item.Adopt_Status_ID == 5)
-            {
-                @Html.ActionLink("Delete", "Delete", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
-            }
-            @if (item.Adopt_Status_ID == 1)
-            {
-                @Html.ActionLink("Go to Schedule HomeCheck Page", "HomeCheckIndex", "Adoptions",null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
-            }
-            @if (item.Adopt_Status_ID == 2)
-            {
-                @Html.ActionLink("Go to HomeCheck Report Page", "HomeCheckReportIndex", "Adoptions",null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
-            }
-            @if (item.Adopt_Status_ID == 3)
-            {
-                @Html.ActionLink("Go to Adoption Payment Page", "AdoptionPaymentIndex", "Adoptions",null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
-            }
-            @if (item.Adopt_Status_ID == 5)
-            {
-                @Html.ActionLink("Go to Collect Animal Page", "CollectionIndex", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-trash" })
-            }
-            @if (item.Adopt_Status_ID == 6)
-            {
-                @Html.ActionLink("Go to Finalise Adoption Page", "Finalise", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-success glyphicon glyphicon-trash" })
-            }
-        </td>
     </tr>
 
             }

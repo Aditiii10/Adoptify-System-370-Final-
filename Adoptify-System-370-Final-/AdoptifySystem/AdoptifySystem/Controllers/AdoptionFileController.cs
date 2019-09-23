@@ -52,7 +52,7 @@ namespace AdoptifySystem.Controllers
             if (files != null)
             {
                 var Extension = Path.GetExtension(files.FileName);
-                var fileName = "my-file-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + Extension;
+                var fileName = "AdoptionFile-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + Extension;
                 string path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName);
                 model.FileUrl = Url.Content(Path.Combine("~/UploadedFiles/", fileName));
                 model.FileName = fileName;
@@ -60,7 +60,7 @@ namespace AdoptifySystem.Controllers
                 if (SaveFile(model))
                 {
                     files.SaveAs(path);
-                    TempData["AlertMessage"] = "Uploaded Successfully !!";
+                    TempData["AlertMessage"] = "Uploaded Adoption File Successfully !!";
                     return RedirectToAction("FileView", "AdoptionFile");
                 }
                 else

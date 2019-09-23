@@ -1,17 +1,16 @@
-﻿@model AdoptifySystem.Models.MedCardFileUpload
-
+﻿@model AdoptifySystem.Models.HCReportFileUpload
 @{
-    ViewBag.Title = "File Upload & Download";
+    ViewBag.Title = "FileView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
         <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1 style="color:white">Medical Card Upload and Download</h1>
+            <h1 style="color:white">HomeCheck Report File Upload and Download</h1>
         </div>
     </div>
-    @using (Html.BeginForm("FileView", "MedCardFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("FileView", "HCReportFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <div class="row">
@@ -51,18 +50,20 @@
                                 grid.Column("FileName", header: "FILE NAME", canSort: false),
                                 grid.Column("FileUrl", header: "FILE PATH", canSort: false),
                                 grid.Column(header: "DOWNLOAD", format:
-                                                            @<text>
-                                                                <a href="~/AdoptionFile/DownloadFile?filePath=@item.FileUrl"><img src="~/Images/download.png" style="width: 15px; height: 15px" title="Download" /></a>
-                                                            </text>)
-      ));
+                                                                @<text>
+                                                                    <a href="~/AdoptionFile/DownloadFile?filePath=@item.FileUrl"><img src="~/Images/download.png" style="width: 15px; height: 15px" title="Download" /></a>
+                                                                </text>)
+   ));
                     }
-                </div>@Html.ActionLink("Done", "Index", "Mecidal_Card", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @style = "float:right" })
+                </div>@Html.ActionLink("Done", "Index", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @style = "float:right" })
             </div>
         </div>
     </div>
+
 </div>
 
 @section Scripts {
+
     <script>
         $(function () {
             var successMessage = '@TempData["AlertMessage"]'
@@ -73,5 +74,4 @@
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
-
 

@@ -269,6 +269,7 @@
     <Compile Include="Controllers\Cassie\VetAppointReportController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
+    <Compile Include="Controllers\HCReportFileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Mecidal_CardController.cs" />
@@ -365,6 +366,7 @@
     </Compile>
     <Compile Include="Models\AdoptionFileUpload.cs" />
     <Compile Include="Models\EmailModel.cs" />
+    <Compile Include="Models\HCReportFileUpload.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KennelHistoryViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -879,9 +881,11 @@
     <Content Include="Views\Mecidal_Card\Delete.cshtml" />
     <Content Include="Views\Mecidal_Card\Edit.cshtml" />
     <Content Include="Views\MedCardFile\FileView.cshtml" />
+    <Content Include="Views\HCReportFile\FileView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFilesHCReport\" />
     <Folder Include="UploadedFilesMedCard\" />
     <Folder Include="UploadedFiles\" />
   </ItemGroup>

@@ -58,7 +58,7 @@ namespace AdoptifySystem.Controllers
                 db.Mecidal_Card.Add(mecidal_Card);
                 db.SaveChanges();
                 TempData["SuccessMessage"] = "Saved New Medical Card Successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction("FileView", "MedCardFile");
             }
 
             ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", mecidal_Card.Animal_ID);
