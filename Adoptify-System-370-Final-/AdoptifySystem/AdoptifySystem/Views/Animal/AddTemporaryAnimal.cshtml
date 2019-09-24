@@ -15,7 +15,10 @@
 
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade show active" id="home">
+        @Html.AntiForgeryToken()
         <div class="col-sm-10 table-primary"><h1>Add Animal</h1></div>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="column">
             <div class="text-center">
                 <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" id="preview" class="avatar img-circle img-thumbnail" alt="avatar" style="width:192px;height:192px;">
@@ -208,7 +211,7 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+@*<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>*@
 <script>
     function yesnoCheck() {
         if (document.getElementById('Cross_Breed_Yes').checked) {
@@ -456,13 +459,14 @@
             alert("Pick a Breed");
             isvalid = false;
         }
-        alert(isvalid);
+        
         if (isvalid)
         {
 
             var array = [];
             array.push(breed1.value);
             array.push(breed2.value);
+            
             //here we are adding the file
             var formData = new FormData();
             var fileUpload = $("#animalPicture").get(0);
@@ -472,13 +476,14 @@
             formData.append("Animal_Coat", Animal_Coat.value );
             formData.append("Animal_Age", Animal_Age.value);
             formData.append("Animal_Description", Animal_Description.value);
-            formData.append("Animal_Sterilization",Animal_Sterilization.value );
+            formData.append("Animal_Sterilization", $('input[name="Animal_Sterilization"]:checked').val());
+            formData.append("Animal_Castration",$('input[name="Animal_Castration"]:checked').val());
             formData.append("animalPicture", files[0]);
-            formData.append("Animal_Size", Animal_Size.value);
-            formData.append("Animal_Gender", Animal_Gender.value);
+            formData.append("Animal_Size", $('input[name="Animal_Size"]:checked').val());
+            formData.append("Animal_Gender", $('input[name="Animal_Gender"]:checked').val());
             formData.append("Animal_Type_ID",Animal_Type_ID.value );
-            formData.append("Cross_Breed", Cross_Breed.value);
-            formData.append("breed",array );
+            formData.append("Cross_Breed", $('input[name="Cross_Breed"]:checked').val());
+            formData.append("breed",array);
             formData.append("Animal_Entry_Date", Animal_Entry_Date.value);
             formData.append("Animal_Location", Animal_Location.value);
 
@@ -490,35 +495,37 @@
             formData.append("Date_of_Implant", Date_of_Implant.value);
 
             $("#loader").show();
-            $.ajax
-                ({
+            console.log(formData)
+            $.ajax(
+                {
                 type: "POST",
                 data: formData,
-                url: "/Animal/AddTemporaryAnimalin",
-                   cache: false,
-                   contentType: false,
+                url: "/Animal/test",
+                    cache: false,
+                    contentType: false,
                     processData: false,
-                success: function (d)
-                {
+                success: function () {
                     $("#loader").hide();
                     isvalid = true;
-
+                    alert("Yes");
+                    
                 },
-                error: function (error)
-                {
+                error: function (error) {
                     $("#loader").hide();
                     isvalid = false;
-                    alert("There was an internal error try again later" + error);
-                    console.log(error)
+                    console.log(error);
+                    //alert("There was an internal error try again later" + error);
                 }
             });
 
-            if (isvalid)
-            {
-                $("#loader").show();
+            if (isvalid) {
                 location.href = '@Url.Action("SearchAnimal","Animal")';
             }
+        } else {
+            alert("all is not valid");
         }
+            
+        
     }
 </script>
 @section scripts{

@@ -49,6 +49,72 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
 
         }
+
+        public ContentResult test(string Cross_Breed, Animal animal, string breeds, Microchip micro, HttpPostedFileBase animalPicture,FormCollection form)
+        {
+            try
+            {
+                if (animalPicture != null)
+                {
+                    //this is where we convert the contract to add to the database
+                    byte[] bytes;
+                    using (BinaryReader br = new BinaryReader(animalPicture.InputStream))
+                    {
+
+                        bytes = br.ReadBytes(animalPicture.ContentLength);
+                    }
+                    animal.Animal_Image_Name = Path.GetFileName(animalPicture.FileName);
+                    animal.Animal_Image_Type = animalPicture.ContentType;
+                    animal.Animal_Image = bytes;
+
+                }
+
+                if (animal != null)
+                {
+                    Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Available").FirstOrDefault();
+                    if (status == null)
+                    {
+                        TempData["EditMessage"] = "there are no status available.";
+                        return Content("AddTemporaryAnimal");
+                    }
+                    animal.Animal_Status_ID = status.Animal_Status_ID;
+                    db.Animals.Add(animal);
+                    db.SaveChanges();
+                }
+                if (Cross_Breed == "True")
+                {
+                    // Split authors separated by a comma followed by space  
+                    string[] breed = breeds.Split(',');
+                        foreach (var item in breed)
+                    {
+                        CrossBreed cross = new CrossBreed();
+                        cross.Animal_ID = animal.Animal_ID;
+                        cross.Animal_Breed_ID = Convert.ToInt32(item);
+                    }
+                }
+                else {
+                    CrossBreed cross = new CrossBreed();
+                    cross.Animal_ID = animal.Animal_ID;
+                    cross.Animal_Breed_ID = Convert.ToInt32(breeds);
+                }
+                if (micro.Animal_Microchip_Code != null || micro.Implanters_PIN_Number != null || micro.Owner_Name != null || micro.Owner_Address != null || micro.Owner_Contact_Number != null)
+                {
+                    
+                    micro.Animal_ID = animal.Animal_ID;
+                    
+                    db.Microchips.Add(micro);
+                    db.SaveChanges();
+                }
+                TempData["SuccessMessage"] = "The animal is Stored";
+                return Content("SearchAnimal");
+            }
+            catch (Exception e)
+            {
+                TempData["EditMessage"] = e.Message;
+                return Content("SearchAnimal");
+
+            }
+        }
         //[HttpPost]
         //public ActionResult AddTemporaryAnimal(bool Cross_Breed, Animal animal, int[] breed, Microchip micro,HttpPostedFileBase animalPicture)
         //{
@@ -107,69 +173,13 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         //    }            
         //}
-        [HttpPost]
-        public ContentResult AddTemporaryAnimalin(bool Cross_Breed, Animal animal, int[] breed, Microchip micro, HttpPostedFileBase animalPicture)
-        {
-            try
-            {
-                if (animalPicture != null)
-                {
-                    //this is where we convert the contract to add to the database
-                    byte[] bytes;
-                    using (BinaryReader br = new BinaryReader(animalPicture.InputStream))
-                    {
-
-                        bytes = br.ReadBytes(animalPicture.ContentLength);
-                    }
-                    animal.Animal_Image_Name = Path.GetFileName(animalPicture.FileName);
-                    animal.Animal_Image_Type = animalPicture.ContentType;
-                    animal.Animal_Image = bytes;
-
-                }
-
-                if (animal != null)
-                {
-                    Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Available").FirstOrDefault();
-                    if (status == null)
-                    {
-                        TempData["EditMessage"] = "there are no status available.";
-                        return Content("AddTemporaryAnimal");
-                    }
-                    animal.Animal_Status_ID = status.Animal_Status_ID;
-                    db.Animals.Add(animal);
-                    db.SaveChanges();
-                }
-                if (Cross_Breed)
-                {
-                    foreach (var item in breed)
-                    {
-                        CrossBreed cross = new CrossBreed();
-                        cross.Animal_ID = animal.Animal_ID;
-                        cross.Animal_Breed_ID = item;
-                    }
-                }
-                if (micro != null)
-                {
-                    Animal animalid = db.Animals.Where(zz => zz.Animal_Name == animal.Animal_Name && zz.Animal_Size == animal.Animal_Size && zz.Animal_Age == animal.Animal_Age && zz.Animal_Entry_Date == animal.Animal_Entry_Date).FirstOrDefault();
-                    micro.Animal_ID = animalid.Animal_ID;
-                    db.Microchips.Add(micro);
-                    db.SaveChanges();
-                }
-                TempData["SuccessMessage"] = "The animal is Stored";
-                return Content("SearchAnimal");
-            }
-            catch (Exception e)
-            {
-                TempData["EditMessage"] = e.Message;
-                return Content("SearchAnimal");
-
-            }
-        }
+        
         public ActionResult SearchAnimal()
         {
             List<Animal> animals = new List<Animal>();
             try
             {
+                db.Database.CommandTimeout = 300;
                 animals = db.Animals.ToList();
             }
             catch (Exception e)
@@ -206,6 +216,7 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
+                db.Database.CommandTimeout = 150;
                 Animal animals = db.Animals.Find(id);
 
                 if (animals == null)
@@ -234,20 +245,22 @@ namespace AdoptifySystem.Controllers.Zinhle
         }
 
         [HttpPost]
-        public ActionResult MaintainAnimal(Animal animal, Microchip micro, HttpPostedFileBase animalPicture, string button)
+        public ContentResult MaintainAnimal(Animal animal, Microchip micro, HttpPostedFileBase animalPicture)
         {
-            if (button == "Save")
-            {
-                try
+            try
                 {
                     Animal searchanimal = db.Animals.Find(animal.Animal_ID);
-                    if (searchanimal == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    if(animalPicture != null)
-                    {
 
+                    searchanimal.Animal_Name = animal.Animal_Name;
+                    searchanimal.Animal_Coat = animal.Animal_Coat;
+                    searchanimal.Animal_Age = searchanimal.Animal_Age;
+                    searchanimal.Animal_Description = animal.Animal_Description;
+                    searchanimal.Animal_Sterilization = animal.Animal_Sterilization;
+                    searchanimal.Animal_Castration = animal.Animal_Castration;
+                    searchanimal.Animal_Size = animal.Animal_Size;
+                    searchanimal.Animal_Gender = animal.Animal_Gender;
+                    if (animalPicture != null)
+                    {
                         //this is where we convert the contract to add to the database
                         byte[] bytes;
                         using (BinaryReader br = new BinaryReader(animalPicture.InputStream))
@@ -255,26 +268,46 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                             bytes = br.ReadBytes(animalPicture.ContentLength);
                         }
-                        animal.Animal_Image_Name = Path.GetFileName(animalPicture.FileName);
-                        animal.Animal_Image_Type = animalPicture.ContentType;
-                        animal.Animal_Image = bytes;
+                        searchanimal.Animal_Image_Name = Path.GetFileName(animalPicture.FileName);
+                        searchanimal.Animal_Image_Type = animalPicture.ContentType;
+                        searchanimal.Animal_Image = bytes;
                     }
-                        db.Entry(searchanimal).CurrentValues.SetValues(animal);
+
+
+                        
                         db.SaveChanges();
+                if (micro != null)
+                    {
+                        if (searchanimal.Microchips.Count != 0 || searchanimal.Microchips != null)
+                        {
+
+                        }
+                        else
+                        {
+                        foreach (var item in searchanimal.Microchips)
+                        {
+                            item.Animal_Microchip_Code = micro.Animal_Microchip_Code;
+                            item.Implanters_PIN_Number = micro.Implanters_PIN_Number;
+                            item.Owner_Name = micro.Owner_Name;
+                            item.Owner_Contact_Number = micro.Owner_Contact_Number;
+                            item.Owner_Address = micro.Owner_Address;
+                            item.Date_of_Implant = micro.Date_of_Implant;
+
+                        }
+                        }
+
+                    }
+                db.SaveChanges();
                     TempData["SuccessMessage"] = "Successfully";
                 }
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return RedirectToAction("MaintainDonationType", "Donations");
+                    return Content("MaintainDonationType", "Donations");
                 }
-            }
-            else if (button == "Cancel")
-            {
-                TempData["SuccessMessage"] = "Successfully";
-                return RedirectToAction("Index", "Home");
-            }
-            return RedirectToAction("Index", "Home");
+            
+            
+            return Content("");
         }
 
         public ActionResult AddAnimalType()

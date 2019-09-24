@@ -428,8 +428,8 @@ C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370
 C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\bin\Microsoft.AspNet.Identity.Owin.xml
 C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.csprojAssemblyReference.cache
 C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.csproj.CoreCompileInputs.cache
 C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.csproj.CopyComplete
 C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.dll
 C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.pdb
+C:\Users\Nickey\Desktop\version 2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.csprojAssemblyReference.cache
