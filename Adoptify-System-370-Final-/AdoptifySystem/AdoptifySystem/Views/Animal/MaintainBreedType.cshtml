@@ -5,31 +5,30 @@
 }
 
 <div id="main">
-    @using (Html.BeginForm())
-    {
+
         <div class="col-sm-12 table-primary">
             <h1 >Update Animal Breed Type</h1>
         </div>
-        <input value="@Model.breed.Animal_Breed_ID" name="Animal_Breed_ID" hidden />
+        <input value="@Model.breed.Animal_Breed_ID" id="Animal_Breed_ID" name="Animal_Breed_ID" hidden />
         <div class="form-horizontal">
             <h4 style="color:red">@ViewBag.errormessage</h4>
             <hr />
             <div class="form-group">
                 <label>Enter Animal Breed Type Name</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="AnimalBreedName" name="Animal_Breed_Name" value="@Model.breed.Animal_Breed_Name" placeholder="Animal Breed Type Name">
+                    <input type="text" class="form-control" id="Animal_Breed_Name" name="Animal_Breed_Name" value="@Model.breed.Animal_Breed_Name" placeholder="Animal Breed Type Name">
                 </div>
             </div>
             <div class="form-group">
                 <label>Enter Animal Breed Description</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="AnimalBreedDescription" name="Animal_Breed_Description" value="@Model.breed.Animal_Breed_Description" placeholder="Animal Breed Type Description"></input>
+                    <input type="text" class="form-control" id="Animal_Breed_Description" name="Animal_Breed_Description" value="@Model.breed.Animal_Breed_Description" placeholder="Animal Breed Type Description"></input>
                 </div>
             </div>
             <div class="form-group">
                 <label><b>Select Animal Type</b></label>
                 <div class="col-md-10">
-                    <select name="Animal_Type_ID">
+                    <select id="Animal_Type_ID" name="Animal_Type_ID">
                         @if (Model.animalTypes != null)
                         {
                             foreach (var item in Model.animalTypes)
@@ -56,11 +55,10 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+                    <button type="submit" name="button" value="Save" onclick="Save()" class=" btn btn-success float-right">Save</button>
                 </div>
             </div>
         </div>
-    }
     </div>
     @section scripts{
         <script>
@@ -79,6 +77,68 @@
             if (successMessage != '')
                 alertify.error(successMessage);
         });
+           function Save() {
 
+               var Animal_Breed_ID = document.getElementById("Animal_Breed_ID");
+               var Animal_Breed_Name = document.getElementById("Animal_Breed_Name");
+               var Animal_Breed_Description = document.getElementById("Animal_Breed_Description");
+               var Animal_Type_ID = document.getElementById("Animal_Type_ID");
+                var isvalid = true;
+
+               var x = document.getElementById("Animal_Type_ID").selectedIndex;
+                if (x == 0) {
+                    alert("Pick an Animal Type");
+                    isvalid = false;
+                }
+                if (Animal_Breed_Name.value == "") {
+                    //first remove
+                    Animal_Breed_Name.classList.remove("is-valid");
+                    //then add the class you want
+                    Animal_Breed_Name.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Animal_Breed_Name.classList.remove("is-invalid");
+                    //then add the class you want
+                    Animal_Breed_Name.classList.add("is-valid");
+                }
+             
+                if (isvalid) {
+
+                    var formData = new FormData();
+
+                    formData.append("Animal_Breed_ID", Animal_Breed_ID.value);
+                    formData.append("Animal_Breed_Name", Animal_Breed_Name.value);
+                    formData.append("Animal_Breed_Description", Animal_Breed_Description.value);
+                    formData.append("Animal_Type_ID", Animal_Type_ID.value );
+
+                    $("#loader").show();
+                $.ajax(
+                    {
+                    type: "POST",
+                    data: formData,
+                    url: "/Animal/MaintainBreedType",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    success: function (d) {
+                        $("#loader").hide();
+                        isvalid = true;
+
+                    },
+                    error: function (error) {
+                        $("#loader").hide();
+                        isvalid = false;
+                        alert("There was an internal error try again later" + error);
+                }
+            });
+
+                    if (isvalid)
+                    {
+                        location.href = '@Url.Action("SearchBreedType","Employees")';
+                    }
+
+                }
+            }
         </script>
     }

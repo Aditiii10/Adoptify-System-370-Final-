@@ -4,8 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div id="main">
-    @using (Html.BeginForm())
-    {
+
         <div class="col-sm-12 table-primary"><h1>Add Employee Type</h1></div>
         <div class="form-horizontal">
             <h4 style="color:red"></h4>
@@ -13,23 +12,22 @@
             <div class="form-group">
                 <label>Employee Type Name</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="EmployeeTypename" name="Emp_Type_Name" placeholder="Employee Type Name">
+                    <input type="text" class="form-control" id="Emp_Type_Name" name="Emp_Type_Name" placeholder="Employee Type Name">
                 </div>
             </div>
             <div class="form-group">
                 <label>Employee Type Description</label>
                 <div class="col-md-10">
-                    <textarea type="text" class="form-control" id="EmployeeTypeDescription" name="Emp_Type_Description" placeholder="Employee Type Description"></textarea>
+                    <textarea type="text" class="form-control" id="Emp_Type_Description" name="Emp_Type_Description" placeholder="Employee Type Description"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+                    <button type="submit" name="button" value="Save" onclick="Save()" class=" btn btn-success float-right">Save</button>
                 </div>
             </div>
         </div>
-    }
     </div>
     @section scripts{
         <script>
@@ -48,7 +46,59 @@
             if (successMessage != '')
                 alertify.error(successMessage);
         });
+function Save() {
 
+                var Emp_Type_Name = document.getElementById("Emp_Type_Name");
+                var Emp_Type_Description = document.getElementById("Emp_Type_Description");
+
+                var isvalid = true;
+
+                if (Emp_Type_Name.value == "") {
+                    //first remove
+                    Emp_Type_Name.classList.remove("is-valid");
+                    //then add the class you want
+                    Emp_Type_Name.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Emp_Type_Name.classList.remove("is-invalid");
+                    //then add the class you want
+                    Emp_Type_Name.classList.add("is-valid");
+                }
+                if (isvalid) {
+
+                    var formData = new FormData();
+                    formData.append("Emp_Type_Name", Emp_Type_Name.value );
+                    formData.append("Emp_Type_Description", Emp_Type_Description.value);
+
+                    $("#loader").show();
+                $.ajax(
+                    {
+                    type: "POST",
+                    data: formData,
+                    url: "/Employees/AddEmployeeType",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    success: function (d) {
+                        $("#loader").hide();
+                        isvalid = true;
+
+                    },
+                    error: function (error) {
+                        $("#loader").hide();
+                        isvalid = false;
+                        alert("There was an internal error try again later" + error);
+                }
+            });
+
+                    if (isvalid)
+                    {
+                        location.href = '@Url.Action("SearchEmployeeType","Employees")';
+                    }
+
+                }
+            }
         </script>
     }
 

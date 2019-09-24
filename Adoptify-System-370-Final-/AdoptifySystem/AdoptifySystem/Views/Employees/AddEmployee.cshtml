@@ -30,8 +30,7 @@
         <a class="nav-link" data-toggle="tab" href="#profile">User Details</a>
     </li>
 </ul>
-    @*@using (Html.BeginForm("AddEmployeein", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {*@
+
         <div id="myTabContent" class="tab-content">
             <div id="home" class="tab-pane fade show active">
 
@@ -183,7 +182,6 @@
                 </div>
             </div>
         </div>
-    @* } *@
 <script>
        $(document).ready(function () {
         var dateNewFormat, onlyDate, today = new Date();
@@ -404,7 +402,7 @@
             var fileUpload = $("#FileName").get(0);
             var files = fileUpload.files;
 
-            formData.append("Emp_Name", Emp_Name.value );
+            formData.append("Emp_Name", Emp_Name.value);
             formData.append("Emp_Surname", Emp_Surname.value );
             formData.append("Emp_ContactNumber", Emp_ContactNumber.value);
             formData.append("Emp_IDNumber", Emp_IDNumber.value);

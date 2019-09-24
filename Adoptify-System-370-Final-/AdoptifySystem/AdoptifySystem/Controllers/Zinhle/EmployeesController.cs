@@ -340,54 +340,43 @@ namespace AdoptifySystem.Controllers.Zinhle
             return View();
         }
         [HttpPost]
-        public ActionResult AddEmployeeType(Employee_Type employee_type, string button)
+        public ContentResult AddEmployeeType(Employee_Type employee_type)
         {
-            ViewBag.errorMessage = "";
-            if (button == "Save")
+            try
             {
-                try
+                List<Employee_Type> Employeetype = new List<Employee_Type>();
+                Employeetype = db.Employee_Type.ToList();
+                if (Employeetype.Count != 0)
                 {
-                    List<Employee_Type> Employeetype = new List<Employee_Type>();
-                    Employeetype = db.Employee_Type.ToList();
-                    if (Employeetype.Count != 0)
+                    int count = 0;
+                    foreach (var item in Employeetype)
                     {
-                        int count = 0;
-                        foreach (var item in Employeetype)
+                        if (item.Emp_Type_Name == employee_type.Emp_Type_Name)
                         {
-                            if (item.Emp_Type_Name == employee_type.Emp_Type_Name)
-                            {
-                                count++;
-                                TempData["EditMessage"]  = "There is a duplicate Employee Type Already";
-                                return View();
-                            }
-                        }
-                        if (count == 0)
-                        {
-                            db.Employee_Type.Add(employee_type);
-                            db.SaveChanges();
+                            count++;
+                            TempData["EditMessage"] = "There is a duplicate Employee Type Already";
+                            return Content("");
                         }
                     }
-                    else
+                    if (count == 0)
                     {
                         db.Employee_Type.Add(employee_type);
                         db.SaveChanges();
                     }
                 }
-                catch (Exception e)
+                else
                 {
-                    TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
-                    return View();
+                    db.Employee_Type.Add(employee_type);
+                    db.SaveChanges();
                 }
-
             }
-            else if (button == "Cancel")
+            catch (Exception e)
             {
-
-                return RedirectToAction("SearchEmployeeType");
+                TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
+                return Content("");
             }
-            TempData["SuccessMessage"] = "Employee Succesfully Added";
-            return RedirectToAction("SearchEmployeeType");
-        }
+            return Content("");
+    }
 
         public ActionResult SearchEmployee()
        {
@@ -473,36 +462,29 @@ namespace AdoptifySystem.Controllers.Zinhle
             return View(employeetype);
         }
         [HttpPost]
-        public ActionResult MaintainEmployeeType(Employee_Type employee_type, string button)
+        public ContentResult MaintainEmployeeType(Employee_Type employee_type)
         {
-            if (button == "Save")
-            {
                 try
                 {
                     Employee_Type searchemployee_type = db.Employee_Type.Find(employee_type.Emp_Type_ID);
                     if (searchemployee_type == null)
                     {
                         TempData["EditMessage"] = "Error is completed";
-                        return RedirectToAction("SearchEmployeeType");
+                    return Content("");
                     }
                     else
                     {
-                        db.Entry(searchemployee_type).CurrentValues.SetValues(employee_type);
-                        db.SaveChanges();
+                    searchemployee_type.Emp_Type_Name = employee_type.Emp_Type_Name;
+                    searchemployee_type.Emp_Type_Description = employee_type.Emp_Type_Description;
+                    db.SaveChanges();
                     }
                 }
                 catch (Exception e)
                 {
                     TempData["EditMessage"] = e.Message;
-                    return RedirectToAction("", "");
-                }
+                return Content("");
             }
-            else if (button == "Cancel")
-            {
-
-                return RedirectToAction("Index", "Home");
-            }
-            return RedirectToAction("Index", "Home");
+            return Content("");
 
         }
 

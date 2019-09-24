@@ -316,31 +316,32 @@ namespace AdoptifySystem.Controllers.Zinhle
             return View();
         }
         [HttpPost]
-        public ActionResult AddAnimalType(Animal_Type animal_type, string button)
+        public ContentResult AddAnimalType(string price,string Animal_type_Name)
         {
-            if (button == "Save")
-            {
                 try
                 {
-
-                    List<Animal_Type> Animal_Type = new List<Animal_Type>();
+                Animal_Type an = new Animal_Type();
+                List<Animal_Type> Animal_Type = new List<Animal_Type>();
                     Animal_Type = db.Animal_Type.ToList();
                     if (Animal_Type.Count != 0)
                     {
                         int count = 0;
                         foreach (var item in Animal_Type)
                         {
-                            if (item.Animal_Type_Name == animal_type.Animal_Type_Name)
+                            if (item.Animal_Type_Name == Animal_type_Name)
                             {
                                 count++;
                                 TempData["DeleteMessage"] = "There is a duplicate Animal Type already";
-                                return View();
+                                return Content("");
                             }
 
                         }
                         if (count == 0)
                         {
-                            db.Animal_Type.Add(animal_type);
+                        
+                        an.Animal_Type_Name = Animal_type_Name;
+                        an.Price = Convert.ToInt32(price);
+                            db.Animal_Type.Add(an);
                             db.SaveChanges();
                             TempData["SuccessMessage"] = "Successfully Stored";
                         }
@@ -348,26 +349,19 @@ namespace AdoptifySystem.Controllers.Zinhle
                     else
                     {
 
-                        db.Animal_Type.Add(animal_type);
+                        db.Animal_Type.Add(an);
                         db.SaveChanges();
 
                         TempData["SuccessMessage"] = "Successfully Stored";
                     }
-
-                }
+                return Content("");
+            }
                 catch (Exception e)
                 {
                     TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
-                    return View();
-                }
+                return Content("");
+            }
 
-            }
-            else if (button == "Cancel")
-            {
-                
-                return RedirectToAction("SearchAnimalType", "Animal");
-            }
-            return RedirectToAction("SearchAnimalType", "Animal");
         }
 
         public ActionResult MainatainAnimalType(int? id)
@@ -384,35 +378,29 @@ namespace AdoptifySystem.Controllers.Zinhle
             return View(animal_type);
         }
         [HttpPost]
-        public ActionResult MainatainAnimalType(Animal_Type animal_Type, string button)
+        public ContentResult MainatainAnimalType(Animal_Type animal_Type)
         {
-            if (button == "Save")
-            {
+           
                 try
                 {
                     Animal_Type searchaniaml = db.Animal_Type.Find(animal_Type.Animal_Type_ID);
                     if (searchaniaml == null)
                     {
-                        return HttpNotFound();
+                        return Content("");
                     }
                     else
                     {
-                        db.Entry(searchaniaml).CurrentValues.SetValues(animal_Type);
+                        searchaniaml.Animal_Type_Name = animal_Type.Animal_Type_Name;
                         db.SaveChanges();
                     }
                 }
                 catch (Exception e)
                 {
                     TempData["EditMessage"] = e.Message;
-                    return RedirectToAction("MaintainDonationType", "Donations");
+                    return Content("");
                 }
-            }
-            else if (button == "Cancel")
-            {
 
-                return RedirectToAction("SearchAnimalType", "Animal");
-            }
-            return RedirectToAction("SearchAnimalType", "Animal");
+            return Content("");
 
         }
 
@@ -453,12 +441,10 @@ namespace AdoptifySystem.Controllers.Zinhle
                 throw;
             }
         }
-        [HttpPost]
-        public ActionResult AddBreedType(Animal_Breed animal_breed, string button)
+       [HttpPost]
+        public ContentResult AddBreedType(Animal_Breed animal_breed)
         {
-            ViewBag.errorMessage = "";
-            if (button == "Save")
-            {
+
                 try
                 {
 
@@ -473,7 +459,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                             {
                                 count++;
                                 TempData["EditMessage"] = "There is a duplicate Animal Breed Already";
-                                return View();
+                                return Content("");
                             }
 
                         }
@@ -496,16 +482,9 @@ namespace AdoptifySystem.Controllers.Zinhle
                 catch (Exception e)
                 {
                     ViewBag.errorMessage = "There was an Error with network please try again: " + e.Message;
-                    return View();
+                    return Content("");
                 }
-
-            }
-            else if (button == "Cancel")
-            {
-
-                return RedirectToAction("SearchBreedType", "Animal");
-            }
-            return RedirectToAction("SearchBreedType", "Animal");
+            return Content("");
         }
 
         public ActionResult MaintainBreedType(int? id)
@@ -532,36 +511,32 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
         }
         [HttpPost]
-        public ActionResult MaintainBreedType(Animal_Breed animal_breed, string button)
+        public ContentResult MaintainBreedType(Animal_Breed animal_breed)
         {
-            if (button == "Save")
-            {
+          
                 try
                 {
                     Animal_Breed searchbreed = db.Animal_Breed.Find(animal_breed.Animal_Breed_ID);
                     if (searchbreed == null)
                     {
-                        return HttpNotFound();
+                        return Content("");
                     }
                     else
                     {
-                        db.Entry(searchbreed).CurrentValues.SetValues(animal_breed);
-                        db.SaveChanges();
+                    searchbreed.Animal_Breed_Name = animal_breed.Animal_Breed_Name;
+                    searchbreed.Animal_Breed_Description = animal_breed.Animal_Breed_Description;
+                    searchbreed.Animal_Type_ID = animal_breed.Animal_Type_ID;
+                    db.SaveChanges();
                     }
                 }
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return RedirectToAction("SearchBreedType", "Animal");
-                }
+                return Content("");
             }
-            else if (button == "Cancel")
-            {
-
-                return RedirectToAction("SearchBreedType", "Animal");
-            }
-            return RedirectToAction("SearchBreedType", "Animal");
+            return Content("");
         }
+         
 
         public ActionResult SearchBreedType()
         {
