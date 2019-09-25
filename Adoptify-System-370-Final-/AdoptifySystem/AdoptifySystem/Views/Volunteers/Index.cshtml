@@ -16,8 +16,8 @@
         @Html.TextBox("search")<input type="submit" value="Search" ? />
     }
 </p>
-<table class="table">
-    <tr>
+<table class="table-bordered table">
+    <tr class="table-primary">
         <th>
             @Html.DisplayNameFor(model => model.Vol_Name)
         </th>
@@ -43,7 +43,7 @@
             @Html.DisplayNameFor(model => model.Title.Title_Description)
         </th>
         <th></th>
-    </tr>
+    </tr class="table-primary">
 
 @foreach (var item in Model) {
     <tr>
