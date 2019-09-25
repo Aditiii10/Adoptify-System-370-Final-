@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Drawing;
+using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem.Models.nickeymodel;
+using Newtonsoft.Json;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 
@@ -217,50 +219,96 @@ namespace AdoptifySystem.Controllers
         //    }
         //    return RedirectToAction("AddDonation");
         //}
+        //[HttpGet]
+        //public ActionResult search_donor(string inid)
+        //{
+        //    if (inid == "")
+        //    {
+        //        TempData[""] = "Pick a Donor please"; 
+        //        return View("AddDonation", flex);
+        //    }
+        //    int id = Convert.ToInt32(inid);
+        //    id = id + 1;
+        //    flex.donor = flex.DonorList.Where(a => a.Donor_ID == id).FirstOrDefault();
+
+        //    if (flex.donor == null)
+        //    {
+        //        return RedirectToAction("SearchDonation");
+        //    }
+        //    ViewBag.Donorname = flex.donor.Donor_Name;
+        //    ViewBag.Donorsurname = flex.donor.Donor_Surname;
+        //    return View("AddDonation", flex);
+
+        //}
         [HttpGet]
-        public ActionResult search_donor(string inid)
+        public JsonResult search_donor(string inid)
         {
+            //List<Animal_Breed> breeds = new List<Animal_Breed>();
             if (inid == "")
             {
-                TempData[""] = "Pick a Donor please"; 
-                return View("AddDonation", flex);
+                TempData[""] = "Pick a Donor please";
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             int id = Convert.ToInt32(inid);
-            id = id + 1;
-            flex.donor = flex.DonorList.Where(a => a.Donor_ID == id).FirstOrDefault();
-
+            id = id -1;
+            flex.donor = flex.DonorList.ElementAt(id);
             if (flex.donor == null)
             {
-                return RedirectToAction("SearchDonation");
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.Donorname = flex.donor.Donor_Name;
-            ViewBag.Donorsurname = flex.donor.Donor_Surname;
-            return View("AddDonation", flex);
+            Donor data = new Donor();
+            data.Donor_Name = flex.donor.Donor_Name;
+            data.Donor_Surname = flex.donor.Donor_Surname;
 
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult search_stock(string inid)
+        //public ActionResult search_stock(string inid)
+        //{
+        //    if (inid == "")
+        //    {
+        //        TempData[""] = "Pick a Stock please";
+        //        return View("AddDonation", flex);
+        //    }
+        //    int id = Convert.ToInt32(inid);
+        //    flex.stock = flex.Stocklist.ElementAt(id);
+
+        //    if (flex.stock == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    return View("AddDonation", flex);
+
+        //}
+        [HttpGet]
+        public JsonResult search_stock(string inid)
         {
             if (inid == "")
             {
                 TempData[""] = "Pick a Stock please";
-                return View("AddDonation", flex);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
-            int id = Convert.ToInt32(inid);
+            int id = Convert.ToInt32(inid) -1;
             flex.stock = flex.Stocklist.ElementAt(id);
 
             if (flex.stock == null)
             {
-                return HttpNotFound();
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
-
-            return View("AddDonation", flex);
+            Stock data = new Stock();
+            data.Stock_Name = flex.stock.Stock_Name;
+            return Json(data, JsonRequestBehavior.AllowGet);
 
         }
         public ActionResult add_stock(string Donation_Quantity)
         {
+            if (flex.donor == null)
+            {
+                return View("AddDonation", flex);
+            }
             if (Donation_Quantity == "")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("AddDonation", flex);
             }
             Donation_Line dl = new Donation_Line();
             dl.Donation_Quantity = Convert.ToInt32(Donation_Quantity);
@@ -286,10 +334,13 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult add_money(string Donation_Quantity)
         {
-
+            if (flex.donor == null)
+            {
+                return View("AddDonation", flex);
+            }
             if (Donation_Quantity == "")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("AddDonation", flex);
             }
             Donation_Line don = new Donation_Line();
 
