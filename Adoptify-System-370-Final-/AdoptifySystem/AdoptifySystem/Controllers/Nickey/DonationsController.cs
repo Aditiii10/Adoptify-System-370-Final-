@@ -95,35 +95,31 @@ namespace AdoptifySystem.Controllers
             return View(flex);
         }
         [HttpPost]
-        public ActionResult MaintainDonor(Donor donor,string button)
+        public ContentResult MaintainDonor(Donor donor)
         {
-            if (button == "Save")
-            {
+            
                 try
                 {
                     Donor Donor = db.Donors.Find(donor.Donor_ID);
                     if (Donor == null)
                     {
-                        return HttpNotFound();
+                        return Content("");
                     }
                     else
                     {
-                        db.Entry(Donor).CurrentValues.SetValues(donor);
-                        db.SaveChanges();
+                    Donor.Donor_Name = donor.Donor_Name;
+                    Donor.Donor_Surname = donor.Donor_Surname;
+                    Donor.Donor_Email = donor.Donor_Email;
+                    Donor.Title_ID = donor.Title_ID;
+                    db.SaveChanges();
                     }
                 }
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return RedirectToAction("MaintainDonor", "Donations");
-                }
+                return Content("");
             }
-            else if (button == "Cancel")
-            {
-
-                return RedirectToAction("Index", "Home");
-            }
-            return RedirectToAction("Index", "Home");
+            return Content("");
         }
         public ActionResult AddDonation()
         {
@@ -553,12 +549,9 @@ namespace AdoptifySystem.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddDonationType(Donation_Type donation_Type, string button)
+        public ContentResult AddDonationType(Donation_Type donation_Type)
         {
-            ViewBag.errorMessage = "";
-            //Donation_Type asd = new Donation_Type();
-            if (button == "Save")
-            {
+
                 try
                 {
 
@@ -574,8 +567,8 @@ namespace AdoptifySystem.Controllers
                             {
                                 count++;
                                 ViewBag.errorMessage = "There is a duplicate Donation Type Already";
-                                return View();
-                            }
+                                return Content("");
+                        }
 
                         }
                         if (count == 0)
@@ -597,16 +590,9 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     ViewBag.errorMessage = "There was an Error with network please try again: "+e.Message;
-                    return View();
+                    return Content("");
                 }
-                
-            }
-            else if (button == "Cancel")
-            {
-
-                return RedirectToAction("Index", "Home");
-            }
-            return RedirectToAction("Index", "Home");
+            return Content("");
 
         }
        
@@ -674,35 +660,28 @@ namespace AdoptifySystem.Controllers
             return View(donation_Type);
         }
         [HttpPost]
-        public ActionResult MaintainDonationType(Donation_Type Donationtype,string button)
+        public ContentResult MaintainDonationType(Donation_Type Donationtype)
         {
-            if (button == "Save")
-            {
-                try
+          try
                 {
                     Donation_Type donation_Type = db.Donation_Type.Find(Donationtype.Donation_Type_ID);
                     if (donation_Type == null)
                     {
-                        return HttpNotFound();
+                    return Content("");
                     }
                     else
                     {
-                        db.Entry(donation_Type).CurrentValues.SetValues(Donationtype);
-                        db.SaveChanges();
+                    donation_Type.Donation_Type_Name = Donationtype.Donation_Type_Name;
+                    donation_Type.Donation_Type_Description = Donationtype.Donation_Type_Description;
+                    db.SaveChanges();
                     }
                 }
                 catch(Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return RedirectToAction("MaintainDonationType","Donations");
-                }
+                return Content("");
             }
-            else if (button == "Cancel")
-            {
-
-                return RedirectToAction("Index", "Home");
-            }
-            return RedirectToAction("Index", "Home");
+            return Content("");
         }
         public ActionResult DeleteDonor(int? id)
         {

@@ -149,36 +149,34 @@ namespace AdoptifySystem.Controllers
             }
         }
         [HttpPost]
-        public ActionResult MaintainStock(Stock stock2, string button)
+        public ActionResult MaintainStock(Stock stock2)
         {
-            if (button == "Save")
-            {
                 try
                 {
                     Stock stock1 = db.Stocks.Find(stock2.Stock_ID);
                     if (stock1 == null)
                     {
-                        return HttpNotFound();
+                        return Content("");
                     }
                     else
                     {
-                        stock2.Stock_Quantity = stock1.Stock_Quantity; 
-                        db.Entry(stock1).CurrentValues.SetValues(stock2);
+                    stock1.Stock_Quantity = stock2.Stock_Quantity;
+                    stock1.Packaging_Type_ID = stock2.Packaging_Type_ID;
+                    stock1.Stock_Type_ID = stock2.Stock_Type_ID;
+                    stock1.Unit_Type_ID = stock2.Unit_Type_ID;
+                    stock1.Unit_number = stock2.Unit_number;
+                    stock1.Stock_Description = stock2.Stock_Description;
+                    db.Entry(stock1).CurrentValues.SetValues(stock2);
                         db.SaveChanges();
                     }
                 }
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return RedirectToAction("MaintainStock", "Stock");
-                }
+                return Content("");
             }
-            else if (button == "Cancel")
-            {
+            return Content("");
 
-                return RedirectToAction("SearchStock", "Stock");
-            }
-            return RedirectToAction("SearchStock", "Stock");
         }
 
         public ActionResult CaptureStockTake(int? id)
@@ -256,12 +254,9 @@ namespace AdoptifySystem.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddStockType(Stock_Type stock_type,string button)
+        public ContentResult AddStockType(Stock_Type stock_type)
         {
-            
-            if (button == "Save")
-            {
-                try
+            try
                 {
 
                     List<Stock_Type> stock_types = new List<Stock_Type>();
@@ -275,8 +270,8 @@ namespace AdoptifySystem.Controllers
                             {
                                 count++;
                                 TempData["error"] = "There is a duplicate Stock Type Already";
-                                return View();
-                            }
+                            return Content("");
+                        }
 
                         }
                         if (count == 0)
@@ -298,18 +293,10 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     TempData["exception"] = "There was an Error with network please try again: " + e.Message;
-                    return View();
-                }
-
+                return Content("");
             }
-            else if (button == "Cancel")
-            {
 
-                TempData["success"] = "The process has been cancelled succesfully";
-                return RedirectToAction("SearchStockType", "Stock");
-            }
-            TempData["success"] = "The Stock Type has been added Succesfully";
-            return RedirectToAction("SearchStockType", "Stock");
+            return Content("");
         }
         public ActionResult ReceiveStock(int? id)
         {
@@ -443,39 +430,31 @@ namespace AdoptifySystem.Controllers
             return View(stock_Type);
         }
         [HttpPost]
-        public ActionResult MaintainStockType(Stock_Type stock_Type,string button)
+        public ContentResult MaintainStockType(Stock_Type stock_Type)
         {
-            if (button == "Save")
-            {
-                try
+             try
                 {
                     
                     Stock_Type Stock_Type = db.Stock_Type.Find(stock_Type.Stock_Type_ID);
                     if (Stock_Type == null)
                     {
-                        return HttpNotFound();
-                    }
+                    return Content("");
+                }
                     else
                     {
-                        
-                            db.Entry(Stock_Type).CurrentValues.SetValues(stock_Type);
-                            db.SaveChanges();
+
+                    Stock_Type.Stock_Type_Name = stock_Type.Stock_Type_Name;
+                    Stock_Type.Stock_Type_Description = stock_Type.Stock_Type_Description;
+                   db.SaveChanges();
                         
                     }
                 }
                 catch (Exception e)
                 {
                     TempData["exception"] = e.Message;
-                    return RedirectToAction("MaintainStockType", "Stock");
-                }
+                return Content("");
             }
-            else if (button == "Cancel")
-            {
-                TempData["success"] = "The Maintain process has been cancelled succesfully";
-                return RedirectToAction("SearchStockType", "Stock");
-            }
-            TempData["success"] = "The Stock Type has been maintained succesfully";
-            return RedirectToAction("SearchStockType", "Stock");
+            return Content("");
         }
 
         public ActionResult Deletestock(Stock id)
