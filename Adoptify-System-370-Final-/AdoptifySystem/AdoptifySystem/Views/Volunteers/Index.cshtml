@@ -8,7 +8,7 @@
 <h2>Volunteer's List</h2>
 
 <p>
-    @Html.ActionLink("Add New", "Create", "Volunteer", new { @class = "btn btn-success" })
+    @Html.ActionLink("Add New", "Create", "Volunteer", new { @class = "btn btn-success", @Title = "Click to Add Volunteer" })
     @using (Html.BeginForm("Index", "Volunteer", FormMethod.Get))
     {
         <b>Search by:</b>@Html.RadioButton("Searchby", "Vol_Name", true) <text>Volunteer Name</text>
@@ -72,9 +72,9 @@
             @Html.DisplayFor(modelItem => item.Title.Title_Description)
         </td>
         <td>
-            @Html.ActionLink("Update", "Edit", "Volunteers", new { id = item.Vol_ID  }, new { @class = "btn btn-success" })
-            @Html.ActionLink("More Info", "Details", "Volunteers", new { id = item.Vol_ID  }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("Delete", "Delete", "Volunteers", new { id = item.Vol_ID  }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Update", "Edit", "Volunteers", new { id = item.Vol_ID  }, new { @class = "btn btn-success", @Title = "Click to Update Volunteer" })
+            @Html.ActionLink("More Info", "Details", "Volunteers", new { id = item.Vol_ID  }, new { @class = "btn btn-primary", @Title = "Click to View Volunteer Details" })
+            @Html.ActionLink("Delete", "Delete", "Volunteers", new { id = item.Vol_ID  }, new { @class = "btn btn-danger", @Title = "Click to Delete Volunteer" })
         </td>
     </tr>
 }
