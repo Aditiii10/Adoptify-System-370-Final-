@@ -74,7 +74,7 @@ namespace AdoptifySystem.Controllers
                 else {
                     db.Veterinarians.Add(veterinarian);
                     db.SaveChanges();
-                    TempData["SuccessMessage"] = "Saved New Veternarian Successfully";
+                    TempData["SuccessMessage"] = "Successfully Saved New Veternarian";
                     return RedirectToAction("Index");
                 }
             }
@@ -116,7 +116,7 @@ namespace AdoptifySystem.Controllers
                 else {
                     db.Entry(veterinarian).State = EntityState.Modified;
                     db.SaveChanges();
-                    TempData["EditMessage"] = "Updated Veternarian Details Successfully";
+                    TempData["EditMessage"] = "Successfully Updated Veternarian Details";
                     return RedirectToAction("Index");
                 }
             }

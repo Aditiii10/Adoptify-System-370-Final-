@@ -5,129 +5,182 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 style="color:green">@ViewBag.Message</h2><br />
+
+
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
-        <h1>Animal Treatment Information</h1>
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Animal Treatment Information</h1>
+        </div>
     </div>
 
     <div class="newButton">
         @Html.ActionLink("Add", "Create", "Animal_Treatment", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus" })
     </div>
     <p>
-        @using (Html.BeginForm("Index", "Veterinarians", FormMethod.Get))
+        @using (Html.BeginForm("Index", "Animal_Treatment", FormMethod.Get))
         {
-            <b>Search by:</b>@Html.RadioButton("Searchby", "Animal_Name", true) <text>Vet Name</text>
-            @Html.RadioButton("Searchby", "Treat_Name")<text> Vet Address</text><br />
-                        @Html.TextBox("search")<input type="submit" value="Search" ? />
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+
+            @*<b>Search by:</b>@Html.RadioButton("Searchby", "Vet_Name", true) <text>Vet Name</text>
+                @Html.RadioButton("Searchby", "Vet_Address")<text> Vet Address</text><br />
+                @Html.TextBox("search")<input type="submit" value="Search" ? />*@
         }
     </p>
-    <table class="table">
-        <tr>
-            <th>
-               Animal
-            </th>
-            <th>
-                Treatment Start Date
-            </th>
-            <th>
-                Treatment End Date
-            </th>
-            <th>
-                Treatment Quantity (kg/g)
-            </th>
-            <th>
-                Treatment Regularity
-            </th>
-            <th>
-                Treatment Name
-            </th>
-            <th>
-                Treatment Cost
-            </th>
-            <th>
-                Comment
-            </th>
-   
-            <th>
-                Diagnosis Details
-            </th>
-            <th></th>
+    <br />
+    <table class="table-bordered table">
+        <tr class="table-primary">
+        <th>
+        Animal
+        </th>
+        <th>
+        Treatment Start Date
+        </th>
+        <th>
+        Treatment End Date
+        </th>
+        <th>
+        Treatment Quantity (kg/g)
+        </th>
+        <th>
+        Treatment Regularity
+        </th>
+        <th>
+        Treatment Name
+        </th>
+        <th>
+        Treatment Cost (R)
+        </th>
+        <th>
+        Comment
+        </th>
+        <th>
+        Action
+        </th>
         </tr>
 
-        @foreach (var item in Model)
+        @if (Model == null)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Animal.Animal_Name)
-                </td> 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Treat_StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Treat_EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Treat_Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Treat_Regularity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Treat_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Treat_cost)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comment)
-                </td>
-               
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mecidal_Card.Diagnosis_Details)
-                </td>
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Treat_ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Treat_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Treat_ID })*@
-                    <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Animal_ID)"> More Info</button>
+                <td colspan="8">
+                    No Treatment found
                 </td>
             </tr>
+        }
 
-            <div /id="@Html.DisplayFor(modelItem => item.Animal_ID)" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="info_card">
-                    <div class="card_inner">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h2> Medical Treatment Details of :</h2>
-                        <h2>  @Html.DisplayFor(modelItem => item.Animal.Animal_Name) </h2>
-                        <hr />
-                    </div>
-                    <div class="data">
 
-                        <span class="value">Email:</span> @Html.DisplayFor(modelItem => item.Treat_StartDate) <br />
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Animal.Animal_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Treat_StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Treat_EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Treat_Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Treat_Regularity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Treat_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Treat_cost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
 
-                        <span class="value">Treat End Date:</span>@Html.DisplayFor(modelItem => item.Treat_EndDate)<br />
-                        <span class="value">Treatment Name:</span>@Html.DisplayFor(modelItem => item.Treat_Name)<br />
-                        <span class="value">Address:</span>@Html.DisplayFor(modelItem => item.Treat_Quantity)<br />
+                    
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Treat_ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Treat_ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Treat_ID })*@
+                        <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Treat_ID)"> More Info</button>
+                    </td>
+                </tr>
 
-                        <span class="value">Address:</span>@Html.DisplayFor(modelItem => item.Treat_Regularity)<br />
-                        
-                        <span class="value">Address:</span>@Html.DisplayFor(modelItem => item.Treat_Quantity)<br />
-                        <span class="value">Address:</span>@Html.DisplayFor(modelItem => item.Treat_Quantity)<br />
-                        <br />
-                        <div class="">
-                            @Html.ActionLink("Edit", "Edit", "Animal_Treatment", new { id = item.Animal_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
-                            @Html.ActionLink("Delete", "Delete", "Animal_Treatment", new { id = item.Animal_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+
+                <div class="modal fade" id="@Html.DisplayFor(modelItem => item.Treat_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header table-primary">
+                                <h5 class="modal-title" id="exampleModalLongTitle" style="text-align:center">  @Html.DisplayFor(modelItem => item.Animal.Animal_Name)</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">Treatment Start Date:</span> @Html.DisplayFor(modelItem => item.Treat_StartDate) <br />
+
+                                <span class="value">Treatment End Date:</span>@Html.DisplayFor(modelItem => item.Treat_EndDate)<br />
+                                <span class="value">Treatment Name:</span>@Html.DisplayFor(modelItem => item.Treat_Name)<br />
+                                <span class="value">Quantity (kg/g):</span>@Html.DisplayFor(modelItem => item.Treat_Quantity)<br />
+
+                                <span class="value">Regularity of Treatment:</span>@Html.DisplayFor(modelItem => item.Treat_Regularity)<br />
+
+                                <span class="value">Treatment Cost(R):</span>@Html.DisplayFor(modelItem => item.Treat_cost)<br />
+                                <br />
+                                <div class="">
+                                    @Html.ActionLink("Edit", "Edit", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
+                                    @Html.ActionLink("Delete", "Delete", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                                </div>
+                                <br />
+                                <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
+                            </div>
                         </div>
-                        <br />
-                        <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
+
                     </div>
                 </div>
 
-            </div>
-        </div>
+            }
         }
 
     </table>
-    </div>
+    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+    @Html.ActionLink("Refresh", "Index", "Animal_Treatment", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+         $(function () {
+            var successMessage = '@TempData["EditMessage"]'
+            if (successMessage != '')
+                alertify.warning(successMessage);
+         });
+        $(function () {
+            var successMessage = '@TempData["DeleteMessage"]'
+            if (successMessage != '')
+                alertify.error(successMessage);
+        });
+
+        @*function Delete(id) {
+            alertify.confirm('Web Api CRUD Operations','Are You Sure to Delete this Record ?',function(){
+                window.location.href  = '@Url.Action("Delete","Employee")/'+id;
+            },null );
+        }*@
+    </script>
+}

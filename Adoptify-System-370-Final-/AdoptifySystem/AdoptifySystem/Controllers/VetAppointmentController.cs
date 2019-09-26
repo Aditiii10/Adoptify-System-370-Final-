@@ -61,9 +61,6 @@ namespace AdoptifySystem.Controllers
         {
             if (ModelState.IsValid)
             {
-
-
-
                 vet_Appointment_Master.AppointmentDate = date.Value;
                 db.Vet_Appointment_Master.Add(vet_Appointment_Master);
                 TempData["SuccessMessage"] = "Created Veternarian Appointment Successfully";

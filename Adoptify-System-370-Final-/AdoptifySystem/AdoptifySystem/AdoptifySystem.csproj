@@ -534,6 +534,7 @@
     <Compile Include="Vet_SearchVet_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Views\Videoplayer\VideoplayerController.cs" />
     <Compile Include="Volunteer.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -960,6 +961,7 @@
     <Content Include="Views\MedCardFile\FileView.cshtml" />
     <Content Include="Views\HCReportFile\FileView.cshtml" />
     <Content Include="Views\SMSMessage\SendMessage.cshtml" />
+    <Content Include="Views\Videoplayer\VideoView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "VideoView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Embedded Video Example</title>
+</head>
+<body>
+
+    <div id="main">
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Adoption Tutorial Video</h1>
+            </div>
+        </div>
+        <br />
+        <h1>Adoption Tutorial Video</h1>
+        <hr />
+        <p>The following video provides an introduction to the Adoption process:</p>
+        <iframe width="1000"
+                height="550"
+                src="http://www.youtube.com/embed/fxCEcPxUbYA"
+                frameborder="1"
+                allowfullscreen></iframe>
+    </div>
+    <br />
+    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+    @Html.ActionLink("Back to Adoption Page", "Index", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+</body>
+</html>

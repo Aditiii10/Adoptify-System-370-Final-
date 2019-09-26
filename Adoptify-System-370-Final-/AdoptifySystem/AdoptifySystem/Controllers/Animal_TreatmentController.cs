@@ -49,16 +49,19 @@ namespace AdoptifySystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Treat_ID,Animal_ID,Treat_StartDate,Treat_EndDate,Treat_Quantity,Treat_Regularity,Treat_Name,Treat_cost,Comment,Id")] Animal_Treatment animal_Treatment)
+        public ActionResult Create([Bind(Include = "Treat_ID,Animal_ID,Treat_StartDate,Treat_EndDate,Treat_Quantity,Treat_Regularity,Treat_Name,Treat_cost,Comment,Id")] Animal_Treatment animal_Treatment, DateTime? date)
         {
             if (ModelState.IsValid)
             {
+                animal_Treatment.Treat_StartDate = date.Value;
+                animal_Treatment.Treat_EndDate = date.Value;
                 db.Animal_Treatment.Add(animal_Treatment);
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Successfully Saved New Animal Treatment ";
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", animal_Treatment.Animal_ID);
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", animal_Treatment.Animal_ID);
             ViewBag.Id = new SelectList(db.Mecidal_Card, "Id", "Diagnosis_Details", animal_Treatment.Id);
             return View(animal_Treatment);
         }
@@ -75,8 +78,7 @@ namespace AdoptifySystem.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", animal_Treatment.Animal_ID);
-            ViewBag.Id = new SelectList(db.Mecidal_Card, "Id", "Diagnosis_Details", animal_Treatment.Id);
+            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", animal_Treatment.Animal_ID);
             return View(animal_Treatment);
         }
 
@@ -85,12 +87,15 @@ namespace AdoptifySystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Treat_ID,Animal_ID,Treat_StartDate,Treat_EndDate,Treat_Quantity,Treat_Regularity,Treat_Name,Treat_cost,Comment,Id")] Animal_Treatment animal_Treatment)
+        public ActionResult Edit([Bind(Include = "Treat_ID,Animal_ID,Treat_StartDate,Treat_EndDate,Treat_Quantity,Treat_Regularity,Treat_Name,Treat_cost,Comment,Id")] Animal_Treatment animal_Treatment, DateTime? date)
         {
             if (ModelState.IsValid)
             {
+                animal_Treatment.Treat_StartDate = date.Value;
+                animal_Treatment.Treat_EndDate = date.Value;
                 db.Entry(animal_Treatment).State = EntityState.Modified;
                 db.SaveChanges();
+              TempData["EditMessage"] = "Successfully Updated Animal Treatment Details ";
                 return RedirectToAction("Index");
             }
             ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", animal_Treatment.Animal_ID);
@@ -121,6 +126,7 @@ namespace AdoptifySystem.Controllers
             Animal_Treatment animal_Treatment = db.Animal_Treatment.Find(id);
             db.Animal_Treatment.Remove(animal_Treatment);
             db.SaveChanges();
+            TempData["DeleteMessage"] = "Deleted Animal Treatment Successfully";
             return RedirectToAction("Index");
         }
 
