@@ -22,9 +22,9 @@ namespace AdoptifySystem.Controllers
         {
             Wollies_ShelterEntities dc = new Wollies_ShelterEntities();
 
-            var AnimalsDogs = dc.Animals.Where(x => x.Animal_Type.Animal_Type_ID == 1).Count();
+            var AnimalsDogs = dc.Animals.Where(x => x.Animal_Type.Animal_Type_ID == 1 && x.Animal_Status.Animal_Status_ID == 2).Count();
             ViewBag.AnimalsDogs = AnimalsDogs;
-            var AnimalsCats = dc.Animals.Where(x => x.Animal_Type.Animal_Type_ID == 2).Count();
+            var AnimalsCats = dc.Animals.Where(x => x.Animal_Type.Animal_Type_ID == 2 && x.Animal_Status.Animal_Status_ID == 2).Count();
             ViewBag.AnimalsCats = AnimalsCats;
             var Adoptions = dc.Adoptions.Where(x => x.Adoption_Status.Adopt_Status_ID ==1 || x.Adoption_Status.Adopt_Status_ID==2 || x.Adoption_Status.Adopt_Status_ID == 3 || x.Adoption_Status.Adopt_Status_ID == 4 || x.Adoption_Status.Adopt_Status_ID == 5).Count();
             ViewBag.Adoptions = Adoptions;

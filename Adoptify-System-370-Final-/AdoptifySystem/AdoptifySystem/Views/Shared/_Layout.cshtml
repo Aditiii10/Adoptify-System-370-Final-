@@ -439,17 +439,17 @@
                         </div>
                     </li>
                 </ul>
-                @if (Request.IsAuthenticated)
+                @*@if (Request.IsAuthenticated)
                 {
                     <h1>@HttpContext.Current.User.Identity.Name</h1>
-                }
+                }*@
             </div>
 </nav>
 
-    @if(Request.IsAuthenticated)
+    @*@if(Request.IsAuthenticated)
     {
         <h1>@HttpContext.Current.User.Identity.Name</h1>
-    }
+    }*@
 
     @*//the Loader*@
     <div class="loading" align="center">
