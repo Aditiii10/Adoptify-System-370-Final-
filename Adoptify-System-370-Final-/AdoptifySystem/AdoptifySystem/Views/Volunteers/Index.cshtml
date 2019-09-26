@@ -80,3 +80,26 @@
 }
 
 </table>
+
+@section scripts{
+ <script>
+    $(function () {
+        var successMessage = '@TempData["SucessMessage"]'
+        if (successMessage != '')
+            alertify.success(successMessage);
+    });
+
+    $(function () {
+        var successMessage = '@TempData["EditMessage"]'
+        if (successMessage != '')
+            alertify.warning(successMessage);
+    });
+
+    $(function () {
+        var successMessage = '@TempData["DeleteMessage"]'
+        if (successMessage != '')
+            alertify.error(successMessage);
+    });
+
+  </script>
+}
