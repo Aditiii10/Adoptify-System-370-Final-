@@ -7,19 +7,11 @@
 <br />
 <div class="border-primary card mb-3">
     <h2 class="table-primary">Add Donor</h2>
-
-    @using (Html.BeginForm())
-    {
-        if (Model != null)
-        {
-            using (Html.BeginForm())
-            {
-                <select name="Title_ID" class="form-control col-md-2" id="exampleList">
+                <select name="Title_ID" class="form-control col-md-2 custom-select" id="Title_ID">
 
                     @foreach (var item in Model)
                     {
                         <option value="@item.Title_ID">@item.Title_Description</option>
-                        @*<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />*@
                     }
                 </select>
                 <br />
@@ -28,7 +20,7 @@
                 </label>
                 <br />
                 <div class="col-md-5">
-                    <input name="Donor_Name" class="form-control" type="text" />
+                    <input name="Donor_Name" id="Donor_Name" class="form-control" type="text" />
                 </div>
                 <br />
                 <label>
@@ -36,7 +28,7 @@
                 </label>
                 <br />
                 <div class="col-md-5">
-                    <input name="Donor_Surname" class="form-control" type="text" />
+                    <input name="Donor_Surname" id="Donor_Surname" class="form-control" type="text" />
                 </div>
                 <br />
                 <label>
@@ -44,21 +36,99 @@
                 </label>
                 <br />
                 <div class="col-md-5">
-                    <input name="Donor_Email" class="form-control" type="email" />
+                    <input name="Donor_Email" id="Donor_Email" class="form-control" type="email" />
                 </div>
 
                 <br />
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                        <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+                        <button type="submit" name="button" value="Save" onclick="Save()" class=" btn btn-success float-right">Save</button>
                     </div>
                 </div>
-            }
-        }
-        else
-        {
-            <h1>the Title is empty GO add Titles to the System</h1>
-        }
-    }
 </div>
+<script>
+               function Save() {
+                var Title_ID = document.getElementById("Title_ID");
+                   var Donor_Name = document.getElementById("Donor_Name");
+                   var Donor_Surname = document.getElementById("Donor_Surname");
+                var Donor_Email = document.getElementById("Donor_Email");
+
+
+                var isvalid = true;
+
+                if (Donor_Name.value == "") {
+                    //first remove
+                    Donor_Name.classList.remove("is-valid");
+                    //then add the class you want
+                    Donor_Name.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Donor_Name.classList.remove("is-invalid");
+                    //then add the class you want
+                    Donor_Name.classList.add("is-valid");
+                   }
+
+                if (Donor_Surname.value == "") {
+                    //first remove
+                    Donor_Surname.classList.remove("is-valid");
+                    //then add the class you want
+                    Donor_Surname.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Donor_Surname.classList.remove("is-invalid");
+                    //then add the class you want
+                    Donor_Surname.classList.add("is-valid");
+                   }
+                   if (Donor_Email.value == "") {
+                    //first remove
+                    Donor_Email.classList.remove("is-valid");
+                    //then add the class you want
+                    Donor_Email.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Donor_Email.classList.remove("is-invalid");
+                    //then add the class you want
+                    Donor_Email.classList.add("is-valid");
+                }
+                if (isvalid) {
+
+                    var formData = new FormData();
+
+                    formData.append("Title_ID", Title_ID.value );
+                    formData.append("Donor_Name", Donor_Name.value);
+                    formData.append("Donor_Surname", Donor_Surname.value);
+                    formData.append("Donor_Email", Donor_Email.value);
+
+                    $("#loader").show();
+                $.ajax(
+                    {
+                    type: "POST",
+                    data: formData,
+                    url: "/Donations/AddDonor",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    success: function (d) {
+                        $("#loader").hide();
+                        isvalid = true;
+
+                    },
+                    error: function (error) {
+                        $("#loader").hide();
+                        isvalid = false;
+                        alert("There was an internal error try again later" + error);
+                }
+            });
+
+                    if (isvalid)
+                    {
+                        location.href = '@Url.Action("SearchDonor","Donations")';
+                    }
+
+                }
+            }
+</script>

@@ -38,10 +38,8 @@ namespace AdoptifySystem.Controllers
             return View(titles);
         }
         [HttpPost]
-        public ActionResult AddDonor(Donor donor,string button)
+        public ContentResult AddDonor(Donor donor,string button)
         {
-            if (button == "Save")
-            {
                 List<Donor> donors = new List<Donor>();
                 donors = db.Donors.ToList();
                 if (donors.Count != 0)
@@ -53,7 +51,7 @@ namespace AdoptifySystem.Controllers
                         {
                             count++;
                             ViewBag.errorMessage = "There is a duplicate Donor Already";
-                            return View();
+                            return Content("");
                         }
 
                     }
@@ -70,13 +68,7 @@ namespace AdoptifySystem.Controllers
                     db.SaveChanges();
                     
                 }
-                return RedirectToAction("Index", "Home");
-            }
-            else if (button == "Cancel")
-            {
-                return RedirectToAction("Index","Home");
-            }
-            return View();
+            return Content("");
         }
         public ActionResult MaintainDonor(int? id)
         {
