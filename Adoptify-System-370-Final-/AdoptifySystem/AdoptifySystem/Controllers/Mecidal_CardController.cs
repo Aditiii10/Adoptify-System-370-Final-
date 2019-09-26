@@ -17,7 +17,7 @@ namespace AdoptifySystem.Controllers
         // GET: Mecidal_Card
         public ActionResult Index()
         {
-            var mecidal_Card = db.Mecidal_Card.Include(m => m.Animal).Include(m => m.Vet_Appointment);
+            var mecidal_Card = db.Mecidal_Card.Include(m => m.Animal).Include(m => m.Vet_Appointment_Master);
             return View(mecidal_Card.ToList());
         }
 
@@ -47,7 +47,7 @@ namespace AdoptifySystem.Controllers
                     animals2.Add(item);
             }
             ViewBag.Animal_ID = new SelectList(animals2, "Animal_ID", "Animal_Name");
-            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment, "Vet_Appointment_ID", "Vet_Appointment_ID");
+            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment_Master, "Vet_Appointment_ID", "Vet_Appointment_ID");
             return View();
         }
 
@@ -72,7 +72,7 @@ namespace AdoptifySystem.Controllers
                     animals2.Add(item);
             }
             ViewBag.Animal_ID = new SelectList(animals2, "Animal_ID", "Animal_Name", mecidal_Card.Animal_ID);
-            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment, "Vet_Appointment_ID", "Vet_Appointment_ID", mecidal_Card.Vet_Appointment_ID);
+            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment_Master, "Vet_Appointment_ID", "Vet_Appointment_ID", mecidal_Card.Id);
             return View(mecidal_Card);
         }
 
@@ -89,7 +89,7 @@ namespace AdoptifySystem.Controllers
                 return HttpNotFound();
             }
             ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", mecidal_Card.Animal_ID);
-            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment, "Vet_Appointment_ID", "Vet_Appointment_ID", mecidal_Card.Vet_Appointment_ID);
+            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment_Master, "Vet_Appointment_ID", "Vet_Appointment_ID", mecidal_Card.Id);
             return View(mecidal_Card);
         }
 
@@ -107,7 +107,7 @@ namespace AdoptifySystem.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", mecidal_Card.Animal_ID);
-            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment, "Vet_Appointment_ID", "Vet_Appointment_ID", mecidal_Card.Vet_Appointment_ID);
+            ViewBag.Vet_Appointment_ID = new SelectList(db.Vet_Appointment_Master, "Vet_Appointment_ID", "Vet_Appointment_ID", mecidal_Card.Id);
             return View(mecidal_Card);
         }
 

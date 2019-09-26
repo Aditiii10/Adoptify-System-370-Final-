@@ -1,0 +1,50 @@
+﻿@model AdoptifySystem.Audit_Log
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <h2>Audit Log Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Auditlog_DateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Auditlog_DateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Transaction_Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Transaction_Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Critical_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Critical_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User_.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_.Username)
+        </dd>
+
+    </dl>
+</div>
+<p>
+   
+    @Html.ActionLink("Back to List", "Index")
+</p>

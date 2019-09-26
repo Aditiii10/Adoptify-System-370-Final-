@@ -184,7 +184,7 @@ namespace AdoptifySystem.Controllers
                 List<Foster_Care_Parent> foster = new List<Foster_Care_Parent>();
                 try
                 {
-                    foster = db.searchParent(search).ToList();
+                    //foster = db.searchParent(search).ToList();
                     //foster = db.Foster_Care_Parent.Where(z => z.Foster_Parent_Email.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
                     if (foster.Count == 0)
                     {
@@ -366,7 +366,7 @@ namespace AdoptifySystem.Controllers
             try
             {
                 List<Foster_Care> list = new List<Foster_Care>();
-                    list = db.Foster_Care.Where(z => z.Animal.Animal_Status.Animal_Status_Name == "Foster Care").ToList();
+                    list = db.Foster_Care.ToList();
                     if (list == null)
                     {
                         ViewBag.err = "There are no Animals in Foster Care";

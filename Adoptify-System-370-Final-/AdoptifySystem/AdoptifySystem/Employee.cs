@@ -27,6 +27,7 @@ namespace AdoptifySystem
         public int Emp_ID { get; set; }
         public string Emp_Name { get; set; }
         public string Emp_Surname { get; set; }
+        public string Emp_Gender { get; set; }
         public string Emp_ContactNumber { get; set; }
         public string Emp_IDNumber { get; set; }
         public string Emp_Email { get; set; }

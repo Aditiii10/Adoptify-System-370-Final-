@@ -237,6 +237,9 @@
     <Compile Include="Animal.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AnimalTypePrice.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="AnimalType_SearchAnimalType_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -288,9 +291,12 @@
     <Compile Include="Controllers\Mecidal_CardController.cs" />
     <Compile Include="Controllers\Nickey\AdminController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Nickey\Audit_LogController.cs" />
     <Compile Include="Controllers\Nickey\DonationsController.cs" />
     <Compile Include="Controllers\Nickey\FosterCareController.cs" />
+    <Compile Include="Controllers\Nickey\FosterCarePeriodsController.cs" />
     <Compile Include="Controllers\Nickey\StockController.cs" />
+    <Compile Include="Controllers\Nickey\TimerController.cs" />
     <Compile Include="Controllers\VetAppointmentController.cs" />
     <Compile Include="Controllers\VeterinariansController.cs" />
     <Compile Include="Controllers\Zinhle\AnimalController.cs" />
@@ -371,6 +377,9 @@
     <Compile Include="Mecidal_Card.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MedCardFile.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Microchip.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -427,7 +436,13 @@
     <Compile Include="Stock_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblFile.cs">
+    <Compile Include="Table.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFileDetail.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFileDetail1.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TimeSheet.cs">
@@ -451,9 +466,6 @@
     <Compile Include="Veterinarian.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Vet_Appointment.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Vet_Appointment_Master.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -467,6 +479,9 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Volunteer_Work_Type.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Wolly.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -1562,6 +1577,12 @@
     <Content Include="Views\Volunteer_Hours\Details.cshtml" />
     <Content Include="Views\Volunteer_Hours\Edit.cshtml" />
     <Content Include="Views\Volunteer_Hours\Index.cshtml" />
+    <Content Include="Views\Timer\AddTimer.cshtml" />
+    <Content Include="Views\Audit_Log\Create.cshtml" />
+    <Content Include="Views\Audit_Log\Delete.cshtml" />
+    <Content Include="Views\Audit_Log\Details.cshtml" />
+    <Content Include="Views\Audit_Log\Edit.cshtml" />
+    <Content Include="Views\Audit_Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

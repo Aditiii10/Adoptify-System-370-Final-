@@ -1,0 +1,68 @@
+﻿@model AdoptifySystem.Audit_Log
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Audit Log</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label>Enter Date:</label>
+        @*@Html.LabelFor(model => model.Auditlog_DateTime, htmlAttributes: new { @class = "control-label col-md-2" })*@
+    <div class="col-md-10">
+        <input type="date" name="Auditlog_DateTime" id="Auditlog_DateTime" class="form-control" placeholder="MM/DD/YY" required = "required">
+        @*@Html.EditorFor(model => model.Auditlog_DateTime, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Auditlog_DateTime, "", new { @class = "text-danger" })*@
+    </div>
+    </div>
+
+    <div class="form-group">
+        <label>Enter Transaction Type:</label>
+        @*@Html.LabelFor(model => model.Transaction_Type, htmlAttributes: new { @class = "control-label col-md-2" })*@
+    <div class="col-md-10">
+        @*<input class="form-control" type="text" name="Transaction_Type" placeholder="Enter Transaction Type">*@
+        @Html.EditorFor(model => model.Transaction_Type, new { htmlAttributes = new { @class = "form-control" }, placeholder = "Enter Transaction Type", required = "required" })
+        @Html.ValidationMessageFor(model => model.Transaction_Type, "", new { @class = "text-danger" })
+    </div>
+    </div>
+
+    <div class="form-group">
+        <label>Enter Critical Date:</label>
+        @*@Html.LabelFor(model => model.Critical_Date, htmlAttributes: new { @class = "control-label col-md-2" })*@
+    <div class="col-md-10">
+     
+        @*<input class="form-control" type="text" name="Critical_Date" placeholder="Enter Critical Date">*@
+        @Html.EditorFor(model => model.Critical_Date, new { htmlAttributes = new { @class = "form-control" }, placeholder = "Enter Critical Date", required = "required"  })
+        @Html.ValidationMessageFor(model => model.Critical_Date, "", new { @class = "text-danger" })
+    </div>
+    </div>
+
+    <div class="form-group">
+        <label>Select User:</label>
+        @*@Html.LabelFor(model => model.UserID, "UserID", htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+            <button type="submit" name="button" value="Save" class="btn btn-success float-right">Save</button>
+        </div>
+    </div>
+</div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
