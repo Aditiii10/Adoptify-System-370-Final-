@@ -21,7 +21,7 @@
 </div>
 <p>
     <br/>
-    @Html.ActionLink("Back to List", "Index", "Titles", new { @class = "btn btn-dark", style = "float:right" })
-    @Html.ActionLink("Update", "Edit", new { id = Model.Title_ID }, new { @class = "btn btn-success", style = "float:right" })
+    @Html.ActionLink("Back to List", "Index", "Titles", new { @class = "btn btn-dark", style = "float:right", @Title = "Click to go Back" })
+    @Html.ActionLink("Update", "Edit", new { id = Model.Title_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Title" })
     <br/>
 </p>
