@@ -1,281 +1,711 @@
 ﻿@model AdoptifySystem.Models.nickeymodel.Innovation
 @{
-    ViewBag.Title = "Maintain Animal";
+    ViewBag.Title = "Maintainanimal";
     Layout = "~/Views/Shared/_Layout.cshtml ";
 }
-<style>
-    .column {
-        box-sizing: border-box;
-    }
 
-    body {
-        margin: 0;
-    }
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#home">Animal Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#profile">Microchip</a>
+    </li>
+</ul>
 
-    .topnav a:hover {
-        background-color: #ddd;
-        color: black;
-    }
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade show active" id="home">
+        @Html.AntiForgeryToken()
+        <div class="col-sm-10 table-primary"><h1>Maintain Animal</h1></div>
 
-    .column {
-        float: left;
-        width: 33.33%;
-        padding: 15px;
-    }
-
-    .row:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-
-    .column {
-        width: 100%;
-    }
-</style>
-
-<div id="main">
-    @using (Html.BeginForm("MaintainAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div>
-            <div class="col-sm-10" style='background-color: #2ba6cb'><h1 style="color:white;">Edit Animal</h1></div>
-        </div>
-
-
-
-        @*start1*@
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="column">
             <div class="text-center">
-                <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.animal.Animal_Image)" style="width:10% ;height:10%;" class="avatar img-circle img-thumbnail" alt="avatar">
+                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" id="preview" class="avatar img-circle img-thumbnail" alt="avatar" style="width:192px;height:192px;">
                 <h6>Upload an animal photo...</h6>
-                <input type="file" name="animalPicture" class="text-center center-block file-upload">
+                <input type="file" id="animalPicture" name="animalPicture" class="text-center center-block file-upload">
             </div>
 
-            <input type="text" name="Animal_ID" value="@Model.animal.Animal_ID" hidden />
-            <div class="form-group" required>
-                <label class="col-md-10"><b>Cross Breed?</b></label><br>
-                <div class="custom-control custom-radio custom-control-inline; col-md-10">
-                    <input type="radio" name="Cross_Breed" value="True" id="Yes">
-                    <label for="customRadio1"><b>Yes</b></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline; col-md-10">
-                    <input type="radio" name="Cross_Breed" value="False" id="No">
-                    <label for="customRadio2"><b>No</b></label>
-                </div>
-            </div>
-
-
-            <div class="col-xs-10" required>
-                <label class="col-md-10"><b>Animal Breed</b></label>
+            <div class="form-group">
+                <label><b>Animal Type</b></label><br />
                 <div class="col-md-10">
-                    <select name="Animal Breed">
-                        @if (Model.breedTypes != null)
+                    <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select" style="width:30%;" onchange="LoadProduct(this)">
+                        @if (Model.animalTypes != null)
                         {
-                            foreach (var item in Model.breedTypes)
+                            <option value="0">-- Select Animal Type--</option>
+                            foreach (var item in Model.animalTypes)
                             {
-                                <option value="@item.Animal_Breed_ID">@item.Animal_Breed_Name</option>
+                                if (item.Animal_Type_ID == Model.animal.Animal_Type_ID)
+                                {
+                                    <option selected value="@item.Animal_Type_ID">@item.Animal_Type_Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Animal_Type_ID">@item.Animal_Type_Name</option>
+                                }
+
                             }
                         }
                         else
                         {
-                            <option>Go add Animal Breed</option>
+                            <option>Go Add Animal Type</option>
                         }
                     </select>
                 </div>
             </div>
 
-            <div class="col-xs-6" required>
-                <label><b>Castrated?</b></label>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="Animal_Castration" value="True" id="Yes">
-                    <label for="customRadio1"><b>Yes</b></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="Animal_Castration" value="False" id="No">
-                    <label for="customRadio2"><b>No</b></label>
-                </div>
-                <div class="form-group">
-                </div>
-
-                <div class="col-xs-6">
-                    <label><b>Animal Name</b></label>
-                    <input type="text" name="Animal_Name" value="@Model.animal.Animal_Name" placeholder="Enter Animal Name" required>
-                </div>
-
-                <div class="form-group">
-                    <label><b>Animal Description</b></label>
-                    <input type="text" name="Animal_Description" value="@Model.animal.Animal_Description" placeholder="Enter Animal Description" required>
-                </div>
-
-
-                <div class="form-group" required>
-                    <label><b>Animal Gender</b></label>
+            <div class="form-group">
+                <label class="col-md-10"><b>Cross Breed?</b></label><br />
+                @if (Model.animal.CrossBreeds.Count == 2)
+                {
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="Animal_Gender" value="Male" id="Male">
-                        <label for="customRadio1"><b>Male</b></label>
+                        <input checked type="radio" onclick="yesnoCheck()" name="Cross_Breed" value="True" id="Cross_Breed_Yes" class="custom-control-input">
+                        <label class="custom-control-label" for="Cross_Breed_Yes">Yes</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="Animal_Gender" value="Female" id="Female">
-                        <label for="customRadio2"><b>Female</b></label>
+                        <input type="radio" onclick="yesnoCheck()" name="Cross_Breed" value="False" id="Cross_Breed_No" class="custom-control-input">
+                        <label class="custom-control-label" for="Cross_Breed_No">No</label>
                     </div>
-
-                    <div class="col-xs-6">
-                        <label><b>Animal Age</b></label>
-                        <input type="number" name="Animal_Age" value="@Model.animal.Animal_Age" placeholder="Enter Animal Age" required>
+                }
+                else
+                {
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" onclick="yesnoCheck()" name="Cross_Breed" value="True" id="Cross_Breed_Yes" class="custom-control-input">
+                        <label class="custom-control-label" for="Cross_Breed_Yes">Yes</label>
                     </div>
-
-
-                    <div class="form-group" required>
-                        <label><b>Animal Size</b></label>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="Animal_Size" value="Small" id="Small">
-                            <label for="customRadio1"><b>Small</b></label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="Animal_Size" value="Medium" id="Medium">
-                            <label for="customRadio2"><b>Medium</b></label>
-                        </div>
-
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="Animal_Size" value="Large" id="Large">
-                            <label for="customRadio2"><b>Large</b></label>
-                        </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input checked type="radio" onclick="yesnoCheck()" name="Cross_Breed" value="False" id="Cross_Breed_No" class="custom-control-input">
+                        <label class="custom-control-label" for="Cross_Breed_No">No</label>
                     </div>
+                }
 
-                    <div class="form-group">
-                        <label><b>Entry Date Of Animal</b></label>
-                        <input type="datetime" name="Animal_Entry_Date" value="@Model.animal.Animal_Entry_Date" placeholder="MM/DD/YY" required />
-                    </div>
+            </div>
+            <div class="col-md-10">
+                <div class="row" style="width:100%;">
+                    <div class="column" style="width:50%;">
 
-                    <div class="form-group">
-                        <label><b>Animal Type</b></label>
-                        <div class="col-md-10">
-                            <select name="AnimalBreed">
-                                @if (Model.animalTypes != null)
+                        <div class="container">
+                            <label class="col-md-10"><b>Animal Breed</b></label>
+                            <select class=" breed custom-select" id="breed1" name="breed">
+                                @if (Model.breedTypes != null)
                                 {
-                                    foreach (var item in Model.animalTypes)
+                                    var crossbreed = 0;
+                                    if (Model.animal.CrossBreeds.Count < 2)
                                     {
-                                        <option value="@item.Animal_Type_ID">@item.Animal_Type_Name</option>
+                                        foreach (var item in Model.animal.CrossBreeds)
+                                        {
+
+                                            crossbreed = Convert.ToInt32(item.Animal_Breed_ID);
+                                        }
+                                        foreach (var item in Model.breedTypes)
+                                        {
+                                            if (item.Animal_Breed_ID == crossbreed)
+                                            {
+                                                <option selected value="@item.Animal_Breed_ID">@item.Animal_Breed_Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Animal_Breed_ID">@item.Animal_Breed_Name</option>
+                                            }
+                                        }
                                     }
+                                    else
+                                    {
+                                        <option value="0">-- Select Breed Type--</option>
+                                    }
+
                                 }
                                 else
                                 {
-                                    <option>Go Add Animal Type</option>
+                                    <option>Go Add Animal Breed Type</option>
                                 }
                             </select>
                         </div>
                     </div>
+                    <div class="column" id="second_breed" style="width:50%; display:none;">
+                        <div class="container">
+                            <label class="col-md-10"><b>Second Breed</b></label>
+                            <select name="breed" id="breed2" class=" breed custom-select">
+                                @if (Model.breedTypes != null)
+                                {
+                                    var crossbreed = 0;
+                                    if (Model.animal.CrossBreeds.Count > 1)
+                                    {
+                                        foreach (var item in Model.animal.CrossBreeds)
+                                        {
 
-                    <div class="form-group">
-                        <label><b>Sterilized?</b></label>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="Animal_Sterilization" value="True" id="Yes">
-                            <label for="customRadio1"><b>Yes</b></label>
+                                            crossbreed = Convert.ToInt32(item.Animal_Breed_ID);
+                                        }
+                                        foreach (var item in Model.breedTypes)
+                                        {
+                                            if (item.Animal_Breed_ID == crossbreed)
+                                            {
+                                                <option selected value="@item.Animal_Breed_ID">@item.Animal_Breed_Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Animal_Breed_ID">@item.Animal_Breed_Name</option>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model.breedTypes)
+                                        {
+                                            if (item.Animal_Breed_ID == crossbreed)
+                                            {
+                                                <option selected value="@item.Animal_Breed_ID">@item.Animal_Breed_Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Animal_Breed_ID">@item.Animal_Breed_Name</option>
+                                            }
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+                                    <option>Go Add Animal Breed Type</option>
+                                }
+                            </select>
                         </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="Animal_Sterilization" value="False" id="No">
-                            <label for="customRadio2"><b>No</b></label>
-                        </div>
+
                     </div>
                 </div>
-
-                @*end1*@
-
-
-                @*start2*@
-                <div class="column">
-                    <div>
-                        <div class="col-sm-10" style='background-color: #2ba6cb'><h style="color:white;">Animal Medical</h></div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label><b>Castrated?</b></label><br />
+                @if (Model.animal.Animal_Castration == true)
+                {
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input checked type="radio" id="Animal_Castration_Yes" value="True" name="Animal_Castration" class="custom-control-input">
+                        <label class="custom-control-label" for="Animal_Castration_Yes">Yes</label>
                     </div>
-                    @if (Model.micro == null)
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="Animal_Castration_No" value="False" name="Animal_Castration" class="custom-control-input">
+                        <label class="custom-control-label" for="Animal_Castration_No">No</label>
+                    </div>
+                }
+                else
+                {
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="Animal_Castration_Yes" value="True" name="Animal_Castration" class="custom-control-input">
+                        <label class="custom-control-label" for="Animal_Castration_Yes">Yes</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input checked type="radio" id="Animal_Castration_No" value="False" name="Animal_Castration" class="custom-control-input">
+                        <label class="custom-control-label" for="Animal_Castration_No">No</label>
+                    </div>
+                }
+
+                <div class="form-group">
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Animal Name</b></label><br />
+                    <input type="text" class="form-control" id="Animal_Name" value="@Model.animal.Animal_Name" name="Animal_Name" placeholder="Enter Animal Name">
+                </div>
+                <br />
+                <div class="form-group">
+                    <label><b>Animal Description</b></label><br />
+                    <textarea type="text" class="form-control" id="Animal_Description" name="Animal_Description" placeholder="Enter Animal Description">@Model.animal.Animal_Description</textarea>
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Animal Age</b></label><br />
+                    <input type="number" class="form-control" value="@Model.animal.Animal_Age" id="Animal_Age" name="Animal_Age" min="0" placeholder="Enter Animal Age">
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Animal Coat</b></label><br />
+                    <input type="text" class="form-control" value="@Model.animal.Animal_Coat" id="Animal_Coat" name="Animal_Coat" placeholder="Animal Coat">
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <label><b>Animal Gender</b></label><br />
+                    @if (Model.animal.Animal_Gender == "Male")
                     {
-                        <div class="col-xs-6">
-                            <label><b>Animal Microchip Code</b></label><br>
-                            <input type="text" name="Animal_Microchip_Code" placeholder="Animal  Microchip Code" required>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input checked type="radio" id="Animal_Gender_Male" value="Male" name="Animal_Gender" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Gender_Male">Male</label>
                         </div>
-
-                        <div class="col-xs-6">
-                            <label><b>Implanteers Pin Number</b></label><br>
-                            <input type="text" name="Implanters_PIN_Number" placeholder="Implanteers Pin Number" required>
-                        </div>
-
-                        <div class="col-xs-6">
-                            <label><b>Date Of Implant</b></label><br>
-                            <input type="datetime" name="Date_of_Implant" placeholder="MM/DD/YY" required>
-                        </div>
-
-
-                        <div class="col-xs-6">
-                            <label><b>Owner Name</b></label><br>
-                            <input type="text" name="Owner_Name" placeholder="Enter Owner Name" required>
-                        </div>
-
-                        <div class="col-xs-6">
-                            <label><b>Owner Contact Number</b></label><br>
-                            <input type="number" value="" placeholder="Owner Contact Number" required>
-                        </div>
-
-                        <div class="col-xs-6">
-                            <label><b>Owner Address</b></label><br>
-                            <input type="text" name="Owner_Address" placeholder="Enter Owner Address" required>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="submit" name="button" value="Save" class="btn btn-default" />
-                            <button type="button" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="Animal_Gender_Female" value="Female" name="Animal_Gender" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Gender_Female">Female</label>
                         </div>
                     }
                     else
                     {
-
-
-                        <div class="col-xs-6">
-                            <label><b>Animal Microchip Code</b></label><br>
-                            <input type="text" name="Animal_Microchip_Code" value="@Model.micro.Animal_Microchip_Code" placeholder="Animal  Microchip Code">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="Animal_Gender_Male" value="Male" name="Animal_Gender" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Gender_Male">Male</label>
                         </div>
-
-                        <div class="col-xs-6">
-                            <label><b>Implanteers Pin Number</b></label><br>
-                            <input type="text" name="Implanters_PIN_Number" value="@Model.micro.Implanters_PIN_Number" placeholder="Implanteers Pin Number">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input checked type="radio" id="Animal_Gender_Female" value="Female" name="Animal_Gender" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Gender_Female">Female</label>
                         </div>
+                    }
+                </div>
 
-                        <div class="col-xs-6">
-                            <label><b>Date Of Implant</b></label><br>
-                            <input type="datetime" name="Date_of_Implant" value="@Model.micro.Date_of_Implant" placeholder="MM/DD/YY" required>
+                <div class="form-group">
+                    <label><b>Animal Size</b></label><br />
+                    @if (Model.animal.Animal_Size == "Small")
+                    {
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input checked type="radio" name="Animal_Size" value="Small" id="Small" class="custom-control-input">
+                            <label class="custom-control-label" for="Small">Small</label>
                         </div>
-
-
-                        <div class="col-xs-6">
-                            <label><b>Owner Name</b></label><br>
-                            <input type="text" name="Owner_Name" value="@Model.micro.Owner_Name" placeholder="Enter Owner Name" required>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Size" value="Medium" id="Medium" class="custom-control-input">
+                            <label class="custom-control-label" for="Medium">Medium</label>
                         </div>
-
-                        <div class="col-xs-6">
-                            <label><b>Owner Contact Number</b></label><br>
-                            <input type="number" value="" placeholder="Owner Contact Number">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Size" value="Large" id="Large" class="custom-control-input">
+                            <label class="custom-control-label" for="Large">Large</label>
                         </div>
-
-                        <div class="col-xs-6">
-                            <label><b>Owner Address</b></label><br>
-                            <input type="text" name="Owner_Address" value="@Model.micro.Owner_Address" placeholder="Enter Owner Address" required>
+                    }
+                    @if (Model.animal.Animal_Size == "Medium")
+                    {
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Size" value="Small" id="Small" class="custom-control-input">
+                            <label class="custom-control-label" for="Small">Small</label>
                         </div>
-
-                        <div class="form-group">
-                            <input type="submit" name="button" value="Save" class="btn btn-default" />
-                            <button type="button" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input checked type="radio" name="Animal_Size" value="Medium" id="Medium" class="custom-control-input">
+                            <label class="custom-control-label" for="Medium">Medium</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Size" value="Large" id="Large" class="custom-control-input">
+                            <label class="custom-control-label" for="Large">Large</label>
+                        </div>
+                    }
+                    @if (Model.animal.Animal_Size == "Large")
+                    {
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Size" value="Small" id="Small" class="custom-control-input">
+                            <label class="custom-control-label" for="Small">Small</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Size" value="Medium" id="Medium" class="custom-control-input">
+                            <label class="custom-control-label" for="Medium">Medium</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input checked type="radio" name="Animal_Size" value="Large" id="Large" class="custom-control-input">
+                            <label class="custom-control-label" for="Large">Large</label>
                         </div>
                     }
 
                 </div>
-                @*start2*@
+
+                <div class="form-group">
+                    <label><b>Entry Date Of Animal</b></label><br />
+                    <input type="date" value="@Model.animal.Animal_Entry_Date.Value.ToString("yyyy-MM-dd")" name="Animal_Entry_Date" id="Animal_Entry_Date" class="form-control" placeholder="Enter Date of Entry" />
+                </div>
+
+
+                <div class="form-group">
+                    <label><b>Sterilized?</b></label><br />
+                    @if (Model.animal.Animal_Sterilization == true)
+                    {
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input checked type="radio" name="Animal_Sterilization" value="True" id="Animal_Sterilization_Yes" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Sterilization_Yes">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Sterilization" value="False" id="Animal_Sterilization_No" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Sterilization_No">No</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Sterilization" value="True" id="Animal_Sterilization_Yes" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Sterilization_Yes">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input checked type="radio" name="Animal_Sterilization" value="False" id="Animal_Sterilization_No" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Sterilization_No">No</label>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Current Location</b></label><br />
+                    <input type="text" name="Animal_Location" value="" id="Animal_Location" class="form-control" placeholder="Enter Current Location">
+                </div>
 
 
             </div>
         </div>
+    </div>
+    <div class="tab-pane fade" id="profile">
+        <div class="column">
+            <div>
+                <div class="col-sm-10 table-primary"><h2>Animal Medical</h2></div>
+            </div>
+            <div class="col-xs-6">
+                <label><b>Animal Microchip Code</b></label><br />
+                <input type="text" class="form-control" id="Animal_Microchip_Code" value="@Model.micro.Animal_Microchip_Code" name="Animal_Microchip_Code" placeholder="Animal  Microchip Code">
+            </div>
+
+            <div class="col-xs-6">
+                <label><b>Implanteers Pin Number</b></label><br />
+                <input type="text" class="form-control" id="Implanters_PIN_Number" value="@Model.micro.Implanters_PIN_Number" name="Implanters_PIN_Number" placeholder="Implanteers Pin Number">
+            </div>
+
+            <div class="col-xs-6">
+                <label><b>Owner Name</b></label><br />
+                <input type="text" class="form-control" id="Owner_Name" value="@Model.micro.Owner_Name" name="Owner_Name" placeholder="Enter Owner Name">
+            </div>
+
+            <div class="col-xs-6">
+                <label><b>Owner Contact Number</b></label><br />
+                <input type="number" id="Owner_Contact_Number" value="@Model.micro.Owner_Contact_Number" name="Owner_Contact_Number" class="form-control" maxlength="10" placeholder="Owner Contact Number">
+            </div>
+
+            <div class="col-xs-6">
+                <label><b>Date Of Implant</b></label><br />
+                <input type="date" value="@Model.micro.Date_of_Implant.Value.ToString("yyyy-MM-dd")" name="Date_of_Implant" id="Date_of_Implant" class="form-control" placeholder="MM/DD/YY">
+            </div>
+
+            <div class="col-xs-6">
+                <label><b>Owner Address</b></label><br />
+                <input type="text" name="Owner_Address" value="@Model.micro.Owner_Address" id="Owner_Address" class="form-control" placeholder="Enter Owner Address">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right col-md-6">Save</button>
+        <button type="button" name="button" value="Cancel" class="btn btn-warning col-md-6">Cancel</button>
+    </div>
+</div>
+
+@*<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>*@
+<script>
+    function yesnoCheck() {
+        if (document.getElementById('Cross_Breed_Yes').checked) {
+            document.getElementById('second_breed').style.display = 'block';
+        }
+        else document.getElementById('second_breed').style.display = 'none';
+
+    }
+    $(function () {
+        $(":file").change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = imageIsLoaded;
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    });
+
+    function imageIsLoaded(e) {
+        $('#preview').attr('src', e.target.result);
+    };
+
+    var today = new Date();
+    if (document.getElementById("Date_of_Implant").value == "") {
+        document.getElementById("Date_of_Implant").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+
+    }
+      if (document.getElementById("Animal_Entry_Date").value == "") {
+
+    document.getElementById("Animal_Entry_Date").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+    }
+
+
+    //fetch products
+    function LoadProduct(categoryDD)
+    {
+        if ($(categoryDD).val() == 0) {
+            alert("Select an Animal Type");
+        } else {
+            $.ajax({
+            type: "GET",
+            url: "/Animal/animalbreed",
+            data: { 'categoryID': $(categoryDD).val() },
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                //render products to appropriate dropdown
+                var s = '<option>--Select Breed--</option>';
+               for (var i = 0; i < data.length; i++) {
+                   s += '<option value="' + data[i].Animal_Breed_ID + '">' + data[i].Animal_Breed_Name + '</option>';
+                }
+                $("#breed1").html(s);
+                $("#breed2").html(s);
+                //data = JSON.parse(data);
+                //alert(data + "Hello");
+
+            },
+            error: function (error) {
+                alert("There was an internal error");
+            }
+        })
+        }
+
+    }
+
+    function Save()
+    {
+
+        var Animal_Type_ID = document.getElementById("Animal_Type_ID");
+        var breed1 = document.getElementById("breed1");
+        var breed2 = document.getElementById("breed2");
+        var Cross_Breed = document.getElementsByName("Cross_Breed");
+        var Animal_Castration = document.getElementsByName("Animal_Castration");
+        var Animal_Gender = document.getElementsByName("Animal_Gender");
+        var Animal_Size = document.getElementsByName("Animal_Size");
+        var Animal_Sterilization = document.getElementsByName("Animal_Sterilization");
+        var Animal_Name = document.getElementById("Animal_Name");
+        var Animal_Description = document.getElementById("Animal_Description");
+        var Animal_Age = document.getElementById("Animal_Age");
+        var Animal_Coat = document.getElementById("Animal_Coat");
+        var Date_of_Implant = document.getElementById("Date_of_Implant");
+        var Animal_Entry_Date = document.getElementById("Animal_Entry_Date");
+        var Animal_Location = document.getElementById("Animal_Location");
+        var Animal_Microchip_Code = document.getElementById("Animal_Microchip_Code");
+        var Implanters_PIN_Number = document.getElementById("Implanters_PIN_Number");
+        var Owner_Name = document.getElementById("Owner_Name");
+        var Owner_Contact_Number = document.getElementById("Owner_Contact_Number");
+        var Owner_Address = document.getElementById("Owner_Address");
+
+        var isvalid = true;
+
+        if (Animal_Name.value == "") {
+            //first remove
+            Animal_Name.classList.remove("is-valid");
+            //then add the class you want
+            Animal_Name.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Animal_Name.classList.remove("is-invalid");
+            //then add the class you want
+            Animal_Name.classList.add("is-valid");
+        }
+
+        if (Animal_Description.value == "") {
+            //first remove
+            Animal_Description.classList.remove("is-valid");
+            //then add the class you want
+            Animal_Description.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Animal_Description.classList.remove("is-invalid");
+            //then add the class you want
+            Animal_Description.classList.add("is-valid");
+        }
+
+        if (Animal_Age.value == "") {
+            //first remove
+            Animal_Age.classList.remove("is-valid");
+            //then add the class you want
+            Animal_Age.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Animal_Age.classList.remove("is-invalid");
+            //then add the class you want
+            Animal_Age.classList.add("is-valid");
+        }
+
+        if (Animal_Coat.value == "") {
+            //first remove
+            Animal_Coat.classList.remove("is-valid");
+            //then add the class you want
+            Animal_Coat.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Animal_Coat.classList.remove("is-invalid");
+            //then add the class you want
+            Animal_Coat.classList.add("is-valid");
+        }
+
+        if (Animal_Entry_Date.value == "") {
+            //first remove
+            Animal_Entry_Date.classList.remove("is-valid");
+            //then add the class you want
+            Animal_Entry_Date.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Animal_Entry_Date.classList.remove("is-invalid");
+            //then add the class you want
+            Animal_Entry_Date.classList.add("is-valid");
+        }
+
+        if (Animal_Location.value == "") {
+            //first remove
+            Animal_Location.classList.remove("is-valid");
+            //then add the class you want
+            Animal_Location.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Animal_Location.classList.remove("is-invalid");
+            //then add the class you want
+            Animal_Location.classList.add("is-valid");
+        }
+
+
+        var breed = false;
+        var ii = 0;
+        while (ii < Cross_Breed.length)
+        {
+            if (Cross_Breed[ii].checked)
+            {
+                breed = true;
+                if (Cross_Breed[ii].value == "True")
+                {
+                    var x = document.getElementById("breed2").selectedIndex;
+                    var z = document.getElementById("breed1").selectedIndex;
+                    if (x == 0 || x==z )
+                    {
+                        alert("Pick a second Breed");
+                        isvalid = false;
+                    }
+                }
+            }
+            ii++;
+        }
+        if (!breed) {
+            alert("Pick Crossbreed");
+            isvalid = false;
+        }
+
+        var castrate = false;
+        var ic = 0;
+        while (ic < Animal_Castration.length) {
+            if (Animal_Castration[ic].checked) {
+                castrate = true;
+            }
+            ic++;
+        }
+        if (!castrate) {
+            alert("Pick a Animal Castration");
+            isvalid = false;
+        }
+        var AnimalGender = false;
+        var ia = 0;
+        while (ia < Animal_Gender.length) {
+            if (Animal_Gender[ia].checked) {
+                AnimalGender = true;
+            }
+            ia++;
+        }
+        if (!AnimalGender) {
+            alert("Pick a Animal Gender");
+            isvalid = false;
+        }
+        var AnimalSize = false;
+        var is = 0;
+        while (is < Animal_Size.length) {
+            if (Animal_Size[is].checked) {
+                AnimalSize = true;
+            }
+            is++;
+        }
+        if (!AnimalSize) {
+            alert("Pick a Animal Size");
+            isvalid = false;
+        }
+        var sterie = false;
+        var si = 0;
+        while (si < Animal_Sterilization.length) {
+            if (Animal_Sterilization[si].checked) {
+                sterie = true;
+            }
+            si++;
+        }
+        if (!sterie) {
+            alert("Pick a Animal Sterilization");
+            isvalid = false;
+        }
+        var a = document.getElementById("Animal_Type_ID").selectedIndex;
+        if (a == 0) {
+            alert("Pick a Animal Type");
+            isvalid = false;
+        }
+        var b = document.getElementById("breed1").selectedIndex;
+        if (b == 0) {
+            alert("Pick a Breed");
+            isvalid = false;
+        }
+
+        if (isvalid)
+        {
+
+            var array = [];
+            array.push(breed1.value);
+            array.push(breed2.value);
+
+            //here we are adding the file
+            var formData = new FormData();
+            var fileUpload = $("#animalPicture").get(0);
+            var files = fileUpload.files;
+
+            formData.append("Animal_Name", Animal_Name.value );
+            formData.append("Animal_Coat", Animal_Coat.value );
+            formData.append("Animal_Age", Animal_Age.value);
+            formData.append("Animal_Description", Animal_Description.value);
+            formData.append("Animal_Sterilization", $('input[name="Animal_Sterilization"]:checked').val());
+            formData.append("Animal_Castration",$('input[name="Animal_Castration"]:checked').val());
+            formData.append("animalPicture", files[0]);
+            formData.append("Animal_Size", $('input[name="Animal_Size"]:checked').val());
+            formData.append("Animal_Gender", $('input[name="Animal_Gender"]:checked').val());
+            formData.append("Animal_Type_ID",Animal_Type_ID.value );
+            formData.append("Cross_Breed", $('input[name="Cross_Breed"]:checked').val());
+            formData.append("breed",array);
+            formData.append("Animal_Entry_Date", Animal_Entry_Date.value);
+            formData.append("Animal_Location", Animal_Location.value);
+
+            formData.append("Animal_Microchip_Code", Animal_Microchip_Code.value);
+            formData.append("Implanters_PIN_Number", Implanters_PIN_Number.value);
+            formData.append("Owner_Name", Owner_Name.value);
+            formData.append("Owner_Contact_Number", Owner_Contact_Number.value);
+            formData.append("Owner_Address", Owner_Address.value);
+            formData.append("Date_of_Implant", Date_of_Implant.value);
+
+            $("#loader").show();
+            console.log(formData)
+            $.ajax(
+                {
+                type: "POST",
+                data: formData,
+                url: "/Animal/MaintainAnimal",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                success: function () {
+                    $("#loader").hide();
+                    isvalid = true;
+                    alert("Yes");
+
+                },
+                error: function (error) {
+                    $("#loader").hide();
+                    isvalid = false;
+                    console.log(error);
+                    //alert("There was an internal error try again later" + error);
+                }
+            });
+
+            if (isvalid) {
+                location.href = '@Url.Action("SearchAnimal","Animal")';
+            }
+        } else {
+            alert("all is not valid");
+        }
 
 
     }
-</div>
+</script>
 @section scripts{
     <script>
         $(function () {
@@ -296,3 +726,17 @@
 
     </script>
 }
+@*<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAwmDJO6_loN_pEkSnVY_AmasgeoIG7dCQ&sensor=false&libraries=places""></script>
+    <script type="text/javascript">
+        google.maps.event.addDomListener(window, 'load', function () {
+            var options = {
+                types: ['(cities)'],
+                componentRestrictions: { country: "in" }
+            };
+
+            var input = document.getElementById('Owner_Address');
+            var places = new google.maps.places.Autocomplete(input, options);
+
+
+        });
+    </script>*@

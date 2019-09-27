@@ -5,7 +5,7 @@
 }
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
-        <div class="col-sm-10" style='background-color: #2ba6cb'><h1 style="color:white;">Search Animal Type</h1></div>
+        <div class="col-sm-12 table-primary"><h1>Search Animal Type</h1></div>
     </div>
     <h1>@ViewBag.errormessage</h1>
     <div class="col-md-10">
@@ -20,11 +20,11 @@
             </div>
         </div>
 
-            <div class="row">
-                <div class="col-md-4">
-                    <button type="submit" value="Search" class="btn btn-primary">Search</button>
-                </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" value="Search" class="btn btn-primary">Search</button>
             </div>
+        </div>
     }
     <br />
     <table class="table table-bordered">
@@ -42,7 +42,7 @@
         </tr>
 
         @if (Model == null)
-            {
+        {
             <tr>
                 <td colspan="8">
                     No results found
@@ -68,28 +68,28 @@
                         @Html.ActionLink("Delete", "Delete", new { id = item.Animal_Type_ID }, new { @class = "btn btn-danger" }) |
                     </td>
                 </tr>
-                    <div class="modal fade" id="@item.Animal_Type_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">@item.Animal_Type_Name</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <span class="value">ID:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Type_ID) <br />
-                                    <span class="value">Name:</span>
-                                    @Html.DisplayFor(modelItem => item.Animal_Type_Name) <br />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Maintain", "MainatainAnimalType", new { id = item.Animal_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" })
-                                </div>
+                <div class="modal fade" id="@item.Animal_Type_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">@item.Animal_Type_Name</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">ID:</span>
+                                @Html.DisplayFor(modelItem => item.Animal_Type_ID) <br />
+                                <span class="value">Name:</span>
+                                @Html.DisplayFor(modelItem => item.Animal_Type_Name) <br />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                @Html.ActionLink("Maintain", "MainatainAnimalType", new { id = item.Animal_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" })
                             </div>
                         </div>
                     </div>
+                </div>
 
             }
         }

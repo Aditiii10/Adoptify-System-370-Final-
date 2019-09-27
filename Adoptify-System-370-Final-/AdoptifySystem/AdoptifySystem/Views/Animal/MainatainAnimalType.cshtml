@@ -1,61 +1,116 @@
 ﻿@model AdoptifySystem.Animal_Type
 
 @{
-    ViewBag.Title = "MaintainAnimalType";
+    ViewBag.Title = "maintainAnimalType";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div id="main">
-    @using (Html.BeginForm())
-    {
-
-        <div class="form-horizontal">
-            <div>
-                <div class="col-sm-10" style='background-color: #2ba6cb'><h1 style="color:white;">Maintain AnimalType</h1></div>
-            </div>
+    <div class="form-horizontal">
+        <div>
+            <div class="col-sm-12 table-primary"><h1>Maintain Animal Type</h1></div>
         </div>
-        @Html.HiddenFor(model => Model.Animal_Type_ID)
-        <div class="form-horizontal">
-            <h4 style="color:red">@ViewBag.errormessage</h4>
-            <hr />
-            <div class="form-group">
-                <label>Animal Type Name</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" id="AnimalTypename" value="@Model.Animal_Type_Name" name="Animal_Type_Name" placeholder="Animal Type Name">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Animal Cost</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" id="AnimalTypeCost" value="@Model.Price" name="Price" placeholder="Animal Type Cost">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" class="btn btn-success float-right">Save</button>
-                </div>
-            </div>
-        </div>
-    }
     </div>
-        @section scripts{
-            <script>
-                $(function () {
-                    var successMessage = '@TempData["SuccessMessage"]'
-                    if (successMessage != '')
-                        alertify.success(successMessage);
-                });
-                $(function () {
-                    var successMessage = '@TempData["EditMessage"]'
-                    if (successMessage != '')
-                        alertify.warning(successMessage);
-                });
-                $(function () {
-                    var successMessage = '@TempData["DeleteMessage"]'
-                    if (successMessage != '')
-                        alertify.error(successMessage);
-                });
-            </script>
-        }
+    <br />
+    <div class="form-horizontal">
+        <input value="@Model.Animal_Type_ID" id="Animal_Type_ID" name="Animal_Type_ID" hidden />
+        <hr />
+        <div class="form-group">
+            <label class="col-md-10">Animal Type Name</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" value="@Model.Animal_Type_Name" id="Animal_Type_Name" name="Animal_Type_Name" placeholder="Animal Type Name" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-10">Animal Selling Price</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="Price" value="@Model.Animal_Type_Name" name="Price" placeholder="Animal Type Cost" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+         $(function () {
+            var successMessage = '@TempData["EditMessage"]'
+            if (successMessage != '')
+                alertify.warning(successMessage);
+         });
+        $(function () {
+            var successMessage = '@TempData["DeleteMessage"]'
+            if (successMessage != '')
+                alertify.error(successMessage);
+        });
+function Save() {
+    var Animal_Type_ID = document.getElementById("Animal_Type_ID");
+                var Animal_Type_Name = document.getElementById("Animal_Type_Name");
+                var Price = document.getElementById("Price");
+                var isvalid = true;
+                if (Animal_Type_Name.value == "") {
+                    //first remove
+                    Animal_Type_Name.classList.remove("is-valid");
+                    //then add the class you want
+                    Animal_Type_Name.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Animal_Type_Name.classList.remove("is-invalid");
+                    //then add the class you want
+                    Animal_Type_Name.classList.add("is-valid");
+                }
+                if (Price.value == "") {
+                    //first remove
+                    Price.classList.remove("is-valid");
+                    //then add the class you want
+                    Price.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Price.classList.remove("is-invalid");
+                    //then add the class you want
+                    Price.classList.add("is-valid");
+                }
+                if (isvalid) {
+                    var formData = new FormData();
+                    formData.append("Animal_Type_ID", Animal_Type_ID.value );
+                    formData.append("Animal_Type_Name", Animal_Type_Name.value );
+                    formData.append("Price", Price.value);
+                    $("#loader").show();
+                $.ajax(
+                    {
+                    type: "POST",
+                    data: formData,
+                    url: "/Animal/MainatainAnimalType",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    success: function (d) {
+                        $("#loader").hide();
+                        isvalid = true;
+                    },
+                    error: function (error) {
+                        $("#loader").hide();
+                        isvalid = false;
+                        alert("There was an internal error try again later" + error);
+                }
+            });
+                    if (isvalid)
+                    {
+                        location.href = '@Url.Action("SearchAnimalType","Animal")';
+                    }
+                }
+            }
+    </script>
+}

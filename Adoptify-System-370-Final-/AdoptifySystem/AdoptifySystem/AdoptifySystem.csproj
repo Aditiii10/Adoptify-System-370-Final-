@@ -332,6 +332,7 @@
     <Compile Include="Controllers\AdoptionFileController.cs" />
     <Compile Include="Controllers\AdoptionsController.cs" />
     <Compile Include="Controllers\Animal_TreatmentController.cs" />
+    <Compile Include="Controllers\BackupController.cs" />
     <Compile Include="Controllers\Cassie\AnimalsDetailsReportController.cs" />
     <Compile Include="Controllers\Cassie\Animal_Kennel_HistoryController.cs" />
     <Compile Include="Controllers\Cassie\Customer_EventController.cs" />
@@ -778,6 +779,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Email\SendEmailView.cshtml" />
+    <Content Include="Views\Backup\BackupDatabase.cshtml" />
     <None Include="Views\ErrorPage\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

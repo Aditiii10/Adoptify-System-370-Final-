@@ -3,12 +3,6 @@
     ViewBag.Title = "AddEmployee";
 }
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <style>
         .row {
             display: flex;
@@ -17,152 +11,146 @@
         .column {
             flex: 50%;
         }
+
+        .mystyle {
+            width: 100%;
+            padding: 25px;
+            background-color: coral;
+            color: white;
+            font-size: 25px;
+            box-sizing: border-box;
+        }
     </style>
 </head>
-<div id="main">
-    @using (Html.BeginForm("AddEmployee", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#home">Employee Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#profile">User Details</a>
+    </li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+    <div id="home" class="tab-pane fade show active">
+
         <div>
             <h1 align="center">Add Employee</h1>
         </div>
-        <div class="row">
-            <div class="column">
-                @Html.AntiForgeryToken()
-                <div>
-                    <div class="col-sm-10" style='background-color: #2ba6cb'><h2 style="color:white;">Employee Details</h2></div>
-                </div>
-                <br />
-                <hr />
-                <br />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <label class="col-md-10"><b>Title</b> </label>
-                    <div class="col-md-10">
-                        <select name="Title">
-                            @if (Model.Titles != null)
-                            {
-                                foreach (var item in Model.Titles)
-                                {
-                                    <option value="@item.Title_ID">@item.Title_Description</option>
-                                }
-
-                            }
-
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label><b></b></label>
-                    <div class="col-md-10">
-                        <select name="EmployeeType">
-                            @if (Model.empTypes != null)
-                            {
-                                foreach (var item in Model.empTypes)
-                                {
-                                    <option value="@item.Emp_Type_ID">@item.Emp_Type_Name</option>
-                                }
-                            }
-                            else
-                            {
-                                <option></option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <br />
-                <div class="form-group">
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="Gender" value="Male" id="Male">
-                        <label for="customRadio1"><b>Male</b></label>
-                    </div>
-                    <div>
-                        <input type="radio" name="Gender" value="Female" id="Female">
-                        <label for="customRadio2"><b>Female</b></label>
-                    </div>
-                </div>
-                    <div class="form-group">
-                        <label><b> </b></label>
-                        <div class="col-md-10">
-
-                            <input name="Emp_Name" type="text" placeholder="Enter Name" required />
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><b></b> </label>
-                        <div class="col-md-10">
-
-                            <input name="Emp_Surname" type="text" placeholder="Enter Surname" required />
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><b></b> </label>
-                        <div class="col-md-10">
-                            <input name="Emp_ContactNumber" type="text" placeholder="Enter Contact Details" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><b></b> </label>
-                        <div class="col-md-10">
-                            <input name="Emp_IDNumber" type="text" placeholder="Enter ID/Passport Number" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><b> </b></label>
-                        <div class="col-md-10">
-                            <input name="Emp_Email" type="text" placeholder="Enter Email Address" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><b></b></label>
-                        <div class="col-md-10">
-                            <input name="Emp_Date_Employed" type="datetime" placeholder="MM/DD/YY" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><b></b></label>
-                        <div class="col-md-10">
-                            <input type="file" name="Contract" id="FileName" class="form-control" />
-                            @Html.ValidationMessageFor(model => model.employee.Emp_Contract, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label><b></b></label>
-                        <div class="col-md-10">
-                            <input name="Username" type="text" placeholder="Enter Username" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><b></b></label>
-                        <div class="col-md-10">
-                            <input name="Password" type="text" id="Password" placeholder="Enter Password" maxlength="8" />
-                        </div>
-                    </div>
-                    @*///script*@
-                    <script>
-                        function myPassword() {
-                            var a = document.getElementById("Password").value;
-                            var b = document.getElementById("Passwords").value;
-
-
-                            if (a != b) {
-                                document.getElementById("messages").innerHTML;
-                                return false;
-                            }
-                        }
-                    </script>
-                </div>
-
-
+        @Html.AntiForgeryToken()
+        <div>
+            <div class="col-sm-12 table-primary"><h2>Employee Details</h2></div>
         </div>
+        <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+        <div class="form-group">
+            <label><b>Employee Type</b></label>
+            <div class="col-md-5" style="width:25%;">
+                <select id="Emp_Type_ID" class="custom-select" name="EmployeeType">
+                    @if (Model.empTypes != null)
+                    {
+                        <option>---Select---</option>
+                        foreach (var item in Model.empTypes)
+                        {
+                            <option value="@item.Emp_Type_ID">@item.Emp_Type_Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option></option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Title</b> </label>
+            <div class="col-md-5" style="width:25%;">
+                <select id="Title_ID" class="custom-select" name="Title">
+                    @if (Model.Titles != null)
+                    {
+                        <option>---Select---</option>
+                        foreach (var item in Model.Titles)
+                        {
+                            <option value="@item.Title_ID">@item.Title_Description</option>
+                        }
 
+                    }
+
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label class="col-md-10"><b>Gender</b> </label><br />
+            <div class="custom-control custom-radio">
+                <input type="radio" name="Gender" value="Male" id="Male" class="custom-control-input">
+                <label class="custom-control-label" for="Male"><b>Male</b></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="Gender" value="Female" id="Female" class="custom-control-input">
+                <label class="custom-control-label" for="Female"><b>Female</b></label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Employee Name </b></label>
+            <div class="col-md-10">
+                <input id="Emp_Name" name="Emp_Name" class="form-control" type="text" placeholder="Enter Name" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Employee Surname</b> </label>
+            <div class="col-md-10">
+                <input id="Emp_Surname" name="Emp_Surname" class="form-control" type="text" placeholder="Enter Surname" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Employee Contact Number</b> </label>
+            <div class="col-md-10">
+                <input name="Emp_ContactNumber" id="Emp_ContactNumber" class="form-control" type="text" placeholder="Enter Contact Details" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Employee ID Number </b> </label>
+            <div class="col-md-10">
+                <input name="Emp_IDNumber" id="Emp_IDNumber" class="form-control" type="text" placeholder="Enter ID/Passport Number" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Employee Email</b></label>
+            <div class="col-md-10">
+                <input name="Emp_Email" id="Emp_Email" class="form-control" type="email" placeholder="Enter Email Address" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Employee Date_Employe</b></label>
+            <div class="col-md-10">
+                <input id="Emp_Date_Employed" name="Emp_Date_Employed" class="form-control" type="date" placeholder="MM/DD/YY" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Employee Contract</b></label>
+            <div class="col-md-10">
+                <input type="file" name="Contract" id="FileName" onchange="ValidateSingleInput(this);" />
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="profile">
+        <div class="form-group">
+            <label><b>Employee Username</b></label>
+            <div class="col-md-10">
+                <input id="Username" name="Username" class="form-control" type="text" placeholder="Enter Username" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Employee Password</b></label>
+            <div class="col-md-10">
+                <input id="Password" name="Password" type="password" class="form-control" placeholder="Enter Password" maxlength="8" />
+            </div>
+        </div>
         <div class="column">
             <div>
-                <div class="col-sm-10" style='background-color: #2ba6cb'><h style="color:white;">Assign User Role </h></div>
+                <div class="col-sm-12 table-primary"><h1>Assign User Role </h1></div>
             </div>
             <label><b>Please Select Level Of Accessiblity:</b></label>
             <div>
@@ -173,23 +161,330 @@
 
                     foreach (var item in Model.Roles)
                     {
-                        <input type="checkbox" name="Role" value="@item.Role_ID">
-                        <label for="defaultUnchecked">@item.Role_Name</label>
-                        <br>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Role @item.Role_ID" name="Role" value="@item.Role_ID">
+                            <label class="custom-control-label" for="Role @item.Role_ID">@item.Role_Name</label>
+                            <br>
+                        </div>
                     }
                 }
 
             </div>
 
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" name="button" value="Save" onsubmit="myPassword" class="btn btn-success float-right">Save</button>
-                @*<input type="submit" name="button"  value="Save" class="btn btn-default" />*@
-                <input type="reset" name="button" value="Reset" class="btn" />
-                <button type="button" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-            </div>
-        </div>
-    }
-    </div>
 
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" name="button" value="Save" onclick="validate()" class="btn btn-success float-right">Save</button>
+            <input type="reset" name="button" value="Reset" class="btn btn-primary" />
+            <button type="button" name="button" value="Cancel" onclick="cancel()" class="btn btn-warning">Cancel</button>
+        </div>
+    </div>
+</div>
+<script>
+       $(document).ready(function () {
+        var dateNewFormat, onlyDate, today = new Date();
+
+        dateNewFormat = today.getFullYear() + '-';
+        if (today.getMonth().length == 2) {
+
+            dateNewFormat += (today.getMonth() + 1);
+        }
+        else {
+            dateNewFormat += '0' + (today.getMonth() + 1);
+        }
+
+        onlyDate = today.getDate();
+        if (onlyDate.toString().length == 2) {
+
+            dateNewFormat += "-" + onlyDate;
+        }
+        else {
+            dateNewFormat += '-0' + onlyDate;
+        }
+
+        $('#Emp_Date_Employed').val(dateNewFormat);
+    });
+    function cancel() {
+        location.href = '@Url.Action("SearchEmployee","Employees")';
+    }
+    function validate() {
+        var Title_ID = document.getElementById("Title_ID");
+        var Emp_Type_ID = document.getElementById("Emp_Type_ID");
+        var Emp_Name = document.getElementById("Emp_Name");
+        var Emp_Surname = document.getElementById("Emp_Surname");
+        var Emp_ContactNumber = document.getElementById("Emp_ContactNumber");
+        var Emp_IDNumber = document.getElementById("Emp_IDNumber");
+        var Emp_Email = document.getElementById("Emp_Email");
+        var Emp_Date_Employed = document.getElementById("Emp_Date_Employed");
+        var FileName = document.getElementById("FileName");
+        var Username = document.getElementById("Username");
+        var Password = document.getElementById("Password");
+        var Gender = document.getElementsByName("Gender");
+
+
+        //var fileUpload = $("#FileName").get(0);
+        //var files = fileUpload.files;
+
+        //// Create FormData object
+        //var fileData = new FormData();
+        //fileData.append(files[0].name, files[0]);
+        //this will detemine if the code can call the post function
+        var isvalid = true;
+
+        if (Emp_Name.value == "") {
+            //first remove
+            Emp_Name.classList.remove("is-valid");
+            //then add the class you want
+            Emp_Name.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Emp_Name.classList.remove("is-invalid");
+            //then add the class you want
+            Emp_Name.classList.add("is-valid");
+        }
+
+        if (Emp_Surname.value == "") {
+            //first remove
+            Emp_Surname.classList.remove("is-valid");
+            //then add the class you want
+            Emp_Surname.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Emp_Surname.classList.remove("is-invalid");
+            //then add the class you want
+            Emp_Surname.classList.add("is-valid");
+        }
+
+        if (Emp_ContactNumber.value == "" || Emp_ContactNumber.value.length != 10) {
+            //first remove
+            Emp_ContactNumber.classList.remove("is-valid");
+            //then add the class you want
+            Emp_ContactNumber.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Emp_ContactNumber.classList.remove("is-invalid");
+            //then add the class you want
+            Emp_ContactNumber.classList.add("is-valid");
+        }
+
+        if (Emp_IDNumber.value == "" || Emp_IDNumber.value.length != 13) {
+            //first remove
+            Emp_IDNumber.classList.remove("is-valid");
+            //then add the class you want
+            Emp_IDNumber.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Emp_IDNumber.classList.remove("is-invalid");
+            //then add the class you want
+            Emp_IDNumber.classList.add("is-valid");
+
+        }
+
+        if (Emp_Email.value == "") {
+            //first remove
+            Emp_Email.classList.remove("is-valid");
+            //then add the class you want
+            Emp_Email.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Emp_Email.classList.remove("is-invalid");
+            //then add the class you want
+            Emp_Email.classList.add("is-valid");
+        }
+
+        if (Emp_Date_Employed.value == "") {
+            //first remove
+            Emp_Date_Employed.classList.remove("is-valid");
+            //then add the class you want
+            Emp_Date_Employed.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Emp_Date_Employed.classList.remove("is-invalid");
+            //then add the class you want
+            Emp_Date_Employed.classList.add("is-valid");
+        }
+
+        if (Username.value != "" || Password.value != "") {
+            Username.classList.remove("is-valid");
+            Username.classList.remove("is-invalid");
+            Password.classList.remove("is-valid");
+            Password.classList.remove("is-invalid");
+
+            if (Username.value == "") {
+                //first remove
+                Username.classList.remove("is-valid");
+                //then add the class you want
+                Username.classList.add("is-invalid");
+                isvalid = false;
+            } else {
+                //first remove
+                Username.classList.remove("is-invalid");
+                //then add the class you want
+                Username.classList.add("is-valid");
+            }
+
+            if (Password.value == "") {
+                //first remove
+                Password.classList.remove("is-valid");
+                //then add the class you want
+                Password.classList.add("is-invalid");
+                isvalid = false;
+            } else {
+                //first remove
+                Password.classList.remove("is-invalid");
+                //then add the class you want
+                Password.classList.add("is-valid");
+            }
+            var array = [];
+        $.each($("input[name='Role']:checked"), function(){
+            array.push($(this).val());
+
+        });
+            if (array.length == 0) {
+            isvalid = false;
+        }
+        }
+        if (Emp_Name.value == "") {
+            //first remove
+            Emp_Name.classList.remove("is-valid");
+            //then add the class you want
+            Emp_Name.classList.add("is-invalid");
+            isvalid = false;
+        } else {
+            //first remove
+            Emp_Name.classList.remove("is-invalid");
+            //then add the class you want
+            Emp_Name.classList.add("is-valid");
+        }
+
+        var gender = false;
+        var i = 0;
+        while (i < Gender.length) {
+            if (Gender[i].checked) {
+                gender = true;
+            }
+            i++;
+        }
+        if (!gender) {
+            alert("Please check some an Gender!");
+             isvalid = false;
+        }
+        var x = document.getElementById("Title_ID").selectedIndex;
+        if (x == 0)
+        {
+            alert("Pick a title");
+            isvalid = false;
+        }
+        var y = document.getElementById("Emp_Type_ID").selectedIndex;
+        if (y == 0)
+        {
+            alert("Pick a Employee Type");
+            isvalid = false;
+        }
+
+        if (isvalid) {
+            //here we add te checkbox data that is checked
+            var array = [];
+        $.each($("input[name='Role']:checked"), function(){
+            array.push($(this).val());
+            console.log($(this).val());
+        });
+            //here we are adding the file
+            var formData = new FormData();
+            var fileUpload = $("#FileName").get(0);
+            var files = fileUpload.files;
+
+            formData.append("Emp_Name", Emp_Name.value);
+            formData.append("Emp_Surname", Emp_Surname.value );
+            formData.append("Emp_ContactNumber", Emp_ContactNumber.value);
+            formData.append("Emp_IDNumber", Emp_IDNumber.value);
+            formData.append("Emp_Email",Emp_Email.value );
+            formData.append("Emp_Date_Employed",Emp_Date_Employed.value );
+            formData.append("Contract", files[0]);
+            formData.append("Username", Username.value);
+            formData.append("Password", Password.value);
+            formData.append("Title_ID",Title_ID.value );
+            formData.append("Emp_Type_ID", Emp_Type_ID.value);
+            formData.append("Role", array);
+
+            // add the data to model
+            //var data = {
+
+            //    Emp_Name: Emp_Name.value,
+            //    Emp_Surname: Emp_Surname.value,
+            //    Emp_ContactNumber: Emp_ContactNumber.value,
+            //    Emp_IDNumber: Emp_IDNumber.value,
+            //    Emp_Email: Emp_Email.value,
+            //    Emp_Date_Employed: Emp_Date_Employed.value,
+            //    //Contract: fileData,
+            //    Username: Username.value,
+            //    Password: Password.value,
+            //    Gender: Gender.value,
+            //    Title_ID: Title_ID.value,
+            //    Emp_Type_ID: Emp_Type_ID.value,
+
+            //}
+
+            alert("all is valid");
+            $("#loader").show();
+            $.ajax(
+                {
+                type: "POST",
+                data: formData,
+                url: "/Employees/AddEmployeein",
+                   cache: false,
+                    contentType: false,
+                    processData: false,
+                success: function (d) {
+                    $("#loader").hide();
+                    isvalid = true;
+
+                },
+                error: function (error) {
+                    $("#loader").hide();
+                    isvalid = false;
+                    alert("There was an internal error try again later" + error);
+                }
+            });
+
+            if (isvalid) {
+                location.href = '@Url.Action("SearchEmployee","Employees")';
+            }
+        } else {
+            alert("all is not valid");
+        }
+
+    }
+    var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png", ".pdf"];
+    function ValidateSingleInput(oInput) {
+        if (oInput.type == "file") {
+            var sFileName = oInput.value;
+            if (sFileName.length > 0) {
+                var blnValid = false;
+                for (var j = 0; j < _validFileExtensions.length; j++) {
+                    var sCurExtension = _validFileExtensions[j];
+                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                        blnValid = true;
+                        break;
+                    }
+                }
+
+                if (!blnValid) {
+                    alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                    oInput.value = "";
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+</script>
