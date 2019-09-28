@@ -750,6 +750,7 @@
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Content>
     <Content Include="appsettings.json" />
+    <Content Include="App_Data\DBBackup.bak" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -966,7 +967,6 @@
     <Content Include="Views\Videoplayer\VideoView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="UploadedFilesHCReport\" />
     <Folder Include="UploadedFilesMedCard\" />
     <Folder Include="UploadedFiles\" />
