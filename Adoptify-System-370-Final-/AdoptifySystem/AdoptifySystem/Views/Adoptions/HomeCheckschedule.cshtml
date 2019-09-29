@@ -9,7 +9,7 @@
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
         <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1>Schedule a HomeCheck</h1>
+            <h1 style="color:white">Schedule a HomeCheck</h1>
             </div>
         </div>
         @using (Html.BeginForm("Save", "Adoptions"))
@@ -23,13 +23,13 @@
     <div>
         <label>Home Schedule Date: </label><input required="required" name="NDate" type="date" id="date" class="form-control" />
     </div>
-    <div class="form-group">
+    @*<div class="form-group">
         <label class="control-label col-md-2" title="Select Desired Employee to perform the HomeCheck Appointment">Employee</label>
         <div class="col-md-10">
             @Html.DropDownList("Emp_ID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Emp_ID, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
     <br />
     <div>
         <label>Adoption ID: </label> <label style="color:red">@ViewBag.ID</label>
