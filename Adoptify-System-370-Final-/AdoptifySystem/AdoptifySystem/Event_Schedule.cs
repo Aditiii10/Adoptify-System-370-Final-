@@ -21,5 +21,10 @@ namespace AdoptifySystem
         public Nullable<System.DateTime> EventEnd { get; set; }
         public string ThemeColour { get; set; }
         public Nullable<bool> IsFullDay { get; set; }
+        public Nullable<int> Emp_ID { get; set; }
+        public Nullable<int> Adoption_ID { get; set; }
+    
+        public virtual Adoption Adoption { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

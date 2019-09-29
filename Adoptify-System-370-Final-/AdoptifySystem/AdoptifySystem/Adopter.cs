@@ -54,6 +54,7 @@ namespace AdoptifySystem
         public Nullable<bool> Animal_Allowed { get; set; }
         public string Animal_Captivity { get; set; }
         public Nullable<bool> Animal_Vaccines_Updated { get; set; }
+        public string Adopter_Occupation { get; set; }
     
         public virtual Title Title { get; set; }
         public virtual Adopter_Status Adopter_Status { get; set; }

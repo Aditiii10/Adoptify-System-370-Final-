@@ -18,7 +18,7 @@ namespace AdoptifySystem.Controllers
         // GET: Vet_Appointment
         public ActionResult Index()
         {
-            var vet_Appointment = db.Vet_Appointment.Include(v => v.Veterinarian);
+            var vet_Appointment = db.Vet_Appointment.Include(v => v.Vet_Appointment_Master);
             return View(vet_Appointment.ToList());
         }
 
@@ -58,7 +58,7 @@ namespace AdoptifySystem.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment.Vet_ID);
+            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment.Vet_Appointment_ID);
             return View(vet_Appointment);
         }
 
@@ -74,7 +74,7 @@ namespace AdoptifySystem.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment.Vet_ID);
+            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment.Vet_Appointment_ID);
             return View(vet_Appointment);
         }
 
@@ -91,7 +91,7 @@ namespace AdoptifySystem.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment.Vet_ID);
+            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment.Vet_Appointment_ID);
             return View(vet_Appointment);
         }
 

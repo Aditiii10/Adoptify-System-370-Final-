@@ -159,7 +159,7 @@ namespace AdoptifySystem.Controllers
         public ActionResult Checkin()
         {
             List<Employee> emp = new List<Employee>();
-            emp = db.Employees.Where(z => z.Emp_Status_ID == 2).ToList();
+            emp = db.Employees.Where(z => z.Employee_Status_ID == 2).ToList();
             flex.employeelist = emp;
             flex.employee = null;
             return View(flex);
@@ -182,7 +182,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.err = "Employee is not found";
                 return View();
                 }
-            empold.Emp_Status_ID = 1;
+            empold.Employee_Status_ID = 1;
             db.Entry(emp).CurrentValues.SetValues(empold);
             db.SaveChanges();
             return RedirectToAction("Index","Home");
@@ -223,7 +223,7 @@ namespace AdoptifySystem.Controllers
         {
 
             List<Employee> emp = new List<Employee>();
-            emp = db.Employees.Where(z => z.Emp_Status_ID == 1).ToList();
+            emp = db.Employees.Where(z => z.Employee_Status_ID == 1).ToList();
             flex.employeelist = emp;
             flex.employee = null;
             return View(flex);
@@ -272,7 +272,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.err = "Employee is not found";
                 return View();
             }
-            empold.Emp_Status_ID = 2;
+            empold.Employee_Status_ID = 2;
             db.Entry(emp).CurrentValues.SetValues(empold);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
