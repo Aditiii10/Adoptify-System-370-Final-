@@ -342,6 +342,7 @@
         </div>
     </div>
     <div class="tab-pane fade" id="profile">
+        @if(Model.micro != null){
         <div class="column">
             <div>
                 <div class="col-sm-10 table-primary"><h2>Animal Medical</h2></div>
@@ -376,6 +377,43 @@
                 <input type="text" name="Owner_Address" value="@Model.micro.Owner_Address" id="Owner_Address" class="form-control" placeholder="Enter Owner Address">
             </div>
         </div>
+        }else{
+    <div class="column">
+        <div>
+            <div class="col-sm-10 table-primary"><h2>Animal Medical</h2></div>
+        </div>
+        <div class="col-xs-6">
+            <label><b>Animal Microchip Code</b></label><br />
+            <input type="text" class="form-control" id="Animal_Microchip_Code" name="Animal_Microchip_Code" placeholder="Animal  Microchip Code">
+        </div>
+
+        <div class="col-xs-6">
+            <label><b>Implanteers Pin Number</b></label><br />
+            <input type="text" class="form-control" id="Implanters_PIN_Number" name="Implanters_PIN_Number" placeholder="Implanteers Pin Number">
+        </div>
+
+        <div class="col-xs-6">
+            <label><b>Owner Name</b></label><br />
+            <input type="text" class="form-control" id="Owner_Name" name="Owner_Name" placeholder="Enter Owner Name">
+        </div>
+
+        <div class="col-xs-6">
+            <label><b>Owner Contact Number</b></label><br />
+            <input type="number" id="Owner_Contact_Number"  name="Owner_Contact_Number" class="form-control" maxlength="10" placeholder="Owner Contact Number">
+        </div>
+
+        <div class="col-xs-6">
+            <label><b>Date Of Implant</b></label><br />
+            <input type="date" name="Date_of_Implant" id="Date_of_Implant" class="form-control" placeholder="MM/DD/YY">
+        </div>
+
+        <div class="col-xs-6">
+            <label><b>Owner Address</b></label><br />
+            <input type="text" name="Owner_Address"  id="Owner_Address" class="form-control" placeholder="Enter Owner Address">
+        </div>
+    </div>
+        }
+
     </div>
     <div class="form-group">
         <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right col-md-6">Save</button>

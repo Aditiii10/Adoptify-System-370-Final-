@@ -3,118 +3,126 @@
     ViewBag.Title = "Search Donor";
      Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="main">
-    <div class="" style="text-align:center;padding-left:120px">
-        <h1>Donor List</h1>
-    </div>
-    <h1>@ViewBag.err</h1>
-    @Html.ActionLink("Create New", "AddDonor", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
-
-    @using (Html.BeginForm("SearchDonor", "Donations", FormMethod.Post))
-    {
-        <div class="row">
-            <div class="col-md-5">
-                <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
-                @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off" , @placeholder = "Search Criteria" ,@class ="form-control" })
-            </div>
+    <div id="main">
+        <div class="" style="text-align:center;padding-left:120px">
+            <h1>Donor List</h1>
         </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <button type="submit" value="Search" class="btn btn-primary">Search</button>
-            </div>
-        </div>
-    }
-        <br />
-
-        <table class="table table-bordered">
-            <tr class="table-primary">
-                <th>
-                    ID
-                </th>
-                <th>
-                    Title
-                </th>
-                <th>
-                    Name
-                    
-                </th>
-                <th>
-                    Surname
-                    
-                </th>
-                <th>
-                    Action
-                </th>
-            </tr>
-
-
-            @if (Model == null)
+        <h1>@ViewBag.err</h1>
+        @using (Html.BeginForm("UploadDonor", "Donations", FormMethod.Post ,new { enctype = "multipart/form-data" }))
+        {
+            <input type="file" name="xmlfile"/>
+            <input type="submit" value="import" class="btn-info" />
+            
+        }
+            @Html.ActionLink("Letter", "CreateathankyoudocumentforDonors", null, new { @style = "color: # fff" }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Create New", "AddDonor", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Export", "export", null, new { @style = "color: # fff" }, new { @class = "btn btn-info" })
+            @using (Html.BeginForm("SearchDonor", "Donations", FormMethod.Post))
             {
-                <tr>
-                    <td colspan="8">
-                        No results found
-                    </td>
-                </tr>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                        @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
             }
-            else
-            {
-                foreach (var item in Model)
+            <br />
+
+            <table class="table table-bordered">
+                <tr class="table-primary">
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Name
+
+                    </th>
+                    <th>
+                        Surname
+
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+
+
+                @if (Model == null)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Donor_ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Title.Title_Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Donor_Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Donor_Surname)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "MaintainDonor", new { id = item.Donor_ID }, new { @class = "btn btn-warning" }) |
-
-                            <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Donor_ID">More info </button> |
-                            @Html.ActionLink("Delete", "DeleteDonor", new { id = item.Donor_ID }, new { @class = "btn btn-danger" }) |
+                        <td colspan="8">
+                            No results found
                         </td>
                     </tr>
-                    <div class="modal fade" id="@item.Donor_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header table-primary">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">@item.Donor_Name</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <span class="value">ID:</span>
-                                    @Html.DisplayFor(modelItem => item.Donor_ID) <br />
-                                    <span class="value">Title:</span>
-                                    @Html.DisplayFor(modelItem => item.Title.Title_Description) <br />
-                                    <span class="value">Name:</span>
-                                    @Html.DisplayFor(modelItem => item.Donor_Name) <br />
-                                    <span class="value">Surname:</span>
-                                    @Html.DisplayFor(modelItem => item.Donor_Surname) <br />
-                                    <span class="value">Email:</span>
-                                    @Html.DisplayFor(modelItem => item.Donor_Email) <br />
-                                    <span class="value">Donations Made:</span>
-                                    @Html.DisplayFor(modelItem => item.Donations.Count) <br />
-                                </div>
-                                <div class="modal-footer">
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Donor_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title.Title_Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Donor_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Donor_Surname)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "MaintainDonor", new { id = item.Donor_ID }, new { @class = "btn btn-warning" }) |
 
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Maintain", "MaintainDonor", new { id = item.Donor_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                                <button class="btn btn-info" data-toggle="modal" data-target="#@item.Donor_ID">More info </button> |
+                                @Html.ActionLink("Delete", "DeleteDonor", new { id = item.Donor_ID }, new { @class = "btn btn-danger" }) |
+                                @Html.ActionLink("View Donor", "ViewDonor", new { id = item.Donor_ID }, new { @class = "btn btn-danger" }) |
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="@item.Donor_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header table-primary">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">@item.Donor_Name</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span class="value">ID:</span>
+                                        @Html.DisplayFor(modelItem => item.Donor_ID) <br />
+                                        <span class="value">Title:</span>
+                                        @Html.DisplayFor(modelItem => item.Title.Title_Description) <br />
+                                        <span class="value">Name:</span>
+                                        @Html.DisplayFor(modelItem => item.Donor_Name) <br />
+                                        <span class="value">Surname:</span>
+                                        @Html.DisplayFor(modelItem => item.Donor_Surname) <br />
+                                        <span class="value">Email:</span>
+                                        @Html.DisplayFor(modelItem => item.Donor_Email) <br />
+                                        <span class="value">Donations Made:</span>
+                                        @Html.DisplayFor(modelItem => item.Donations.Count) <br />
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        @Html.ActionLink("Maintain", "MaintainDonor", new { id = item.Donor_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                    }
                 }
-            }
 
-        </table>
-</div>
+            </table>
+        </div>

@@ -330,7 +330,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     return RedirectToAction("Index", "Home");
                 }
 
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
           
         }
         //BarCodeGenerated

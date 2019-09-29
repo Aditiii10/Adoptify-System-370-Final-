@@ -7,6 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
+using System.Xml.Linq;
 using AdoptifySystem.Models.nickeymodel;
 using Newtonsoft.Json;
 using Syncfusion.DocIO;
@@ -939,5 +941,118 @@ namespace AdoptifySystem.Controllers
                 document.Save("Sample.docx", FormatType.Docx, HttpContext.ApplicationInstance.Response, HttpContentDisposition.Attachment);
             return View();
         }
+        public ActionResult UploadDonor(HttpPostedFileBase xmlfile)
+        {
+            if (xmlfile.ContentType.Equals("application/xml") || xmlfile.ContentType.Equals("text/xml"))
+            {
+                var xmlPath = Server.MapPath("~/FileUpload" + xmlfile.FileName);
+                xmlfile.SaveAs(xmlPath);
+                List<Donor> customers = new List<Donor>();
+
+                //Load the XML file in XmlDocument.
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlPath);
+
+                //Loop through the selected Nodes.
+                foreach (XmlNode node in doc.SelectNodes("/Donors/Donor"))
+                {
+                    //Fetch the Node values and assign it to Model.
+                    customers.Add(new Donor
+                    {
+                        Donor_ID = int.Parse(node["Donor_ID"].InnerText),
+                        Donor_Name = node["Donor_Name"].InnerText,
+                        Donor_Surname = node["Donor_Surname"].InnerText,
+                        Donor_Email = node["Donor_Email"].InnerText,
+                        Title_ID = int.Parse(node["Title_ID"].InnerText),
+                    });
+                }
+                using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
+                {
+                    foreach (var i in customers)
+                    {
+                        var v = db.Donors.Where(a => a.Donor_ID.Equals(i.Donor_ID)).FirstOrDefault();
+
+                        if (v != null)
+                        {
+                            v.Donor_ID = i.Donor_ID;
+                            v.Donor_Name = i.Donor_Name;
+                            v.Donor_Surname = i.Donor_Surname;
+                            v.Donor_Email = i.Donor_Email;
+                            v.Title_ID = i.Title_ID;
+                        }
+                        else
+                        {
+                            db.Donors.Add(i);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+            }
+            else
+            {
+
+            }
+            return RedirectToAction("SearchDonor");
+        }
+
+        public ActionResult export()
+        {
+            List<Donor> donlist = db.Donors.ToList();
+            if (donlist.Count > 0)
+            {
+                var xEle = new XElement("Donors",
+                    from don in donlist
+                    select new XElement("Donor",
+                        new XElement("Donor_ID", don.Donor_ID),
+                        new XElement("Donor_Name", don.Donor_Name),
+                        new XElement("Donor_Surname", don.Donor_Surname),
+                        new XElement("Donor_Email", don.Donor_Email),
+                        new XElement("Title_ID", don.Title_ID),
+                        new XElement("Donations", don.Donations)
+
+                        ));
+               // HttpContextBase context = HttpContextBase.Response;
+                Response.Write(xEle);
+                Response.ContentType = "application/xml";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=DonorsList.xml");
+                Response.End();
+            }
+            //var data = db.Donors.Select(
+            //       donor => new MetadataDonor
+            //       {
+            //           Donor_ID = donor.Donor_ID,
+            //           Donor_Name = donor.Donor_Name,
+            //           Donor_Surname = donor.Donor_Surname,
+            //           Donor_Email = donor.Donor_Email,
+            //           //Title_ID = Convert.ToInt32(donor.Title_ID)
+
+            //       }).ToList();
+
+            //Response.ClearContent();
+            //Response.Buffer = true;
+            //Response.AddHeader("content-disposition", "attachment;filename = Donorslist.xml");
+            //Response.ContentType = "text/xml";
+            //var serializer = new
+            //System.Xml.Serialization.XmlSerializer(data.GetType());
+            //serializer.Serialize(Response.OutputStream, data);
+            return View("SearchDonor");
+        }
+        public ActionResult ViewDonor(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Donor donor = db.Donors.Find(id);
+            if (donor == null)
+            {
+                return HttpNotFound();
+            }
+            flex.Titles = db.Titles.ToList();
+            flex.donor = donor;
+
+            return View(flex);
+        }
+
     }
 }

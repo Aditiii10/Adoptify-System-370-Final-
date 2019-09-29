@@ -1583,6 +1583,7 @@
     <Content Include="Views\Audit_Log\Details.cshtml" />
     <Content Include="Views\Audit_Log\Edit.cshtml" />
     <Content Include="Views\Audit_Log\Index.cshtml" />
+    <Content Include="Views\Donations\ViewDonor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
