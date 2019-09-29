@@ -80,7 +80,7 @@
         </td>
         <td>
             @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
-            @Html.ActionLink("Collect Animal", "CollectAnimal", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Collect Animal", "CollectAnimal", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning" , @Title = "Click to go Collect Animal Screen" })
 
         </td>
     </tr>
@@ -88,8 +88,8 @@
 
 
     </table>
-    @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
-    @Html.ActionLink("Refresh", "CollectionIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+    @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back" })
+    @Html.ActionLink("Refresh", "CollectionIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
 </div>
 
 

@@ -33,11 +33,11 @@
                 <br />
 
                 <div>
-                    <label style="color:darkcyan; font-size:200%">Animal Adoption Fee : R</label> <label style="color:darkcyan; font-size:200%">@ViewBag.Price</label>
+                    <label style="color:darkcyan; font-size:200%" title = "Adoption Fee that the Adopter should pay">Animal Adoption Fee : R</label> <label style="color:darkcyan; font-size:200%">@ViewBag.Price</label>
                 </div>
                 <br />
                 <div>
-                    <label>Payment Type: </label> <select required id="Payment" name="Payment" class="vn form-control" onclick="(this)">
+                    <label title = "Select Payment Type">Payment Type: </label> <select required id="Payment" name="Payment" class="vn form-control" onclick="(this)">
                         <option></option>
                         <option id="Payment" value="Cash" name="Payment">Cash</option>
                         <option id="Payment" value="EFT" name="Payment">EFT</option>
@@ -80,8 +80,8 @@
                 <br />
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        @Html.ActionLink("Back", "AdoptionPaymentIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" })
-                        <input type="submit" value="Pay" class="btn btn-success" style="float:right"/>
+                        @Html.ActionLink("Back", "AdoptionPaymentIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
+                        <input type="submit" value="Pay" class="btn btn-success" style="float:right" title = "Click to Make Payment"/>
                     </div>
                 </div>
             </div>

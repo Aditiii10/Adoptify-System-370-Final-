@@ -20,7 +20,7 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        <label class="control-label col-md-2">Select Adoption Date</label>
+        <label class="control-label col-md-2" title="Select Adoption Date">Select Adoption Date</label>
         <div class="col-md-10">
             <input type="date" name="ADate" class="form-control" required="required" />
             @Html.ValidationMessageFor(model => model.Adoption_Date, "", new { @class = "text-danger", required = "required" })
@@ -38,7 +38,7 @@
         </div>*@
 
     <div class="form-group">
-        <label class="control-label col-md-2">Select Adopter</label>
+        <label class="control-label col-md-2" title="Select Desired Adopter">Select Adopter</label>
         <div class="col-md-10">
             @Html.DropDownList("Adopter_ID", null, htmlAttributes: new { @class = "form-control", required = "required" })
             @Html.ValidationMessageFor(model => model.Adopter_ID, "", new { @class = "text-danger" })
@@ -48,7 +48,7 @@
     <br />
     <br />
     <div class="form-group">
-        <label class="control-label col-md-2">Select Animal</label>
+        <label class="control-label col-md-2" title="Select Desired Animal">Select Animal</label>
         <div class="col-md-10">
             @Html.DropDownList("Animal_ID", null, htmlAttributes: new { @class = "form-control", required = "required" })
             @Html.ValidationMessageFor(model => model.Animal_ID, "", new { @class = "text-danger" })
@@ -86,8 +86,9 @@
     <br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            @Html.ActionLink("Back", "Index", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" })
-            <input type="submit" value="Create" class="btn pull-right btn-success" style="float:right" />
+            @Html.ActionLink("Back", "Index", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
+            @Html.ActionLink("Refresh", "Create", "Adoptions", null, new { @class = "btn btn-secondary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
+            <input type="submit" value="Create" class="btn pull-right btn-success" style="float:right" title="Click to Save New Adoption" />
         </div>
     </div>
 </div>

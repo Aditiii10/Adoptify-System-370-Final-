@@ -78,7 +78,7 @@
         </td>
         <td>
             @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
-            @Html.ActionLink("Homecheck Report", "HomeCheckReport", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning glyphicon glyphicon-calendar" })
+            @Html.ActionLink("Homecheck Report", "HomeCheckReport", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning glyphicon glyphicon-calendar" , @Title = "Click to go to HomeCheck Report Screen"  })
 
         </td>
     </tr>
@@ -86,6 +86,6 @@
 
 
     </table>
-    @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
-    @Html.ActionLink("Refresh", "HomeCheckReportIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+    @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back to Adoption Home"  })
+    @Html.ActionLink("Refresh", "HomeCheckReportIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page"  })
 </div>

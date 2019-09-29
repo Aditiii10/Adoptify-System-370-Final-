@@ -81,10 +81,10 @@
                 @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            @Html.ActionLink("Back", "Index", "Adoptions", null, new { @class = "btn btn-primary pull-left glyphicon glyphicon-remove-sign" })
+            @Html.ActionLink("Back", "Index", "Adoptions", null, new { @class = "btn btn-primary pull-left glyphicon glyphicon-remove-sign", @Title = "Click to go Back"  })
             @*@Html.ActionLink("Cancel Adoption", "Delete", "Adoptions", null, new { @class = "btn btn-danger pull-left glyphicon glyphicon-remove-sign", @style = "float:right", onclick = "return confirm('Are you sure want to Cancel This Adoption Animal? this with Cancel and Forfit the Current Adoption Process!');" })*@
             
-            <input id="Delete" type="submit" value="Cancel Adoption" name="Delete" class="btn btn-danger" onclick="return confirm('Are you sure want to Cancel and Delete This Adoption from the List? this with Cancel and Forfit the Current Adoption Process!')" style="float:right" />
+            <input id="Delete" type="submit" value="Cancel Adoption" name="Delete" class="btn btn-danger" onclick="return confirm('Are you sure want to Cancel and Delete This Adoption from the List? this with Cancel and Forfit the Current Adoption Process!')" style="float:right" title="Click to Delete the following Adoption Details"/>
 
         </div>
             }

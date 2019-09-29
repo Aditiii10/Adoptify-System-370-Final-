@@ -957,7 +957,6 @@
     <Content Include="Views\Adoptions\HomeCheckHistory.cshtml" />
     <Content Include="Views\Adoptions\HomeCheckReportHistory.cshtml" />
     <Content Include="Views\Adoptions\AdoptionPayemenHistory.cshtml" />
-    <Content Include="Views\Adoptions\FileView.cshtml" />
     <Content Include="Views\AdoptionFile\FileView.cshtml" />
     <Content Include="Views\Mecidal_Card\Delete.cshtml" />
     <Content Include="Views\Mecidal_Card\Edit.cshtml" />
