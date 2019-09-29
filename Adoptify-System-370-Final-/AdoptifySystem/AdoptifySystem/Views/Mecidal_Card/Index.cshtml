@@ -13,10 +13,10 @@
         </div>
 
         <p>
-            @Html.ActionLink("Add Medical Card", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Add Medical Card", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success", @Title = "Click to Add New Vet Appoinment" })
         </p>
         <p>
-            @Html.ActionLink("Upload/Download Medical Cards", "FileView", "MedCardFile", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+            @Html.ActionLink("Upload/Download Medical Cards", "FileView", "MedCardFile", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" , @Title = "Click to go Upload/Download Medical Cards"})
         </p>
 
         @using (Html.BeginForm("SearchMedicalCard", "Donations", FormMethod.Post))
@@ -97,16 +97,16 @@
                             @Html.DisplayFor(modelItem => item.Vet_Appointment_Master.Description)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", "Mecidal_Card", new { id = item.Id }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
-                            @Html.ActionLink("Delete", "Delete", "Mecidal_Card", new { id = item.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                            @Html.ActionLink("Edit", "Edit", "Mecidal_Card", new { id = item.Id }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" , @Title = "Click to go Update Medical Card Details"})
+                            @Html.ActionLink("Delete", "Delete", "Mecidal_Card", new { id = item.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash", @Title = "Click to go Delete Medical Card Details" })
                         </td>
                     </tr>
                 }
             }
 
         </table>
-        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
-        @Html.ActionLink("Refresh", "Index", "Mecidal_Card", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back to Home" })
+        @Html.ActionLink("Refresh", "Index", "Mecidal_Card", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
     </div>
 
 

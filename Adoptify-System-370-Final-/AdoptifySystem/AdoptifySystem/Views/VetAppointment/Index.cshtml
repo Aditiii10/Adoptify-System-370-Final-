@@ -14,7 +14,7 @@
 
     <h1>@ViewBag.err</h1>
     <div>
-        @Html.ActionLink("Create New Vet Appointment", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Create New Vet Appointment", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" , @Title = "Click to Add New Vet Appoinment"})
     </div>
     <br />
     @using (Html.BeginForm("SearchAppointment", "Vet_Appointment_Master", FormMethod.Post))
@@ -28,7 +28,7 @@
 
         <div class="row">
             <div class="col-md-4">
-                <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                <button type="submit" value="Search" class="btn btn-primary" title = "Click to Search Vet Appoinment">Search</button>
             </div>
         </div>
     }
@@ -84,7 +84,7 @@
                         @Html.DisplayFor(modelItem => item.VetAppReason.Reason)
                     </td>
                     <td>
-                        <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Vet_Appoint_Line_ID)"> More Info</button>
+                        <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Vet_Appoint_Line_ID)"title = "Click to View Vet Appointment Details"> More Info</button>
                         @*@Html.ActionLink("Edit", "Edit", new { id = item.Vet_Appoint_Line_ID }) |
                             @Html.ActionLink("Details", "Details", new { id = item.Vet_Appoint_Line_ID }) |
                             @Html.ActionLink("Delete", "Delete", new { id = item.Vet_Appoint_Line_ID })*@
@@ -110,11 +110,11 @@
                                 <div class="modal-footer">
                                     <div style="position:center">
 
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil", @Title = "Click to go Update Vet Appointment Details"  })
                                         @*@Html.ActionLink("Details", "Details", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open" })*@
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash", @Title = "Click to go Delete Vet Appointment Details"  })
                                     </div>
-                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal" title = "Click to close Vet Appointment View"><i></i>Close</button>
                                 </div>
                             </div>
                         </div>
@@ -124,8 +124,8 @@
             }
         }
     </table>
-    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
-    @Html.ActionLink("Refresh", "Index", "VetAppointment", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back to Home"  })
+    @Html.ActionLink("Refresh", "Index", "VetAppointment", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page"  })
 </div>
 
 

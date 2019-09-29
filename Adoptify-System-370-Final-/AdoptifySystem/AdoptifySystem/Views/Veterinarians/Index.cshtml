@@ -15,7 +15,7 @@
     </div>
 
     <div class="newButton">
-        @Html.ActionLink("Create New Vet", "Create", "Veterinarians", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus" })
+        @Html.ActionLink("Create New Vet", "Create", "Veterinarians", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus", @Title = "Click to Add New Veterinarian"   })
     </div>
     <p>
         @using (Html.BeginForm("Index", "Veterinarians", FormMethod.Get))
@@ -29,7 +29,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                        <button type="submit" value="Search" class="btn btn-primary" title = "Click to Search Veterinarian">Search</button>
                     </div>
                 </div>
 
@@ -88,7 +88,7 @@
                     @*@Html.ActionLink("Edit", "Edit", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
                         @Html.ActionLink("Details", "Details", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open" })
                         @Html.ActionLink("Delete", "Delete", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })*@
-                    <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Vet_ID)"> More Info</button>
+                    <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Vet_ID)" title = "Click to View Veterinarian Details"> More Info</button>
                 </td>
             </tr>
 
@@ -112,11 +112,11 @@
                             <div class="modal-footer">
                                 <div style="position:center">
                                    
-                                        @Html.ActionLink("Edit", "Edit", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
+                                        @Html.ActionLink("Edit", "Edit", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil", @Title = "Click to go Update Veterinarian Details" })
                                         @*@Html.ActionLink("Details", "Details", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open" })*@
-                                        @Html.ActionLink("Delete", "Delete", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                                        @Html.ActionLink("Delete", "Delete", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash", @Title = "Click to go Delete Veterinarian Details" })
                                     </div>
-                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal" title = "Click to close Veterinarian View"><i></i>Close</button>
                                 </div>
                             </div>
                         </div>
@@ -128,8 +128,8 @@
                 }
 
 </table>
-    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
-    @Html.ActionLink("Refresh", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back to Home" })
+    @Html.ActionLink("Refresh", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
 </div>
 
 

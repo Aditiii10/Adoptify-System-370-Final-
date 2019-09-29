@@ -62,8 +62,8 @@
                     @Html.AntiForgeryToken()
 
                     <div class="form-actions no-color">
-                        @Html.ActionLink("Back to List", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" })
-                        <input type="submit" value="Delete" class="btn btn-danger glyphicon glyphicon-trash center-block" onclick="return confirm('Are you sure want to Cancel and Delete This Veterinarian from the List?')" style="float:right" />
+                        @Html.ActionLink("Back to List", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
+                        <input type="submit" value="Delete" class="btn btn-danger glyphicon glyphicon-trash center-block" onclick="return confirm('Are you sure want to Cancel and Delete This Veterinarian from the List?')" style="float:right" title="Click to Delete the following Vet Details " />
 
 
 

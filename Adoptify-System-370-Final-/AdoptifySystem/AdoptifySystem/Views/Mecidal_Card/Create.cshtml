@@ -21,7 +21,7 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        <label class="control-label col-md-2">Animal:</label>
+        <label class="control-label col-md-2" title = "Select Desired Animal">Animal:</label>
         <div class="col-md-10">
             @Html.DropDownList("Animal_ID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Animal_ID, "", new { @class = "text-danger" })
@@ -29,14 +29,14 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-2">Daignosis Details:</label>
+        <label class="control-label col-md-2" title = "Enter Daignosis Details">Daignosis Details:</label>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Diagnosis_Details, new { htmlAttributes = new { @class = "form-control" }, required = "required" })
+            @Html.EditorFor(model => model.Diagnosis_Details, new { htmlAttributes = new { @class = "form-control" }, required = "required" ,  placeholder = "Enter Daignosis Details" })
             @Html.ValidationMessageFor(model => model.Diagnosis_Details, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-md-2">Vet Appointment:</label>
+        <label class="control-label col-md-2" title = "Select Vet Appointment">Vet Appointment:</label>
         <div class="col-md-10">
             @Html.DropDownList("Vet_Appoint_Line_ID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Vet_Appoint_Line_ID, "", new { @class = "text-danger" })
@@ -44,14 +44,14 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-2">Arriaval From Vet Date:</label><br />
+        <label class="control-label col-md-2" title = "Select Arriaval From Vet Date">Arriaval From Vet Date:</label><br />
         <div class="col-md-10">
             <input type="date" name="date" required="required" />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Next Appointment Date:</label><br />
+            <label class="control-label col-md-2" title = "Select Next Appointment Date">Next Appointment Date:</label><br />
             <div class="col-md-10">
                 <input type="date" name="date" />
             </div>
@@ -59,9 +59,9 @@
 
 
         <div class="form-group">
-            <label class="control-label col-md-2">Animal Treatment:</label>
+            <label class="control-label col-md-2" title = "Does the Animal have a Treatment?">Animal Treatment:</label>
             <div class="col-md-10">
-                <div class="checkbox">
+                <div class="checkbox" title = "True" required>
                     @Html.EditorFor(model => model.Animal_Treatment)
                     @Html.ValidationMessageFor(model => model.Animal_Treatment, "", new { @class = "text-danger" })
                 </div>
@@ -72,8 +72,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Back", "Index", "Mecidal_Card", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" })
-                <input type="submit" value="Create" class="btn btn-success" style="float:right" />
+                @Html.ActionLink("Back", "Index", "Mecidal_Card", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
+                <input type="submit" value="Create" class="btn btn-success" style="float:right" title="Click to Save New Medical Card" />
             </div>
         </div>
     </div>

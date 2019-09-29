@@ -15,7 +15,7 @@
     </div>
 
     <div class="newButton">
-        @Html.ActionLink("Add", "Create", "Animal_Treatment", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus" })
+        @Html.ActionLink("Add", "Create", "Animal_Treatment", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus" , @Title = "Click to Add New Animal Treatment"})
     </div>
     <p>
         @using (Html.BeginForm("Index", "Animal_Treatment", FormMethod.Get))
@@ -115,7 +115,7 @@
                         @*@Html.ActionLink("Edit", "Edit", new { id = item.Treat_ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.Treat_ID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.Treat_ID })*@
-                        <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Treat_ID)"> More Info</button>
+                        <button class="btn btn-info glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Treat_ID)" title = "Click to View Animal Treatment Details"> More Info</button>
                     </td>
                 </tr>
 
@@ -141,11 +141,11 @@
                                 <span class="value">Treatment Cost(R):</span>@Html.DisplayFor(modelItem => item.Treat_cost)<br />
                                 <br />
                                 <div class="">
-                                    @Html.ActionLink("Edit", "Edit", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil" })
-                                    @Html.ActionLink("Delete", "Delete", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+                                    @Html.ActionLink("Edit", "Edit", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil", @Title = "Click to go Update Animal Treatment Details" })
+                                    @Html.ActionLink("Delete", "Delete", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash", @Title = "Click to go Delete Animal Treatment Details"  })
                                 </div>
                                 <br />
-                                <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><i></i>Close</button>
+                                <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal" title = "Click to close Animal Treatment View"><i></i>Close</button>
                             </div>
                         </div>
 
@@ -156,8 +156,8 @@
         }
 
     </table>
-    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
-    @Html.ActionLink("Refresh", "Index", "Animal_Treatment", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" , @Title = "Click to go Back to Home"})
+    @Html.ActionLink("Refresh", "Index", "Animal_Treatment", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
 </div>
 @section scripts{
     <script>
