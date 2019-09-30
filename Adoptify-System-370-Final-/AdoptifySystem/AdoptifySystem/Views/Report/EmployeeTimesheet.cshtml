@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AdoptifySystem.Models.TimeSheet>
+﻿@model IEnumerable<AdoptifySystem.TimeSheet>
 
 @{
     ViewBag.Title = "EmployeeTimesheet";
@@ -40,11 +40,7 @@
     <td>
         @Html.DisplayFor(modelItem => item.Employee.Emp_Surname)
     </td>
-    @*<td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TimeSheet_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TimeSheet_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TimeSheet_ID })
-        </td>*@
+
 </tr>
 }
 

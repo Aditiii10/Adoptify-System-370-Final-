@@ -9,8 +9,10 @@ namespace AdoptifySystem.Controllers.Cassie
     public class ReportController : Controller
     {
         // GET: Report
-        public ActionResult Index()
+
+        public ActionResult EmployeeTimesheet()
         {
+
             return View();
         }
     }

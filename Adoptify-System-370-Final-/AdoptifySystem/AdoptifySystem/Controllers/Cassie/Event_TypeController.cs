@@ -11,112 +11,107 @@ using AdoptifySystem.Models;
 
 namespace AdoptifySystem.Controllers
 {
-    public class Vet_AppointmentController : Controller
+    public class Event_TypeController : Controller
     {
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
-        // GET: Vet_Appointment
+        // GET: Event_Type
         public ActionResult Index()
         {
-            var vet_Appointment = db.Vet_Appointment_Master.Include(v => v.Veterinarian);
-            return View(vet_Appointment.ToList());
+            return View(db.Event_Type.ToList());
         }
 
-        // GET: Vet_Appointment/Details/5
+        // GET: Event_Type/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vet_Appointment_Master vet_Appointment = db.Vet_Appointment_Master.Find(id);
-            if (vet_Appointment == null)
+            Event_Type event_Type = db.Event_Type.Find(id);
+            if (event_Type == null)
             {
                 return HttpNotFound();
             }
-            return View(vet_Appointment);
+            return View(event_Type);
         }
 
-        // GET: Vet_Appointment/Create
+        // GET: Event_Type/Create
         public ActionResult Create()
         {
-            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name");
             return View();
         }
 
-        // POST: Vet_Appointment/Create
+        // POST: Event_Type/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Vet_Appointment_ID,Vet_ID")] Vet_Appointment_Master vet_Appointment)
+        public ActionResult Create([Bind(Include = "Event_Type_ID,Event_Type_Name")] Event_Type event_Type)
         {
             if (ModelState.IsValid)
             {
-                db.Vet_Appointment_Master.Add(vet_Appointment);
+                db.Event_Type.Add(event_Type);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment.Vet_Appointment_ID);
-            return View(vet_Appointment);
+            return View(event_Type);
         }
 
-        // GET: Vet_Appointment/Edit/5
+        // GET: Event_Type/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vet_Appointment_Master vet_Appointment = db.Vet_Appointment_Master.Find(id);
-            if (vet_Appointment == null)
+            Event_Type event_Type = db.Event_Type.Find(id);
+            if (event_Type == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment.Vet_Appointment_ID);
-            return View(vet_Appointment);
+            return View(event_Type);
         }
 
-        // POST: Vet_Appointment/Edit/5
+        // POST: Event_Type/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Vet_Appointment_ID,Vet_ID")] Vet_Appointment_Master vet_Appointment)
+        public ActionResult Edit([Bind(Include = "Event_Type_ID,Event_Type_Name")] Event_Type event_Type)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vet_Appointment).State = EntityState.Modified;
+                db.Entry(event_Type).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment.Vet_Appointment_ID);
-            return View(vet_Appointment);
+            return View(event_Type);
         }
 
-        // GET: Vet_Appointment/Delete/5
+        // GET: Event_Type/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vet_Appointment_Master vet_Appointment = db.Vet_Appointment_Master.Find(id);
-            if (vet_Appointment == null)
+            Event_Type event_Type = db.Event_Type.Find(id);
+            if (event_Type == null)
             {
                 return HttpNotFound();
             }
-            return View(vet_Appointment);
+            return View(event_Type);
         }
 
-        // POST: Vet_Appointment/Delete/5
+        // POST: Event_Type/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Vet_Appointment_Master vet_Appointment = db.Vet_Appointment_Master.Find(id);
-            db.Vet_Appointment_Master.Remove(vet_Appointment);
+            Event_Type event_Type = db.Event_Type.Find(id);
+            db.Event_Type.Remove(event_Type);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
