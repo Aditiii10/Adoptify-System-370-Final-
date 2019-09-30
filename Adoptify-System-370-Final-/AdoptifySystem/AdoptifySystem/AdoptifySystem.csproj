@@ -45,6 +45,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
     </Reference>
@@ -181,40 +186,49 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adopter.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Adopter_Contract.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Adopter_Relative.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Adopter_Status.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Adoption.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdoptionPayment.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Adoption_Status.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Animal.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AnimalTypePrice.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AnimalType_SearchAnimalType_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Animal_Breed.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Animal_Kennel_History.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Animal_Status.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Animal_Treatment.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Animal_Type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -223,17 +237,23 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Audit_Log.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Capture_Medical_Card.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="BreedType_SearchBreedType_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Aditi\AdoptersController.cs" />
     <Compile Include="Controllers\Aditi\VolunteersController.cs" />
+    <Compile Include="Controllers\Cassie\AnimalDetailsController.cs" />
     <Compile Include="Controllers\Cassie\Animal_Kennel_HistoryController.cs" />
+    <Compile Include="Controllers\Cassie\AuditTrailController.cs" />
+    <Compile Include="Controllers\Cassie\ComServeController.cs" />
+    <Compile Include="Controllers\Cassie\EmployeeTimesheetController.cs" />
+    <Compile Include="Controllers\Cassie\IntakeReportController.cs" />
     <Compile Include="Controllers\Cassie\KennelsController.cs" />
     <Compile Include="Controllers\Cassie\ReportController.cs" />
+    <Compile Include="Controllers\Cassie\VetAppointController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Nickey\AdminController.cs" />
@@ -243,138 +263,257 @@
     <Compile Include="Controllers\VeterinariansController.cs" />
     <Compile Include="Controllers\Vet_AppointmentController.cs" />
     <Compile Include="CrossBreed.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalReport\AnimalDetails.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\AnimalDetails1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnimalDetails.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\AnimalDetailsModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnimalDetailsModel.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalReport\AnimalIntake.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnimalIntake.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\AuditTrail.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuditTrail.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\AuditTrailModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuditTrailModel.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalReport\ComServe.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComServe.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\ComServeModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComServeModel.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalReport\Employee.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Employee.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\EmployeeModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployeeModel.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalReport\IntakeAnimalModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IntakeAnimalModel.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalReport\VetAppoint.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VetAppoint.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\VetAppointModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VetAppointModel.xsd</DependentUpon>
     </Compile>
     <Compile Include="Customer_Event.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="database_firewall_rules.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Donation.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Donation_Line.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Donation_Type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Donor.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Donor_SearchDonor_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Don_SearchDon_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Employee.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Employee_Status.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Employee_Type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Emp_Kennel.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Emp_SearchEmpType_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Event_.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Event_Schedule.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Event_Type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Foster_Care.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Foster_Care_Parent.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GoogleChartData.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HomeCheck.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HomeCheckReport.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Kennel.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mecidal_Card.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedCardFile.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Microchip.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KennelHistoryViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\nickeymodel\Flexible.cs" />
-    <Compile Include="MyModel.cs" />
+    <Compile Include="MyModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MyModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MyModel.Designer.cs">
-      <DependentUpon>MyModel.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Packaging_Type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Parent_SearchParent_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Payment.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Payment_Type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role_.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Stock.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Stock_SearchStockType_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Stock_SearchStock_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Stock_Type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFileDetail.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFileDetail1.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TimeSheet.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Title.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Unit_Type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserRole.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User_.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VetAppReason.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Veterinarian.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Vet_Appointment.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Vet_Appointment_Master.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Vet_Appointment_Line.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Vet_SearchVet_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AnimalDetailsVM.cs" />
+    <Compile Include="ViewModel\AuditTrailVM.cs" />
+    <Compile Include="ViewModel\ComServeVM.cs" />
+    <Compile Include="ViewModel\EventSale.cs" />
+    <Compile Include="ViewModel\IntakeReportVM.cs" />
+    <Compile Include="ViewModel\TimesheetVM.cs" />
     <Compile Include="Volunteer.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Volunteer_Hours.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Volunteer_Work_Type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Wolly.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -401,15 +540,15 @@
     <Content Include="JS\bootstrap.min.js" />
     <Content Include="JS\jquery.min.js" />
     <Content Include="JS\popper.min.js" />
-    <Content Include="Model1.Context.tt">
+    <Content Include="MyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>MyModel.edmx</DependentUpon>
+      <LastGenOutput>MyModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model1.tt">
+    <Content Include="MyModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>MyModel.edmx</DependentUpon>
+      <LastGenOutput>MyModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -459,12 +598,78 @@
     <Content Include="Scripts\angular-message-format.min.js.map" />
     <Content Include="Scripts\angular-loader.min.js.map" />
     <Content Include="Scripts\angular-cookies.min.js.map" />
-    <EntityDeploy Include="Model1.edmx">
+    <Content Include="CrystalReport\AuditTrailModel.xsc">
+      <DependentUpon>AuditTrailModel.xsd</DependentUpon>
+    </Content>
+    <Content Include="CrystalReport\AnimalDetailsModel.xsc">
+      <DependentUpon>AnimalDetailsModel.xsd</DependentUpon>
+    </Content>
+    <None Include="CrystalReport\AnimalDetailsModel.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AnimalDetailsModel.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="CrystalReport\AnimalDetailsModel.xss">
+      <DependentUpon>AnimalDetailsModel.xsd</DependentUpon>
+    </Content>
+    <None Include="CrystalReport\AuditTrailModel.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AuditTrailModel.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="CrystalReport\AuditTrailModel.xss">
+      <DependentUpon>AuditTrailModel.xsd</DependentUpon>
+    </Content>
+    <EntityDeploy Include="MyModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>MyModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <Content Include="MyModel.edmx.diagram">
+      <DependentUpon>MyModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="CrystalReport\VetAppointModel.xsc">
+      <DependentUpon>VetAppointModel.xsd</DependentUpon>
+    </Content>
+    <Content Include="CrystalReport\EmployeeModel.xsc">
+      <DependentUpon>EmployeeModel.xsd</DependentUpon>
+    </Content>
+    <Content Include="CrystalReport\ComServeModel.xsc">
+      <DependentUpon>ComServeModel.xsd</DependentUpon>
+    </Content>
+    <None Include="CrystalReport\ComServeModel.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ComServeModel.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="CrystalReport\ComServeModel.xss">
+      <DependentUpon>ComServeModel.xsd</DependentUpon>
+    </Content>
+    <None Include="CrystalReport\EmployeeModel.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EmployeeModel.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="CrystalReport\EmployeeModel.xss">
+      <DependentUpon>EmployeeModel.xsd</DependentUpon>
+    </Content>
+    <Content Include="CrystalReport\IntakeAnimalModel.xsc">
+      <DependentUpon>IntakeAnimalModel.xsd</DependentUpon>
+    </Content>
+    <None Include="CrystalReport\IntakeAnimalModel.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>IntakeAnimalModel.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="CrystalReport\IntakeAnimalModel.xss">
+      <DependentUpon>IntakeAnimalModel.xsd</DependentUpon>
+    </Content>
+    <None Include="CrystalReport\VetAppointModel.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>VetAppointModel.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="CrystalReport\VetAppointModel.xss">
+      <DependentUpon>VetAppointModel.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
@@ -1321,6 +1526,13 @@
     <Content Include="Views\Animal_Kennel_History\Details.cshtml" />
     <Content Include="Views\Animal_Kennel_History\Edit.cshtml" />
     <Content Include="Views\Animal_Kennel_History\Index.cshtml" />
+    <Content Include="Views\IntakeReport\View.cshtml" />
+    <Content Include="Views\IntakeReport\IntakeReportChart.cshtml" />
+    <Content Include="Views\AuditTrail\Index.cshtml" />
+    <Content Include="Views\ComServe\Index.cshtml" />
+    <Content Include="Views\EmployeeTimesheet\Index.cshtml" />
+    <Content Include="Views\AnimalDetails\Animal.cshtml" />
+    <Content Include="Views\VetAppoint\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1341,6 +1553,33 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CrystalReport\AnimalDetails.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>AnimalDetails1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\AnimalIntake.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>AnimalIntake.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\AuditTrail.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>AuditTrail.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\ComServe.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ComServe.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\Employee.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Employee.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\VetAppoint.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>VetAppoint.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

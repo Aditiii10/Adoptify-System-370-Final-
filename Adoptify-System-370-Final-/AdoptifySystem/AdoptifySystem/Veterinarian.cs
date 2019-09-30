@@ -17,7 +17,7 @@ namespace AdoptifySystem
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Veterinarian()
         {
-            this.Vet_Appointment = new HashSet<Vet_Appointment>();
+            this.Vet_Appointment_Master = new HashSet<Vet_Appointment_Master>();
         }
     
         public int Vet_ID { get; set; }
@@ -27,6 +27,6 @@ namespace AdoptifySystem
         public string Vet_Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vet_Appointment> Vet_Appointment { get; set; }
+        public virtual ICollection<Vet_Appointment_Master> Vet_Appointment_Master { get; set; }
     }
 }

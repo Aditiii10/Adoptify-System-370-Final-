@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Nickey\Desktop\370\INF370-Adoptify-System\AdoptifySystem\AdoptifySystem\MyModel.edmx'. 
+﻿// T4 code generation is enabled for model '\\Mac\Home\Desktop\370 NickeyBranch\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\MyModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

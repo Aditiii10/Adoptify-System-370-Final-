@@ -1,0 +1,69 @@
+﻿
+@model  AdoptifySystem.ViewModel.IntakeReportVM
+@using AdoptifySystem.ViewModel
+@using System.Globalization
+@using System.Data
+
+<h2>Animal Intake Report</h2>
+
+<div class="criteria">
+
+@using (Html.BeginForm("Index", "IntakeReport", FormMethod.Post))
+{
+
+    <label>From</label>
+    @Html.TextBoxFor(m => m.DateFrom, "yyyy-MM-dd", new { @Value = "2019-08-01", @type = "date", @class = "form-control" })
+    <label>To</label>
+    @Html.TextBoxFor(m => m.DateTo, "yyyy-MM-dd", new { @Value = "2019-08-30", @type = "date", @class = "form-control" })
+    <br />
+    <input type="submit" value="Generate" class="btn btn-primary" />
+}
+</div>
+<hr />
+@if (Model.animal != null)
+{
+    //shows the chart
+    <div class="panel">
+        @if (Model.chartData != null)
+        {
+            <img src="@Url.Action("IntakeReportChart", "IntakeReport")" />
+        }
+    </div>
+
+    //shows details of individual animal entries
+    <div class="panel panel-info">
+        @foreach (var group in Model.results)
+        {
+            <h4>@group.Key:</h4>
+            <table class="table table-striped">
+                <tr>
+                    <th>Entry Date</th>
+                    <th>Animal Name</th>
+                    <th>Animal Type</th>
+                    <th>Animal Gender</th>
+                    <th>Animal Age</th>
+                    <th>Animal Status</th>
+
+                </tr>
+                @foreach (ReportRecordAnimal groupItem in group)
+                {
+                    <tr>
+                        <td>@groupItem.Animal_Entry_Date</td>
+                        <td>@groupItem.Animal_Name</td>
+                        <td>@groupItem.Animal_Type_Name</td>
+                        <td>@groupItem.Animal_Age.ToString("C", CultureInfo.CurrentCulture)</td>
+                        <td>@groupItem.Animal_Status_Name</td>
+                    </tr>
+                }
+            </table>
+            <hr />
+        }
+        <h3>Animal Intake Total: <strong>@Model.results.Sum(group => group.Sum(item => item.Animal_ID)).ToString("C", CultureInfo.CurrentCulture)</strong></h3>
+
+
+    </div>
+    // download the reports in PDF
+    <div>
+        @Html.ActionLink("Export as PDF", "ExportPDF", "IntakeReport")<br />
+    </div>
+}

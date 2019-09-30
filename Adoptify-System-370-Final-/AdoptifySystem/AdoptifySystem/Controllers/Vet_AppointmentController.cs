@@ -18,7 +18,7 @@ namespace AdoptifySystem.Controllers
         // GET: Vet_Appointment
         public ActionResult Index()
         {
-            var vet_Appointment = db.Vet_Appointment.Include(v => v.Veterinarian);
+            var vet_Appointment = db.Vet_Appointment_Master.Include(v => v.Veterinarian);
             return View(vet_Appointment.ToList());
         }
 
@@ -29,7 +29,7 @@ namespace AdoptifySystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vet_Appointment vet_Appointment = db.Vet_Appointment.Find(id);
+            Vet_Appointment_Master vet_Appointment = db.Vet_Appointment_Master.Find(id);
             if (vet_Appointment == null)
             {
                 return HttpNotFound();
@@ -49,11 +49,11 @@ namespace AdoptifySystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Vet_Appointment_ID,Vet_ID")] Vet_Appointment vet_Appointment)
+        public ActionResult Create([Bind(Include = "Vet_Appointment_ID,Vet_ID")] Vet_Appointment_Master vet_Appointment)
         {
             if (ModelState.IsValid)
             {
-                db.Vet_Appointment.Add(vet_Appointment);
+                db.Vet_Appointment_Master.Add(vet_Appointment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -69,7 +69,7 @@ namespace AdoptifySystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vet_Appointment vet_Appointment = db.Vet_Appointment.Find(id);
+            Vet_Appointment_Master vet_Appointment = db.Vet_Appointment_Master.Find(id);
             if (vet_Appointment == null)
             {
                 return HttpNotFound();
@@ -83,7 +83,7 @@ namespace AdoptifySystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Vet_Appointment_ID,Vet_ID")] Vet_Appointment vet_Appointment)
+        public ActionResult Edit([Bind(Include = "Vet_Appointment_ID,Vet_ID")] Vet_Appointment_Master vet_Appointment)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace AdoptifySystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vet_Appointment vet_Appointment = db.Vet_Appointment.Find(id);
+            Vet_Appointment_Master vet_Appointment = db.Vet_Appointment_Master.Find(id);
             if (vet_Appointment == null)
             {
                 return HttpNotFound();
@@ -115,8 +115,8 @@ namespace AdoptifySystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Vet_Appointment vet_Appointment = db.Vet_Appointment.Find(id);
-            db.Vet_Appointment.Remove(vet_Appointment);
+            Vet_Appointment_Master vet_Appointment = db.Vet_Appointment_Master.Find(id);
+            db.Vet_Appointment_Master.Remove(vet_Appointment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

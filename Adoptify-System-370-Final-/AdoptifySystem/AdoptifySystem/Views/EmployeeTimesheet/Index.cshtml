@@ -1,0 +1,53 @@
+﻿@model  AdoptifySystem.ViewModel.TimesheetVM
+@using AdoptifySystem.ViewModel
+@using System.Globalization
+@using System.Data
+
+<h2>Animal Intake Report</h2>
+
+<div class="criteria">
+@* Create a HTML Form so that users can enter criteria for the Advanced Report *@
+@using (Html.BeginForm("Index", "EmployeeTimesheet", FormMethod.Post))
+{
+   <label>From</label>
+    @Html.TextBoxFor(m => m.DateFrom, "yyyy-MM-dd", new { @Value = "2019-08-01", @type = "date", @class = "form-control" })
+    <label>To</label>
+    @Html.TextBoxFor(m => m.DateTo, "yyyy-MM-dd", new { @Value = "2019-08-30", @type = "date", @class = "form-control" })
+    <br />
+    <input type="submit" value="Generate" class="btn btn-primary" />
+}
+</div>
+<hr />
+
+<div class="panel panel-info">
+    @foreach (var group in Model.results)
+    {
+        <h4>@group.Key:</h4>
+        <table class="table table-striped">
+            <tr>
+                <th>Date</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+
+
+            </tr>
+            @foreach (ReportRecordTimesheet groupItem in group)
+            {
+                <tr>
+                    <td>@groupItem.Emp_Name</td>
+                    <td>@groupItem.Emp_Surname</td>
+                    <td>@groupItem.Check_in</td>
+                    <td>@groupItem.Check_out </td>
+                </tr>
+            }
+        </table>
+        <hr />
+       // <h3>Animal Intake Total: <strong>@Model.results.Sum(group => group.Sum(item => item.Check_in)).ToString("C", CultureInfo.CurrentCulture)</strong></h3>
+    }
+
+ </div>
+        // download the reports in PDF
+        <div>
+            @Html.ActionLink("Export as PDF", "ExportPDF", "ComServe")<br />
+        </div>
+    }

@@ -1,0 +1,52 @@
+﻿@model AdoptifySystem.ViewModel.AuditTrailVM
+@using AdoptifySystem.ViewModel;
+@using System.Globalization
+@using System.Data
+
+<h2>Audit Trail Report</h2>
+<div class="criteria">
+    @using (Html.BeginForm("Index", "AuditTrail", FormMethod.Post))
+    {
+        <label>Select Vendor</label>
+        @Html.DropDownListFor(m => m.SelectedTransactionTypeID, Model.TransactionTypes, "Select", new { @class = "form-control" })
+        <label>From</label>
+        @Html.TextBoxFor(m => m.DateFrom, "yyyy-mm-dd", new { @Value = "2019-10-01", @type = "date", @class = "form-control" })
+        <label>To</label>
+        @Html.TextBoxFor(m => m.DateTo, "yyyy-mm-dd", new { @Value = "2019-10-30", @type = "date", @class = "form-control" })
+        <br />
+        <input type="submit" value="Generate" class="btn btn-primary" />
+    }
+</div>
+@if (Model.Transaction_Type != null)
+{
+    <div class="panel panel-info">
+        @foreach (var group in Model.results)
+        {
+            <h4>@group</h4>
+            <table class="table table-striped">
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Type</th>
+                    <th>Critical Date</th>
+                    <th>Responsible Employee</th>
+                </tr>
+                @foreach (ReportRecord groupItem in group)
+                {
+                    <tr>
+                        <td>@groupItem.Auditlog_DateTime</td>
+                        <td>@groupItem.Transaction_Type</td>
+                        <td>@groupItem.Critical_Date</td>
+                        <td>@groupItem.Emp_Name</td>
+                    </tr>
+                }
+            </table>
+            <hr />
+        }
+
+    </div>
+
+    //Download the report in PDF
+    <div>
+        @Html.ActionLink("Export as PDF", "ExportPDF", "AuditTrail")<br />
+    </div>
+
