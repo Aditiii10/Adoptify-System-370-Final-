@@ -21,7 +21,8 @@
     <hr />
 
     <div>
-        <label>Home Schedule Date: </label><input required="required" name="NDate" type="date" id="date" class="form-control" />
+        <label>Home Schedule Date: </label>
+        <input required="required" name="NDate" type="date" id="HCSdate" class="form-control" />
     </div>
     @*<div class="form-group">
         <label class="control-label col-md-2" title="Select Desired Employee to perform the HomeCheck Appointment">Employee</label>
@@ -66,3 +67,8 @@
 </div>
         }
     </div>
+
+<script>
+     var today = new Date();
+    document.getElementById("HCSdate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+</script>

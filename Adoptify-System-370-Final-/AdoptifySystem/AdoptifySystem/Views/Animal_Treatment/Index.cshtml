@@ -15,7 +15,7 @@
     </div>
 
     <div class="newButton">
-        @Html.ActionLink("Add", "Create", "Animal_Treatment", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus" , @Title = "Click to Add New Animal Treatment"})
+        @Html.ActionLink("Add Animal Treatment", "Create", "Animal_Treatment", null, new { @class = "btn btn-success 	glyphicon glyphicon-plus" , @Title = "Click to Add New Animal Treatment"})
     </div>
     <p>
         @using (Html.BeginForm("Index", "Animal_Treatment", FormMethod.Get))
@@ -140,14 +140,16 @@
 
                                 <span class="value">Treatment Cost(R):</span>@Html.DisplayFor(modelItem => item.Treat_cost)<br />
                                 <br />
-                                <div class="">
-                                    @Html.ActionLink("Edit", "Edit", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil", @Title = "Click to go Update Animal Treatment Details" })
-                                    @Html.ActionLink("Delete", "Delete", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash", @Title = "Click to go Delete Animal Treatment Details"  })
+                                <div class="modal-footer">
+                                    <div style="position:center">
+                                        @Html.ActionLink("Edit", "Edit", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil", @Title = "Click to go Update Animal Treatment Details" })
+                                        @Html.ActionLink("Delete", "Delete", "Animal_Treatment", new { id = item.Treat_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash", @Title = "Click to go Delete Animal Treatment Details" })
+                                    </div>
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal" title="Click to close Animal Treatment View"><i></i>Close</button>
                                 </div>
-                                <br />
-                                <button type="button" class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal" title = "Click to close Animal Treatment View"><i></i>Close</button>
+                                    
+                                </div>
                             </div>
-                        </div>
 
                     </div>
                 </div>

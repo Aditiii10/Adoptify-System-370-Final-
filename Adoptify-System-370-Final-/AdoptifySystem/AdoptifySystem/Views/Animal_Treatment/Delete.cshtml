@@ -89,13 +89,13 @@
                     </dd>
 
 
-                    <dt>
+                    @*<dt>
                         Diagnosis Details
                     </dt>
 
                     <dd>
                         @Html.DisplayFor(model => model.Mecidal_Card.Diagnosis_Details)
-                    </dd>
+                    </dd>*@
 
                 </dl>
 
@@ -105,7 +105,7 @@
 
             <div class="form-actions no-color">
                 @Html.ActionLink("Back to List", "Index", "Animal_Treatment", null, new { @class = "btn btn-primary glyphicon glyphicon-trash", @Title = "Click to go Back"  })
-                <input type="submit" value="Delete" class="btn btn-danger glyphicon glyphicon-trash center-block" onclick="return confirm('Are you sure want to Cancel and Delete This Animal Treatment from the List?')" style="float:right" title="Click to Delete the following Animal Treatment Details"/>
+                <input type="submit" value="Delete" class="btn btn-danger glyphicon glyphicon-trash center-block" onclick="return confirm('Are you sure want to Delete This Animal Treatment from the List?')" style="float:right" title="Click to Delete the following Animal Treatment Details"/>
             </div>
                 }
             </div>

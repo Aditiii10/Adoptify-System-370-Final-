@@ -12,7 +12,7 @@
         <div class="col-sm-10" style='background-color: #2ba6cb'>
             <h1 style="color:white">Home Check Report</h1></div>
         </div>
-        <hr />
+        <hr />..
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2" title = "Select Collection Date">Collection Date: </label>
                     <div class="col-md-10">
-                        <input required type="date" name="date" />
+                        <input required type="date" id="CollectDate" name="date" />
                         </div>
                     </div>
 
@@ -52,3 +52,7 @@
             
         </div>
     </div>
+<script>
+    var today = new Date();
+    document.getElementById("CollectDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+</script>

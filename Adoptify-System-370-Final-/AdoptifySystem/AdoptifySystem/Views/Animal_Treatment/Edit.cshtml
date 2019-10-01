@@ -6,97 +6,103 @@
 }
 
 
-<div id="main">
-    <div class="" style="text-align:center;padding-left:120px">
-        <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1 style="color:white">Edit Animal Treatment Information</h1>
+    <div id="main">
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Edit Animal Treatment Information</h1>
+            </div>
         </div>
-    </div>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4> Animal Treatment Deatils</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Treat_ID)
+            <div class="form-horizontal">
+                <h4> Animal Treatment Deatils</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Treat_ID)
 
-    <div>
-        <label class="control-label col-md-2" title="Select Desired Animal">Animal:</label><br />
+                <div>
+                    <label class="control-label col-md-2" title="Select Desired Animal">Animal:</label><br />
 
-        <div class="col-md-10">
-            @Html.DropDownList("Animal_ID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Animal_ID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2" title="Select Treatment Start Date">Treatment Start Date:</label><br />
-        <div class="col-md-10">
-            <input type="date" name="date" required="required" />
-        </div>
-    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("Animal_ID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Animal_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="control-label col-md-2" title="Select Treatment End Date">Treatment End Date:</label><br />
-        <div class="col-md-10">
-            <input type="date" name="date" required="required" />
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" title="Select Treatment Start Date">Treatment Start Date:</label><br />
+                <div class="col-md-10">
+                    <input type="date" name="date" id="TreatmentStartDate" required="required" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" title="Select Treatment End Date">Treatment End Date:</label><br />
+                <div class="col-md-10">
+                    <input type="date" name="date" id="TreatmentEndDate" required="required" />
+                </div>
+            </div>
 
 
-    <div>
-        <label class="control-label col-md-2" title="Enter Treatment Quantity (kg/g)">Treatment Quantity (kg/g):</label><br />
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Treat_Quantity, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Treatment Quantity (kg/g)" } })
-            @Html.ValidationMessageFor(model => model.Treat_Quantity, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div>
+                <label class="control-label col-md-2" title="Enter Treatment Quantity (kg/g)">Treatment Quantity (kg/g):</label><br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Treat_Quantity, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Treatment Quantity (kg/g)" } })
+                    @Html.ValidationMessageFor(model => model.Treat_Quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div>
-        <label class="control-label col-md-2" title="Enter Treatment Regularity (how often the treatment will take place e.g once or multiple times">Treatment Regularity:</label><br />
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Treat_Regularity, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Treatment Regularity" } })
-            @Html.ValidationMessageFor(model => model.Treat_Regularity, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div>
+                <label class="control-label col-md-2" title="Enter Treatment Regularity (how often the treatment will take place e.g once or multiple times">Treatment Regularity:</label><br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Treat_Regularity, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Treatment Regularity" } })
+                    @Html.ValidationMessageFor(model => model.Treat_Regularity, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div>
-        <label class="control-label col-md-2" title="Enter Treatment Name">Treatment Name:</label><br />
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Treat_Name, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Treatment Name" } })
-            @Html.ValidationMessageFor(model => model.Treat_Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div>
+                <label class="control-label col-md-2" title="Enter Treatment Name">Treatment Name:</label><br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Treat_Name, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Treatment Name" } })
+                    @Html.ValidationMessageFor(model => model.Treat_Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div>
-        <label class="control-label col-md-2" title="Enter Treatment Cost(R)">Treatment Cost(R):</label><br />
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Treat_cost, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Treatment Cost(R)" } })
-            @Html.ValidationMessageFor(model => model.Treat_cost, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div>
+                <label class="control-label col-md-2" title="Enter Treatment Cost(R)">Treatment Cost(R):</label><br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Treat_cost, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Treatment Cost(R)" } })
+                    @Html.ValidationMessageFor(model => model.Treat_cost, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div>
-        <label class="control-label col-md-2" title="Enter Comment">Comment:</label><br />
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Comment" } })
-            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <br />
-    <br />
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @Html.ActionLink("Back", "Index", "Animal_Treatment", null, new { @class = "btn btn-primary", @Title = "Click to go Back" })
-            <input type="submit" value="Update" class="btn btn-success" title="Click to Save Updated Animal Treatment Details" />
-        </div>
-    </div>
-</div>
+            <div>
+                <label class="control-label col-md-2" title="Enter Comment">Comment:</label><br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Comment" } })
+                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.ActionLink("Back", "Index", "Animal_Treatment", null, new { @class = "btn btn-primary", @Title = "Click to go Back" })
+                    <input type="submit" value="Update" class="btn btn-success" title="Click to Save Updated Animal Treatment Details" />
+                </div>
+            </div>
+       
     }
 </div>
-<div>
 
-</div>
 
+<script>
+     var today = new Date();
+
+    document.getElementById("TreatmentStartDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+    document.getElementById("TreatmentEndDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+</script>

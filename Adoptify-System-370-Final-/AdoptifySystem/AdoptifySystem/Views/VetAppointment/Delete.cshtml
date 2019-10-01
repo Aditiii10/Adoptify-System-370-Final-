@@ -18,7 +18,7 @@
             </div>
             <h3 style="text-align:center; color:red">Are you sure you want to delete this Vet Appointment Details?</h3>
             <div>
-                <h4>Vet_Appointment_Master</h4>
+                <h4>Vet Appointment</h4>
                 <hr />
                 <dl class="dl-horizontal">
                     <dt>
@@ -68,7 +68,7 @@
                     @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                @Html.ActionLink("Back to List", "Index", "Vet_Appointment_Master", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
+                @Html.ActionLink("Back to List", "Index", "VetAppointment", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
                 <input type="submit" value="Delete" class="btn btn-danger glyphicon glyphicon-trash center-block" onclick="return confirm('Are you sure want to Cancel and Delete This Vet Appointment from the List?')" style="float:right" title="Click to Delete the following Vet Appointment Details" />
             </div>
                 }

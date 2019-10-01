@@ -103,6 +103,15 @@ namespace AdoptifySystem.Controllers
             obj.HomeCheck_Datetime = dd;
             db.HomeChecks.Add(obj);
             db.SaveChanges();
+            //Sending SMS
+            var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
+            var authToken = "4186739dfb2554741e7dff014074ff82";
+            TwilioClient.Init(accountSid, authToken);
+            var message = MessageResource.Create(
+                to: new Twilio.Types.PhoneNumber("+27676367506"),
+                from: new Twilio.Types.PhoneNumber("+14245431153"),
+                body: "Congrats, You have Successfully Scdueled a Homecheck Appointment for the date of " +" " + NDate + " " + "from Wollies Animal Shelter!"
+            );
             myList = db.Adoptions.ToList();
             TempData["HCSCMessage"] = "Please Save The Current HomeCheck on the Calendar Schedular";
             TempData["HomeCheckMessage"] = "HomeCheck Successfully Booked";
@@ -146,15 +155,14 @@ namespace AdoptifySystem.Controllers
                     aaa.Adopt_Status_ID = 3;
                     db.SaveChanges();
 
+                    //Sending SMS
                     var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                     var authToken = "4186739dfb2554741e7dff014074ff82";
-
                     TwilioClient.Init(accountSid, authToken);
-
                     var message = MessageResource.Create(
                         to: new Twilio.Types.PhoneNumber("+27676367506"),
                         from: new Twilio.Types.PhoneNumber("+14245431153"),
-                        body: "Congrats, Your HomeCheck Report was Successful And Approved. From Wollies Animal Shelter!"
+                            body: "Congrats, Your HomeCheck Report was Successful And Approved. From Wollies Animal Shelter!"
                     );
                    // return View("FileView", "HCReportFile");
                     return View("Index",db.Adoptions);
@@ -170,16 +178,14 @@ namespace AdoptifySystem.Controllers
                     
                     db.SaveChanges();
 
-
+                    //Sending SMS
                     var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                     var authToken = "4186739dfb2554741e7dff014074ff82";
-
                     TwilioClient.Init(accountSid, authToken);
-
                     var message = MessageResource.Create(
                         to: new Twilio.Types.PhoneNumber("+27676367506"),
                         from: new Twilio.Types.PhoneNumber("+14245431153"),
-                        body: "We are sorry to inform you that Your HomeCheck Report was unsuccessful And Dispproved. From Wollies Animal Shelter!"
+                            body: "We are sorry to inform you that Your HomeCheck Report was unsuccessful And Dispproved. From Wollies Animal Shelter!"
                     );
                 }
 
@@ -245,11 +251,10 @@ namespace AdoptifySystem.Controllers
                     db.AdoptionPayments.Add(obj);
                     db.SaveChanges();
 
+                    //Sending SMS
                     var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                     var authToken = "4186739dfb2554741e7dff014074ff82";
-
                     TwilioClient.Init(accountSid, authToken);
-
                     var message = MessageResource.Create(
                         to: new Twilio.Types.PhoneNumber("+27676367506"),
                         from: new Twilio.Types.PhoneNumber("+14245431153"),
@@ -270,11 +275,10 @@ namespace AdoptifySystem.Controllers
                     db.SaveChanges();
 
 
+                    //Sending SMS
                     var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                     var authToken = "4186739dfb2554741e7dff014074ff82";
-
                     TwilioClient.Init(accountSid, authToken);
-
                     var message = MessageResource.Create(
                         to: new Twilio.Types.PhoneNumber("+27676367506"),
                         from: new Twilio.Types.PhoneNumber("+14245431153"),
@@ -327,6 +331,15 @@ namespace AdoptifySystem.Controllers
               
                 aaa.Collection_Date = date;
                 db.SaveChanges();
+                //Sending SMS
+                var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
+                var authToken = "4186739dfb2554741e7dff014074ff82";
+                TwilioClient.Init(accountSid, authToken);
+                var message = MessageResource.Create(
+                    to: new Twilio.Types.PhoneNumber("+27676367506"),
+                    from: new Twilio.Types.PhoneNumber("+14245431153"),
+                    body: "Congrats, You have Successfully Collected your Adopted Animal from Wollies Animal Shelter!"
+                );
                 return View("Finalise");
             }
             Id = Convert.ToInt32(id);
@@ -376,16 +389,14 @@ namespace AdoptifySystem.Controllers
                 TempData["FinaliseMessage"] = "CONGRATULATION!!" + " " + adoption.Animal.Animal_Name + " " + "Successfully Adopted by" + " " + adoption.Adopter.Adopter_Name;
                 db.SaveChanges();
 
+                //Sending SMS
                 var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                 var authToken = "4186739dfb2554741e7dff014074ff82";
-
                 TwilioClient.Init(accountSid, authToken);
-
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "Congrats, you have Successfully Adopted an Animal from Wollies Animal Shelter! Please Come again!"
-                );
+                    body: "Congrats, you have Successfully Adopted an Animal from Wollies Animal Shelter! Please Come again!");
             }
             TempData["FinaliseMessage"] ="CONGRATULATION!!"+" "+ adoption.Animal.Animal_Name+" "+ "Successfully Adopted by" + " " +adoption.Adopter.Adopter_Name;
             return Redirect("http://localhost:55003/Adoptions/Index");
@@ -399,6 +410,16 @@ namespace AdoptifySystem.Controllers
             aaa.Adopt_Status_ID = 8;
             aaa.Animal.Animal_Status_ID = 2;
             db.SaveChanges();
+
+            //Sending SMS
+            var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
+            var authToken = "4186739dfb2554741e7dff014074ff82";
+            TwilioClient.Init(accountSid, authToken);
+            var message = MessageResource.Create(
+                to: new Twilio.Types.PhoneNumber("+27676367506"),
+                from: new Twilio.Types.PhoneNumber("+14245431153"),
+                body: "Sadly, you have Successfully Returned an Animal to Wollies Animal Shelter! Your Adoption HAS been CANCELLED!");
+
             TempData["ReturnMessage"] = "SADDLY!!" + " " + adoption.Animal.Animal_Name + " " + "WAS RETURNED BY ADOPTER:" + " " + adoption.Adopter.Adopter_Name;
             return Redirect("http://localhost:55003/Adoptions/Index");
 
@@ -594,28 +615,15 @@ namespace AdoptifySystem.Controllers
                 adoption.Animal.Animal_Status_ID = 3;
                 db.SaveChanges();
 
+                //Sending SMS
                 var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                 var authToken = "4186739dfb2554741e7dff014074ff82";
-
                 TwilioClient.Init(accountSid, authToken);
-
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
                     body: "Congrats, You have Successfully Started the Adoption Process from Wollies Animal Shelter!"
                 );
-
-                //var client = new Client(creds: new Nexmo.Api.Request.Credentials
-                //{
-                //    ApiKey = "f5a1e3fb",
-                //    ApiSecret = "X7Qdph0vSpDbENYv"
-                //});
-                //var results = client.SMS.Send(request: new SMS.SMSRequest
-                //{
-                //    from = "Nexmo",
-                //    to = "27676367506",
-                //    text = "Hello from Nexmo"
-                //});
 
                 TempData["AdoptionCreateMessage"] = "Adoption Process Successfully Created";
                 return RedirectToAction("Index");
@@ -661,11 +669,11 @@ namespace AdoptifySystem.Controllers
                 TempData["AdoptionDeleteMessage"] = "Adoption Process Successfully Deleted";
                 
                 db.SaveChanges();
+
+                //Sending SMS
                 var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                 var authToken = "4186739dfb2554741e7dff014074ff82";
-
                 TwilioClient.Init(accountSid, authToken);
-
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),

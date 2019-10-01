@@ -22,7 +22,7 @@
     <div class="form-group">
         <label class="control-label col-md-2" title="Select Adoption Date">Select Adoption Date</label>
         <div class="col-md-10">
-            <input type="date" name="ADate" class="form-control" required="required" />
+            <input type="date" name="ADate" id="AdoptionDate" class="form-control" required="required" />
             @Html.ValidationMessageFor(model => model.Adoption_Date, "", new { @class = "text-danger", required = "required" })
         </div>
     </div>
@@ -96,3 +96,9 @@
     
         
     </div>
+
+<script>
+     var today = new Date();
+
+    document.getElementById("AdoptionDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+</script>

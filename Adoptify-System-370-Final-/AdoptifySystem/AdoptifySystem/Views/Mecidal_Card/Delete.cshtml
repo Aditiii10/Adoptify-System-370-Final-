@@ -20,13 +20,13 @@
             <div>
                 <hr />
                 <dl class="dl-horizontal">
-                    <dt>
+                    @*<dt>
                         Vet Appointment Line ID
                     </dt>
 
                     <dd>
                         @Html.DisplayFor(model => model.Vet_Appoint_Line_ID)
-                    </dd>
+                    </dd>*@
 
                     <dt>
                         Diagnosis Details
@@ -41,15 +41,16 @@
                     </dt>
 
                     <dd>
-                        Arrival from Vet
+                        @Html.DisplayFor(model => model.Arrival_from_Vet)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.Next_Appointment_Date_)
+                        Next Appointment Date
                     </dt>
 
                     <dd>
-                        Next Appointment Date
+                        @Html.DisplayFor(model => model.Next_Appointment_Date_)
+                     
                     </dd>
 
                     <dt>
@@ -84,7 +85,7 @@
 
                     <div class="form-actions no-color">
                         @Html.ActionLink("Back to List", "Index", "Mecidal_Card", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left" , @Title = "Click to go Back"  })
-                        <input type="submit" value="Delete" class="btn btn-danger glyphicon glyphicon-trash center-block" style="float:right" title="Click to Delete the following Vet Appointment Details "  />
+                        <input type="submit" value="Delete" class="btn btn-danger glyphicon glyphicon-trash center-block" onclick="return confirm('Are you sure want to Delete This Animal Medical Card from the List?')" style="float:right" title="Click to Delete the following Vet Appointment Details "  />
 
                     </div>
                 }
