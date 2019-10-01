@@ -18,20 +18,20 @@
             <div class="form-group">
                 <label class="col-md-10">Animal Type Name</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="Animal_Type_Name" name="Animal_Type_Name" placeholder="Animal Type Name" required>
+                    <input type="text" class="form-control" id="Animal_Type_Name" name="Animal_Type_Name" title="Enter the Animal Type name" placeholder="Animal Type Name" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-10">Animal Selling Price</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="Price" name="Price" placeholder="Animal Type Cost" required>
+                    <input type="text" class="form-control" id="Price" name="Price" title="Enter the Animal Type current price" placeholder="Animal Type Cost" required>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10">
-                    <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right">Save</button>
+                    @Html.ActionLink("Cancel", "SearchAnimalType", new { @id ="name" } ,new { @class = "btn btn-warning" ,@title="Click to go back to Search Animal Type screen"})
+                    <button type="submit" name="button" title="Click to Add the Following Animal Type Details" value="Save" onclick="Save()" class="btn btn-success float-right">Save</button>
                 </div>
             </div>
         </div>
@@ -115,7 +115,9 @@ function Save() {
 
                     if (isvalid)
                     {
-                        location.href = '@Url.Action("SearchBreedType","Animal")';
+                        //$('#name').click();
+                        
+                        //window.location.href = '@Url.Action("SearchAnimalType","Animal")';
                     }
 
                 }

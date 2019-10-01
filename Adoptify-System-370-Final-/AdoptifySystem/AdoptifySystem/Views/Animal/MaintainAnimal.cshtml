@@ -6,10 +6,10 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#home">Animal Details</a>
+        <a class="nav-link active" title="Click to View Animal Details" data-toggle="tab" href="#home">Animal Details</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile">Microchip</a>
+        <a class="nav-link"  title="Click to View Microchip Details" data-toggle="tab" href="#profile">Microchip</a>
     </li>
 </ul>
 
@@ -23,13 +23,13 @@
             <div class="text-center">
                 <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" id="preview" class="avatar img-circle img-thumbnail" alt="avatar" style="width:192px;height:192px;">
                 <h6>Upload an animal photo...</h6>
-                <input type="file" id="animalPicture" name="animalPicture" class="text-center center-block file-upload">
+                <input type="file" id="animalPicture" name="animalPicture"  title="Click to add image" class="text-center center-block file-upload">
             </div>
 
             <div class="form-group">
                 <label><b>Animal Type</b></label><br />
                 <div class="col-md-10">
-                    <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select" style="width:30%;" onchange="LoadProduct(this)">
+                    <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select" style="width:30%;" onchange="LoadProduct(this)" title="Select Animal Type">
                         @if (Model.animalTypes != null)
                         {
                             <option value="0">-- Select Animal Type--</option>
@@ -86,7 +86,7 @@
 
                         <div class="container">
                             <label class="col-md-10"><b>Animal Breed</b></label>
-                            <select class=" breed custom-select" id="breed1" name="breed">
+                            <select class=" breed custom-select" id="breed1" name="breed" title="Select Breed">
                                 @if (Model.breedTypes != null)
                                 {
                                     var crossbreed = 0;
@@ -125,7 +125,7 @@
                     <div class="column" id="second_breed" style="width:50%; display:none;">
                         <div class="container">
                             <label class="col-md-10"><b>Second Breed</b></label>
-                            <select name="breed" id="breed2" class=" breed custom-select">
+                            <select name="breed" id="breed2" class=" breed custom-select" title="Select Breed">
                                 @if (Model.breedTypes != null)
                                 {
                                     var crossbreed = 0;
@@ -416,8 +416,8 @@
 
     </div>
     <div class="form-group">
-        <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right col-md-6">Save</button>
-        <button type="button" name="button" value="Cancel" class="btn btn-warning col-md-6">Cancel</button>
+        <button type="submit" name="button" value="Save" onclick="Save()" title="Click to Update the Following Animal Details" class="btn btn-success float-right col-md-6">Save</button>
+        @Html.ActionLink("Cancel", "SearchAnimal", new { @class = "btn btn-warning" ,@title="Click to go back to Search Animal screen" })
     </div>
 </div>
 

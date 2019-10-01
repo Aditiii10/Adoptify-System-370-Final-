@@ -9,7 +9,7 @@
     <h1 class="table-primary">Maintain Donor</h1>
     @if (Model != null)
     {
-        <select name="Title_ID" class="form-control col-md-2" id="Title_ID">
+        <select name="Title_ID" class="form-control col-md-2" id="Title_ID" title="Select Title">
 
             @foreach (var item in Model.Titles)
             {
@@ -45,8 +45,8 @@
     <br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-            <button type="submit" name="button" value="Save" onclick="Save()" class=" btn btn-success float-right">Save</button>
+            @Html.ActionLink("Cancel", "SearchDonor", null, new { @class = "btn btn-warning" })
+            <button type="submit" name="button" value="Save" title="Click to Update the Following Donor Details" onclick="Save()" class=" btn btn-success float-right">Save</button>
         </div>
     </div>
 </div>

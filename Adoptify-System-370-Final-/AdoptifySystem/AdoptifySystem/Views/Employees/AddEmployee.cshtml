@@ -47,7 +47,7 @@
                 <div class="form-group">
                     <label><b>Employee Type</b></label>
                     <div class="col-md-5" style="width:25%;">
-                        <select id="Emp_Type_ID" class="custom-select" name="EmployeeType">
+                        <select id="Emp_Type_ID" class="custom-select" name="EmployeeType" title="Select Employee Type">
                             @if (Model.empTypes != null)
                             {
                                 <option>---Select---</option>
@@ -66,7 +66,7 @@
                 <div class="form-group">
                     <label><b>Title</b> </label>
                     <div class="col-md-5" style="width:25%;">
-                        <select id="Title_ID" class="custom-select" name="Title">
+                        <select id="Title_ID" class="custom-select" name="Title" title="Select Title">
                             @if (Model.Titles != null)
                             {
                                 <option>---Select---</option>
@@ -176,9 +176,8 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" name="button" value="Save" onclick="validate()" class="btn btn-success float-right">Save</button>
-                    <input type="reset" name="button" value="Reset" class="btn" />
-                    <button type="button" name="button" value="Cancel" onclick="cancel()" class="btn btn-warning">Cancel</button>
+                    <button type="submit" name="button" value="Save" onclick="validate()" title="Click to Add the Following Employee Details" class="btn btn-success float-right">Save</button>
+                    @Html.ActionLink("Cancel", "SearchEmployee", new { @class = "btn btn-warning" ,@title="Click to go back to Search Employee screen" })
                 </div>
             </div>
         </div>

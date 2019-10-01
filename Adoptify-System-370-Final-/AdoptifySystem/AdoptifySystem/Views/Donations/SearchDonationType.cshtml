@@ -65,10 +65,10 @@
                             @Html.DisplayFor(modelItem => item.Donation_Type_Description)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-warning" }) |
+                            @Html.ActionLink("Edit", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-warning" ,@title="Click to Maintian Donation Type" }) |
 
-                            <button class="btn btn-info" data-toggle="modal" data-target="#@item.Donation_Type_ID">More info </button> |
-                            @Html.ActionLink("Delete", "DeleteDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-danger" }) |                            
+                            <button class="btn btn-info" data-toggle="modal" title="Select to Display Details" data-target="#@item.Donation_Type_ID">More info </button> |
+                            @Html.ActionLink("Delete", "DeleteDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-danger" ,@title="Click to Delete Donation Type" }) |                            
                         </td>
                     </tr>
                     <div class="modal fade" id="@item.Donation_Type_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -91,7 +91,7 @@
                                 <div class="modal-footer">
 
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Maintain", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                                    @Html.ActionLink("Maintain", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" ,@title="Click to Maintian Donation Type" })
                                 </div>
                             </div>
                         </div>

@@ -14,13 +14,16 @@
 
 <div class="form-group">
     <label>Search Criteria:</label><br />
-
+<div id="contain">
     <select name="Search" class="custom-select-sm">
         <option>Select Option </option>
-        <option value="User_Type">User Type</option>
+        <option value="User">User</option>
         <option value="Date">Date</option>
         <option value="Transaction Type">Transaction Type</option>
     </select>
+    </div>
+    <input type="button" id="clone" />
+    <br />
     <input type="text" name="othercolor" id="othercolor" style='display:none;' />
 
 </div>
@@ -85,7 +88,7 @@
 
                 <td>
 
-                    @Html.ActionLink("Details", "Details", new { id = item.Auditlog_ID }, new { @class = "btn btn-success" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Auditlog_ID }, new { @class = "btn btn-success" })
                     @*@Html.ActionLink("Edit", "Edit", new { id = item.Auditlog_ID }, new { @class = "btn btn-warning" }) |*@
                     @*@Html.ActionLink("Delete", "Delete", new { id = item.Auditlog_ID }, new { @class = "btn btn-danger" })*@
                 </td>
@@ -96,6 +99,16 @@
 
 
 </table>
+<script>
+$("#clone").bind("click", function () { 
+            //Clone the DropDownList
+            var ddl = $("#Search").clone()
+ 
+            //Append to the DIV.
+            $("#contain").append(ddl);
+            
+        });
+</script>
 
 
 

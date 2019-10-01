@@ -120,6 +120,88 @@ namespace AdoptifySystem.Controllers.Zinhle
             return RedirectToAction("Index");
         }
 
+        public ActionResult Search(string search,string[] option)
+        {
+            List<Audit_Log> list = new List<Audit_Log>();
+
+            foreach (var item in option)
+            {
+                List<Audit_Log> templist = new List<Audit_Log>();
+                switch (item)
+                {
+                    case "Transaction Type":
+                       
+                            templist = db.Audit_Log.Where(z => z.Transaction_Type.StartsWith(search)).ToList();
+                        if (list.Count>0)
+                        {
+                            int count = 0;
+                            foreach(var audit in templist)
+                            {
+                               foreach(var cur in list)
+                                {
+                                    
+                                    if (audit.Auditlog_ID == cur.Auditlog_ID)
+                                    {
+                                        count++;
+                                    }
+                                }
+                                if (count == 0)
+                                {
+                                    list.Add(audit);
+                                }
+                            }
+                        }
+                        
+                        
+                    break;
+                    case "User":
+                        list = db.Audit_Log.Where(z => z.User_.Employee.Emp_Name.StartsWith(search)).ToList();
+                        if (list.Count > 0)
+                        {
+                            int count = 0;
+                            foreach (var audit in templist)
+                            {
+                                foreach (var cur in list)
+                                {
+
+                                    if (audit.Auditlog_ID == cur.Auditlog_ID)
+                                    {
+                                        count++;
+                                    }
+                                }
+                                if (count == 0)
+                                {
+                                    list.Add(audit);
+                                }
+                            }
+                        }
+                        break;
+                    case "Date":
+                        list = db.Audit_Log.Where(z => z.Critical_Date.StartsWith(search)).ToList();
+                        if (list.Count > 0)
+                        {
+                            int count = 0;
+                            foreach (var audit in templist)
+                            {
+                                foreach (var cur in list)
+                                {
+
+                                    if (audit.Auditlog_ID == cur.Auditlog_ID)
+                                    {
+                                        count++;
+                                    }
+                                }
+                                if (count == 0)
+                                {
+                                    list.Add(audit);
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+            return View("Index",list);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

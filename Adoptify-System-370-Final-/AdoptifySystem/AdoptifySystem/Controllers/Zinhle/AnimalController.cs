@@ -197,6 +197,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             
             if (!(search == ""))
             {
+                db.Database.CommandTimeout = 300;
                 var animallist = db.Animals.Where(z=>z.Animal_Name.Equals(search)).ToList();
                 if (animallist == null)
                 {
@@ -303,7 +304,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return Content("MaintainDonationType", "Donations");
+                    return Content("");
                 }
             
             
@@ -567,7 +568,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 {
                     //you cant delete becasue its referenced to another table
                     ViewBag.err = "You can not delete this";
-                    return RedirectToAction("SearchDonationType");
+                    return RedirectToAction("SearchBreedType");
                 }
                 else
                 {
@@ -577,6 +578,59 @@ namespace AdoptifySystem.Controllers.Zinhle
                 }
             }
             return RedirectToAction("SearchBreedType");
+
+        }
+
+        public ActionResult DeleteAnimal(int? id)
+        {
+
+            try
+            {
+                if (id != 0)
+                {
+                    Animal animal = db.Animals.Find(id);
+                    int status = Convert.ToInt32(animal.Animal_Status_ID);
+
+                    //kennel
+                    //adoption
+                    //status - Adoption
+                    if (status == 3 || status == 5)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return RedirectToAction("SearchAnimal");
+                    }
+                    else
+                    {
+                        if (animal.Microchips.Count != 0)
+                        {
+                            foreach (var item in animal.Microchips)
+                            {
+                                db.Microchips.Remove(item);
+                                db.SaveChanges();
+                            }
+
+                        }
+                        if (animal.CrossBreeds.Count != 0)
+                        {
+                            foreach (var item in animal.CrossBreeds)
+                            {
+                                db.CrossBreeds.Remove(item);
+                                db.SaveChanges();
+                            }
+                        }
+                        db.Animals.Remove(animal);
+                        db.SaveChanges();
+                        return RedirectToAction("SearchAnimal");
+                    }
+                }
+                return RedirectToAction("SearchAnimal");
+            }
+            catch (Exception e)
+            {
+                TempData["Success"] = e.Message;
+                return RedirectToAction("SearchAnimal");
+            }
 
         }
         public ActionResult DeleteAnimalType(int? id)
@@ -603,37 +657,75 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
 
-        /*public ActionResult ClaimAnimal()
+        public ActionResult ClaimAnimal()
          {
              try
              {
-                 innovation.animals = db.Animals.Select( x=> new Animal { Animal_Name = x.Animal_Name}).ToList();
-
-
+                db.Database.CommandTimeout = 300;
+                 innovation.animals = db.Animals.Where(z=> z.Animal_Status_ID == 1 || z.Animal_Status_ID == 4).ToList();
                  return View(innovation);
              }
              catch (Exception e)
              {
                  ViewBag.err = e.Message;
-                 return RedirectToAction("Index", "Employees");
+                 return RedirectToAction("SearchAnimal");
 
              }
 
          }
 
-         [HttpPost]
-         public ActionResult ClaimAnimal()
+         public ActionResult RemoveClaimAnimal(int id)
          {
+            try
+            {
+                if (id != 0)
+                {
+                    Animal animal = db.Animals.Find(id);
+                    int status = Convert.ToInt32(animal.Animal_Status_ID);
+
+                    //kennel
+                    //adoption
+                    //status - Adoption
+                    if (status == 3 || status == 5)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return RedirectToAction("SearchAnimal");
+                    }
+                    else
+                    {
+                        if (animal.Microchips.Count != 0)
+                        {
+                            foreach (var item in animal.Microchips)
+                            {
+                                db.Microchips.Remove(item);
+                                db.SaveChanges();
+                            }
+                            
+                        }
+                        if (animal.CrossBreeds.Count != 0)
+                        {
+                            foreach (var item in animal.CrossBreeds)
+                            {
+                                db.CrossBreeds.Remove(item);
+                                db.SaveChanges();
+                            }
+                        }
+                        db.Animals.Remove(animal);
+                        db.SaveChanges();
+                        return RedirectToAction("SearchAnimal");
+                    }
+                }
+                return RedirectToAction("SearchAnimal");
+            }
+            catch (Exception e)
+            {
+                TempData["Success"] = e.Message;
+                return RedirectToAction("SearchAnimal");
+            }
 
 
-
-             Animal animal = new Animal();
-             Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Temporary").FirstOrDefault();
-             animal.Animal_Status_ID = status.Animal_Status_ID;
-             db.Animals.Add(animal);
-             db.SaveChanges();
-
-
-         }*/
+            //return RedirectToAction("ClaimAnimal");
+        }
     }
 }

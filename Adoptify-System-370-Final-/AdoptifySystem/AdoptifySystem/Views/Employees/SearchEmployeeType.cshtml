@@ -7,7 +7,7 @@
     <div class="col-sm-12 table-primary"><h1>Search Employee Type</h1></div>
 
     <h1>@ViewBag.errormessage</h1>
-    @Html.ActionLink("Add Employee Type", "AddEmployeeType", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Add Employee Type", "AddEmployeeType", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" ,@title="Click to Add Employee Type" })
     @using (Html.BeginForm("SearchEmployeeType", "Employees", FormMethod.Get))
     {
         <div class="row">
@@ -19,7 +19,7 @@
 
         <div class="row">
             <div class="col-md-4">
-                <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                <button type="submit" value="Search" title="Click to Search Employee Type" class="btn btn-primary">Search</button>
             </div>
         </div>
     }
@@ -59,7 +59,7 @@
                         @Html.DisplayFor(modelItem => item.Emp_Type_Description)
                     </td>
                     <td>
-                        <button class="btn btn-info" data-toggle="modal" data-target="#@item.Emp_Type_ID">More Info </button> |
+                        <button class="btn btn-info" data-toggle="modal" title="Select to Display Details" data-target="#@item.Emp_Type_ID">More Info </button> |
                      
                     </td>
                 </tr>
@@ -80,8 +80,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                @Html.ActionLink("Delete", "DeleteEmployeeType", new { id = item.Emp_Type_ID }, new { @class = "btn btn-danger" }) 
-                                @Html.ActionLink("Maintain Employee Type", "MaintainEmployeeType", new { id = item.Emp_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                                @Html.ActionLink("Delete", "DeleteEmployeeType", new { id = item.Emp_Type_ID }, new { @class = "btn btn-danger" ,@title="Click to Delete Employee Type"}) 
+                                @Html.ActionLink("Maintain Employee Type", "MaintainEmployeeType", new { id = item.Emp_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" ,@title="Click to Maintian Employee Type" })
                             </div>
                         </div>
                     </div>

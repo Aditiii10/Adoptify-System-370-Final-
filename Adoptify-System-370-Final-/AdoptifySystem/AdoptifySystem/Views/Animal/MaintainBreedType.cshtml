@@ -3,9 +3,7 @@
     ViewBag.Title = "MaintainBreedType";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div id="main">
-
         <div class="col-sm-12 table-primary">
             <h1 >Update Animal Breed Type</h1>
         </div>
@@ -22,13 +20,14 @@
             <div class="form-group">
                 <label>Enter Animal Breed Description</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="Animal_Breed_Description" name="Animal_Breed_Description" value="@Model.breed.Animal_Breed_Description" placeholder="Animal Breed Type Description"></input>
+                    <textarea type="text" class="form-control" id="Animal_Breed_Description" name="Animal_Breed_Description" title="" value="@Model.breed.Animal_Breed_Description" placeholder="Animal Breed Type Description">@Model.breed.Animal_Breed_Description</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label><b>Select Animal Type</b></label>
                 <div class="col-md-10">
-                    <select id="Animal_Type_ID" class="custom-select" style="width:25%;" name="Animal_Type_ID">
+                    <select id="Animal_Type_ID" class="custom-select" style="width:25%;" name="Animal_Type_ID" title="Select Animal Type">
+                        <option>---Select Animal Type---</option>
                         @if (Model.animalTypes != null)
                         {
                             foreach (var item in Model.animalTypes)
@@ -54,8 +53,8 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" onclick="Save()" class=" btn btn-success float-right">Save</button>
+                    @Html.ActionLink("Cancel", "SearchBreedType", new { @class = "btn btn-warning" ,@title="Click to go back to Search Breed screen"})
+                    <button type="submit" name="button" value="Save" onclick="Save()" title="Click to Update the Following Breed Type Details" class=" btn btn-success float-right">Save</button>
                 </div>
             </div>
         </div>
@@ -135,7 +134,7 @@
 
                     if (isvalid)
                     {
-                        location.href = '@Url.Action("SearchBreedType","Employees")';
+                        location.href = '@Url.Action("SearchBreedType","Animal")';
                     }
 
                 }

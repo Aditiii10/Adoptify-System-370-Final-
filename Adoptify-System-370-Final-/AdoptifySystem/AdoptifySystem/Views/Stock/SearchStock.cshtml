@@ -7,7 +7,7 @@
         <h1>Stock List</h1>
     </div>
     <h1>@ViewBag.errormessage</h1>
-    @Html.ActionLink("Create New", "AddStock", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Add Stock", "AddStock", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" ,@title="Click to Add Stock" })
 
     @using (Html.BeginForm("SearchStock", "Stock", FormMethod.Post))
     {
@@ -20,7 +20,7 @@
 
         <div class="row">
             <div class="col-md-4">
-                <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                <button type="submit" value="Search" title="Click to Search Stock" class="btn btn-primary">Search</button>
             </div>
         </div>
     }
@@ -71,9 +71,9 @@
                 @Html.DisplayFor(modelItem => item.Stock_Quantity)
             </td>
             <td>
-                @Html.ActionLink("Receive Stock", "ReceiveStock", new { id = item.Stock_ID }, new { @class = "btn btn-success" }) |
-                @Html.ActionLink("Capture Stock", "CaptureStockTake", new { id = item.Stock_ID }, new { @class = "btn btn-warning" }) |
-                <button class="btn btn-info" data-toggle="modal" data-target="#@item.Stock_ID">More info </button>
+                @Html.ActionLink("Receive Stock", "ReceiveStock", new { id = item.Stock_ID }, new { @class = "btn btn-success" ,@title="Click to Recieve Stock" }) |
+                @Html.ActionLink("Capture Stock", "CaptureStockTake", new { id = item.Stock_ID }, new { @class = "btn btn-warning" ,@title="Click to Capture Stock" }) |
+                <button class="btn btn-info" title="Select to Display Details" data-toggle="modal" data-target="#@item.Stock_ID">More info </button>
             </td>
         </tr>
                     <div class="modal fade" id="@item.Stock_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -106,8 +106,8 @@
                                 <div class="modal-footer">
 
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Stock_ID }, new { @class = "btn btn-danger" })
-                                    @Html.ActionLink("Maintain", "MaintainStock", new { id = item.Stock_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.Stock_ID }, new { @class = "btn btn-danger" })*@
+                                    @Html.ActionLink("Maintain", "MaintainStock", new { id = item.Stock_ID }, new { @style = "color: white", @class = "btn btn-warning" ,@title="Click to Maintian Stock" })
                                 </div>
                             </div>
                         </div>

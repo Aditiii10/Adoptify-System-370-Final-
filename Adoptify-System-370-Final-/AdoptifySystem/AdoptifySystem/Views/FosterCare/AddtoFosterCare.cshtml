@@ -37,7 +37,7 @@
         @using (Html.BeginForm("search_parent", "FosterCare", FormMethod.Post))
         {
             <h1>Search For Foster Care Parent</h1>
-            <select id="parent" onclick="myFunction()">
+            <select id="parent" onclick="myFunction()" title="Select Parent">
                 @if (Model.parent != null)
                 {
                     foreach (var item in Model.fostercareparent)
@@ -66,7 +66,7 @@
                 }
             </select>
             <input type="text" id="pa" onclick="myFunction()" name="inid" hidden />
-            <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+            <button id="btnSave" class="btn btn-lg btn-success" title="Click to Search Parent">Search</button>
         }
     </div>
     <div class="column">
@@ -99,7 +99,7 @@
         @using (Html.BeginForm("search_animal", "FosterCare", FormMethod.Post))
         {
             <h1>Search For Animal</h1>
-            <select id="animal" onclick="sync()">
+            <select id="animal" onclick="sync()" title="Select Animal">
                 @if (Model.animal != null)
                 {
                     foreach (var item in Model.animallist)
@@ -128,7 +128,7 @@
                 }
             </select>
             <input type="text" id="an" onclick="myFunction()" name="inid" hidden />
-            <button id="btnSave" class="btn btn-lg btn-success">Search</button>
+            <button id="btnSave" class="btn btn-lg btn-success" title="Search Animal">Search</button>
 
         }
     </div>
@@ -169,48 +169,49 @@
             </label>
                 <input type="number" name="Foster_Care_Period" class="form-control" />
             </div>
-                <button class="btn btn-lg btn-dark">ADD</button>
+                <button class="btn btn-lg btn-dark" title="Add to Foster Care">ADD</button>
                 }
 </div>
-            <div class="row">
-                @if (Model.Fostercarelist != null)
-                {
+<div class="row">
+    @if (Model.Fostercarelist != null)
+    {
 
-                    <table class="table table-bordered">
-                        <thead class="table-primary">
-                            <tr>
-                                <td>Parent Name</td>
-                                <td>Animal Name</td>
-                                <td>Start Date</td>
-                                <td>Foster Care Period</td>
-                                <td> </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Fostercarelist)
-                            {
-                                <tr>
-                                    <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
-                                    <td>@item.Animal.Animal_Name</td>
-                                    <td>@item.Foster_Start_Date</td>
-                                    <td>@item.Foster_Care_Period</td>
-                                    <td>@Html.ActionLink("Delete", "removefromlist", new { animalid = item.Animal_ID }, new { @class = "btn btn-danger" })</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    @Html.ActionLink("Save", "savetofostercare", null, new { @class = "btn btn-success" });
-                }
-                else
+        <table class="table table-bordered">
+            <thead class="table-primary">
+                <tr>
+                    <td>Parent Name</td>
+                    <td>Animal Name</td>
+                    <td>Start Date</td>
+                    <td>Foster Care Period</td>
+                    <td> </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Fostercarelist)
                 {
-                    <table class="table table-bordered">
-                        <thead class="thead-light"></thead>
-                        <tbody>
-                            <tr>No Results</tr>
-                        </tbody>
-                    </table>
+                    <tr>
+                        <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
+                        <td>@item.Animal.Animal_Name</td>
+                        <td>@item.Foster_Start_Date</td>
+                        <td>@item.Foster_Care_Period</td>
+                        <td>@Html.ActionLink("Delete", "removefromlist", new { animalid = item.Animal_ID }, new { @class = "btn btn-danger" ,@title="Click to Remove from list" })</td>
+                    </tr>
                 }
-            </div>
+            </tbody>
+        </table>
+        @Html.ActionLink("Cancel", "SearchFosterCareParent", new { @class = "btn btn-warning" ,@title="Click to Search FosterCare Parent Screen" })
+        @Html.ActionLink("Save", "savetofostercare", null, new { @class = "btn btn-success"  ,@title="Click to Save Foster Care List"});
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead class="thead-light"></thead>
+            <tbody>
+                <tr>No Results</tr>
+            </tbody>
+        </table>
+    }
+</div>
         </div>
 <script type="text/javascript">
     function myFunction() {

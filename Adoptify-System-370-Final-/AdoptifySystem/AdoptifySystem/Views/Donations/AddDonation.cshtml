@@ -29,7 +29,7 @@
         <div class="column">
             @if (Model.adddonationlist == null)
             {
-            <select id="donor" onclick="sync(this)">
+            <select id="donor" onclick="sync(this)" title="Select Donor">
                 <option>---Select Donor---</option>
                 @if (Model.donor != null)
                 {
@@ -62,7 +62,7 @@
 
             </select>
                 <input type="text" id="pa" name="inid" />
-                <button id="btnSave" class="btn btn-lg btn-primary" onclick="LoadDonor()">Search</button>
+                <button id="btnSave" class="btn btn-lg btn-primary" title="Search Donor" onclick="LoadDonor()">Search</button>
             }
             else
             {
@@ -99,7 +99,7 @@
                 </div>
                 <div id="AddtheStock">
                     <label>Enter Stock:</label><br />
-                    <select id="stock" onclick="block()">
+                    <select id="stock" onclick="block()" title="Select Stock Type">
                         <option>--Select Stock---</option>
                         @if (Model.stock != null)
                         {
@@ -131,7 +131,7 @@
                         }
                     </select>
                     <input type="text" id="as" name="inid" hidden />
-                    <button id="btnSave" class="btn btn-lg btn-primary" onclick="LoadStock()">Search</button>
+                    <button id="btnSave" class="btn btn-lg btn-primary" title="Select to Search Stock Details" onclick="LoadStock()">Search</button>
                 </div>
                 @using (Html.BeginForm("add_stock", "Donations", FormMethod.Post))
                 {
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="col" style="text-align: center; width: 50%; float:left;">
-                        <button name="button" value="Add Stock" class="btn btn-info">Add Stock</button>
+                        <button name="button" value="Add Stock" class="btn btn-info" title="Click to Add to Donation">Add Stock</button>
                     </div>
                 }
             </div>
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <div style="text-align: center; width: 50%; float:right;">
-                        <button id="addmoney" name="button" value="Add Money" class="btn btn-info">Add Money</button>
+                        <button id="addmoney" name="button" value="Add Money" class="btn btn-info" title="Click to Add to Donation">Add Money</button>
                     </div>
 
                 }
@@ -198,7 +198,7 @@
                                         <td>@item.Donation_Type.Donation_Type_Name</td>
                                     }
                                     <td>@item.Donation_Quantity</td>
-                                    <td>@Html.ActionLink("Delete", "removefromlist", new { donationline = count }, new { @class = "btn btn-danger" })</td>
+                                    <td>@Html.ActionLink("Delete", "removefromlist", new { donationline = count }, new { @class = "btn btn-danger" ,@title="Click to Remove from Donation" })</td>
                                 </tr>
                                 count++;
                             }
@@ -221,8 +221,8 @@
             {
                 <div class="col-xs-12">
                     <br>
-                    <button name="button" value="Save" class="btn btn-lg btn-success pull-right" type="submit">Save</button>
-                    <button name="button" value="Cancel" class="btn btn-lg btn-primary pull-left" type="submit">Cancel</button>
+                    <button name="button" value="Save" class="btn btn-lg btn-success pull-right" title="Click to store Donations" type="submit">Save</button>
+                    <button name="button" value="Cancel" class="btn btn-lg btn-primary pull-left" title="Click to go Search Donations" type="submit">Cancel</button>
                 </div>
             }
         </div>

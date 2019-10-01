@@ -112,8 +112,8 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+                    @Html.ActionLink("Cancel", "SearchStock", new { @class = "btn btn-warning" ,@title="Click to go back to Search Stock screen" })
+                    <button type="submit" name="button" value="Save" title="Click to update Details" class=" btn btn-success float-right">Save</button>
                 </div>
             </div>
         </div>

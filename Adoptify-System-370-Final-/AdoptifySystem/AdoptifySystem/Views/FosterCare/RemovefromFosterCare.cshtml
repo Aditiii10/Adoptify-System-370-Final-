@@ -15,7 +15,7 @@
                 <label>Search Foster Care Parent</label>
                 <br>
                 <input class="form-control" autocomplete="off" name="search" type="text" placeholder="Search For Foster Care Parent">
-                <button type="submit" class="btn btn-lg btn-primary">Search</button>
+                <button type="submit" title="Click to Search Parent" class="btn btn-lg btn-primary">Search</button>
             </div>
         }
     </div>
@@ -40,7 +40,7 @@
                     <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
                     <td>@item.Foster_Care_Parent.Foster_Parent_Surname</td>
                     <td>@item.Animal.Animal_Name</td>
-                    <td><button class="btn btn-danger" data-toggle="modal" data-target="#@item.Foster_Parent_ID">Remove</button></td>
+                    <td><button class="btn btn-danger" data-toggle="modal" title="Click to remove" data-target="#@item.Foster_Parent_ID">Remove</button></td>
                 </tr>
                 <div class="modal fade" id="@item.Foster_Parent_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -66,7 +66,7 @@
                             <div class="modal-footer">
 
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                @Html.ActionLink("Remove", "removefromfostercarelist", new { id = item.Foster_Care_ID }, new { @style = "color: white", @class = "btn btn-danger" })
+                                @Html.ActionLink("Remove", "removefromfostercarelist", new { id = item.Foster_Care_ID }, new { @style = "color: white", @class = "btn btn-danger" ,@title="Click to remove" })
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
             }
         </table>
 
-        @Html.ActionLink("Save", "saveremovefostercare", null, new { @class = "btn btn-success" });
+        @Html.ActionLink("Save", "saveremovefostercare", null, new { @class = "btn btn-success" ,@title="Click to Save" });
     }
     else
     {

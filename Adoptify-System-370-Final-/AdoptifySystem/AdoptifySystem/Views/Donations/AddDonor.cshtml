@@ -7,7 +7,7 @@
 <br />
 <div class="border-primary card mb-3">
     <h2 class="table-primary">Add Donor</h2>
-                <select name="Title_ID" class="form-control col-md-2 custom-select" id="Title_ID">
+                <select name="Title_ID" class="form-control col-md-2 custom-select" id="Title_ID" title="Select Title">
 
                     @foreach (var item in Model)
                     {
@@ -42,8 +42,8 @@
                 <br />
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                        <button type="submit" name="button" value="Save" onclick="Save()" class=" btn btn-success float-right">Save</button>
+                        @Html.ActionLink("Cancel", "SearchDonor", new { @class = "btn btn-warning" ,@title="Click to go back to Search Donor screen" })
+                        <button type="submit" name="button" value="Save" onclick="Save()" title="Click to Add the Following Donor Details" class=" btn btn-success float-right">Save</button>
                     </div>
                 </div>
 </div>

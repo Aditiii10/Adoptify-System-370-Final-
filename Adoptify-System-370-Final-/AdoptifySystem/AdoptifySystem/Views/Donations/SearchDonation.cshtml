@@ -8,7 +8,7 @@
         <h1>Donation List</h1>
     </div>
     <h1>@ViewBag.err</h1>
-    @Html.ActionLink("Create New", "AddDonation", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Create New", "AddDonation", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" ,@title="Click to Add Donation"})
 
     @using (Html.BeginForm("SearchDonation", "Donations", FormMethod.Post))
     {
@@ -21,7 +21,7 @@
 
         <div class="row">
             <div class="col-md-4">
-                <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                <button type="submit" value="Search" title="Click to Search Donation" class="btn btn-primary">Search</button>
             </div>
         </div>
     }
@@ -66,9 +66,9 @@
                             @Html.DisplayFor(modelItem => item.Donation_Date)
                         </td>
                         <td>
-                            @Html.ActionLink("View", "ViewDonation", new { id = item.Donation_ID }, new { @class = "btn btn-success" }) |
+                            @Html.ActionLink("View", "ViewDonation", new { id = item.Donation_ID }, new { @class = "btn btn-success" ,@title="Click to Display Details" })
 
-                            <button class="btn btn-info" data-toggle="modal" data-target="#@item.Donation_ID">More info </button> |
+                            <button class="btn btn-info" title="Select to Display Details" data-toggle="modal" data-target="#@item.Donation_ID">More info </button> 
                            @* @Html.ActionLink("Delete", "Delete", new { id = item.Donation_ID }, new { @class = "btn btn-danger" }) |*@
                         </td>
                     </tr>
@@ -117,7 +117,7 @@
                                 <div class="modal-footer">
 
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Maintain", "MaintainDonation", new { id = item.Donation_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                                    @Html.ActionLink("View", "ViewDonation", new { id = item.Donation_ID }, new { @class = "btn btn-success", @title = "Click to Display Details" })
                                 </div>
                             </div>
                         </div>
