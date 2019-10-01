@@ -38,12 +38,12 @@ namespace AdoptifySystem.Controllers
 
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Veterinarian veterinarian = db.Veterinarians.Find(id);
             if (veterinarian == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(veterinarian);
         }
@@ -61,7 +61,7 @@ namespace AdoptifySystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Vet_ID,Vet_Name,Vet_Emial,Vet_Tel,Vet_Address")] Veterinarian veterinarian)
         {
-            
+            try { 
             if (ModelState.IsValid)
             {
                 if (db.Veterinarians.Any(p => p.Vet_Name == veterinarian.Vet_Name || p.Vet_Emial == veterinarian.Vet_Emial)) //duplicate data
@@ -78,6 +78,11 @@ namespace AdoptifySystem.Controllers
                     return RedirectToAction("Index");
                 }
             }
+              }
+            catch (Exception err)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
           
             return View(veterinarian);
         }
@@ -87,12 +92,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Veterinarian veterinarian = db.Veterinarians.Find(id);
             if (veterinarian == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(veterinarian);
         }
@@ -104,6 +109,7 @@ namespace AdoptifySystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Vet_ID,Vet_Name,Vet_Emial,Vet_Tel,Vet_Address")] Veterinarian veterinarian)
         {
+            try { 
             if (ModelState.IsValid)
             {
                 if (db.Veterinarians.Any(p => p.Vet_Name == veterinarian.Vet_Name)) //duplicate data
@@ -120,6 +126,11 @@ namespace AdoptifySystem.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            }
+            catch (Exception err)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
             return View(veterinarian);
         }
 
@@ -128,12 +139,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Veterinarian veterinarian = db.Veterinarians.Find(id);
             if (veterinarian == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(veterinarian);
         }

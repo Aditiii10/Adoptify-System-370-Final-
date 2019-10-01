@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace AdoptifySystem.Controllers
 {
-    public class ErrorPageController : Controller
+    public class ErrorController : Controller
     {
-        // GET: ErrorPage
-        public ActionResult Index()
+        // GET: Error
+        public ActionResult NotFound()
         {
             return View();
         }

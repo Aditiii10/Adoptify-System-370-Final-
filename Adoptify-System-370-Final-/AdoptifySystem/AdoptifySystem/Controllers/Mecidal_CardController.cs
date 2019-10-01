@@ -26,12 +26,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Mecidal_Card mecidal_Card = db.Mecidal_Card.Find(id);
             if (mecidal_Card == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(mecidal_Card);
         }
@@ -71,12 +71,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Mecidal_Card mecidal_Card = db.Mecidal_Card.Find(id);
             if (mecidal_Card == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", mecidal_Card.Animal_ID);
             ViewBag.Vet_Appoint_Line_ID = new SelectList(db.Vet_Appointment_Master, "Vet_Appoint_Line_ID", "Description", mecidal_Card.Vet_Appoint_Line_ID);
@@ -109,12 +109,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Mecidal_Card mecidal_Card = db.Mecidal_Card.Find(id);
             if (mecidal_Card == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(mecidal_Card);
         }

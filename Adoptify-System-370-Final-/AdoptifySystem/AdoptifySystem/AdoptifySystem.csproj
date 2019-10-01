@@ -343,7 +343,7 @@
     <Compile Include="Controllers\Cassie\ReportScreenController.cs" />
     <Compile Include="Controllers\Cassie\VetAppointReportController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
-    <Compile Include="Controllers\ErrorPageController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HCReportFileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -781,7 +781,6 @@
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Email\SendEmailView.cshtml" />
     <Content Include="Views\Backup\BackupDatabase.cshtml" />
-    <None Include="Views\ErrorPage\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -834,7 +833,6 @@
     <Content Include="Views\Mecidal_Card\Index.cshtml" />
     <Content Include="Views\Animal_Treatment\Create.cshtml" />
     <Content Include="Views\Animal_Treatment\Delete.cshtml" />
-    <Content Include="Views\Animal_Treatment\Details.cshtml" />
     <Content Include="Views\Animal_Treatment\Edit.cshtml" />
     <Content Include="Views\Animal_Treatment\Index.cshtml" />
     <Content Include="Views\Admin\AddUserRole.cshtml" />
@@ -964,11 +962,13 @@
     <Content Include="Views\HCReportFile\FileView.cshtml" />
     <Content Include="Views\SMSMessage\SendMessage.cshtml" />
     <Content Include="Views\Videoplayer\VideoView.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesHCReport\" />
     <Folder Include="UploadedFilesMedCard\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

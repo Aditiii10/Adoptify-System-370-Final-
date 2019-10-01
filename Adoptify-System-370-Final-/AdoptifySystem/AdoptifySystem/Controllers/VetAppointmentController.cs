@@ -26,12 +26,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Vet_Appointment_Master vet_Appointment_Master = db.Vet_Appointment_Master.Find(id);
             if (vet_Appointment_Master == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(vet_Appointment_Master);
         }
@@ -85,12 +85,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Vet_Appointment_Master vet_Appointment_Master = db.Vet_Appointment_Master.Find(id);
             if (vet_Appointment_Master == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", vet_Appointment_Master.Animal_ID);
             ViewBag.Vet_ID = new SelectList(db.Veterinarians, "Vet_ID", "Vet_Name", vet_Appointment_Master.Vet_ID);
@@ -124,12 +124,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Vet_Appointment_Master vet_Appointment_Master = db.Vet_Appointment_Master.Find(id);
             if (vet_Appointment_Master == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(vet_Appointment_Master);
         }

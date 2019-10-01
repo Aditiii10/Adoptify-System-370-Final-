@@ -44,7 +44,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return RedirectToAction("Index", "Employees");
+                return RedirectToAction("SearchAnimal");
 
             }
 
@@ -111,8 +111,9 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                TempData["EditMessage"] = e.Message;
-                return Content("SearchAnimal");
+                throw new Exception("Something Went Wrong!");
+                //TempData["EditMessage"] = e.Message;
+                //return Content("SearchAnimal");
 
             }
         }
@@ -185,8 +186,9 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                TempData["EditMessage"] = e.Message;
-                return RedirectToAction("AddTemporaryAnimal", "Animal");
+                throw new Exception("Something Went Wrong!");
+                // TempData["EditMessage"] = e.Message;
+                // return RedirectToAction("AddTemporaryAnimal", "Animal");
             }
 
 
@@ -239,8 +241,9 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                TempData["EditMessage"] = e.Message;
-                return View("SearchAnimal");
+                throw new Exception("Something Went Wrong!");
+                // TempData["EditMessage"] = e.Message;
+                //return View("SearchAnimal");
             }
             return View(innovation);
         }
@@ -303,8 +306,8 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                ViewBag.err = e.Message;
-                return Content("MaintainDonationType", "Donations");
+                //ViewBag.err = e.Message;
+                throw new Exception("Something Went Wrong!");
             }
 
 
@@ -359,8 +362,9 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
-                return Content("");
+                //TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+                //return Content("");
             }
 
         }
@@ -397,8 +401,9 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                TempData["EditMessage"] = e.Message;
-                return Content("");
+                throw new Exception("Something Went Wrong!");
+                //TempData["EditMessage"] = e.Message;
+                //return Content("");
             }
 
             return Content("");
@@ -420,8 +425,9 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                TempData["EditMessage"] = "there was a network error: " + e.Message;
-                return View();
+                throw new Exception("Something Went Wrong!");
+                //TempData["EditMessage"] = "there was a network error: " + e.Message;
+                //return View();
             }
         }
         [HttpPost]
@@ -438,8 +444,9 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                TempData["EditMessage"] = e.Message + "";
-                throw;
+                throw new Exception("Something Went Wrong!");
+                //TempData["EditMessage"] = e.Message + "";
+                //throw;
             }
         }
         [HttpPost]

@@ -21,7 +21,7 @@ namespace AdoptifySystem.Controllers
         public ActionResult Index()
         {
             Wollies_ShelterEntities dc = new Wollies_ShelterEntities();
-
+            try { 
             var AnimalsDogs = dc.Animals.Where(x => x.Animal_Type.Animal_Type_ID == 1 && x.Animal_Status.Animal_Status_ID == 2).Count();
             ViewBag.AnimalsDogs = AnimalsDogs;
             var AnimalsCats = dc.Animals.Where(x => x.Animal_Type.Animal_Type_ID == 2 && x.Animal_Status.Animal_Status_ID == 2).Count();
@@ -34,6 +34,11 @@ namespace AdoptifySystem.Controllers
             ViewBag.Employees = Employees;
             var Kennels = dc.Kennels.Count();
             ViewBag.Kennels = Kennels;
+            }
+            catch (Exception err)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
             return View();
         }
         

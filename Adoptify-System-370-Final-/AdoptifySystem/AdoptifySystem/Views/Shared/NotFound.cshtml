@@ -1,7 +1,11 @@
-﻿@{
+﻿
+@{
+    ViewBag.Title = "NotFound";
+    
     Layout = null;
 }
-    <link rel="icon" href="~/AdopifyLogo.ico" width="20" height="20" />
+
+<link rel="icon" href="~/AdopifyLogo.ico" width="20" height="20" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,9 +20,10 @@
 
 <body class="permission_denied">
     <div id="particles-js"></div>
+    @*<h1 class="text-danger">Error.@Model.Exception.Message</h1>*@
     <div class="denied__wrapper">
         <h1>404</h1>
-        <h3>LOST IN <span>SPACE</span> Wollies? Hmm, looks like that page doesn't exist.</h3>
+        <h3>LOST IN <span>SPACE</span> WOLLIES? OOPS!! Looks like Something Went WRONG, The Page you have requested CANNOT be Found or Reached! Please Check Internet Connection and Retry.</h3>
         <svg id="astronaut" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <style>
 
@@ -201,3 +206,4 @@
     <script src="../../JS/script.js"></script>
 </body>
 </html>
+

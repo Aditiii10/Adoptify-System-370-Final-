@@ -17,23 +17,40 @@ namespace AdoptifySystem.Controllers
         // GET: Animal_Treatment
         public ActionResult Index()
         {
-            var animal_Treatment = db.Animal_Treatment.Include(a => a.Animal).Include(a => a.Mecidal_Card);
-            return View(animal_Treatment.ToList());
+            try
+            {
+                var animal_Treatment = db.Animal_Treatment.Include(a => a.Animal).Include(a => a.Mecidal_Card);
+                return View(animal_Treatment.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                // return View("Error");
+            }
+            
         }
 
         // GET: Animal_Treatment/Details/5
         public ActionResult Details(int? id)
         {
+            try { 
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+                    throw new Exception("Something Went Wrong!");
+                }
             Animal_Treatment animal_Treatment = db.Animal_Treatment.Find(id);
             if (animal_Treatment == null)
             {
-                return HttpNotFound();
-            }
+                    throw new Exception("Something Went Wrong!");
+                }
+
             return View(animal_Treatment);
+            }
+            catch (Exception ex)
+            {
+                //throw new Exception("Something Went Wrong!");
+                return View("Error");
+            }
         }
 
         // GET: Animal_Treatment/Create
@@ -71,12 +88,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Animal_Treatment animal_Treatment = db.Animal_Treatment.Find(id);
             if (animal_Treatment == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Name", animal_Treatment.Animal_ID);
             return View(animal_Treatment);
@@ -108,12 +125,12 @@ namespace AdoptifySystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Animal_Treatment animal_Treatment = db.Animal_Treatment.Find(id);
             if (animal_Treatment == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(animal_Treatment);
         }

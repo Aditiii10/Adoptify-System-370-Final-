@@ -43,91 +43,127 @@ namespace AdoptifySystem.Controllers
                     return View(db.Adoptions.Where(x => x.Animal.Animal_Name == search || search == null).ToList());
                 else
                     return View(db.Adoptions.Where(x => x.Adopter.Adopter_Name == search || search == null).ToList());
+               
             }
-            catch (Exception err)
+            catch (Exception ex)
             {
-                ViewBag.err = err.Message;
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
             }
-            return View(db.Adoptions.ToList());
+            finally
+            {
+
+            }
+             return View(db.Adoptions.ToList());
         }
       
 
         public ActionResult HomeCheckSchedule(int? id)
         {
-
+        try { 
             List<Adoption> adoption1 = db.Adoptions.ToList();
-
-            Id = Convert.ToInt32(id);
-            Adoption adoption = db.Adoptions.Find(id);//Display the animal details object
-            if (adoption != null)
-            {
-                ViewBag.ID = id;
-                ViewBag.IDName = adoption.Adopter.Adopter_Name + " "+ adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
-                ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old";
-                ViewBag.AnimalImage = adoption.Animal.Animal_Image;
-                return View("HomeCheckSchedule");
-            }
-       
-            if (id == null)
-            {
-                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+                Id = Convert.ToInt32(id);
+                Adoption adoption = db.Adoptions.Find(id);//Display the animal details object
             
+            if (adoption != null)
+                {
+                    ViewBag.ID = id;
+                    ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
+                    ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old";
+                    ViewBag.AnimalImage = adoption.Animal.Animal_Image;
+                    return View("HomeCheckSchedule");
+                }
+
+                if (id == null)
+                {
+                    return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+            finally
+            {
+
+            }
+
             return View("HomeCheckSchedule");
         }
         public ActionResult Save(String NDate="")
         {
+            try
+            {
             DateTime dd = new DateTime();
             Adoption adoption = db.Adoptions.Find(Id);
-            if (NDate != "")
-            {
-                String year = NDate.Substring(0, 4);
-                String month = NDate.Substring(5, 2);
-                String day = NDate.Substring(8, 2);
-                 dd = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
-            }
-
-           
-            if (adoption == null)
-            {
-               
-                return HttpNotFound();
-            }
-
             
-           
-            adoption.Adopt_Status_ID = 2;
+                if (NDate != "")
+                {
+                    String year = NDate.Substring(0, 4);
+                    String month = NDate.Substring(5, 2);
+                    String day = NDate.Substring(8, 2);
+                    dd = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
+                }
 
-            HomeCheck obj = new HomeCheck();
-            obj.Adoption_ID = Id;
-            obj.HomeCheck_Datetime = dd;
-            db.HomeChecks.Add(obj);
-            db.SaveChanges();
-            //Sending SMS
-            var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
-            var authToken = "4186739dfb2554741e7dff014074ff82";
-            TwilioClient.Init(accountSid, authToken);
-            var message = MessageResource.Create(
-                to: new Twilio.Types.PhoneNumber("+27676367506"),
-                from: new Twilio.Types.PhoneNumber("+14245431153"),
-                body: "Congrats, You have Successfully Scdueled a Homecheck Appointment for the date of " +" " + NDate + " " + "from Wollies Animal Shelter!"
-            );
-            myList = db.Adoptions.ToList();
-            TempData["HCSCMessage"] = "Please Save The Current HomeCheck on the Calendar Schedular";
-            TempData["HomeCheckMessage"] = "HomeCheck Successfully Booked";
-            //return View("HomeCheckSchedule");
-            //return View("Index", myList);
-            return View("HomeCheckHistory");
 
+                if (adoption == null)
+                {
+
+                    return HttpNotFound();
+                }
+                adoption.Adopt_Status_ID = 2;
+
+                HomeCheck obj = new HomeCheck();
+                obj.Adoption_ID = Id;
+                obj.HomeCheck_Datetime = dd;
+                db.HomeChecks.Add(obj);
+                db.SaveChanges();
+                //Sending SMS
+                var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
+                var authToken = "4186739dfb2554741e7dff014074ff82";
+                TwilioClient.Init(accountSid, authToken);
+                var message = MessageResource.Create(
+                    to: new Twilio.Types.PhoneNumber("+27676367506"),
+                    from: new Twilio.Types.PhoneNumber("+14245431153"),
+                    body: "Congrats, You have Successfully Scdueled a Homecheck Appointment for the date of " + " " + NDate + " " + "from Wollies Animal Shelter!"
+                );
+                myList = db.Adoptions.ToList();
+                TempData["HCSCMessage"] = "Please Save The Current HomeCheck on the Calendar Schedular";
+                TempData["HomeCheckMessage"] = "HomeCheck Successfully Booked";
+                //return View("HomeCheckSchedule");
+               
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                // return View("Error");
+            }
+            finally
+            {
+
+            }
+            //return View("HomeCheckHistory");
+            return View("Index", myList);
         }
         public ActionResult HomeCheckReport(int? id)
         {
+            try { 
             if (id != 0)
             {
                 Adoption adoption = db.Adoptions.Find(id);
                 ViewBag.ID = adoption.Adoption_ID;
                 ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
                 ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
+            }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
             }
             return View();
         }
@@ -136,12 +172,13 @@ namespace AdoptifySystem.Controllers
 
         public ActionResult HomeCheckReport(int? id, string val ="")
         {
+            try {
             List<Adoption> adoption1 = db.Adoptions.ToList();
             bool flag1 = false;
             Id = Convert.ToInt32(id);
             Adoption adoption = db.Adoptions.Find(id);
             Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
-
+             
             if (adoption != null)
             {
                 
@@ -206,6 +243,16 @@ namespace AdoptifySystem.Controllers
             }
 
             TempData["HomeCheckReportMessage"] = "HomeCheck Successfully Reported";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+               // return View("Error");
+            }
+            finally
+            {
+
+            }
             return View("Index");
         }
 
@@ -213,7 +260,9 @@ namespace AdoptifySystem.Controllers
 
         public ActionResult CaptureAdoptionPayment(int? id)
         {
+            try { 
             adoption = db.Adoptions.Find(id);//Display the animal details object
+            
             if (adoption != null)
             {
                 ViewBag.ID = id;
@@ -222,15 +271,26 @@ namespace AdoptifySystem.Controllers
                 ViewBag.Price = adoption.Animal.Animal_Type.Price;
 
             }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
+            }
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CaptureAdoptionPayment(int? id, string Payment="")
         {
-          
-
+            try { 
             adoption = db.Adoptions.Find(id);//Display the animal details object
+
+            
             if (adoption != null)
             {
                 ViewBag.ID = id;
@@ -296,27 +356,51 @@ namespace AdoptifySystem.Controllers
                 return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TempData["PaymentMessage"] = "Payment Successfully";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
+            }
             return View("CaptureAdoptionPayment");
         }
         public ActionResult CollectAnimal(int? id)
         {
+            try { 
+
             Adoption adoption = db.Adoptions.Find(id);
+            
             ViewBag.ID = id;
             ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
             ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
             Id = Convert.ToInt32(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                // return View("Error");
+            }
+            finally
+            {
+
+            }
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CollectAnimal(int? id, DateTime? date)
         {
+            try {
             var statusID = new List<Adoption>();
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
             List<Adoption> adoption1 = db.Adoptions.ToList();
-
             Id = Convert.ToInt32(id);
             Adoption adoption = db.Adoptions.Find(id);//Display the animal details object
+            
             if (adoption != null)
             {
                 Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
@@ -347,14 +431,24 @@ namespace AdoptifySystem.Controllers
             {
                 return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
 
+            }
             ///TempData["CollectMessage"] = "Animal Successfully Collected";
             return View("Finalise");
         }
         public ActionResult Finalise(int? id)
         {
-            //id = Id;
+            try {//id = Id;
             Adoption adoption = db.Adoptions.Find(id);
+             
             if (adoption != null)
             {
                 ViewBag.ID = id;
@@ -365,8 +459,19 @@ namespace AdoptifySystem.Controllers
                 aaa.Animal.Animal_Status_ID = 4;
                 TempData["FinaliseMessage"] = "CONGRATULATION!!" + " " + adoption.Animal.Animal_Name + " " + "Successfully Adopted by" + " " + adoption.Adopter.Adopter_Name;
                 db.SaveChanges();
+                //TempData["FinaliseMessage"] = "CONGRATULATION!!" + " " + adoption.Animal.Animal_Name + " " + "Successfully Adopted by" + " " + adoption.Adopter.Adopter_Name;
+                }
+            
             }
-            TempData["FinaliseMessage"] = "CONGRATULATION!!" + " " + adoption.Animal.Animal_Name + " " + "Successfully Adopted by" + " " + adoption.Adopter.Adopter_Name;
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
+            }
             return Redirect("http://localhost:55003/Adoptions/Index");
 
         }
@@ -374,9 +479,11 @@ namespace AdoptifySystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Finalise(string name  ="", int id=0)
         {
+            try {
 
              id = Id;
             Adoption adoption = db.Adoptions.Find(id);
+             
             if (adoption != null)
             {
                 ViewBag.ID = id;
@@ -399,17 +506,28 @@ namespace AdoptifySystem.Controllers
                     body: "Congrats, you have Successfully Adopted an Animal from Wollies Animal Shelter! Please Come again!");
             }
             TempData["FinaliseMessage"] ="CONGRATULATION!!"+" "+ adoption.Animal.Animal_Name+" "+ "Successfully Adopted by" + " " +adoption.Adopter.Adopter_Name;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
+            }
             return Redirect("http://localhost:55003/Adoptions/Index");
         }
         public ActionResult ReturnAnimal(int? id)
         {
-
-            Adoption adoption = db.Adoptions.Find(id);
-
-            Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
+            try
+            {
+                Adoption adoption = db.Adoptions.Find(id);
+                Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
             aaa.Adopt_Status_ID = 8;
             aaa.Animal.Animal_Status_ID = 2;
-            db.SaveChanges();
+          
+                db.SaveChanges();
 
             //Sending SMS
             var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
@@ -421,6 +539,16 @@ namespace AdoptifySystem.Controllers
                 body: "Sadly, you have Successfully Returned an Animal to Wollies Animal Shelter! Your Adoption HAS been CANCELLED!");
 
             TempData["ReturnMessage"] = "SADDLY!!" + " " + adoption.Animal.Animal_Name + " " + "WAS RETURNED BY ADOPTER:" + " " + adoption.Adopter.Adopter_Name;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
+            }
             return Redirect("http://localhost:55003/Adoptions/Index");
 
         }
@@ -429,7 +557,7 @@ namespace AdoptifySystem.Controllers
 
             var statusID = new List<Adoption>();
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
-
+            try { 
 
             foreach (var item in adoptions)
             {
@@ -438,17 +566,27 @@ namespace AdoptifySystem.Controllers
                     statusID.Add(item);
                 }
             }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
 
+            }
             return View(statusID);
         }
 
         public ActionResult HomeCheckIndex(/*string searchBy, string search*/)
         {
-
+            
             var statusID = new List<Adoption>();
+            
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
-
-
+            try { 
+            
             foreach (var item in adoptions)
             {
                 if (item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 4)
@@ -456,7 +594,17 @@ namespace AdoptifySystem.Controllers
                     statusID.Add(item);
                 }
             }
+                return View(statusID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
 
+            }
             //try
             //{
             //    if (searchBy == "Animal_Name")
@@ -468,20 +616,31 @@ namespace AdoptifySystem.Controllers
             //{
             //    ViewBag.err = err.Message;
             //}
-
             return View(statusID);
+
         }
 
         public ActionResult AdoptionPayemenHistory()
         {
             var statusID = new List<Adoption>();
             var adoptions = db.AdoptionPayments.Include(a => a.Adoption.Adopter).Include(a => a.Adoption.Animal).Include(a => a.Adoption.AdoptionPayments).ToList();
+            try { 
             foreach (var item in adoptions)
             {
-                if (item.Adoption.Adopt_Status_ID == 3)
+                if (item.Adoption.Adopt_Status_ID == 5)
                 {
                     //statusID.Add(item);
                 }
+            }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                // return View("Error");
+            }
+            finally
+            {
+
             }
             return View(statusID);
         }
@@ -495,7 +654,17 @@ namespace AdoptifySystem.Controllers
 
         public ActionResult HomeCheckReportHistory()
         {
+            try {
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
 
+            }
 
             return View();
         }
@@ -506,7 +675,7 @@ namespace AdoptifySystem.Controllers
             var statusID = new List<Adoption>();
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
 
-
+            try { 
             foreach (var item in adoptions)
             {
                 if (item.Adopt_Status_ID == 3)
@@ -514,7 +683,16 @@ namespace AdoptifySystem.Controllers
                     statusID.Add(item);
                 }
             }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                // return View("Error");
+            }
+            finally
+            {
 
+            }
             return View(statusID);
         }
         public ActionResult CollectionIndex()
@@ -522,7 +700,7 @@ namespace AdoptifySystem.Controllers
             var statusID = new List<Adoption>();
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
 
-
+            try { 
             foreach (var item in adoptions)
             {
                 if (item.Adopt_Status_ID == 5 || item.Adopt_Status_ID == 6)
@@ -530,7 +708,16 @@ namespace AdoptifySystem.Controllers
                     statusID.Add(item);
                 }
             }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
 
+            }
             return View(statusID);
         }
         public ActionResult HomeCheckReportIndex()
@@ -538,7 +725,7 @@ namespace AdoptifySystem.Controllers
             var statusID = new List<Adoption>();
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).ToList();
 
-
+            try { 
             foreach (var item in adoptions)
             {
                 if (item.Adopt_Status_ID == 2)
@@ -546,7 +733,16 @@ namespace AdoptifySystem.Controllers
                     statusID.Add(item);
                 }
             }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
 
+            }
             return View(statusID);
         }
 
@@ -561,8 +757,9 @@ namespace AdoptifySystem.Controllers
             //db.Database.CommandTimeout = 300; 
             var statusID = new List<Animal>();
             var adoptions = db.Animals.ToList();
-
-            animalsss = db.Animals.ToList();
+            try
+            {
+                animalsss = db.Animals.ToList();
 
             foreach (Animal item in animalsss)
             {
@@ -576,6 +773,16 @@ namespace AdoptifySystem.Controllers
             ViewBag.Animal_ID = new SelectList(statusID, "Animal_ID", "Animal_Name", "Animal_Type");
             ViewBag.Payment_ID = new SelectList(db.Payments, "Payment_ID", "Payment_Description");
             ViewBag.Adopt_Status_ID = new SelectList(db.Adoption_Status, "Adopt_Status_ID", "Adopt_Status_Name");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
+            }
             return View();
         }
 
@@ -586,10 +793,12 @@ namespace AdoptifySystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Adoption_ID,Adoption_Date,Adoption_Form,Payment_ID,Adopter_ID,Adopt_Status_ID,Animal_ID,Collection_Date")] Adoption adoption, string ADate = "")
         {
+           
             var statusID = new List<Animal>();
             var adoptions = db.Animals.ToList();
-           
-            if (ModelState.IsValid)
+            try
+            {
+                if (ModelState.IsValid)
             {
                 String year = ADate.Substring(0, 4);
                 String month = ADate.Substring(5, 2);
@@ -633,22 +842,43 @@ namespace AdoptifySystem.Controllers
             ViewBag.Animal_ID = new SelectList(statusID, "Animal_ID", "Animal_Name", adoption.Animal_ID);
             //ViewBag.Payment_ID = new SelectList(db.Payments, "Payment_ID", "Payment_Description", adoption.Payment_ID);
             ViewBag.Adopt_Status_ID = new SelectList(db.Adoption_Status, "Adopt_Status_ID", "Adopt_Status_Name", adoption.Adopt_Status_ID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
+            }
             return View(adoption);
         }
 
         
         public ActionResult Delete(int? id)
         {
+            try { 
             Id = Convert.ToInt32(id);
 
             if (id == null)
             {
-                return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Adoption adoption = db.Adoptions.Find(id);
             if (adoption == null)
             {
-                return HttpNotFound();
+                    throw new Exception("Something Went Wrong!");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
             }
             return View(adoption);
         }
@@ -680,10 +910,15 @@ namespace AdoptifySystem.Controllers
                     body: "Unfortunately, your Adoption Process has been Cancelled Animal from Wollies!"
                 );
             }
-            catch {
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
 
             }
-            
             return RedirectToAction("Index");
             
         }
