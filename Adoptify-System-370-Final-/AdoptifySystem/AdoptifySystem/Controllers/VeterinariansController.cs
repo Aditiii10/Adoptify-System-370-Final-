@@ -152,13 +152,27 @@ namespace AdoptifySystem.Controllers
         // POST: Veterinarians/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
-            Veterinarian veterinarian = db.Veterinarians.Find(id);
-            db.Veterinarians.Remove(veterinarian);
-            db.SaveChanges();
-            TempData["DeleteMessage"] = "Deleted Veternarian Successfully";
+            if (id != null)
+            {
+                Veterinarian veterinarian = db.Veterinarians.Find(id);
+                int count = veterinarian.Vet_Appointment_Master.Count();
+                if (count != 0)
+                {
+                    ViewBag.err = "You can not delete this Item as it is been used else where!!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    db.Veterinarians.Remove(veterinarian);
+                    db.SaveChanges();
+                    TempData["DeleteMessage"] = "Deleted Veternarian Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)

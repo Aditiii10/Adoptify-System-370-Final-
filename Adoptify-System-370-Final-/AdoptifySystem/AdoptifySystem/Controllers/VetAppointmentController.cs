@@ -137,12 +137,26 @@ namespace AdoptifySystem.Controllers
         // POST: VetAppointment/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
-            Vet_Appointment_Master vet_Appointment_Master = db.Vet_Appointment_Master.Find(id);
-            db.Vet_Appointment_Master.Remove(vet_Appointment_Master);
-            db.SaveChanges();
-            TempData["DeleteMessage"] = "Deleted Veternarian Appointment Successfully";
+            if (id != null)
+            {
+                Vet_Appointment_Master vet_Appointment_Master = db.Vet_Appointment_Master.Find(id);
+                int count = vet_Appointment_Master.Mecidal_Card.Count();
+                if (count != 0)
+                {
+                    ViewBag.err = "You can not delete this Item as it is been used else where!!";
+                    return RedirectToAction("Index");
+                }
+
+                else
+                {
+                    db.Vet_Appointment_Master.Remove(vet_Appointment_Master);
+                    db.SaveChanges();
+                    TempData["DeleteMessage"] = "Deleted Veternarian Appointment Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
             return RedirectToAction("Index");
         }
 
