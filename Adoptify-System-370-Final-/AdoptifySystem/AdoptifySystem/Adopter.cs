@@ -153,7 +153,7 @@ namespace AdoptifySystem.Models
         public Nullable<bool> Adopted_Before { get; set; }
 
 
-        [Display(Name = "Complex or Flat")]
+        [Display(Name = "Select if the House is enclosed in an estate/complex")]
         [Required]
         public Nullable<bool> Complex_or_Flat { get; set; }
 

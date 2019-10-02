@@ -82,6 +82,13 @@ namespace AdoptifySystem.Controllers.Aditi
               if (ModelState.IsValid)
                 {
                     db.Adopters.Add(adopter);
+                    //Animal a = new Animal();
+                    //a.Animal_Gender = "test";
+                    //a.Animal_Status = adopter.Adopter_Employer.ToString();
+
+                    //db.Animals.Add(a);
+
+
                     db.SaveChanges();
 
                     return RedirectToAction("Index");

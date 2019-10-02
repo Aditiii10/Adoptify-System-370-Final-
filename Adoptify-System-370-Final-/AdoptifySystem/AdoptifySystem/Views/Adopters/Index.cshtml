@@ -217,9 +217,16 @@
             @Html.ActionLink("Update", "Edit", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-success" })
             @Html.ActionLink("More Info", "Details", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-primary" })
             @Html.ActionLink("Delete", "Delete", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-danger" })          
-                                                    
         </td>
         </tr>
     }
 
 </table>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <br />
+        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page"  })
+        <br />
+    </div>
+</div>

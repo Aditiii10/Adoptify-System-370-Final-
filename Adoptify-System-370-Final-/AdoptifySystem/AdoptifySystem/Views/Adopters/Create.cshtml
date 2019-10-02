@@ -13,11 +13,10 @@
 
 
 <div class="form-horizontal">
-    @*<h4>Adopter</h4>*@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Adopter_Name, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Adopter Name" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Name" } })
             <br />
@@ -26,7 +25,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Adopter_Surname, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Adopter Surname" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_Surname, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Surname" } })
             <br />
@@ -35,15 +34,15 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Adopter_Email, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Adopter Email" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Email" } })
             @Html.ValidationMessageFor(model => model.Adopter_Email, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+   <div class="form-group">
+        @Html.LabelFor(model => model.Title_ID, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Adopter Title" })
         <div class="col-md-10">
             @Html.DropDownList("Title_ID", null, htmlAttributes: new { @class = "form-control" })
             <br />
@@ -54,7 +53,7 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_Address, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Adopter_Address, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Adopter Address" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Address" } })
             <br />
@@ -63,7 +62,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_PostalAddress, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Adopter_PostalAddress, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Adopter Postal Address" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_PostalAddress, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Postal Address" } })
             <br />
@@ -72,7 +71,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_HomeNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Adopter_HomeNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Adopter Home Number" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_HomeNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Home Number" } })
             <br />
@@ -81,7 +80,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_WorkNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Adopter_WorkNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Adopter Work Number" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_WorkNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Work Number" } })
             <br />
@@ -90,7 +89,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_CellNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Adopter_CellNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Adopter Cell Number" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_CellNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Cell Number" } })
             <br />
@@ -99,7 +98,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_CarRegistartion_Number, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Adopter_CarRegistartion_Number, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Adopter Car Registration Number" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_CarRegistartion_Number, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Car Registration Number" } })
             <br />
@@ -108,7 +107,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_Employer, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Adopter_Employer, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Adopter Employer" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_Employer, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Employer" } })
             <br />
@@ -117,16 +116,16 @@
     </div>
 
     @*<div class="form-group">
-        @Html.LabelFor(model => model.Adopter_Status_ID, "Adopter_Status_ID", htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
-        <div class="col-md-10">
-            @Html.DropDownList("Adopter_Status_ID", null, htmlAttributes: new { @class = "form-control" })
-            <br />
-            @Html.ValidationMessageFor(model => model.Adopter_Status_ID, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
+            @Html.LabelFor(model => model.Adopter_Status_ID, "Adopter_Status_ID", htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+            <div class="col-md-10">
+                @Html.DropDownList("Adopter_Status_ID", null, htmlAttributes: new { @class = "form-control" })
+                <br />
+                @Html.ValidationMessageFor(model => model.Adopter_Status_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Amount_of_Family_Memebers, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Amount_of_Family_Memebers, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Amount of Family Members" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Amount_of_Family_Memebers, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Amount of Family Members" } })
             <br />
@@ -135,7 +134,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.No_of_Children, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.No_of_Children, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Number of Children" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.No_of_Children, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Number Of Children" } })
             <br />
@@ -144,7 +143,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Age_of_Children, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Age_of_Children, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Age of Children" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Age_of_Children, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Age Of Children" } })
             <br />
@@ -153,18 +152,39 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Property_Securely_Closed, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Property_Securely_Closed, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Property is Securely Closed" })
         <div class="col-md-10">
-            <div class="checkbox">
+            <div class="custom-control custom-radio">
                 @Html.EditorFor(model => model.Property_Securely_Closed)
-                <br />
-                @Html.ValidationMessageFor(model => model.Property_Securely_Closed, "", new { @class = "text-danger" })
+                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                <label class="custom-control-label" for="customRadio1">Yes</label>
             </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                <label class="custom-control-label" for="customRadio2">No</label>
+            </div>
+            <br />
+            @Html.ValidationMessageFor(model => model.Property_Securely_Closed, "", new { @class = "text-danger" })
+        </div>
+        </div>
+    
+
+    <div class="form-group">
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio1">Yes</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio2">No</label>
         </div>
     </div>
 
+
+
+
     <div class="form-group">
-        @Html.LabelFor(model => model.Properyty_Include_Pool, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Properyty_Include_Pool, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Property Includes a Pool" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Properyty_Include_Pool)
@@ -175,7 +195,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Pool_Secured, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Pool_Secured, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Pool is Secured" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Pool_Secured)
@@ -186,7 +206,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Animal_Shelter_Available, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Animal_Shelter_Available, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Animal Shelter is Available" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Animal_Shelter_Available)
@@ -197,7 +217,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Sick_Animal, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Sick_Animal, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if the Adopter has a Sick Animal" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Sick_Animal)
@@ -208,7 +228,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Sick_Animal_Diagnosis, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Sick_Animal_Diagnosis, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Sick Animal's Diagnosis" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Sick_Animal_Diagnosis, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Sick Animal's Diagnosis" } })
             <br />
@@ -217,7 +237,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Animal_Sleep_Location, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Animal_Sleep_Location, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Animal's Sleep Location" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Animal_Sleep_Location, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Animal's Sleep Location" } })
             <br />
@@ -226,7 +246,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Given_Animal_Away, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Given_Animal_Away, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if the Adopter has given an Animal Away" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Given_Animal_Away)
@@ -237,7 +257,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.HomeCheck_Suburb, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.HomeCheck_Suburb, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Suburb Location" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.HomeCheck_Suburb, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Suburb Location" } })
             <br />
@@ -246,7 +266,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Type_of_House, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Type_of_House, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Type of House" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Type_of_House, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Type Of House" } })
             <br />
@@ -255,7 +275,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopted_Before, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Adopted_Before, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if the Adopter has Adopted Before" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Adopted_Before)
@@ -266,7 +286,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Complex_or_Flat, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Complex_or_Flat, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if House is enclosed in an estate/complex" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Complex_or_Flat)
@@ -277,7 +297,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Animal_Allowed, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Animal_Allowed, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Animals are Allowed" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Animal_Allowed)
@@ -288,7 +308,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Animal_Captivity, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Animal_Captivity, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter if the Animal will be Caged" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Animal_Captivity, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter if the Animal will be Caged" } })
             <br />
@@ -297,7 +317,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Animal_Vaccines_Updated, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Animal_Vaccines_Updated, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Animal's Vaccines are Updated" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Animal_Vaccines_Updated)
@@ -308,7 +328,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Adopter_Occupation, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+        @Html.LabelFor(model => model.Adopter_Occupation, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Adopter Occupation" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Adopter_Occupation, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Occupation" } })
             <br />
@@ -318,10 +338,10 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <br/>
-            @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-dark", style = "float:right" })
-            <input type="submit" value="Save" class="btn btn-success" style="float:right" />
-            <br/>
+            <br />
+            @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-dark", style = "float:right", @Title = "Click to go Back" })
+            <input type="submit" value="Save" class="btn btn-success" style="float:right" title="Click to Save Adopter" />
+            <br />
         </div>
     </div>
 </div>
