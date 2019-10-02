@@ -33,17 +33,20 @@ namespace AdoptifySystem.Controllers
         static Adoption adoption = new Adoption();
         static int Id = 0;
         // GET: Adoptions
-        public ActionResult Index(string searchBy, string search)
+        public ActionResult Index(string searchBy="", string search="")
         {
             //var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.Payment).Include(a => a.Adoption_Status);
            
             try
             {
-                if (searchBy == "Animal_Name")
-                    return View(db.Adoptions.Where(x => x.Animal.Animal_Name == search || search == null).ToList());
-                else
-                    return View(db.Adoptions.Where(x => x.Adopter.Adopter_Name == search || search == null).ToList());
-               
+                //if (searchBy == "Animal_Name")
+                //    return View(db.Adoptions.Where(x => x.Animal.Animal_Name == search || search == null).ToList());
+                //else
+                //    return View(db.Adoptions.Where(x => x.Adopter.Adopter_Name == search || search == null).ToList());
+            return View(db.Adoptions.ToList());
+
+                //return View();
+
             }
             catch (Exception ex)
             {
@@ -54,7 +57,7 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-             return View(db.Adoptions.ToList());
+
         }
       
 
@@ -125,7 +128,7 @@ namespace AdoptifySystem.Controllers
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "Congrats, You have Successfully Scdueled a Homecheck Appointment for the date of " + " " + NDate + " " + "from Wollies Animal Shelter!"
+                    body: "CONGRATULATION!" + " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname +" "+ " You have Successfully Scdueled a Homecheck Appointment for the date of " + " " + NDate + " " + "! From Wollies Animal Shelter."
                 );
                 myList = db.Adoptions.ToList();
                 TempData["HCSCMessage"] = "Please Save The Current HomeCheck on the Calendar Schedular";
@@ -147,14 +150,14 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult HomeCheckReport(int? id)
         {
-            try { 
-            if (id != 0)
-            {
-                Adoption adoption = db.Adoptions.Find(id);
-                ViewBag.ID = adoption.Adoption_ID;
-                ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
-                ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
-            }
+           try { 
+               if (id != 0)
+               {
+                    Adoption adoption = db.Adoptions.Find(id);
+                    ViewBag.ID = adoption.Adoption_ID;
+                   ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
+                  ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
+              }
             }
             catch (Exception ex)
             {
@@ -172,13 +175,13 @@ namespace AdoptifySystem.Controllers
 
         public ActionResult HomeCheckReport(int? id, string val ="")
         {
-            try {
+          
             List<Adoption> adoption1 = db.Adoptions.ToList();
             bool flag1 = false;
             Id = Convert.ToInt32(id);
             Adoption adoption = db.Adoptions.Find(id);
             Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
-             
+           try {  
             if (adoption != null)
             {
                 
@@ -186,21 +189,33 @@ namespace AdoptifySystem.Controllers
                 {
                     val = "true";
                     flag1 = true;
+                    
                     adoption.Adopt_Status_ID = 3;
-
+                    adoption.Animal.Animal_Status_ID = 2;
                     TempData["HomeCheckReportMessage"] = "HomeCheck Report Success ";
                     aaa.Adopt_Status_ID = 3;
                     db.SaveChanges();
 
-                    //Sending SMS
-                    var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
+                        HomeCheckReport obj = new HomeCheckReport();
+
+                        //AdoptionPayment obj = db.AdoptionPayments.SingleOrDefault(x => x.Adoption_ID == id);
+                        obj.HomeCheckStatus = flag1;
+                        obj.Adoption_ID = Id;
+                        db.HomeCheckReports.Add(obj);
+                        db.SaveChanges();
+
+
+
+                        //Sending SMS
+                        var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                     var authToken = "4186739dfb2554741e7dff014074ff82";
                     TwilioClient.Init(accountSid, authToken);
                     var message = MessageResource.Create(
                         to: new Twilio.Types.PhoneNumber("+27676367506"),
                         from: new Twilio.Types.PhoneNumber("+14245431153"),
-                            body: "Congrats, Your HomeCheck Report was Successful And Approved. From Wollies Animal Shelter!"
+                            body: "CONGRATULATION!" + " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + "Your HomeCheck Report was Successful And Approved. From Wollies Animal Shelter!"
                     );
+
                    // return View("FileView", "HCReportFile");
                     return View("Index",db.Adoptions);
                 }
@@ -209,20 +224,27 @@ namespace AdoptifySystem.Controllers
                     flag1 = false;
                     val = "false";
                     adoption.Adopt_Status_ID = 4;
-                    //adoption.Animal.Animal_Status_ID = 2;
+                    adoption.Animal.Animal_Status_ID = 2;
                     TempData["HomeCheckReportErrorMessage"] = "HomeCheck Report Failed ";
                     aaa.Adopt_Status_ID = 4;
-                    
+                    adoption.Adoption_Status.Adopt_Status_ID = 4;
                     db.SaveChanges();
 
-                    //Sending SMS
-                    var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
+                        HomeCheckReport obj = new HomeCheckReport();
+                        obj.HomeCheckStatus = flag1;
+                        obj.Adoption_ID = Id;
+                        db.HomeCheckReports.Add(obj);
+                        db.SaveChanges();
+
+
+                        //Sending SMS
+                        var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                     var authToken = "4186739dfb2554741e7dff014074ff82";
                     TwilioClient.Init(accountSid, authToken);
                     var message = MessageResource.Create(
                         to: new Twilio.Types.PhoneNumber("+27676367506"),
                         from: new Twilio.Types.PhoneNumber("+14245431153"),
-                            body: "We are sorry to inform you that Your HomeCheck Report was unsuccessful And Dispproved. From Wollies Animal Shelter!"
+                            body: "We are sorry to inform you"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " +adoption.Adopter.Adopter_Surname+" "+ "that Your HomeCheck Report was unsuccessful And Dispproved. From Wollies Animal Shelter!"
                     );
                 }
 
@@ -231,7 +253,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
                 ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
 
-
+                
                 //return View("FileView", "HCReportFile");
 
                 return View("Index",db.Adoptions);
@@ -244,15 +266,12 @@ namespace AdoptifySystem.Controllers
 
             TempData["HomeCheckReportMessage"] = "HomeCheck Successfully Reported";
             }
-            catch (Exception ex)
+           catch (Exception ex)
             {
                 throw new Exception("Something Went Wrong!");
                // return View("Error");
             }
-            finally
-            {
-
-            }
+    
             return View("Index");
         }
 
@@ -281,18 +300,18 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-            return View();
+            return View("CaptureAdoptionPayment");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CaptureAdoptionPayment(int? id, string Payment="")
         {
             try { 
-            adoption = db.Adoptions.Find(id);//Display the animal details object
+                 adoption = db.Adoptions.Find(id);//Display the animal details object
 
             
-            if (adoption != null)
-            {
+                if (adoption != null)
+                {
                 ViewBag.ID = id;
                 ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
                 ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
@@ -301,16 +320,18 @@ namespace AdoptifySystem.Controllers
                 if (Payment=="Cash")
                 {
                     Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
-                    aaa.Adopt_Status_ID = 5;
-                    //AdoptionPayment obj = db.AdoptionPayments.SingleOrDefault(x => x.Adoption_ID == id);
-                    AdoptionPayment obj = new AdoptionPayment();
-                    obj.Adoption_Fee = adoption.Animal.Animal_Type.Price;
-                    obj.Adoption_ID = id;
-                    obj.Animal_Type_ID = adoption.Animal.Animal_Type_ID;
-                    obj.Payment_Type_ID = 1;
-                    db.AdoptionPayments.Add(obj);
-                    db.SaveChanges();
-
+                        if (aaa != null)
+                        {
+                            aaa.Adopt_Status_ID = 5;
+                            //AdoptionPayment obj = db.AdoptionPayments.SingleOrDefault(x => x.Adoption_ID == id);
+                            AdoptionPayment obj = new AdoptionPayment();
+                            obj.Adoption_Fee = aaa.Animal.Animal_Type.Price;
+                            obj.Adoption_ID = id;
+                            obj.Animal_Type_ID = aaa.Animal.Animal_Type_ID;
+                            obj.Payment_Type_ID = 1;
+                            db.AdoptionPayments.Add(obj);
+                            db.SaveChanges();
+                        }
                     //Sending SMS
                     var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                     var authToken = "4186739dfb2554741e7dff014074ff82";
@@ -318,22 +339,25 @@ namespace AdoptifySystem.Controllers
                     var message = MessageResource.Create(
                         to: new Twilio.Types.PhoneNumber("+27676367506"),
                         from: new Twilio.Types.PhoneNumber("+14245431153"),
-                        body: "Congrats, your Adoption payment was Successful. From Wollies Animal Shelter!"
+                        body: "CONGRATULATION!" + " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + "" + "your Adoption Payment through a Cash payment was Successful! From Wollies Animal Shelter."
+
                     );
                 }
                 else if (Payment == "EFT")
                 {
                     Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
-                    aaa.Adopt_Status_ID = 5;
-                    //AdoptionPayment obj = db.AdoptionPayments.SingleOrDefault(x => x.Adoption_ID == id);
-                    AdoptionPayment obj = new AdoptionPayment(); 
-                    obj.Adoption_Fee = adoption.Animal.Animal_Type.Price;
-                    obj.Adoption_ID = id;
-                    obj.Animal_Type_ID = adoption.Animal.Animal_Type_ID;
-                    obj.Payment_Type_ID = 2;
-                    db.AdoptionPayments.Add(obj);
-                    db.SaveChanges();
-
+                        if (aaa != null)
+                        {
+                            aaa.Adopt_Status_ID = 5;
+                            //AdoptionPayment obj = db.AdoptionPayments.SingleOrDefault(x => x.Adoption_ID == id);
+                            AdoptionPayment obj = new AdoptionPayment();
+                            obj.Adoption_Fee = aaa.Animal.Animal_Type.Price;
+                            obj.Adoption_ID = id;
+                            obj.Animal_Type_ID = aaa.Animal.Animal_Type_ID;
+                            obj.Payment_Type_ID = 2;
+                            db.AdoptionPayments.Add(obj);
+                            db.SaveChanges();
+                        }
 
                     //Sending SMS
                     var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
@@ -342,7 +366,7 @@ namespace AdoptifySystem.Controllers
                     var message = MessageResource.Create(
                         to: new Twilio.Types.PhoneNumber("+27676367506"),
                         from: new Twilio.Types.PhoneNumber("+14245431153"),
-                        body: "Congrats, your Adoption payment was Successful. From Wollies Animal Shelter!"
+                        body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+""+  "your Adoption Payment through an EFT payemnet was Successful! From Wollies Animal Shelter."
                     );
                 }
                
@@ -366,7 +390,7 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-            return View("CaptureAdoptionPayment");
+            return View("Index");
         }
         public ActionResult CollectAnimal(int? id)
         {
@@ -422,7 +446,7 @@ namespace AdoptifySystem.Controllers
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "Congrats, You have Successfully Collected your Adopted Animal from Wollies Animal Shelter!"
+                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+""+ "You have Successfully Collected your Adopted Animal from Wollies Animal Shelter!"
                 );
                 return View("Finalise");
             }
@@ -435,7 +459,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception ex)
             {
                 throw new Exception("Something Went Wrong!");
-                //return View("Error");
+              
             }
             finally
             {
@@ -503,7 +527,7 @@ namespace AdoptifySystem.Controllers
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "Congrats, you have Successfully Adopted an Animal from Wollies Animal Shelter! Please Come again!");
+                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+ "you have Successfully Adopted" + " " + adoption.Animal.Animal_Name + " " + "from Wollies Animal Shelter. Please Come again!");
             }
             TempData["FinaliseMessage"] ="CONGRATULATION!!"+" "+ adoption.Animal.Animal_Name+" "+ "Successfully Adopted by" + " " +adoption.Adopter.Adopter_Name;
             }
@@ -536,7 +560,7 @@ namespace AdoptifySystem.Controllers
             var message = MessageResource.Create(
                 to: new Twilio.Types.PhoneNumber("+27676367506"),
                 from: new Twilio.Types.PhoneNumber("+14245431153"),
-                body: "Sadly, you have Successfully Returned an Animal to Wollies Animal Shelter! Your Adoption HAS been CANCELLED!");
+                body: "SADLY!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname +""+  "the Animal" + " " + adoption.Animal.Animal_Name + " " + "Was unfortunaley returned to Wollies Animal Shelter by you! In doing so Your Adoption HAS been TERMINATED!");
 
             TempData["ReturnMessage"] = "SADDLY!!" + " " + adoption.Animal.Animal_Name + " " + "WAS RETURNED BY ADOPTER:" + " " + adoption.Adopter.Adopter_Name;
             }
@@ -831,7 +855,7 @@ namespace AdoptifySystem.Controllers
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "Congrats, You have Successfully Started the Adoption Process from Wollies Animal Shelter!"
+                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+ "You have Successfully Started the Adoption Process with" + " " + adoption.Animal.Animal_Name + " " +"On the date of"+" "+ ADate + " "+   "!From Wollies Animal Shelter."
                 );
 
                 TempData["AdoptionCreateMessage"] = "Adoption Process Successfully Created";
@@ -907,7 +931,7 @@ namespace AdoptifySystem.Controllers
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "Unfortunately, your Adoption Process has been Cancelled Animal from Wollies!"
+                    body: "Unfortunately!" + " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+ " "+ " Adoption Process has been Cancelled. From Wollies!"
                 );
             }
             catch (Exception ex)

@@ -28,9 +28,9 @@ namespace AdoptifySystem
         public Nullable<int> VetAppReasonsID { get; set; }
     
         public virtual Animal Animal { get; set; }
-        public virtual Veterinarian Veterinarian { get; set; }
-        public virtual VetAppReason VetAppReason { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mecidal_Card> Mecidal_Card { get; set; }
+        public virtual Veterinarian Veterinarian { get; set; }
+        public virtual VetAppReason VetAppReason { get; set; }
     }
 }

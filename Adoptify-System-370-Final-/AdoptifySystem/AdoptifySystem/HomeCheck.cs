@@ -14,12 +14,6 @@ namespace AdoptifySystem
     
     public partial class HomeCheck
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HomeCheck()
-        {
-            this.HomeCheckReports = new HashSet<HomeCheckReport>();
-        }
-    
         public int HomeCheck_ID { get; set; }
         public Nullable<System.DateTime> HomeCheck_Datetime { get; set; }
         public Nullable<int> Adoption_ID { get; set; }
@@ -27,7 +21,5 @@ namespace AdoptifySystem
     
         public virtual Adoption Adoption { get; set; }
         public virtual Employee Employee { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HomeCheckReport> HomeCheckReports { get; set; }
     }
 }

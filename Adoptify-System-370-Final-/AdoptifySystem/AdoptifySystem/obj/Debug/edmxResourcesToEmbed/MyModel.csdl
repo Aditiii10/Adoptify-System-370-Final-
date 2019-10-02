@@ -96,6 +96,7 @@
     <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr1" FromRole="Adoption" ToRole="AdoptionPayment" />
     <NavigationProperty Name="Event_Schedule" Relationship="Self.fkech1" FromRole="Adoption" ToRole="Event_Schedule" />
     <NavigationProperty Name="HomeChecks" Relationship="Self.fkhoch" FromRole="Adoption" ToRole="HomeCheck" />
+    <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="Adoption" ToRole="HomeCheckReport" />
   </EntityType>
   <EntityType Name="Adoption_Status">
     <Key>
@@ -208,8 +209,18 @@
     <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr2" FromRole="Animal_Type" ToRole="AdoptionPayment" />
     <NavigationProperty Name="Animals" Relationship="Self.fkani1" FromRole="Animal_Type" ToRole="Animal" />
     <NavigationProperty Name="Animal_Breed" Relationship="Self.fkanibreed" FromRole="Animal_Type" ToRole="Animal_Breed" />
+    <NavigationProperty Name="AnimalTypePrices" Relationship="Self.fk2" FromRole="Animal_Type" ToRole="AnimalTypePrice" />
     <NavigationProperty Name="VetAppReasons" Relationship="Self.fkvetreasonl" FromRole="Animal_Type" ToRole="VetAppReasons" />
-    <NavigationProperty Name="AnimalTypePrices" Relationship="Wollies_ShelterModel.fk2" FromRole="Animal_Type" ToRole="AnimalTypePrice" />
+  </EntityType>
+  <EntityType Name="AnimalTypePrice">
+    <Key>
+      <PropertyRef Name="AnimalTypePrice_ID" />
+    </Key>
+    <Property Name="AnimalTypePrice_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Animal_Type_ID" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Animal_Type" Relationship="Self.fk2" FromRole="AnimalTypePrice" ToRole="Animal_Type" />
   </EntityType>
   <EntityType Name="Audit_Log">
     <Key>
@@ -311,6 +322,7 @@
     <Property Name="Emp_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Emp_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="Emp_Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Emp_Gender" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="Emp_ContactNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
     <Property Name="Emp_IDNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="Emp_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
@@ -330,7 +342,6 @@
     <NavigationProperty Name="HomeChecks" Relationship="Self.fkho" FromRole="Employee" ToRole="HomeCheck" />
     <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
     <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
-    <Property Name="Emp_Gender" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Employee_Status">
     <Key>
@@ -442,17 +453,15 @@
     <Property Name="Emp_ID" Type="Int32" />
     <NavigationProperty Name="Adoption" Relationship="Self.fkhoch" FromRole="HomeCheck" ToRole="Adoption" />
     <NavigationProperty Name="Employee" Relationship="Self.fkho" FromRole="HomeCheck" ToRole="Employee" />
-    <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="HomeCheck" ToRole="HomeCheckReport" />
   </EntityType>
   <EntityType Name="HomeCheckReport">
     <Key>
       <PropertyRef Name="HomeCheckReportID" />
     </Key>
     <Property Name="HomeCheckReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="HomeCheck_ID" Type="Int32" />
+    <Property Name="Adoption_ID" Type="Int32" />
     <Property Name="HomeCheckStatus" Type="Boolean" />
-    <Property Name="HCDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="HomeCheck" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="HomeCheck" />
+    <NavigationProperty Name="Adoption" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="Adoption" />
   </EntityType>
   <EntityType Name="Kennel">
     <Key>
@@ -472,14 +481,22 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Animal_ID" Type="Int32" Nullable="false" />
     <Property Name="Diagnosis_Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Vet_Appoint_Line_ID" Type="Int32" />
     <Property Name="Arrival_from_Vet" Type="DateTime" Precision="0" />
     <Property Name="Next_Appointment_Date_" Type="DateTime" Precision="0" />
     <Property Name="MedicalCard" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Animal_Treatment" Type="Boolean" />
     <NavigationProperty Name="Animal" Relationship="Self.fkmedcard" FromRole="Mecidal_Card" ToRole="Animal" />
     <NavigationProperty Name="Animal_Treatment1" Relationship="Self.fktreat1" FromRole="Mecidal_Card" ToRole="Animal_Treatment" />
-    <Property Name="Vet_Appoint_Line_ID" Type="Int32" />
-    <NavigationProperty Name="Vet_Appointment_Master" Relationship="Wollies_ShelterModel.fkmedcard1" FromRole="Mecidal_Card" ToRole="Vet_Appointment_Master" />
+    <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkmedcard1" FromRole="Mecidal_Card" ToRole="Vet_Appointment_Master" />
+  </EntityType>
+  <EntityType Name="MedCardFile">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Microchip">
     <Key>
@@ -560,6 +577,44 @@
     <Property Name="Stock_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Stocks" Relationship="Self.fkstock" FromRole="Stock_Type" ToRole="Stock" />
   </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Table">
+    <Key>
+      <PropertyRef Name="Co_ID" />
+    </Key>
+    <Property Name="Co_ID" Type="Int32" Nullable="false" />
+    <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Org_ContactNumber" Type="Int32" />
+    <Property Name="Org_FaxNumber" Type="Int32" />
+    <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblFileDetail">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblFileDetail1">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+  </EntityType>
   <EntityType Name="TimeSheet">
     <Key>
       <PropertyRef Name="TimeSheet_ID" />
@@ -622,9 +677,9 @@
     <Property Name="Animal_ID" Type="Int32" />
     <Property Name="VetAppReasonsID" Type="Int32" />
     <NavigationProperty Name="Animal" Relationship="Self.fkvetapl5" FromRole="Vet_Appointment_Master" ToRole="Animal" />
+    <NavigationProperty Name="Mecidal_Card" Relationship="Self.fkmedcard1" FromRole="Vet_Appointment_Master" ToRole="Mecidal_Card" />
     <NavigationProperty Name="Veterinarian" Relationship="Self.fkvetapl3" FromRole="Vet_Appointment_Master" ToRole="Veterinarian" />
     <NavigationProperty Name="VetAppReason" Relationship="Self.fkvetapl4" FromRole="Vet_Appointment_Master" ToRole="VetAppReasons" />
-    <NavigationProperty Name="Mecidal_Card" Relationship="Wollies_ShelterModel.fkmedcard1" FromRole="Vet_Appointment_Master" ToRole="Mecidal_Card" />
   </EntityType>
   <EntityType Name="VetAppReason">
     <Key>
@@ -685,21 +740,17 @@
     <Property Name="Vol_WorkType_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Volunteer_Hours" Relationship="Self.fkvolhrs1" FromRole="Volunteer_Work_Type" ToRole="Volunteer_Hours" />
   </EntityType>
-  <EntityType Name="database_firewall_rules">
+  <EntityType Name="Wolly">
     <Key>
-      <PropertyRef Name="id" />
-      <PropertyRef Name="name" />
-      <PropertyRef Name="start_ip_address" />
-      <PropertyRef Name="end_ip_address" />
-      <PropertyRef Name="create_date" />
-      <PropertyRef Name="modify_date" />
+      <PropertyRef Name="Co_ID" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Co_ID" Type="Int32" Nullable="false" />
+    <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Org_ContactNumber" Type="Int32" />
+    <Property Name="Org_FaxNumber" Type="Int32" />
+    <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="fkado">
     <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
@@ -841,6 +892,18 @@
         <PropertyRef Name="Adoption_ID" />
       </Principal>
       <Dependent Role="HomeCheck">
+        <PropertyRef Name="Adoption_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkhoch1">
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+    <End Role="HomeCheckReport" Type="Self.HomeCheckReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adoption">
+        <PropertyRef Name="Adoption_ID" />
+      </Principal>
+      <Dependent Role="HomeCheckReport">
         <PropertyRef Name="Adoption_ID" />
       </Dependent>
     </ReferentialConstraint>
@@ -1034,6 +1097,18 @@
       </Principal>
       <Dependent Role="Animal_Treatment">
         <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk2">
+    <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="1" />
+    <End Role="AnimalTypePrice" Type="Self.AnimalTypePrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animal_Type">
+        <PropertyRef Name="Animal_Type_ID" />
+      </Principal>
+      <Dependent Role="AnimalTypePrice">
+        <PropertyRef Name="Animal_Type_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1289,15 +1364,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fkhoch1">
-    <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="0..1" />
-    <End Role="HomeCheckReport" Type="Self.HomeCheckReport" Multiplicity="*" />
+  <Association Name="fkmedcard1">
+    <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="0..1" />
+    <End Role="Mecidal_Card" Type="Self.Mecidal_Card" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="HomeCheck">
-        <PropertyRef Name="HomeCheck_ID" />
+      <Principal Role="Vet_Appointment_Master">
+        <PropertyRef Name="Vet_Appoint_Line_ID" />
       </Principal>
-      <Dependent Role="HomeCheckReport">
-        <PropertyRef Name="HomeCheck_ID" />
+      <Dependent Role="Mecidal_Card">
+        <PropertyRef Name="Vet_Appoint_Line_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1447,6 +1522,7 @@
     <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" />
     <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" />
     <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" />
+    <EntitySet Name="AnimalTypePrices" EntityType="Self.AnimalTypePrice" />
     <EntitySet Name="Audit_Log" EntityType="Self.Audit_Log" />
     <EntitySet Name="CrossBreeds" EntityType="Self.CrossBreed" />
     <EntitySet Name="Customer_Event" EntityType="Self.Customer_Event" />
@@ -1468,6 +1544,7 @@
     <EntitySet Name="HomeCheckReports" EntityType="Self.HomeCheckReport" />
     <EntitySet Name="Kennels" EntityType="Self.Kennel" />
     <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" />
+    <EntitySet Name="MedCardFiles" EntityType="Self.MedCardFile" />
     <EntitySet Name="Microchips" EntityType="Self.Microchip" />
     <EntitySet Name="Packaging_Type" EntityType="Self.Packaging_Type" />
     <EntitySet Name="Payments" EntityType="Self.Payment" />
@@ -1475,6 +1552,10 @@
     <EntitySet Name="Role_" EntityType="Self.Role_" />
     <EntitySet Name="Stocks" EntityType="Self.Stock" />
     <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Tables" EntityType="Self.Table" />
+    <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetail" />
+    <EntitySet Name="tblFileDetails1" EntityType="Self.tblFileDetail1" />
     <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
     <EntitySet Name="Titles" EntityType="Self.Title" />
     <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" />
@@ -1486,7 +1567,7 @@
     <EntitySet Name="Volunteers" EntityType="Self.Volunteer" />
     <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" />
     <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" />
-    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+    <EntitySet Name="Wollies" EntityType="Self.Wolly" />
     <AssociationSet Name="fkado" Association="Self.fkado">
       <End Role="Title" EntitySet="Titles" />
       <End Role="Adopter" EntitySet="Adopters" />
@@ -1534,6 +1615,10 @@
     <AssociationSet Name="fkhoch" Association="Self.fkhoch">
       <End Role="Adoption" EntitySet="Adoptions" />
       <End Role="HomeCheck" EntitySet="HomeChecks" />
+    </AssociationSet>
+    <AssociationSet Name="fkhoch1" Association="Self.fkhoch1">
+      <End Role="Adoption" EntitySet="Adoptions" />
+      <End Role="HomeCheckReport" EntitySet="HomeCheckReports" />
     </AssociationSet>
     <AssociationSet Name="fkcr2" Association="Self.fkcr2">
       <End Role="Animal_Type" EntitySet="Animal_Type" />
@@ -1598,6 +1683,10 @@
     <AssociationSet Name="fktreat1" Association="Self.fktreat1">
       <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
       <End Role="Animal_Treatment" EntitySet="Animal_Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="fk2" Association="Self.fk2">
+      <End Role="Animal_Type" EntitySet="Animal_Type" />
+      <End Role="AnimalTypePrice" EntitySet="AnimalTypePrices" />
     </AssociationSet>
     <AssociationSet Name="fkvetreasonl" Association="Self.fkvetreasonl">
       <End Role="Animal_Type" EntitySet="Animal_Type" />
@@ -1683,9 +1772,9 @@
       <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
       <End Role="Foster_Care" EntitySet="Foster_Care" />
     </AssociationSet>
-    <AssociationSet Name="fkhoch1" Association="Self.fkhoch1">
-      <End Role="HomeCheck" EntitySet="HomeChecks" />
-      <End Role="HomeCheckReport" EntitySet="HomeCheckReports" />
+    <AssociationSet Name="fkmedcard1" Association="Self.fkmedcard1">
+      <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
+      <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
     </AssociationSet>
     <AssociationSet Name="fkstock1" Association="Self.fkstock1">
       <End Role="Packaging_Type" EntitySet="Packaging_Type" />
@@ -1731,197 +1820,5 @@
       <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
       <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
     </AssociationSet>
-    <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
-      <Parameter Name="Name" Mode="In" Type="String" />
-    </FunctionImport>
-    <EntitySet Name="tblFileDetails" EntityType="Wollies_ShelterModel.tblFileDetail" />
-    <EntitySet Name="tblFileDetail1" EntityType="Wollies_ShelterModel.tblFileDetail1" />
-    <EntitySet Name="Tables" EntityType="Wollies_ShelterModel.Table" />
-    <EntitySet Name="Wollies" EntityType="Wollies_ShelterModel.Wolly" />
-    <AssociationSet Name="fkmedcard1" Association="Wollies_ShelterModel.fkmedcard1">
-      <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
-      <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
-    </AssociationSet>
-    <EntitySet Name="MedCardFiles" EntityType="Wollies_ShelterModel.MedCardFile" />
-    <EntitySet Name="AnimalTypePrices" EntityType="Wollies_ShelterModel.AnimalTypePrice" />
-    <AssociationSet Name="fk2" Association="Wollies_ShelterModel.fk2">
-      <End Role="Animal_Type" EntitySet="Animal_Type" />
-      <End Role="AnimalTypePrice" EntitySet="AnimalTypePrices" />
-    </AssociationSet>
   </EntityContainer>
-  <ComplexType Name="AnimalType_SearchAnimalType_Result">
-    <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
-    <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
-    <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
-  </ComplexType>
-  <ComplexType Name="BreedType_SearchBreedType_Result">
-    <Property Type="Int32" Name="Animal_Breed_ID" Nullable="false" />
-    <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
-    <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="Don_SearchDon_Result">
-    <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
-    <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
-    <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
-  </ComplexType>
-  <ComplexType Name="Donor_SearchDonor_Result">
-    <Property Type="Int32" Name="Donor_ID" Nullable="false" />
-    <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
-    <Property Type="Int32" Name="Title_ID" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="Emp_SearchEmpType_Result">
-    <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
-    <Property Type="String" Name="Emp_Type_Name" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Emp_Type_Description" Nullable="true" MaxLength="50" />
-  </ComplexType>
-  <ComplexType Name="Parent_SearchParent_Result">
-    <Property Type="Int32" Name="Foster_Parent_ID" Nullable="false" />
-    <Property Type="String" Name="Foster_Parent_Name" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="Foster_Parent_Surname" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="Foster_Parent_Address" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="Foster_Parent_CellNumber" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="Foster_Parent_WorkNumber" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="Foster_Parent_Email" Nullable="true" MaxLength="200" />
-    <Property Type="Int32" Name="Foster_Parent_IDNumber" Nullable="true" />
-    <Property Type="DateTime" Name="Foster_Parent_Last_Modified" Nullable="true" Precision="23" />
-    <Property Type="Int32" Name="Num_In_Household" Nullable="true" />
-    <Property Type="String" Name="Type_Of_Housing" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
-    <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
-    <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="Stock_SearchStock_Result">
-    <Property Type="Int32" Name="Stock_ID" Nullable="false" />
-    <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
-    <Property Type="Int32" Name="Stock_Quantity" Nullable="true" />
-    <Property Type="String" Name="Stock_Description" Nullable="true" MaxLength="200" />
-    <Property Type="Int32" Name="Stock_Type_ID" Nullable="true" />
-    <Property Type="Int32" Name="Packaging_Type_ID" Nullable="true" />
-    <Property Type="Int32" Name="Unit_Type_ID" Nullable="true" />
-    <Property Type="Int32" Name="Unit_number" Nullable="true" />
-    <Property Type="Int32" Name="Stock_Type_ID1" Nullable="false" />
-    <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
-  </ComplexType>
-  <ComplexType Name="Stock_SearchStockType_Result">
-    <Property Type="Int32" Name="Stock_Type_ID" Nullable="false" />
-    <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
-  </ComplexType>
-  <ComplexType Name="Vet_SearchVet_Result">
-    <Property Type="Int32" Name="Vet_ID" Nullable="false" />
-    <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
-    <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
-    <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
-    <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
-  </ComplexType>
-  <EntityType Name="tblFileDetail">
-    <Key>
-      <PropertyRef Name="SQLID" />
-    </Key>
-    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="tblFileDetail1">
-    <Key>
-      <PropertyRef Name="SQLID" />
-    </Key>
-    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="Table">
-    <Key>
-      <PropertyRef Name="Co_ID" />
-    </Key>
-    <Property Name="Co_ID" Type="Int32" Nullable="false" />
-    <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Org_ContactNumber" Type="Int32" />
-    <Property Name="Org_FaxNumber" Type="Int32" />
-    <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="Wolly">
-    <Key>
-      <PropertyRef Name="Co_ID" />
-    </Key>
-    <Property Name="Co_ID" Type="Int32" Nullable="false" />
-    <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Org_ContactNumber" Type="Int32" />
-    <Property Name="Org_FaxNumber" Type="Int32" />
-    <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <Association Name="fkmedcard1">
-    <End Type="Wollies_ShelterModel.Vet_Appointment_Master" Role="Vet_Appointment_Master" Multiplicity="0..1" />
-    <End Type="Wollies_ShelterModel.Mecidal_Card" Role="Mecidal_Card" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Vet_Appointment_Master">
-        <PropertyRef Name="Vet_Appoint_Line_ID" />
-      </Principal>
-      <Dependent Role="Mecidal_Card">
-        <PropertyRef Name="Vet_Appoint_Line_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="MedCardFile">
-    <Key>
-      <PropertyRef Name="SQLID" />
-    </Key>
-    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="AnimalTypePrice">
-    <Key>
-      <PropertyRef Name="AnimalTypePrice_ID" />
-    </Key>
-    <Property Name="AnimalTypePrice_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Animal_Type_ID" Type="Int32" Nullable="false" />
-    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Date" Type="DateTime" Precision="0" />
-    <NavigationProperty Name="Animal_Type" Relationship="Wollies_ShelterModel.fk2" FromRole="AnimalTypePrice" ToRole="Animal_Type" />
-  </EntityType>
-  <Association Name="fk2">
-    <End Type="Wollies_ShelterModel.Animal_Type" Role="Animal_Type" Multiplicity="1" />
-    <End Type="Wollies_ShelterModel.AnimalTypePrice" Role="AnimalTypePrice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Animal_Type">
-        <PropertyRef Name="Animal_Type_ID" />
-      </Principal>
-      <Dependent Role="AnimalTypePrice">
-        <PropertyRef Name="Animal_Type_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

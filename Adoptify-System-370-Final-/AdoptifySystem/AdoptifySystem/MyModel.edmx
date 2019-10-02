@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -380,9 +380,8 @@
             <PropertyRef Name="HomeCheckReportID" />
           </Key>
           <Property Name="HomeCheckReportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HomeCheck_ID" Type="int" />
+          <Property Name="Adoption_ID" Type="int" />
           <Property Name="HomeCheckStatus" Type="bit" />
-          <Property Name="HCDoc" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Kennel">
           <Key>
@@ -479,6 +478,16 @@
           <Property Name="Stock_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
@@ -621,24 +630,6 @@
           <Property Name="Org_ContactNumber" Type="int" />
           <Property Name="Org_FaxNumber" Type="int" />
           <Property Name="Org_Email" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="database_firewall_rules">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="start_ip_address" />
-            <PropertyRef Name="end_ip_address" />
-            <PropertyRef Name="create_date" />
-            <PropertyRef Name="modify_date" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="create_date" Type="datetime" Nullable="false" />
-          <Property Name="modify_date" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="fk2">
           <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="1" />
@@ -1145,14 +1136,14 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           </ReferentialConstraint>
         </Association>
         <Association Name="fkhoch1">
-          <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="0..1" />
+          <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
           <End Role="HomeCheckReport" Type="Self.HomeCheckReport" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HomeCheck">
-              <PropertyRef Name="HomeCheck_ID" />
+            <Principal Role="Adoption">
+              <PropertyRef Name="Adoption_ID" />
             </Principal>
             <Dependent Role="HomeCheckReport">
-              <PropertyRef Name="HomeCheck_ID" />
+              <PropertyRef Name="Adoption_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1396,33 +1387,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="AnimalType_SearchAnimalType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="BreedType_SearchBreedType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Don_SearchDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Donor_SearchDonor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Emp_SearchEmpType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Parent_SearchParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Stock_SearchStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Stock_SearchStockType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="Vet_SearchVet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="nvarchar" Mode="In" />
-        </Function>
         <EntityContainer Name="Wollies_ShelterModelStoreContainer">
           <EntitySet Name="Adopter" EntityType="Self.Adopter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
@@ -1467,6 +1431,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFileDetail" EntityType="Self.tblFileDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetails" Schema="dbo" store:Type="Tables" />
@@ -1482,16 +1447,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Wollies" EntityType="Self.Wollies" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
-            <DefiningQuery>SELECT 
-    [database_firewall_rules].[id] AS [id], 
-    [database_firewall_rules].[name] AS [name], 
-    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
-    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
-    [database_firewall_rules].[create_date] AS [create_date], 
-    [database_firewall_rules].[modify_date] AS [modify_date]
-    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="fk2" Association="Self.fk2">
             <End Role="Animal_Type" EntitySet="Animal_Type" />
             <End Role="AnimalTypePrice" EntitySet="AnimalTypePrice" />
@@ -1661,7 +1616,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="HomeCheck" EntitySet="HomeCheck" />
           </AssociationSet>
           <AssociationSet Name="fkhoch1" Association="Self.fkhoch1">
-            <End Role="HomeCheck" EntitySet="HomeCheck" />
+            <End Role="Adoption" EntitySet="Adoption" />
             <End Role="HomeCheckReport" EntitySet="HomeCheckReport" />
           </AssociationSet>
           <AssociationSet Name="fkmedcard" Association="Self.fkmedcard">
@@ -1745,7 +1700,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1845,6 +1801,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr1" FromRole="Adoption" ToRole="AdoptionPayment" />
           <NavigationProperty Name="Event_Schedule" Relationship="Self.fkech1" FromRole="Adoption" ToRole="Event_Schedule" />
           <NavigationProperty Name="HomeChecks" Relationship="Self.fkhoch" FromRole="Adoption" ToRole="HomeCheck" />
+          <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="Adoption" ToRole="HomeCheckReport" />
         </EntityType>
         <EntityType Name="Adoption_Status">
           <Key>
@@ -1957,8 +1914,18 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr2" FromRole="Animal_Type" ToRole="AdoptionPayment" />
           <NavigationProperty Name="Animals" Relationship="Self.fkani1" FromRole="Animal_Type" ToRole="Animal" />
           <NavigationProperty Name="Animal_Breed" Relationship="Self.fkanibreed" FromRole="Animal_Type" ToRole="Animal_Breed" />
+          <NavigationProperty Name="AnimalTypePrices" Relationship="Self.fk2" FromRole="Animal_Type" ToRole="AnimalTypePrice" />
           <NavigationProperty Name="VetAppReasons" Relationship="Self.fkvetreasonl" FromRole="Animal_Type" ToRole="VetAppReasons" />
-          <NavigationProperty Name="AnimalTypePrices" Relationship="Wollies_ShelterModel.fk2" FromRole="Animal_Type" ToRole="AnimalTypePrice" />
+        </EntityType>
+        <EntityType Name="AnimalTypePrice">
+          <Key>
+            <PropertyRef Name="AnimalTypePrice_ID" />
+          </Key>
+          <Property Name="AnimalTypePrice_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Animal_Type_ID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Animal_Type" Relationship="Self.fk2" FromRole="AnimalTypePrice" ToRole="Animal_Type" />
         </EntityType>
         <EntityType Name="Audit_Log">
           <Key>
@@ -2060,6 +2027,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Emp_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Emp_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Emp_Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Emp_Gender" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Emp_ContactNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="Emp_IDNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Emp_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
@@ -2079,7 +2047,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <NavigationProperty Name="HomeChecks" Relationship="Self.fkho" FromRole="Employee" ToRole="HomeCheck" />
           <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
           <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
-          <Property Name="Emp_Gender" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Employee_Status">
           <Key>
@@ -2191,17 +2158,15 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Emp_ID" Type="Int32" />
           <NavigationProperty Name="Adoption" Relationship="Self.fkhoch" FromRole="HomeCheck" ToRole="Adoption" />
           <NavigationProperty Name="Employee" Relationship="Self.fkho" FromRole="HomeCheck" ToRole="Employee" />
-          <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="HomeCheck" ToRole="HomeCheckReport" />
         </EntityType>
         <EntityType Name="HomeCheckReport">
           <Key>
             <PropertyRef Name="HomeCheckReportID" />
           </Key>
           <Property Name="HomeCheckReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HomeCheck_ID" Type="Int32" />
+          <Property Name="Adoption_ID" Type="Int32" />
           <Property Name="HomeCheckStatus" Type="Boolean" />
-          <Property Name="HCDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="HomeCheck" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="HomeCheck" />
+          <NavigationProperty Name="Adoption" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="Adoption" />
         </EntityType>
         <EntityType Name="Kennel">
           <Key>
@@ -2221,14 +2186,22 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Animal_ID" Type="Int32" Nullable="false" />
           <Property Name="Diagnosis_Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Vet_Appoint_Line_ID" Type="Int32" />
           <Property Name="Arrival_from_Vet" Type="DateTime" Precision="0" />
           <Property Name="Next_Appointment_Date_" Type="DateTime" Precision="0" />
           <Property Name="MedicalCard" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Animal_Treatment" Type="Boolean" />
           <NavigationProperty Name="Animal" Relationship="Self.fkmedcard" FromRole="Mecidal_Card" ToRole="Animal" />
           <NavigationProperty Name="Animal_Treatment1" Relationship="Self.fktreat1" FromRole="Mecidal_Card" ToRole="Animal_Treatment" />
-          <Property Name="Vet_Appoint_Line_ID" Type="Int32" />
-          <NavigationProperty Name="Vet_Appointment_Master" Relationship="Wollies_ShelterModel.fkmedcard1" FromRole="Mecidal_Card" ToRole="Vet_Appointment_Master" />
+          <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkmedcard1" FromRole="Mecidal_Card" ToRole="Vet_Appointment_Master" />
+        </EntityType>
+        <EntityType Name="MedCardFile">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Microchip">
           <Key>
@@ -2309,6 +2282,44 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Stock_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Stocks" Relationship="Self.fkstock" FromRole="Stock_Type" ToRole="Stock" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Co_ID" />
+          </Key>
+          <Property Name="Co_ID" Type="Int32" Nullable="false" />
+          <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Org_ContactNumber" Type="Int32" />
+          <Property Name="Org_FaxNumber" Type="Int32" />
+          <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblFileDetail">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblFileDetail1">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="TimeSheet">
           <Key>
             <PropertyRef Name="TimeSheet_ID" />
@@ -2371,9 +2382,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Animal_ID" Type="Int32" />
           <Property Name="VetAppReasonsID" Type="Int32" />
           <NavigationProperty Name="Animal" Relationship="Self.fkvetapl5" FromRole="Vet_Appointment_Master" ToRole="Animal" />
+          <NavigationProperty Name="Mecidal_Card" Relationship="Self.fkmedcard1" FromRole="Vet_Appointment_Master" ToRole="Mecidal_Card" />
           <NavigationProperty Name="Veterinarian" Relationship="Self.fkvetapl3" FromRole="Vet_Appointment_Master" ToRole="Veterinarian" />
           <NavigationProperty Name="VetAppReason" Relationship="Self.fkvetapl4" FromRole="Vet_Appointment_Master" ToRole="VetAppReasons" />
-          <NavigationProperty Name="Mecidal_Card" Relationship="Wollies_ShelterModel.fkmedcard1" FromRole="Vet_Appointment_Master" ToRole="Mecidal_Card" />
         </EntityType>
         <EntityType Name="VetAppReason">
           <Key>
@@ -2434,21 +2445,17 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Vol_WorkType_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Volunteer_Hours" Relationship="Self.fkvolhrs1" FromRole="Volunteer_Work_Type" ToRole="Volunteer_Hours" />
         </EntityType>
-        <EntityType Name="database_firewall_rules">
+        <EntityType Name="Wolly">
           <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="start_ip_address" />
-            <PropertyRef Name="end_ip_address" />
-            <PropertyRef Name="create_date" />
-            <PropertyRef Name="modify_date" />
+            <PropertyRef Name="Co_ID" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Co_ID" Type="Int32" Nullable="false" />
+          <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Org_ContactNumber" Type="Int32" />
+          <Property Name="Org_FaxNumber" Type="Int32" />
+          <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="fkado">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
@@ -2590,6 +2597,18 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               <PropertyRef Name="Adoption_ID" />
             </Principal>
             <Dependent Role="HomeCheck">
+              <PropertyRef Name="Adoption_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkhoch1">
+          <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+          <End Role="HomeCheckReport" Type="Self.HomeCheckReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adoption">
+              <PropertyRef Name="Adoption_ID" />
+            </Principal>
+            <Dependent Role="HomeCheckReport">
               <PropertyRef Name="Adoption_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2783,6 +2802,18 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Principal>
             <Dependent Role="Animal_Treatment">
               <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2">
+          <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="1" />
+          <End Role="AnimalTypePrice" Type="Self.AnimalTypePrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal_Type">
+              <PropertyRef Name="Animal_Type_ID" />
+            </Principal>
+            <Dependent Role="AnimalTypePrice">
+              <PropertyRef Name="Animal_Type_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3038,15 +3069,15 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkhoch1">
-          <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="0..1" />
-          <End Role="HomeCheckReport" Type="Self.HomeCheckReport" Multiplicity="*" />
+        <Association Name="fkmedcard1">
+          <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="0..1" />
+          <End Role="Mecidal_Card" Type="Self.Mecidal_Card" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HomeCheck">
-              <PropertyRef Name="HomeCheck_ID" />
+            <Principal Role="Vet_Appointment_Master">
+              <PropertyRef Name="Vet_Appoint_Line_ID" />
             </Principal>
-            <Dependent Role="HomeCheckReport">
-              <PropertyRef Name="HomeCheck_ID" />
+            <Dependent Role="Mecidal_Card">
+              <PropertyRef Name="Vet_Appoint_Line_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3196,6 +3227,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" />
           <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" />
           <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" />
+          <EntitySet Name="AnimalTypePrices" EntityType="Self.AnimalTypePrice" />
           <EntitySet Name="Audit_Log" EntityType="Self.Audit_Log" />
           <EntitySet Name="CrossBreeds" EntityType="Self.CrossBreed" />
           <EntitySet Name="Customer_Event" EntityType="Self.Customer_Event" />
@@ -3217,6 +3249,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="HomeCheckReports" EntityType="Self.HomeCheckReport" />
           <EntitySet Name="Kennels" EntityType="Self.Kennel" />
           <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" />
+          <EntitySet Name="MedCardFiles" EntityType="Self.MedCardFile" />
           <EntitySet Name="Microchips" EntityType="Self.Microchip" />
           <EntitySet Name="Packaging_Type" EntityType="Self.Packaging_Type" />
           <EntitySet Name="Payments" EntityType="Self.Payment" />
@@ -3224,6 +3257,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Role_" EntityType="Self.Role_" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Tables" EntityType="Self.Table" />
+          <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetail" />
+          <EntitySet Name="tblFileDetails1" EntityType="Self.tblFileDetail1" />
           <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
           <EntitySet Name="Titles" EntityType="Self.Title" />
           <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" />
@@ -3235,7 +3272,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Volunteers" EntityType="Self.Volunteer" />
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" />
-          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+          <EntitySet Name="Wollies" EntityType="Self.Wolly" />
           <AssociationSet Name="fkado" Association="Self.fkado">
             <End Role="Title" EntitySet="Titles" />
             <End Role="Adopter" EntitySet="Adopters" />
@@ -3283,6 +3320,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <AssociationSet Name="fkhoch" Association="Self.fkhoch">
             <End Role="Adoption" EntitySet="Adoptions" />
             <End Role="HomeCheck" EntitySet="HomeChecks" />
+          </AssociationSet>
+          <AssociationSet Name="fkhoch1" Association="Self.fkhoch1">
+            <End Role="Adoption" EntitySet="Adoptions" />
+            <End Role="HomeCheckReport" EntitySet="HomeCheckReports" />
           </AssociationSet>
           <AssociationSet Name="fkcr2" Association="Self.fkcr2">
             <End Role="Animal_Type" EntitySet="Animal_Type" />
@@ -3347,6 +3388,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <AssociationSet Name="fktreat1" Association="Self.fktreat1">
             <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
             <End Role="Animal_Treatment" EntitySet="Animal_Treatment" />
+          </AssociationSet>
+          <AssociationSet Name="fk2" Association="Self.fk2">
+            <End Role="Animal_Type" EntitySet="Animal_Type" />
+            <End Role="AnimalTypePrice" EntitySet="AnimalTypePrices" />
           </AssociationSet>
           <AssociationSet Name="fkvetreasonl" Association="Self.fkvetreasonl">
             <End Role="Animal_Type" EntitySet="Animal_Type" />
@@ -3432,9 +3477,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
             <End Role="Foster_Care" EntitySet="Foster_Care" />
           </AssociationSet>
-          <AssociationSet Name="fkhoch1" Association="Self.fkhoch1">
-            <End Role="HomeCheck" EntitySet="HomeChecks" />
-            <End Role="HomeCheckReport" EntitySet="HomeCheckReports" />
+          <AssociationSet Name="fkmedcard1" Association="Self.fkmedcard1">
+            <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
+            <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
           </AssociationSet>
           <AssociationSet Name="fkstock1" Association="Self.fkstock1">
             <End Role="Packaging_Type" EntitySet="Packaging_Type" />
@@ -3480,199 +3525,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
-          <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="tblFileDetails" EntityType="Wollies_ShelterModel.tblFileDetail" />
-          <EntitySet Name="tblFileDetail1" EntityType="Wollies_ShelterModel.tblFileDetail1" />
-          <EntitySet Name="Tables" EntityType="Wollies_ShelterModel.Table" />
-          <EntitySet Name="Wollies" EntityType="Wollies_ShelterModel.Wolly" />
-          <AssociationSet Name="fkmedcard1" Association="Wollies_ShelterModel.fkmedcard1">
-            <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
-            <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
-          </AssociationSet>
-          <EntitySet Name="MedCardFiles" EntityType="Wollies_ShelterModel.MedCardFile" />
-          <EntitySet Name="AnimalTypePrices" EntityType="Wollies_ShelterModel.AnimalTypePrice" />
-          <AssociationSet Name="fk2" Association="Wollies_ShelterModel.fk2">
-            <End Role="Animal_Type" EntitySet="Animal_Type" />
-            <End Role="AnimalTypePrice" EntitySet="AnimalTypePrices" />
-          </AssociationSet>
         </EntityContainer>
-        <ComplexType Name="AnimalType_SearchAnimalType_Result">
-          <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
-        </ComplexType>
-        <ComplexType Name="BreedType_SearchBreedType_Result">
-          <Property Type="Int32" Name="Animal_Breed_ID" Nullable="false" />
-          <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="Don_SearchDon_Result">
-          <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
-          <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
-        </ComplexType>
-        <ComplexType Name="Donor_SearchDonor_Result">
-          <Property Type="Int32" Name="Donor_ID" Nullable="false" />
-          <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Title_ID" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="Emp_SearchEmpType_Result">
-          <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Emp_Type_Name" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Emp_Type_Description" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="Parent_SearchParent_Result">
-          <Property Type="Int32" Name="Foster_Parent_ID" Nullable="false" />
-          <Property Type="String" Name="Foster_Parent_Name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_Surname" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_Address" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_CellNumber" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_WorkNumber" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Foster_Parent_Email" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Foster_Parent_IDNumber" Nullable="true" />
-          <Property Type="DateTime" Name="Foster_Parent_Last_Modified" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="Num_In_Household" Nullable="true" />
-          <Property Type="String" Name="Type_Of_Housing" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
-          <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="Stock_SearchStock_Result">
-          <Property Type="Int32" Name="Stock_ID" Nullable="false" />
-          <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Stock_Quantity" Nullable="true" />
-          <Property Type="String" Name="Stock_Description" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Stock_Type_ID" Nullable="true" />
-          <Property Type="Int32" Name="Packaging_Type_ID" Nullable="true" />
-          <Property Type="Int32" Name="Unit_Type_ID" Nullable="true" />
-          <Property Type="Int32" Name="Unit_number" Nullable="true" />
-          <Property Type="Int32" Name="Stock_Type_ID1" Nullable="false" />
-          <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="Stock_SearchStockType_Result">
-          <Property Type="Int32" Name="Stock_Type_ID" Nullable="false" />
-          <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="Vet_SearchVet_Result">
-          <Property Type="Int32" Name="Vet_ID" Nullable="false" />
-          <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
-          <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
-        </ComplexType>
-        <EntityType Name="tblFileDetail">
-          <Key>
-            <PropertyRef Name="SQLID" />
-          </Key>
-          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblFileDetail1">
-          <Key>
-            <PropertyRef Name="SQLID" />
-          </Key>
-          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Table">
-          <Key>
-            <PropertyRef Name="Co_ID" />
-          </Key>
-          <Property Name="Co_ID" Type="Int32" Nullable="false" />
-          <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Org_ContactNumber" Type="Int32" />
-          <Property Name="Org_FaxNumber" Type="Int32" />
-          <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Wolly">
-          <Key>
-            <PropertyRef Name="Co_ID" />
-          </Key>
-          <Property Name="Co_ID" Type="Int32" Nullable="false" />
-          <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Org_ContactNumber" Type="Int32" />
-          <Property Name="Org_FaxNumber" Type="Int32" />
-          <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <Association Name="fkmedcard1">
-          <End Type="Wollies_ShelterModel.Vet_Appointment_Master" Role="Vet_Appointment_Master" Multiplicity="0..1" />
-          <End Type="Wollies_ShelterModel.Mecidal_Card" Role="Mecidal_Card" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Vet_Appointment_Master">
-              <PropertyRef Name="Vet_Appoint_Line_ID" />
-            </Principal>
-            <Dependent Role="Mecidal_Card">
-              <PropertyRef Name="Vet_Appoint_Line_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="MedCardFile">
-          <Key>
-            <PropertyRef Name="SQLID" />
-          </Key>
-          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="AnimalTypePrice">
-          <Key>
-            <PropertyRef Name="AnimalTypePrice_ID" />
-          </Key>
-          <Property Name="AnimalTypePrice_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Animal_Type_ID" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Animal_Type" Relationship="Wollies_ShelterModel.fk2" FromRole="AnimalTypePrice" ToRole="Animal_Type" />
-        </EntityType>
-        <Association Name="fk2">
-          <End Type="Wollies_ShelterModel.Animal_Type" Role="Animal_Type" Multiplicity="1" />
-          <End Type="Wollies_ShelterModel.AnimalTypePrice" Role="AnimalTypePrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Animal_Type">
-              <PropertyRef Name="Animal_Type_ID" />
-            </Principal>
-            <Dependent Role="AnimalTypePrice">
-              <PropertyRef Name="Animal_Type_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3858,6 +3711,16 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AnimalTypePrices">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.AnimalTypePrice">
+              <MappingFragment StoreEntitySet="AnimalTypePrice">
+                <ScalarProperty Name="AnimalTypePrice_ID" ColumnName="AnimalTypePrice_ID" />
+                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Audit_Log">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Audit_Log">
               <MappingFragment StoreEntitySet="Audit_Log">
@@ -3946,10 +3809,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Emp_Gender" ColumnName="Emp_Gender" />
                 <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
                 <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
                 <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />
+                <ScalarProperty Name="Emp_Gender" ColumnName="Emp_Gender" />
                 <ScalarProperty Name="Emp_ContactNumber" ColumnName="Emp_ContactNumber" />
                 <ScalarProperty Name="Emp_IDNumber" ColumnName="Emp_IDNumber" />
                 <ScalarProperty Name="Emp_Email" ColumnName="Emp_Email" />
@@ -4075,9 +3938,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheckReport">
               <MappingFragment StoreEntitySet="HomeCheckReport">
                 <ScalarProperty Name="HomeCheckReportID" ColumnName="HomeCheckReportID" />
-                <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
+                <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
                 <ScalarProperty Name="HomeCheckStatus" ColumnName="HomeCheckStatus" />
-                <ScalarProperty Name="HCDoc" ColumnName="HCDoc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4094,14 +3956,23 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySetMapping Name="Mecidal_Card">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Mecidal_Card">
               <MappingFragment StoreEntitySet="Mecidal_Card">
-                <ScalarProperty Name="Vet_Appoint_Line_ID" ColumnName="Vet_Appoint_Line_ID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
                 <ScalarProperty Name="Diagnosis_Details" ColumnName="Diagnosis Details" />
+                <ScalarProperty Name="Vet_Appoint_Line_ID" ColumnName="Vet_Appoint_Line_ID" />
                 <ScalarProperty Name="Arrival_from_Vet" ColumnName="Arrival from Vet" />
                 <ScalarProperty Name="Next_Appointment_Date_" ColumnName="Next Appointment Date " />
                 <ScalarProperty Name="MedicalCard" ColumnName="MedicalCard" />
                 <ScalarProperty Name="Animal_Treatment" ColumnName="Animal_Treatment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedCardFiles">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.MedCardFile">
+              <MappingFragment StoreEntitySet="MedCardFile">
+                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4175,6 +4046,48 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
                 <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
                 <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
                 <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
+                <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
+                <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
+                <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
+                <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
+                <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
+                <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFileDetails">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail">
+              <MappingFragment StoreEntitySet="tblFileDetail">
+                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFileDetails1">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail1">
+              <MappingFragment StoreEntitySet="tblFileDetails">
+                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4291,183 +4204,16 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="database_firewall_rules">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.database_firewall_rules">
-              <MappingFragment StoreEntitySet="database_firewall_rules">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
-                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AnimalType_SearchAnimalType" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.AnimalType_SearchAnimalType_Result">
-                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
-                <ScalarProperty Name="Animal_Type_Name" ColumnName="Animal_Type_Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="BreedType_SearchBreedType" FunctionName="Wollies_ShelterModel.Store.BreedType_SearchBreedType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.BreedType_SearchBreedType_Result">
-                <ScalarProperty Name="Animal_Breed_ID" ColumnName="Animal_Breed_ID" />
-                <ScalarProperty Name="Animal_Breed_Name" ColumnName="Animal_Breed_Name" />
-                <ScalarProperty Name="Animal_Breed_Description" ColumnName="Animal_Breed_Description" />
-                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Don_SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Don_SearchDon_Result">
-                <ScalarProperty Name="Donation_Type_ID" ColumnName="Donation_Type_ID" />
-                <ScalarProperty Name="Donation_Type_Name" ColumnName="Donation_Type_Name" />
-                <ScalarProperty Name="Donation_Type_Description" ColumnName="Donation_Type_Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Donor_SearchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Donor_SearchDonor_Result">
-                <ScalarProperty Name="Donor_ID" ColumnName="Donor_ID" />
-                <ScalarProperty Name="Donor_Name" ColumnName="Donor_Name" />
-                <ScalarProperty Name="Donor_Surname" ColumnName="Donor_Surname" />
-                <ScalarProperty Name="Donor_Email" ColumnName="Donor_Email" />
-                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Emp_SearchEmpType" FunctionName="Wollies_ShelterModel.Store.Emp_SearchEmpType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Emp_SearchEmpType_Result">
-                <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
-                <ScalarProperty Name="Emp_Type_Name" ColumnName="Emp_Type_Name" />
-                <ScalarProperty Name="Emp_Type_Description" ColumnName="Emp_Type_Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Parent_SearchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Parent_SearchParent_Result">
-                <ScalarProperty Name="Foster_Parent_ID" ColumnName="Foster_Parent_ID" />
-                <ScalarProperty Name="Foster_Parent_Name" ColumnName="Foster_Parent_Name" />
-                <ScalarProperty Name="Foster_Parent_Surname" ColumnName="Foster_Parent_Surname" />
-                <ScalarProperty Name="Foster_Parent_Address" ColumnName="Foster_Parent_Address" />
-                <ScalarProperty Name="Foster_Parent_CellNumber" ColumnName="Foster_Parent_CellNumber" />
-                <ScalarProperty Name="Foster_Parent_WorkNumber" ColumnName="Foster_Parent_WorkNumber" />
-                <ScalarProperty Name="Foster_Parent_Email" ColumnName="Foster_Parent_Email" />
-                <ScalarProperty Name="Foster_Parent_IDNumber" ColumnName="Foster_Parent_IDNumber" />
-                <ScalarProperty Name="Foster_Parent_Last_Modified" ColumnName="Foster_Parent_Last_Modified" />
-                <ScalarProperty Name="Num_In_Household" ColumnName="Num_In_Household" />
-                <ScalarProperty Name="Type_Of_Housing" ColumnName="Type_Of_Housing" />
-                <ScalarProperty Name="Ownership_Housing" ColumnName="Ownership_Housing" />
-                <ScalarProperty Name="Hours_Left_Alone" ColumnName="Hours_Left_Alone" />
-                <ScalarProperty Name="Adopter_ID" ColumnName="Adopter_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Stock_SearchStock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStock_Result">
-                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
-                <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
-                <ScalarProperty Name="Stock_Quantity" ColumnName="Stock_Quantity" />
-                <ScalarProperty Name="Stock_Description" ColumnName="Stock_Description" />
-                <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
-                <ScalarProperty Name="Packaging_Type_ID" ColumnName="Packaging_Type_ID" />
-                <ScalarProperty Name="Unit_Type_ID" ColumnName="Unit_Type_ID" />
-                <ScalarProperty Name="Unit_number" ColumnName="Unit_number" />
-                <ScalarProperty Name="Stock_Type_ID1" ColumnName="Stock_Type_ID1" />
-                <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
-                <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Stock_SearchStockType" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStockType_Result">
-                <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
-                <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
-                <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Vet_SearchVet" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Vet_SearchVet_Result">
-                <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
-                <ScalarProperty Name="Vet_Name" ColumnName="Vet_Name" />
-                <ScalarProperty Name="Vet_Emial" ColumnName="Vet_Emial" />
-                <ScalarProperty Name="Vet_Tel" ColumnName="Vet_Tel" />
-                <ScalarProperty Name="Vet_Address" ColumnName="Vet_Address" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="tblFileDetails">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail">
-              <MappingFragment StoreEntitySet="tblFileDetails">
-                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
-                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
-                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblFileDetail1">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail1">
-              <MappingFragment StoreEntitySet="tblFileDetail">
-                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
-                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
-                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tables">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.Table">
-              <MappingFragment StoreEntitySet="Table">
-                <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
-                <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
-                <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
-                <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
-                <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
-                <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
-                <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Wollies">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Wolly">
               <MappingFragment StoreEntitySet="Wollies">
-                <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
-                <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
-                <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
-                <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
-                <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
-                <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
                 <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MedCardFiles">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.MedCardFile">
-              <MappingFragment StoreEntitySet="MedCardFile">
-                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
-                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
-                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AnimalTypePrices">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.AnimalTypePrice">
-              <MappingFragment StoreEntitySet="AnimalTypePrice">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
-                <ScalarProperty Name="AnimalTypePrice_ID" ColumnName="AnimalTypePrice_ID" />
+                <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
+                <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
+                <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
+                <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
+                <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
+                <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

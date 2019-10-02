@@ -23,11 +23,11 @@ namespace AdoptifySystem
         public int Id { get; set; }
         public int Animal_ID { get; set; }
         public string Diagnosis_Details { get; set; }
+        public Nullable<int> Vet_Appoint_Line_ID { get; set; }
         public Nullable<System.DateTime> Arrival_from_Vet { get; set; }
         public Nullable<System.DateTime> Next_Appointment_Date_ { get; set; }
         public string MedicalCard { get; set; }
         public Nullable<bool> Animal_Treatment { get; set; }
-        public Nullable<int> Vet_Appoint_Line_ID { get; set; }
     
         public virtual Animal Animal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
