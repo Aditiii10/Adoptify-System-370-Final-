@@ -17,18 +17,31 @@ namespace AdoptifySystem
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public VetAppReason()
         {
-            this.Vet_Appointment = new HashSet<Vet_Appointment>();
+<<<<<<<< HEAD:Adoptify-System-370-Final-/AdoptifySystem/AdoptifySystem/VetAppReason.cs
             this.Vet_Appointment_Master = new HashSet<Vet_Appointment_Master>();
         }
     
         public int VetAppReasonsID { get; set; }
-        public Nullable<int> Animal_Type_ID { get; set; }
+        public int Animal_Type_ID { get; set; }
         public string Reason { get; set; }
     
         public virtual Animal_Type Animal_Type { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vet_Appointment> Vet_Appointment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vet_Appointment_Master> Vet_Appointment_Master { get; set; }
+========
+            this.Mecidal_Card = new HashSet<Mecidal_Card>();
+        }
+    
+        public int Vet_Appointment_ID { get; set; }
+        public Nullable<int> Vet_Appoint_Line_ID { get; set; }
+        public Nullable<int> VetAppReasonsID { get; set; }
+        public Nullable<int> Animal_ID { get; set; }
+    
+        public virtual Animal Animal { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Mecidal_Card> Mecidal_Card { get; set; }
+        public virtual Vet_Appointment_Master Vet_Appointment_Master { get; set; }
+        public virtual VetAppReason VetAppReason { get; set; }
+>>>>>>>> master:Adoptify-System-370-Final-/AdoptifySystem/AdoptifySystem/Vet_Appointment.cs
     }
 }

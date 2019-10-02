@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -171,6 +171,15 @@
           <Property Name="Animal_Type_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="AnimalTypePrice">
+          <Key>
+            <PropertyRef Name="AnimalTypePrice_ID" />
+          </Key>
+          <Property Name="AnimalTypePrice_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Animal_Type_ID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
         <EntityType Name="Audit_Log">
           <Key>
             <PropertyRef Name="Auditlog_ID" />
@@ -255,6 +264,7 @@
           <Property Name="Emp_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Emp_Name" Type="nvarchar" MaxLength="150" />
           <Property Name="Emp_Surname" Type="varchar" MaxLength="150" />
+          <Property Name="Emp_Gender" Type="varchar" MaxLength="150" />
           <Property Name="Emp_ContactNumber" Type="nvarchar" MaxLength="12" />
           <Property Name="Emp_IDNumber" Type="nvarchar" MaxLength="150" />
           <Property Name="Emp_Email" Type="nvarchar" MaxLength="254" />
@@ -308,6 +318,8 @@
           <Property Name="EventEnd" Type="datetime" />
           <Property Name="ThemeColour" Type="nchar" MaxLength="10" />
           <Property Name="IsFullDay" Type="bit" />
+          <Property Name="Emp_ID" Type="int" />
+          <Property Name="Adoption_ID" Type="int" />
         </EntityType>
         <EntityType Name="Event_Type">
           <Key>
@@ -345,6 +357,15 @@
           <Property Name="Hours_Left_Alone" Type="int" />
           <Property Name="Adopter_ID" Type="int" />
         </EntityType>
+        <EntityType Name="GoogleChartData">
+          <Key>
+            <PropertyRef Name="SLID" />
+          </Key>
+          <Property Name="SLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Cats" Type="int" Nullable="false" />
+          <Property Name="Dogs" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="HomeCheck">
           <Key>
             <PropertyRef Name="HomeCheck_ID" />
@@ -352,9 +373,8 @@
           <Property Name="HomeCheck_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HomeCheck_Datetime" Type="datetime" />
           <Property Name="Adoption_ID" Type="int" />
+          <Property Name="Emp_ID" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="HomeCheckReport">
           <Key>
             <PropertyRef Name="HomeCheckReportID" />
@@ -379,12 +399,20 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Animal_ID" Type="int" Nullable="false" />
-          <Property Name="Vet_Appointment_ID" Type="int" Nullable="false" />
           <Property Name="Diagnosis Details" Type="nvarchar(max)" />
+          <Property Name="Vet_Appoint_Line_ID" Type="int" />
           <Property Name="Arrival from Vet" Type="date" />
           <Property Name="Next Appointment Date " Type="date" />
           <Property Name="MedicalCard" Type="nvarchar(max)" />
           <Property Name="Animal_Treatment" Type="bit" />
+        </EntityType>
+        <EntityType Name="MedCardFile">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
         </EntityType>
         <EntityType Name="Microchip">
           <Key>
@@ -452,15 +480,33 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="Table">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="Co_ID" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="Co_ID" Type="int" Nullable="false" />
+          <Property Name="Org_Name" Type="nvarchar(max)" />
+          <Property Name="Org_Address" Type="nvarchar(max)" />
+          <Property Name="Org_Type" Type="varchar" MaxLength="50" />
+          <Property Name="Org_ContactNumber" Type="int" />
+          <Property Name="Org_FaxNumber" Type="int" />
+          <Property Name="Org_Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblFileDetail">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
+        </EntityType>
+        <EntityType Name="tblFileDetails">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
         </EntityType>
         <EntityType Name="TimeSheet">
           <Key>
@@ -501,15 +547,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="UserRole_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="Role_ID" Type="int" />
-        </EntityType>
-        <EntityType Name="Vet_Appointment">
-          <Key>
-            <PropertyRef Name="Vet_Appointment_ID" />
-          </Key>
-          <Property Name="Vet_Appointment_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Vet_Appoint_Line_ID" Type="int" />
-          <Property Name="VetAppReasonsID" Type="int" />
-          <Property Name="Animal_ID" Type="int" />
         </EntityType>
         <EntityType Name="Vet_Appointment_Master">
           <Key>
@@ -573,6 +610,48 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Vol_WorkType_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Vol_WorkType_Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="Wollies">
+          <Key>
+            <PropertyRef Name="Co_ID" />
+          </Key>
+          <Property Name="Co_ID" Type="int" Nullable="false" />
+          <Property Name="Org_Name" Type="nvarchar(max)" />
+          <Property Name="Org_Address" Type="nvarchar(max)" />
+          <Property Name="Org_Type" Type="varchar" MaxLength="50" />
+          <Property Name="Org_ContactNumber" Type="int" />
+          <Property Name="Org_FaxNumber" Type="int" />
+          <Property Name="Org_Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="fk2">
+          <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="1" />
+          <End Role="AnimalTypePrice" Type="Self.AnimalTypePrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal_Type">
+              <PropertyRef Name="Animal_Type_ID" />
+            </Principal>
+            <Dependent Role="AnimalTypePrice">
+              <PropertyRef Name="Animal_Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkado">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
           <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
@@ -909,6 +988,30 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkech">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkech1">
+          <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adoption">
+              <PropertyRef Name="Adoption_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Adoption_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkemp">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -1017,6 +1120,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkho">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="HomeCheck">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkhoch">
           <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
           <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
@@ -1054,14 +1169,14 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           </ReferentialConstraint>
         </Association>
         <Association Name="fkmedcard1">
-          <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="1" />
+          <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="0..1" />
           <End Role="Mecidal_Card" Type="Self.Mecidal_Card" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Vet_Appointment">
-              <PropertyRef Name="Vet_Appointment_ID" />
+            <Principal Role="Vet_Appointment_Master">
+              <PropertyRef Name="Vet_Appoint_Line_ID" />
             </Principal>
             <Dependent Role="Mecidal_Card">
-              <PropertyRef Name="Vet_Appointment_ID" />
+              <PropertyRef Name="Vet_Appoint_Line_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1197,42 +1312,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkvetap2">
-          <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="0..1" />
-          <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Vet_Appointment_Master">
-              <PropertyRef Name="Vet_Appoint_Line_ID" />
-            </Principal>
-            <Dependent Role="Vet_Appointment">
-              <PropertyRef Name="Vet_Appoint_Line_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkvetap3">
-          <End Role="VetAppReasons" Type="Self.VetAppReasons" Multiplicity="0..1" />
-          <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VetAppReasons">
-              <PropertyRef Name="VetAppReasonsID" />
-            </Principal>
-            <Dependent Role="Vet_Appointment">
-              <PropertyRef Name="VetAppReasonsID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkvetap4">
-          <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
-          <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Animal">
-              <PropertyRef Name="Animal_ID" />
-            </Principal>
-            <Dependent Role="Vet_Appointment">
-              <PropertyRef Name="Animal_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fkvetapl3">
           <End Role="Veterinarian" Type="Self.Veterinarian" Multiplicity="1" />
           <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="*" />
@@ -1317,6 +1396,33 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AnimalType_SearchAnimalType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="BreedType_SearchBreedType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Don_SearchDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Donor_SearchDonor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Emp_SearchEmpType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Parent_SearchParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Stock_SearchStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Stock_SearchStockType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Vet_SearchVet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="Wollies_ShelterModelStoreContainer">
           <EntitySet Name="Adopter" EntityType="Self.Adopter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
@@ -1331,6 +1437,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnimalTypePrice" EntityType="Self.AnimalTypePrice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Audit_Log" EntityType="Self.Audit_Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CrossBreed" EntityType="Self.CrossBreed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Event" EntityType="Self.Customer_Event" Schema="dbo" store:Type="Tables" />
@@ -1347,9 +1454,12 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Event_Type" EntityType="Self.Event_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoogleChartData" EntityType="Self.GoogleChartData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HomeCheck" EntityType="Self.HomeCheck" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HomeCheckReport" EntityType="Self.HomeCheckReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kennel" EntityType="Self.Kennel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedCardFile" EntityType="Self.MedCardFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Microchip" EntityType="Self.Microchip" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Packaging_Type" EntityType="Self.Packaging_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
@@ -1357,27 +1467,35 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFileDetail" EntityType="Self.tblFileDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_" EntityType="Self.User_" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Vet_Appointment" EntityType="Self.Vet_Appointment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vet_Appointment_Master" EntityType="Self.Vet_Appointment_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VetAppReasons" EntityType="Self.VetAppReasons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Veterinarian" EntityType="Self.Veterinarian" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HomeCheckReport" EntityType="Self.HomeCheckReport" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="Wollies" EntityType="Self.Wollies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
             <DefiningQuery>SELECT 
-    [HomeCheckReport].[HomeCheckReportID] AS [HomeCheckReportID], 
-    [HomeCheckReport].[HomeCheck_ID] AS [HomeCheck_ID], 
-    [HomeCheckReport].[HomeCheckStatus] AS [HomeCheckStatus], 
-    [HomeCheckReport].[HCDoc] AS [HCDoc]
-    FROM [dbo].[HomeCheckReport] AS [HomeCheckReport]</DefiningQuery>
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="fk2" Association="Self.fk2">
+            <End Role="Animal_Type" EntitySet="Animal_Type" />
+            <End Role="AnimalTypePrice" EntitySet="AnimalTypePrice" />
+          </AssociationSet>
           <AssociationSet Name="fkado" Association="Self.fkado">
             <End Role="Title" EntitySet="Title" />
             <End Role="Adopter" EntitySet="Adopter" />
@@ -1490,6 +1608,14 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Title" EntitySet="Title" />
             <End Role="Donor" EntitySet="Donor" />
           </AssociationSet>
+          <AssociationSet Name="fkech" Association="Self.fkech">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="fkech1" Association="Self.fkech1">
+            <End Role="Adoption" EntitySet="Adoption" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
           <AssociationSet Name="fkemp" Association="Self.fkemp">
             <End Role="Title" EntitySet="Title" />
             <End Role="Employee" EntitySet="Employee" />
@@ -1526,6 +1652,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
             <End Role="Foster_Care" EntitySet="Foster_Care" />
           </AssociationSet>
+          <AssociationSet Name="fkho" Association="Self.fkho">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="HomeCheck" EntitySet="HomeCheck" />
+          </AssociationSet>
           <AssociationSet Name="fkhoch" Association="Self.fkhoch">
             <End Role="Adoption" EntitySet="Adoption" />
             <End Role="HomeCheck" EntitySet="HomeCheck" />
@@ -1539,7 +1669,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
           </AssociationSet>
           <AssociationSet Name="fkmedcard1" Association="Self.fkmedcard1">
-            <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
+            <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
             <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
           </AssociationSet>
           <AssociationSet Name="fkmicro" Association="Self.fkmicro">
@@ -1585,18 +1715,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <AssociationSet Name="fkuserol1" Association="Self.fkuserol1">
             <End Role="Role_" EntitySet="Role_" />
             <End Role="UserRole" EntitySet="UserRole" />
-          </AssociationSet>
-          <AssociationSet Name="fkvetap2" Association="Self.fkvetap2">
-            <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
-            <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
-          </AssociationSet>
-          <AssociationSet Name="fkvetap3" Association="Self.fkvetap3">
-            <End Role="VetAppReasons" EntitySet="VetAppReasons" />
-            <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
-          </AssociationSet>
-          <AssociationSet Name="fkvetap4" Association="Self.fkvetap4">
-            <End Role="Animal" EntitySet="Animal" />
-            <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
           </AssociationSet>
           <AssociationSet Name="fkvetapl3" Association="Self.fkvetapl3">
             <End Role="Veterinarian" EntitySet="Veterinarian" />
@@ -1726,6 +1844,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="AdoptionPayment" Relationship="Self.fkadopt1" FromRole="Adoption" ToRole="AdoptionPayment" />
           <NavigationProperty Name="Adoption_Status" Relationship="Self.fkadopt2" FromRole="Adoption" ToRole="Adoption_Status" />
           <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr1" FromRole="Adoption" ToRole="AdoptionPayment" />
+          <NavigationProperty Name="Event_Schedule" Relationship="Self.fkech1" FromRole="Adoption" ToRole="Event_Schedule" />
           <NavigationProperty Name="HomeChecks" Relationship="Self.fkhoch" FromRole="Adoption" ToRole="HomeCheck" />
         </EntityType>
         <EntityType Name="Adoption_Status">
@@ -1780,7 +1899,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="Mecidal_Card" Relationship="Self.fkmedcard" FromRole="Animal" ToRole="Mecidal_Card" />
           <NavigationProperty Name="Microchips" Relationship="Self.fkmicro" FromRole="Animal" ToRole="Microchip" />
           <NavigationProperty Name="Animal_Treatment" Relationship="Self.fktreat" FromRole="Animal" ToRole="Animal_Treatment" />
-          <NavigationProperty Name="Vet_Appointment" Relationship="Self.fkvetap4" FromRole="Animal" ToRole="Vet_Appointment" />
           <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkvetapl5" FromRole="Animal" ToRole="Vet_Appointment_Master" />
         </EntityType>
         <EntityType Name="Animal_Breed">
@@ -1840,7 +1958,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr2" FromRole="Animal_Type" ToRole="AdoptionPayment" />
           <NavigationProperty Name="Animals" Relationship="Self.fkani1" FromRole="Animal_Type" ToRole="Animal" />
           <NavigationProperty Name="Animal_Breed" Relationship="Self.fkanibreed" FromRole="Animal_Type" ToRole="Animal_Breed" />
+          <NavigationProperty Name="AnimalTypePrices" Relationship="Self.fk2" FromRole="Animal_Type" ToRole="AnimalTypePrice" />
           <NavigationProperty Name="VetAppReasons" Relationship="Self.fkvetreasonl" FromRole="Animal_Type" ToRole="VetAppReasons" />
+        </EntityType>
+        <EntityType Name="AnimalTypePrice">
+          <Key>
+            <PropertyRef Name="AnimalTypePrice_ID" />
+          </Key>
+          <Property Name="AnimalTypePrice_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Animal_Type_ID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Animal_Type" Relationship="Self.fk2" FromRole="AnimalTypePrice" ToRole="Animal_Type" />
         </EntityType>
         <EntityType Name="Audit_Log">
           <Key>
@@ -1942,6 +2071,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Emp_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Emp_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Emp_Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Emp_Gender" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Emp_ContactNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="Emp_IDNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Emp_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
@@ -1954,9 +2084,11 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Emp_Contract_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BarcodeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk" FromRole="Employee" ToRole="Emp_Kennel" />
+          <NavigationProperty Name="Event_Schedule" Relationship="Self.fkech" FromRole="Employee" ToRole="Event_Schedule" />
           <NavigationProperty Name="Title" Relationship="Self.fkemp" FromRole="Employee" ToRole="Title" />
           <NavigationProperty Name="Employee_Type" Relationship="Self.fkemp1" FromRole="Employee" ToRole="Employee_Type" />
           <NavigationProperty Name="Employee_Status" Relationship="Self.fkemp2" FromRole="Employee" ToRole="Employee_Status" />
+          <NavigationProperty Name="HomeChecks" Relationship="Self.fkho" FromRole="Employee" ToRole="HomeCheck" />
           <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
           <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
         </EntityType>
@@ -2005,6 +2137,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="EventEnd" Type="DateTime" Precision="3" />
           <Property Name="ThemeColour" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="IsFullDay" Type="Boolean" />
+          <Property Name="Emp_ID" Type="Int32" />
+          <Property Name="Adoption_ID" Type="Int32" />
+          <NavigationProperty Name="Adoption" Relationship="Self.fkech1" FromRole="Event_Schedule" ToRole="Adoption" />
+          <NavigationProperty Name="Employee" Relationship="Self.fkech" FromRole="Event_Schedule" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Event_Type">
           <Key>
@@ -2047,6 +2183,15 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="Adopter" Relationship="Self.fkfos" FromRole="Foster_Care_Parent" ToRole="Adopter" />
           <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc1" FromRole="Foster_Care_Parent" ToRole="Foster_Care" />
         </EntityType>
+        <EntityType Name="GoogleChartData">
+          <Key>
+            <PropertyRef Name="SLID" />
+          </Key>
+          <Property Name="SLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Cats" Type="Int32" Nullable="false" />
+          <Property Name="Dogs" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="HomeCheck">
           <Key>
             <PropertyRef Name="HomeCheck_ID" />
@@ -2054,8 +2199,20 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="HomeCheck_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HomeCheck_Datetime" Type="DateTime" Precision="3" />
           <Property Name="Adoption_ID" Type="Int32" />
+          <Property Name="Emp_ID" Type="Int32" />
           <NavigationProperty Name="Adoption" Relationship="Self.fkhoch" FromRole="HomeCheck" ToRole="Adoption" />
+          <NavigationProperty Name="Employee" Relationship="Self.fkho" FromRole="HomeCheck" ToRole="Employee" />
           <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="HomeCheck" ToRole="HomeCheckReport" />
+        </EntityType>
+        <EntityType Name="HomeCheckReport">
+          <Key>
+            <PropertyRef Name="HomeCheckReportID" />
+          </Key>
+          <Property Name="HomeCheckReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HomeCheck_ID" Type="Int32" />
+          <Property Name="HomeCheckStatus" Type="Boolean" />
+          <Property Name="HCDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HomeCheck" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="HomeCheck" />
         </EntityType>
         <EntityType Name="Kennel">
           <Key>
@@ -2074,15 +2231,23 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Animal_ID" Type="Int32" Nullable="false" />
-          <Property Name="Vet_Appointment_ID" Type="Int32" Nullable="false" />
           <Property Name="Diagnosis_Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Vet_Appoint_Line_ID" Type="Int32" />
           <Property Name="Arrival_from_Vet" Type="DateTime" Precision="0" />
           <Property Name="Next_Appointment_Date_" Type="DateTime" Precision="0" />
           <Property Name="MedicalCard" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Animal_Treatment" Type="Boolean" />
           <NavigationProperty Name="Animal" Relationship="Self.fkmedcard" FromRole="Mecidal_Card" ToRole="Animal" />
           <NavigationProperty Name="Animal_Treatment1" Relationship="Self.fktreat1" FromRole="Mecidal_Card" ToRole="Animal_Treatment" />
-          <NavigationProperty Name="Vet_Appointment" Relationship="Self.fkmedcard1" FromRole="Mecidal_Card" ToRole="Vet_Appointment" />
+          <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkmedcard1" FromRole="Mecidal_Card" ToRole="Vet_Appointment_Master" />
+        </EntityType>
+        <EntityType Name="MedCardFile">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Microchip">
           <Key>
@@ -2163,15 +2328,33 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Stock_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Stocks" Relationship="Self.fkstock" FromRole="Stock_Type" ToRole="Stock" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="Table">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="Co_ID" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Co_ID" Type="Int32" Nullable="false" />
+          <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Org_ContactNumber" Type="Int32" />
+          <Property Name="Org_FaxNumber" Type="Int32" />
+          <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblFileDetail">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblFileDetail1">
+          <Key>
+            <PropertyRef Name="SQLID" />
+          </Key>
+          <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TimeSheet">
           <Key>
@@ -2224,19 +2407,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <NavigationProperty Name="Role_" Relationship="Self.fkuserol1" FromRole="UserRole" ToRole="Role_" />
           <NavigationProperty Name="User_" Relationship="Self.fkuserol" FromRole="UserRole" ToRole="User_" />
         </EntityType>
-        <EntityType Name="Vet_Appointment">
-          <Key>
-            <PropertyRef Name="Vet_Appointment_ID" />
-          </Key>
-          <Property Name="Vet_Appointment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Vet_Appoint_Line_ID" Type="Int32" />
-          <Property Name="VetAppReasonsID" Type="Int32" />
-          <Property Name="Animal_ID" Type="Int32" />
-          <NavigationProperty Name="Animal" Relationship="Self.fkvetap4" FromRole="Vet_Appointment" ToRole="Animal" />
-          <NavigationProperty Name="Mecidal_Card" Relationship="Self.fkmedcard1" FromRole="Vet_Appointment" ToRole="Mecidal_Card" />
-          <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkvetap2" FromRole="Vet_Appointment" ToRole="Vet_Appointment_Master" />
-          <NavigationProperty Name="VetAppReason" Relationship="Self.fkvetap3" FromRole="Vet_Appointment" ToRole="VetAppReasons" />
-        </EntityType>
         <EntityType Name="Vet_Appointment_Master">
           <Key>
             <PropertyRef Name="Vet_Appoint_Line_ID" />
@@ -2248,7 +2418,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Animal_ID" Type="Int32" />
           <Property Name="VetAppReasonsID" Type="Int32" />
           <NavigationProperty Name="Animal" Relationship="Self.fkvetapl5" FromRole="Vet_Appointment_Master" ToRole="Animal" />
-          <NavigationProperty Name="Vet_Appointment" Relationship="Self.fkvetap2" FromRole="Vet_Appointment_Master" ToRole="Vet_Appointment" />
+          <NavigationProperty Name="Mecidal_Card" Relationship="Self.fkmedcard1" FromRole="Vet_Appointment_Master" ToRole="Mecidal_Card" />
           <NavigationProperty Name="Veterinarian" Relationship="Self.fkvetapl3" FromRole="Vet_Appointment_Master" ToRole="Veterinarian" />
           <NavigationProperty Name="VetAppReason" Relationship="Self.fkvetapl4" FromRole="Vet_Appointment_Master" ToRole="VetAppReasons" />
         </EntityType>
@@ -2260,7 +2430,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Animal_Type_ID" Type="Int32" />
           <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Animal_Type" Relationship="Self.fkvetreasonl" FromRole="VetAppReasons" ToRole="Animal_Type" />
-          <NavigationProperty Name="Vet_Appointment" Relationship="Self.fkvetap3" FromRole="VetAppReasons" ToRole="Vet_Appointment" />
           <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkvetapl4" FromRole="VetAppReasons" ToRole="Vet_Appointment_Master" />
         </EntityType>
         <EntityType Name="Veterinarian">
@@ -2312,15 +2481,33 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <Property Name="Vol_WorkType_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Volunteer_Hours" Relationship="Self.fkvolhrs1" FromRole="Volunteer_Work_Type" ToRole="Volunteer_Hours" />
         </EntityType>
-        <EntityType Name="HomeCheckReport">
+        <EntityType Name="Wolly">
           <Key>
-            <PropertyRef Name="HomeCheckReportID" />
+            <PropertyRef Name="Co_ID" />
           </Key>
-          <Property Name="HomeCheckReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HomeCheck_ID" Type="Int32" />
-          <Property Name="HomeCheckStatus" Type="Boolean" />
-          <Property Name="HCDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="HomeCheck" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="HomeCheck" />
+          <Property Name="Co_ID" Type="Int32" Nullable="false" />
+          <Property Name="Org_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Org_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Org_ContactNumber" Type="Int32" />
+          <Property Name="Org_FaxNumber" Type="Int32" />
+          <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="fkado">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
@@ -2438,6 +2625,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               <PropertyRef Name="Adoption_ID" />
             </Principal>
             <Dependent Role="AdoptionPayment">
+              <PropertyRef Name="Adoption_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkech1">
+          <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adoption">
+              <PropertyRef Name="Adoption_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
               <PropertyRef Name="Adoption_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2586,18 +2785,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkvetap4">
-          <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
-          <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Animal">
-              <PropertyRef Name="Animal_ID" />
-            </Principal>
-            <Dependent Role="Vet_Appointment">
-              <PropertyRef Name="Animal_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fkvetapl5">
           <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
           <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="*" />
@@ -2655,6 +2842,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Principal>
             <Dependent Role="Animal_Treatment">
               <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2">
+          <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="1" />
+          <End Role="AnimalTypePrice" Type="Self.AnimalTypePrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal_Type">
+              <PropertyRef Name="Animal_Type_ID" />
+            </Principal>
+            <Dependent Role="AnimalTypePrice">
+              <PropertyRef Name="Animal_Type_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2802,6 +3001,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkech">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkemp">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -2835,6 +3046,18 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="Employee_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkho">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="HomeCheck">
+              <PropertyRef Name="Emp_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2899,14 +3122,14 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           </ReferentialConstraint>
         </Association>
         <Association Name="fkmedcard1">
-          <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="1" />
+          <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="0..1" />
           <End Role="Mecidal_Card" Type="Self.Mecidal_Card" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Vet_Appointment">
-              <PropertyRef Name="Vet_Appointment_ID" />
+            <Principal Role="Vet_Appointment_Master">
+              <PropertyRef Name="Vet_Appoint_Line_ID" />
             </Principal>
             <Dependent Role="Mecidal_Card">
-              <PropertyRef Name="Vet_Appointment_ID" />
+              <PropertyRef Name="Vet_Appoint_Line_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2994,30 +3217,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkvetap2">
-          <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="0..1" />
-          <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Vet_Appointment_Master">
-              <PropertyRef Name="Vet_Appoint_Line_ID" />
-            </Principal>
-            <Dependent Role="Vet_Appointment">
-              <PropertyRef Name="Vet_Appoint_Line_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkvetap3">
-          <End Role="VetAppReasons" Type="Self.VetAppReason" Multiplicity="0..1" />
-          <End Role="Vet_Appointment" Type="Self.Vet_Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VetAppReasons">
-              <PropertyRef Name="VetAppReasonsID" />
-            </Principal>
-            <Dependent Role="Vet_Appointment">
-              <PropertyRef Name="VetAppReasonsID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fkvetapl3">
           <End Role="Veterinarian" Type="Self.Veterinarian" Multiplicity="1" />
           <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="*" />
@@ -3080,6 +3279,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" />
           <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" />
           <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" />
+          <EntitySet Name="AnimalTypePrices" EntityType="Self.AnimalTypePrice" />
           <EntitySet Name="Audit_Log" EntityType="Self.Audit_Log" />
           <EntitySet Name="CrossBreeds" EntityType="Self.CrossBreed" />
           <EntitySet Name="Customer_Event" EntityType="Self.Customer_Event" />
@@ -3096,9 +3296,12 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Event_Type" EntityType="Self.Event_Type" />
           <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" />
           <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" />
+          <EntitySet Name="GoogleChartDatas" EntityType="Self.GoogleChartData" />
           <EntitySet Name="HomeChecks" EntityType="Self.HomeCheck" />
+          <EntitySet Name="HomeCheckReports" EntityType="Self.HomeCheckReport" />
           <EntitySet Name="Kennels" EntityType="Self.Kennel" />
           <EntitySet Name="Mecidal_Card" EntityType="Self.Mecidal_Card" />
+          <EntitySet Name="MedCardFiles" EntityType="Self.MedCardFile" />
           <EntitySet Name="Microchips" EntityType="Self.Microchip" />
           <EntitySet Name="Packaging_Type" EntityType="Self.Packaging_Type" />
           <EntitySet Name="Payments" EntityType="Self.Payment" />
@@ -3106,20 +3309,22 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <EntitySet Name="Role_" EntityType="Self.Role_" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Tables" EntityType="Self.Table" />
+          <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetail" />
+          <EntitySet Name="tblFileDetails1" EntityType="Self.tblFileDetail1" />
           <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
           <EntitySet Name="Titles" EntityType="Self.Title" />
           <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" />
           <EntitySet Name="User_" EntityType="Self.User_" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
-          <EntitySet Name="Vet_Appointment" EntityType="Self.Vet_Appointment" />
           <EntitySet Name="Vet_Appointment_Master" EntityType="Self.Vet_Appointment_Master" />
           <EntitySet Name="VetAppReasons" EntityType="Self.VetAppReason" />
           <EntitySet Name="Veterinarians" EntityType="Self.Veterinarian" />
           <EntitySet Name="Volunteers" EntityType="Self.Volunteer" />
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" />
-          <EntitySet Name="HomeCheckReports" EntityType="Self.HomeCheckReport" />
+          <EntitySet Name="Wollies" EntityType="Self.Wolly" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
           <AssociationSet Name="fkado" Association="Self.fkado">
             <End Role="Title" EntitySet="Titles" />
             <End Role="Adopter" EntitySet="Adopters" />
@@ -3159,6 +3364,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <AssociationSet Name="fkcr1" Association="Self.fkcr1">
             <End Role="Adoption" EntitySet="Adoptions" />
             <End Role="AdoptionPayment" EntitySet="AdoptionPayments" />
+          </AssociationSet>
+          <AssociationSet Name="fkech1" Association="Self.fkech1">
+            <End Role="Adoption" EntitySet="Adoptions" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
           </AssociationSet>
           <AssociationSet Name="fkhoch" Association="Self.fkhoch">
             <End Role="Adoption" EntitySet="Adoptions" />
@@ -3208,10 +3417,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Animal" EntitySet="Animals" />
             <End Role="Animal_Treatment" EntitySet="Animal_Treatment" />
           </AssociationSet>
-          <AssociationSet Name="fkvetap4" Association="Self.fkvetap4">
-            <End Role="Animal" EntitySet="Animals" />
-            <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
-          </AssociationSet>
           <AssociationSet Name="fkvetapl5" Association="Self.fkvetapl5">
             <End Role="Animal" EntitySet="Animals" />
             <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
@@ -3231,6 +3436,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <AssociationSet Name="fktreat1" Association="Self.fktreat1">
             <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
             <End Role="Animal_Treatment" EntitySet="Animal_Treatment" />
+          </AssociationSet>
+          <AssociationSet Name="fk2" Association="Self.fk2">
+            <End Role="Animal_Type" EntitySet="Animal_Type" />
+            <End Role="AnimalTypePrice" EntitySet="AnimalTypePrices" />
           </AssociationSet>
           <AssociationSet Name="fkvetreasonl" Association="Self.fkvetreasonl">
             <End Role="Animal_Type" EntitySet="Animal_Type" />
@@ -3280,6 +3489,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Kennel" EntitySet="Kennels" />
             <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
           </AssociationSet>
+          <AssociationSet Name="fkech" Association="Self.fkech">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
           <AssociationSet Name="fkemp" Association="Self.fkemp">
             <End Role="Title" EntitySet="Titles" />
             <End Role="Employee" EntitySet="Employees" />
@@ -3291,6 +3504,10 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
           <AssociationSet Name="fkemp2" Association="Self.fkemp2">
             <End Role="Employee_Status" EntitySet="Employee_Status" />
             <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="fkho" Association="Self.fkho">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="HomeCheck" EntitySet="HomeChecks" />
           </AssociationSet>
           <AssociationSet Name="fktime" Association="Self.fktime">
             <End Role="Employee" EntitySet="Employees" />
@@ -3313,7 +3530,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="HomeCheckReport" EntitySet="HomeCheckReports" />
           </AssociationSet>
           <AssociationSet Name="fkmedcard1" Association="Self.fkmedcard1">
-            <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
+            <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
             <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
           </AssociationSet>
           <AssociationSet Name="fkstock1" Association="Self.fkstock1">
@@ -3344,14 +3561,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="User_" EntitySet="User_" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <AssociationSet Name="fkvetap2" Association="Self.fkvetap2">
-            <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
-            <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
-          </AssociationSet>
-          <AssociationSet Name="fkvetap3" Association="Self.fkvetap3">
-            <End Role="VetAppReasons" EntitySet="VetAppReasons" />
-            <End Role="Vet_Appointment" EntitySet="Vet_Appointment" />
-          </AssociationSet>
           <AssociationSet Name="fkvetapl3" Association="Self.fkvetapl3">
             <End Role="Veterinarian" EntitySet="Veterinarians" />
             <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
@@ -3368,7 +3577,103 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
+          <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="AnimalType_SearchAnimalType_Result">
+          <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="BreedType_SearchBreedType_Result">
+          <Property Type="Int32" Name="Animal_Breed_ID" Nullable="false" />
+          <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Don_SearchDon_Result">
+          <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
+          <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
+        </ComplexType>
+        <ComplexType Name="Donor_SearchDonor_Result">
+          <Property Type="Int32" Name="Donor_ID" Nullable="false" />
+          <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Title_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Emp_SearchEmpType_Result">
+          <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Emp_Type_Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Emp_Type_Description" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Parent_SearchParent_Result">
+          <Property Type="Int32" Name="Foster_Parent_ID" Nullable="false" />
+          <Property Type="String" Name="Foster_Parent_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_Surname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_Address" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_CellNumber" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_WorkNumber" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_Email" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Foster_Parent_IDNumber" Nullable="true" />
+          <Property Type="DateTime" Name="Foster_Parent_Last_Modified" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Num_In_Household" Nullable="true" />
+          <Property Type="String" Name="Type_Of_Housing" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
+          <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Stock_SearchStock_Result">
+          <Property Type="Int32" Name="Stock_ID" Nullable="false" />
+          <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Stock_Quantity" Nullable="true" />
+          <Property Type="String" Name="Stock_Description" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Stock_Type_ID" Nullable="true" />
+          <Property Type="Int32" Name="Packaging_Type_ID" Nullable="true" />
+          <Property Type="Int32" Name="Unit_Type_ID" Nullable="true" />
+          <Property Type="Int32" Name="Unit_number" Nullable="true" />
+          <Property Type="Int32" Name="Stock_Type_ID1" Nullable="false" />
+          <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="Stock_SearchStockType_Result">
+          <Property Type="Int32" Name="Stock_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="Vet_SearchVet_Result">
+          <Property Type="Int32" Name="Vet_ID" Nullable="false" />
+          <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3554,6 +3859,16 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AnimalTypePrices">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.AnimalTypePrice">
+              <MappingFragment StoreEntitySet="AnimalTypePrice">
+                <ScalarProperty Name="AnimalTypePrice_ID" ColumnName="AnimalTypePrice_ID" />
+                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Audit_Log">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Audit_Log">
               <MappingFragment StoreEntitySet="Audit_Log">
@@ -3645,6 +3960,7 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
                 <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
                 <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
                 <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />
+                <ScalarProperty Name="Emp_Gender" ColumnName="Emp_Gender" />
                 <ScalarProperty Name="Emp_ContactNumber" ColumnName="Emp_ContactNumber" />
                 <ScalarProperty Name="Emp_IDNumber" ColumnName="Emp_IDNumber" />
                 <ScalarProperty Name="Emp_Email" ColumnName="Emp_Email" />
@@ -3702,6 +4018,8 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
                 <ScalarProperty Name="EventEnd" ColumnName="EventEnd" />
                 <ScalarProperty Name="ThemeColour" ColumnName="ThemeColour" />
                 <ScalarProperty Name="IsFullDay" ColumnName="IsFullDay" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+                <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3744,12 +4062,33 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="GoogleChartDatas">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.GoogleChartData">
+              <MappingFragment StoreEntitySet="GoogleChartData">
+                <ScalarProperty Name="SLID" ColumnName="SLID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Cats" ColumnName="Cats" />
+                <ScalarProperty Name="Dogs" ColumnName="Dogs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="HomeChecks">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheck">
               <MappingFragment StoreEntitySet="HomeCheck">
                 <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
                 <ScalarProperty Name="HomeCheck_Datetime" ColumnName="HomeCheck_Datetime" />
                 <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HomeCheckReports">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheckReport">
+              <MappingFragment StoreEntitySet="HomeCheckReport">
+                <ScalarProperty Name="HomeCheckReportID" ColumnName="HomeCheckReportID" />
+                <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
+                <ScalarProperty Name="HomeCheckStatus" ColumnName="HomeCheckStatus" />
+                <ScalarProperty Name="HCDoc" ColumnName="HCDoc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3768,12 +4107,21 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               <MappingFragment StoreEntitySet="Mecidal_Card">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
-                <ScalarProperty Name="Vet_Appointment_ID" ColumnName="Vet_Appointment_ID" />
                 <ScalarProperty Name="Diagnosis_Details" ColumnName="Diagnosis Details" />
+                <ScalarProperty Name="Vet_Appoint_Line_ID" ColumnName="Vet_Appoint_Line_ID" />
                 <ScalarProperty Name="Arrival_from_Vet" ColumnName="Arrival from Vet" />
                 <ScalarProperty Name="Next_Appointment_Date_" ColumnName="Next Appointment Date " />
                 <ScalarProperty Name="MedicalCard" ColumnName="MedicalCard" />
                 <ScalarProperty Name="Animal_Treatment" ColumnName="Animal_Treatment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedCardFiles">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.MedCardFile">
+              <MappingFragment StoreEntitySet="MedCardFile">
+                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3850,14 +4198,34 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
+                <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
+                <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
+                <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
+                <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
+                <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
+                <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFileDetails">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail">
+              <MappingFragment StoreEntitySet="tblFileDetail">
+                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFileDetails1">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.tblFileDetail1">
+              <MappingFragment StoreEntitySet="tblFileDetails">
+                <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+                <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3903,16 +4271,6 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
                 <ScalarProperty Name="UserRole_ID" ColumnName="UserRole_ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vet_Appointment">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.Vet_Appointment">
-              <MappingFragment StoreEntitySet="Vet_Appointment">
-                <ScalarProperty Name="Vet_Appointment_ID" ColumnName="Vet_Appointment_ID" />
-                <ScalarProperty Name="Vet_Appoint_Line_ID" ColumnName="Vet_Appoint_Line_ID" />
-                <ScalarProperty Name="VetAppReasonsID" ColumnName="VetAppReasonsID" />
-                <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3984,16 +4342,136 @@ warning 6002: The table/view 'Wollies_Shelter.dbo.HomeCheckReport' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HomeCheckReports">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheckReport">
-              <MappingFragment StoreEntitySet="HomeCheckReport">
-                <ScalarProperty Name="HomeCheckReportID" ColumnName="HomeCheckReportID" />
-                <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
-                <ScalarProperty Name="HomeCheckStatus" ColumnName="HomeCheckStatus" />
-                <ScalarProperty Name="HCDoc" ColumnName="HCDoc" />
+          <EntitySetMapping Name="Wollies">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.Wolly">
+              <MappingFragment StoreEntitySet="Wollies">
+                <ScalarProperty Name="Co_ID" ColumnName="Co_ID" />
+                <ScalarProperty Name="Org_Name" ColumnName="Org_Name" />
+                <ScalarProperty Name="Org_Address" ColumnName="Org_Address" />
+                <ScalarProperty Name="Org_Type" ColumnName="Org_Type" />
+                <ScalarProperty Name="Org_ContactNumber" ColumnName="Org_ContactNumber" />
+                <ScalarProperty Name="Org_FaxNumber" ColumnName="Org_FaxNumber" />
+                <ScalarProperty Name="Org_Email" ColumnName="Org_Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AnimalType_SearchAnimalType" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.AnimalType_SearchAnimalType_Result">
+                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+                <ScalarProperty Name="Animal_Type_Name" ColumnName="Animal_Type_Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="BreedType_SearchBreedType" FunctionName="Wollies_ShelterModel.Store.BreedType_SearchBreedType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.BreedType_SearchBreedType_Result">
+                <ScalarProperty Name="Animal_Breed_ID" ColumnName="Animal_Breed_ID" />
+                <ScalarProperty Name="Animal_Breed_Name" ColumnName="Animal_Breed_Name" />
+                <ScalarProperty Name="Animal_Breed_Description" ColumnName="Animal_Breed_Description" />
+                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Don_SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Don_SearchDon_Result">
+                <ScalarProperty Name="Donation_Type_ID" ColumnName="Donation_Type_ID" />
+                <ScalarProperty Name="Donation_Type_Name" ColumnName="Donation_Type_Name" />
+                <ScalarProperty Name="Donation_Type_Description" ColumnName="Donation_Type_Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Donor_SearchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Donor_SearchDonor_Result">
+                <ScalarProperty Name="Donor_ID" ColumnName="Donor_ID" />
+                <ScalarProperty Name="Donor_Name" ColumnName="Donor_Name" />
+                <ScalarProperty Name="Donor_Surname" ColumnName="Donor_Surname" />
+                <ScalarProperty Name="Donor_Email" ColumnName="Donor_Email" />
+                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Emp_SearchEmpType" FunctionName="Wollies_ShelterModel.Store.Emp_SearchEmpType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Emp_SearchEmpType_Result">
+                <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
+                <ScalarProperty Name="Emp_Type_Name" ColumnName="Emp_Type_Name" />
+                <ScalarProperty Name="Emp_Type_Description" ColumnName="Emp_Type_Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Parent_SearchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Parent_SearchParent_Result">
+                <ScalarProperty Name="Foster_Parent_ID" ColumnName="Foster_Parent_ID" />
+                <ScalarProperty Name="Foster_Parent_Name" ColumnName="Foster_Parent_Name" />
+                <ScalarProperty Name="Foster_Parent_Surname" ColumnName="Foster_Parent_Surname" />
+                <ScalarProperty Name="Foster_Parent_Address" ColumnName="Foster_Parent_Address" />
+                <ScalarProperty Name="Foster_Parent_CellNumber" ColumnName="Foster_Parent_CellNumber" />
+                <ScalarProperty Name="Foster_Parent_WorkNumber" ColumnName="Foster_Parent_WorkNumber" />
+                <ScalarProperty Name="Foster_Parent_Email" ColumnName="Foster_Parent_Email" />
+                <ScalarProperty Name="Foster_Parent_IDNumber" ColumnName="Foster_Parent_IDNumber" />
+                <ScalarProperty Name="Foster_Parent_Last_Modified" ColumnName="Foster_Parent_Last_Modified" />
+                <ScalarProperty Name="Num_In_Household" ColumnName="Num_In_Household" />
+                <ScalarProperty Name="Type_Of_Housing" ColumnName="Type_Of_Housing" />
+                <ScalarProperty Name="Ownership_Housing" ColumnName="Ownership_Housing" />
+                <ScalarProperty Name="Hours_Left_Alone" ColumnName="Hours_Left_Alone" />
+                <ScalarProperty Name="Adopter_ID" ColumnName="Adopter_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Stock_SearchStock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStock_Result">
+                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
+                <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
+                <ScalarProperty Name="Stock_Quantity" ColumnName="Stock_Quantity" />
+                <ScalarProperty Name="Stock_Description" ColumnName="Stock_Description" />
+                <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
+                <ScalarProperty Name="Packaging_Type_ID" ColumnName="Packaging_Type_ID" />
+                <ScalarProperty Name="Unit_Type_ID" ColumnName="Unit_Type_ID" />
+                <ScalarProperty Name="Unit_number" ColumnName="Unit_number" />
+                <ScalarProperty Name="Stock_Type_ID1" ColumnName="Stock_Type_ID1" />
+                <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
+                <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Stock_SearchStockType" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStockType_Result">
+                <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
+                <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
+                <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Vet_SearchVet" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Vet_SearchVet_Result">
+                <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
+                <ScalarProperty Name="Vet_Name" ColumnName="Vet_Name" />
+                <ScalarProperty Name="Vet_Emial" ColumnName="Vet_Emial" />
+                <ScalarProperty Name="Vet_Tel" ColumnName="Vet_Tel" />
+                <ScalarProperty Name="Vet_Address" ColumnName="Vet_Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

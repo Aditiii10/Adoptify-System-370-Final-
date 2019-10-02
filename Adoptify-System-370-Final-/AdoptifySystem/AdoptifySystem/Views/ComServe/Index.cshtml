@@ -1,0 +1,55 @@
+﻿@model AdoptifySystem.ViewModel.ComServeVM
+@using AdoptifySystem.ViewModel;
+@using System.Globalization
+@using System.Data
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="criteria">
+    @using (Html.BeginForm("Index", "ComServe", FormMethod.Post))
+    {
+        //<label>Select Volunteer</label>
+        // @Html.DropDownListFor(m => m.SelectedVolunteerID, Model.Volunteer, "Select", new { @class = "form-control" })
+        <label>From</label>
+        @Html.TextBoxFor(m => m.DateFrom, "yyyy-mm-dd", new { @Value = "2019-10-01", @type = "date", @class = "form-control" })
+        <label>To</label>
+        @Html.TextBoxFor(m => m.DateTo, "yyyy-mm-dd", new { @Value = "2019-10-30", @type = "date", @class = "form-control" })
+        <br />
+        <input type="submit" value="Generate" class="btn btn-primary" />
+    }
+</div>
+</div>
+@if (Model.Volunteers != null)
+{
+    <div class="panel panel-info">
+        @foreach (var group in Model.results)
+        {
+            <h4>@group</h4>
+            <table class="table table-striped">
+                <tr>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+
+                </tr>
+                @foreach (ReportRecordComServe groupItem in group)
+        {
+                    <tr>
+                        <td>@groupItem.Vol_Start_Time</td>
+                        <td>@groupItem.Vol_End_Time </td>
+
+                    </tr>
+        }
+            </table>
+            <hr />
+        }
+
+    </div>
+}
+
+//Download the report in PDF
+    <div>
+        @Html.ActionLink("Export as PDF", "ExportPDF", "ComServe")<br />
+    </div>
+

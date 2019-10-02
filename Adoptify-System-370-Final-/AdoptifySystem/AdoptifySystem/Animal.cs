@@ -23,25 +23,21 @@ namespace AdoptifySystem
             this.Foster_Care = new HashSet<Foster_Care>();
             this.Mecidal_Card = new HashSet<Mecidal_Card>();
             this.Microchips = new HashSet<Microchip>();
-            this.Animal_Treatment = new HashSet<Animal_Treatment>();
-            this.Vet_Appointment = new HashSet<Vet_Appointment>();
-            this.Vet_Appointment_Master = new HashSet<Vet_Appointment_Master>();
+            this.Vet_Appointment_Line = new HashSet<Vet_Appointment_Line>();
         }
     
         public int Animal_ID { get; set; }
         public byte[] Animal_Image { get; set; }
         public string Animal_Name { get; set; }
-        public Nullable<int> Animal_Type_ID { get; set; }
-        public Nullable<int> Animal_Breed_ID { get; set; }
         public string Animal_Description { get; set; }
         public string Animal_Gender { get; set; }
-        public Nullable<int> Animal_Age { get; set; }
-        public Nullable<bool> Animal_Sterilization { get; set; }
-        public Nullable<bool> Animal_Castration { get; set; }
+        public int Animal_Age { get; set; }
+        public bool Animal_Sterilization { get; set; }
+        public bool Animal_Castration { get; set; }
         public string Animal_Size { get; set; }
-        public Nullable<System.DateTime> Animal_Entry_Date { get; set; }
+        public System.DateTime Animal_Entry_Date { get; set; }
         public string Animal_Coat { get; set; }
-        public Nullable<int> Animal_Status_ID { get; set; }
+        public int Animal_Status_ID { get; set; }
         public string Animal_Image_Name { get; set; }
         public string Animal_Image_Type { get; set; }
     
@@ -61,10 +57,6 @@ namespace AdoptifySystem
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Microchip> Microchips { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Animal_Treatment> Animal_Treatment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vet_Appointment> Vet_Appointment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vet_Appointment_Master> Vet_Appointment_Master { get; set; }
+        public virtual ICollection<Vet_Appointment_Line> Vet_Appointment_Line { get; set; }
     }
 }

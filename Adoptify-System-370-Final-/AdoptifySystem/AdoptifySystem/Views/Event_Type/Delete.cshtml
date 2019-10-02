@@ -1,23 +1,64 @@
-﻿@model AdoptifySystem.Event_Type
+<<<<<<<< HEAD:Adoptify-System-370-Final-/AdoptifySystem/AdoptifySystem/Views/Event_Type/Delete.cshtml
+﻿@model AdoptifySystem.Models.Event_Type
+========
+﻿@model AdoptifySystem.Animal_Kennel_History
+>>>>>>>> 420d66ee22f4986437fa006d67cff2e917d124ac:Adoptify-System-370-Final-/AdoptifySystem/AdoptifySystem/Views/Animal_Kennel_History/Delete.cshtml
 
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<<<<<<<< HEAD:Adoptify-System-370-Final-/AdoptifySystem/AdoptifySystem/Views/Event_Type/Delete.cshtml
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Event_Type</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Event_Type_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event_Type_Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
+========
 <div id="main">
     <h2>Delete</h2>
 
     <h3>Are you sure you want to delete this?</h3>
     <div>
-        <h4>Event_Type</h4>
+        <h4>Animal_Kennel_History</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Event_Type_Name)
+                @Html.DisplayNameFor(model => model.Animal.Animal_Name)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Event_Type_Name)
+                @Html.DisplayFor(model => model.Animal.Animal_Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Kennel.Kennel_Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Kennel.Kennel_Name)
             </dd>
 
         </dl>
@@ -33,3 +74,4 @@
         }
     </div>
     </div>
+>>>>>>>> 420d66ee22f4986437fa006d67cff2e917d124ac:Adoptify-System-370-Final-/AdoptifySystem/AdoptifySystem/Views/Animal_Kennel_History/Delete.cshtml

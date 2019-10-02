@@ -28,7 +28,7 @@ namespace AdoptifySystem
         public string Vol_Address { get; set; }
         public string Vol_Emergency_ContactName { get; set; }
         public string Vol_Emergency_ContactNumber { get; set; }
-        public Nullable<int> Title_ID { get; set; }
+        public int Title_ID { get; set; }
     
         public virtual Title Title { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
