@@ -118,6 +118,7 @@
     <Property Name="Animal_Status_ID" Type="int" />
     <Property Name="Animal_Image_Name" Type="nvarchar(max)" />
     <Property Name="Animal_Image_Type" Type="nvarchar(max)" />
+    <Property Name="Kennel_ID" Type="int" />
   </EntityType>
   <EntityType Name="Animal_Breed">
     <Key>
@@ -127,14 +128,6 @@
     <Property Name="Animal_Breed_Name" Type="nvarchar" MaxLength="200" />
     <Property Name="Animal_Breed_Description" Type="nvarchar" MaxLength="200" />
     <Property Name="Animal_Type_ID" Type="int" />
-  </EntityType>
-  <EntityType Name="Animal_Kennel_History">
-    <Key>
-      <PropertyRef Name="Animal_Kennel_History_ID" />
-    </Key>
-    <Property Name="Animal_Kennel_History_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Animal_ID" Type="int" />
-    <Property Name="Kennel_ID" Type="int" />
   </EntityType>
   <EntityType Name="Animal_Status">
     <Key>
@@ -770,6 +763,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fkani3">
+    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+    <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kennel">
+        <PropertyRef Name="Kennel_ID" />
+      </Principal>
+      <Dependent Role="Animal">
+        <PropertyRef Name="Kennel_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkanibreed">
     <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="0..1" />
     <End Role="Animal_Breed" Type="Self.Animal_Breed" Multiplicity="*" />
@@ -779,30 +784,6 @@
       </Principal>
       <Dependent Role="Animal_Breed">
         <PropertyRef Name="Animal_Type_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fkanikh">
-    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
-    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Animal">
-        <PropertyRef Name="Animal_ID" />
-      </Principal>
-      <Dependent Role="Animal_Kennel_History">
-        <PropertyRef Name="Animal_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fkanikh1">
-    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
-    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Kennel">
-        <PropertyRef Name="Kennel_ID" />
-      </Principal>
-      <Dependent Role="Animal_Kennel_History">
-        <PropertyRef Name="Kennel_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1392,7 +1373,6 @@
     <EntitySet Name="AdoptionPayment" EntityType="Self.AdoptionPayment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal" EntityType="Self.Animal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Breed" EntityType="Self.Animal_Breed" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Animal_Kennel_History" EntityType="Self.Animal_Kennel_History" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" Schema="dbo" store:Type="Tables" />
@@ -1490,17 +1470,13 @@
       <End Role="Animal_Breed" EntitySet="Animal_Breed" />
       <End Role="Animal" EntitySet="Animal" />
     </AssociationSet>
+    <AssociationSet Name="fkani3" Association="Self.fkani3">
+      <End Role="Kennel" EntitySet="Kennel" />
+      <End Role="Animal" EntitySet="Animal" />
+    </AssociationSet>
     <AssociationSet Name="fkanibreed" Association="Self.fkanibreed">
       <End Role="Animal_Type" EntitySet="Animal_Type" />
       <End Role="Animal_Breed" EntitySet="Animal_Breed" />
-    </AssociationSet>
-    <AssociationSet Name="fkanikh" Association="Self.fkanikh">
-      <End Role="Animal" EntitySet="Animal" />
-      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
-    </AssociationSet>
-    <AssociationSet Name="fkanikh1" Association="Self.fkanikh1">
-      <End Role="Kennel" EntitySet="Kennel" />
-      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
     </AssociationSet>
     <AssociationSet Name="fkaudlog" Association="Self.fkaudlog">
       <End Role="User_" EntitySet="User_" />

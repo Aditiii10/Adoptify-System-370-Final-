@@ -43,6 +43,7 @@ namespace AdoptifySystem
         public Nullable<int> Animal_Status_ID { get; set; }
         public string Animal_Image_Name { get; set; }
         public string Animal_Image_Type { get; set; }
+        public Nullable<int> Kennel_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Adoption> Adoptions { get; set; }
@@ -63,5 +64,6 @@ namespace AdoptifySystem
         public virtual ICollection<Animal_Treatment> Animal_Treatment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vet_Appointment_Master> Vet_Appointment_Master { get; set; }
+        public virtual Kennel Kennel { get; set; }
     }
 }

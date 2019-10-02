@@ -151,6 +151,8 @@
     <NavigationProperty Name="Microchips" Relationship="Self.fkmicro" FromRole="Animal" ToRole="Microchip" />
     <NavigationProperty Name="Animal_Treatment" Relationship="Self.fktreat" FromRole="Animal" ToRole="Animal_Treatment" />
     <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkvetapl5" FromRole="Animal" ToRole="Vet_Appointment_Master" />
+    <Property Name="Kennel_ID" Type="Int32" />
+    <NavigationProperty Name="Kennel" Relationship="Wollies_ShelterModel.fkani3" FromRole="Animal" ToRole="Kennel" />
   </EntityType>
   <EntityType Name="Animal_Breed">
     <Key>
@@ -473,6 +475,7 @@
     <Property Name="Kennel_Capacity" Type="Int32" />
     <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh1" FromRole="Kennel" ToRole="Animal_Kennel_History" />
     <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk1" FromRole="Kennel" ToRole="Emp_Kennel" />
+    <NavigationProperty Name="Animals" Relationship="Wollies_ShelterModel.fkani3" FromRole="Kennel" ToRole="Animal" />
   </EntityType>
   <EntityType Name="Mecidal_Card">
     <Key>
@@ -1820,5 +1823,21 @@
       <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
       <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
     </AssociationSet>
+    <AssociationSet Name="fkani3" Association="Wollies_ShelterModel.fkani3">
+      <End Role="Kennel" EntitySet="Kennels" />
+      <End Role="Animal" EntitySet="Animals" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="fkani3">
+    <End Type="Wollies_ShelterModel.Kennel" Role="Kennel" Multiplicity="0..1" />
+    <End Type="Wollies_ShelterModel.Animal" Role="Animal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kennel">
+        <PropertyRef Name="Kennel_ID" />
+      </Principal>
+      <Dependent Role="Animal">
+        <PropertyRef Name="Kennel_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

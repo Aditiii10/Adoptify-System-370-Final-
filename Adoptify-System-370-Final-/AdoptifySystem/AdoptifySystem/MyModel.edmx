@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -123,6 +123,7 @@
           <Property Name="Animal_Status_ID" Type="int" />
           <Property Name="Animal_Image_Name" Type="nvarchar(max)" />
           <Property Name="Animal_Image_Type" Type="nvarchar(max)" />
+          <Property Name="Kennel_ID" Type="int" />
         </EntityType>
         <EntityType Name="Animal_Breed">
           <Key>
@@ -132,14 +133,6 @@
           <Property Name="Animal_Breed_Name" Type="nvarchar" MaxLength="200" />
           <Property Name="Animal_Breed_Description" Type="nvarchar" MaxLength="200" />
           <Property Name="Animal_Type_ID" Type="int" />
-        </EntityType>
-        <EntityType Name="Animal_Kennel_History">
-          <Key>
-            <PropertyRef Name="Animal_Kennel_History_ID" />
-          </Key>
-          <Property Name="Animal_Kennel_History_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Animal_ID" Type="int" />
-          <Property Name="Kennel_ID" Type="int" />
         </EntityType>
         <EntityType Name="Animal_Status">
           <Key>
@@ -775,6 +768,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkani3">
+          <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+          <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kennel">
+              <PropertyRef Name="Kennel_ID" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="Kennel_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkanibreed">
           <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="0..1" />
           <End Role="Animal_Breed" Type="Self.Animal_Breed" Multiplicity="*" />
@@ -784,30 +789,6 @@
             </Principal>
             <Dependent Role="Animal_Breed">
               <PropertyRef Name="Animal_Type_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkanikh">
-          <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
-          <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Animal">
-              <PropertyRef Name="Animal_ID" />
-            </Principal>
-            <Dependent Role="Animal_Kennel_History">
-              <PropertyRef Name="Animal_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkanikh1">
-          <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
-          <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Kennel">
-              <PropertyRef Name="Kennel_ID" />
-            </Principal>
-            <Dependent Role="Animal_Kennel_History">
-              <PropertyRef Name="Kennel_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1397,7 +1378,6 @@
           <EntitySet Name="AdoptionPayment" EntityType="Self.AdoptionPayment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Animal" EntityType="Self.Animal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Animal_Breed" EntityType="Self.Animal_Breed" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Animal_Kennel_History" EntityType="Self.Animal_Kennel_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" Schema="dbo" store:Type="Tables" />
@@ -1495,17 +1475,13 @@
             <End Role="Animal_Breed" EntitySet="Animal_Breed" />
             <End Role="Animal" EntitySet="Animal" />
           </AssociationSet>
+          <AssociationSet Name="fkani3" Association="Self.fkani3">
+            <End Role="Kennel" EntitySet="Kennel" />
+            <End Role="Animal" EntitySet="Animal" />
+          </AssociationSet>
           <AssociationSet Name="fkanibreed" Association="Self.fkanibreed">
             <End Role="Animal_Type" EntitySet="Animal_Type" />
             <End Role="Animal_Breed" EntitySet="Animal_Breed" />
-          </AssociationSet>
-          <AssociationSet Name="fkanikh" Association="Self.fkanikh">
-            <End Role="Animal" EntitySet="Animal" />
-            <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
-          </AssociationSet>
-          <AssociationSet Name="fkanikh1" Association="Self.fkanikh1">
-            <End Role="Kennel" EntitySet="Kennel" />
-            <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
           </AssociationSet>
           <AssociationSet Name="fkaudlog" Association="Self.fkaudlog">
             <End Role="User_" EntitySet="User_" />
@@ -1700,8 +1676,7 @@
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1856,6 +1831,8 @@
           <NavigationProperty Name="Microchips" Relationship="Self.fkmicro" FromRole="Animal" ToRole="Microchip" />
           <NavigationProperty Name="Animal_Treatment" Relationship="Self.fktreat" FromRole="Animal" ToRole="Animal_Treatment" />
           <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkvetapl5" FromRole="Animal" ToRole="Vet_Appointment_Master" />
+          <Property Name="Kennel_ID" Type="Int32" />
+          <NavigationProperty Name="Kennel" Relationship="Wollies_ShelterModel.fkani3" FromRole="Animal" ToRole="Kennel" />
         </EntityType>
         <EntityType Name="Animal_Breed">
           <Key>
@@ -2178,6 +2155,7 @@
           <Property Name="Kennel_Capacity" Type="Int32" />
           <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh1" FromRole="Kennel" ToRole="Animal_Kennel_History" />
           <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk1" FromRole="Kennel" ToRole="Emp_Kennel" />
+          <NavigationProperty Name="Animals" Relationship="Wollies_ShelterModel.fkani3" FromRole="Kennel" ToRole="Animal" />
         </EntityType>
         <EntityType Name="Mecidal_Card">
           <Key>
@@ -3525,7 +3503,23 @@
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
+          <AssociationSet Name="fkani3" Association="Wollies_ShelterModel.fkani3">
+            <End Role="Kennel" EntitySet="Kennels" />
+            <End Role="Animal" EntitySet="Animals" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="fkani3">
+          <End Type="Wollies_ShelterModel.Kennel" Role="Kennel" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Animal" Role="Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kennel">
+              <PropertyRef Name="Kennel_ID" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="Kennel_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3640,6 +3634,7 @@
           <EntitySetMapping Name="Animals">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Animal">
               <MappingFragment StoreEntitySet="Animal">
+                <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
                 <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
                 <ScalarProperty Name="Animal_Image" ColumnName="Animal_Image" />
                 <ScalarProperty Name="Animal_Name" ColumnName="Animal_Name" />
@@ -3666,15 +3661,6 @@
                 <ScalarProperty Name="Animal_Breed_Name" ColumnName="Animal_Breed_Name" />
                 <ScalarProperty Name="Animal_Breed_Description" ColumnName="Animal_Breed_Description" />
                 <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Animal_Kennel_History">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.Animal_Kennel_History">
-              <MappingFragment StoreEntitySet="Animal_Kennel_History">
-                <ScalarProperty Name="Animal_Kennel_History_ID" ColumnName="Animal_Kennel_History_ID" />
-                <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
-                <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

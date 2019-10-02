@@ -127,6 +127,7 @@
         <AssociationConnector Association="Wollies_ShelterModel.fkvetapl4" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs1" ManuallyRouted="false" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkani3" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
