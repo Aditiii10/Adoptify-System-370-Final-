@@ -17,9 +17,8 @@ namespace AdoptifySystem
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Kennel()
         {
-            this.Animal_Kennel_History = new HashSet<Animal_Kennel_History>();
-            this.Emp_Kennel = new HashSet<Emp_Kennel>();
             this.Animals = new HashSet<Animal>();
+            this.Emp_Kennel = new HashSet<Emp_Kennel>();
         }
     
         public int Kennel_ID { get; set; }
@@ -28,10 +27,8 @@ namespace AdoptifySystem
         public Nullable<int> Kennel_Capacity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Animal_Kennel_History> Animal_Kennel_History { get; set; }
+        public virtual ICollection<Animal> Animals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Emp_Kennel> Emp_Kennel { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Animal> Animals { get; set; }
     }
 }

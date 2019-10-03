@@ -18,7 +18,6 @@ namespace AdoptifySystem
         public Animal()
         {
             this.Adoptions = new HashSet<Adoption>();
-            this.Animal_Kennel_History = new HashSet<Animal_Kennel_History>();
             this.CrossBreeds = new HashSet<CrossBreed>();
             this.Foster_Care = new HashSet<Foster_Care>();
             this.Mecidal_Card = new HashSet<Mecidal_Card>();
@@ -50,8 +49,7 @@ namespace AdoptifySystem
         public virtual Animal_Status Animal_Status { get; set; }
         public virtual Animal_Type Animal_Type { get; set; }
         public virtual Animal_Breed Animal_Breed { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Animal_Kennel_History> Animal_Kennel_History { get; set; }
+        public virtual Kennel Kennel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CrossBreed> CrossBreeds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -64,6 +62,5 @@ namespace AdoptifySystem
         public virtual ICollection<Animal_Treatment> Animal_Treatment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vet_Appointment_Master> Vet_Appointment_Master { get; set; }
-        public virtual Kennel Kennel { get; set; }
     }
 }

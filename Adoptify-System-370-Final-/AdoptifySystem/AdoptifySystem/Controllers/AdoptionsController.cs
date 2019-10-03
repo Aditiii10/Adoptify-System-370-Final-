@@ -71,7 +71,7 @@ namespace AdoptifySystem.Controllers
             if (adoption != null)
                 {
                     ViewBag.ID = id;
-                    ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
+                    ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email + ", Address:" +" "+ adoption.Adopter.Adopter_Address;
                     ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old";
                     ViewBag.AnimalImage = adoption.Animal.Animal_Image;
                     return View("HomeCheckSchedule");
@@ -155,7 +155,7 @@ namespace AdoptifySystem.Controllers
                {
                     Adoption adoption = db.Adoptions.Find(id);
                     ViewBag.ID = adoption.Adoption_ID;
-                   ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
+                   ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email + ", Address:" + " " + adoption.Adopter.Adopter_Address;
                   ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
               }
             }
@@ -446,7 +446,7 @@ namespace AdoptifySystem.Controllers
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+""+ "You have Successfully Collected your Adopted Animal from Wollies Animal Shelter!"
+                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+""+ "You have Successfully Collected your Adopted Animal name" +" "+ adoption.Animal.Animal_Name+ ""+" from Wollies Animal Shelter on the Date of"+""+ date
                 );
                 return View("Finalise");
             }
@@ -527,7 +527,7 @@ namespace AdoptifySystem.Controllers
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+ "you have Successfully Adopted" + " " + adoption.Animal.Animal_Name + " " + "from Wollies Animal Shelter. Please Come again!");
+                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+" "+ "you have Successfully Adopted a"+" "+ adoption.Animal.Animal_Type.Animal_Type_Name+" "+"named"+ " " + adoption.Animal.Animal_Name + " " + "from Wollies Animal Shelter. Please Come again!");
             }
             TempData["FinaliseMessage"] ="CONGRATULATION!!"+" "+ adoption.Animal.Animal_Name+" "+ "Successfully Adopted by" + " " +adoption.Adopter.Adopter_Name;
             }
@@ -820,8 +820,7 @@ namespace AdoptifySystem.Controllers
            
             var statusID = new List<Animal>();
             var adoptions = db.Animals.ToList();
-            try
-            {
+            
                 if (ModelState.IsValid)
             {
                 String year = ADate.Substring(0, 4);
@@ -844,19 +843,17 @@ namespace AdoptifySystem.Controllers
 
                 }
 
-
                 adoption.Animal.Animal_Status_ID = 3;
                 db.SaveChanges();
-
                 //Sending SMS
                 var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
                 var authToken = "4186739dfb2554741e7dff014074ff82";
                 TwilioClient.Init(accountSid, authToken);
-                var message = MessageResource.Create(
-                    to: new Twilio.Types.PhoneNumber("+27676367506"),
-                    from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+ "You have Successfully Started the Adoption Process with" + " " + adoption.Animal.Animal_Name + " " +"On the date of"+" "+ ADate + " "+   "!From Wollies Animal Shelter."
-                );
+                //var message = MessageResource.Create(
+                //    to: new Twilio.Types.PhoneNumber("+27676367506"),
+                //    from: new Twilio.Types.PhoneNumber("+14245431153"),
+                //        body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+ "You have Successfully Started the Adoption Process with" + " " + adoption.Animal.Animal_Name + " " +"On the date of"+" "+ ADate + " "+   "!From Wollies Animal Shelter."
+                //);
 
                 TempData["AdoptionCreateMessage"] = "Adoption Process Successfully Created";
                 return RedirectToAction("Index");
@@ -866,25 +863,31 @@ namespace AdoptifySystem.Controllers
             ViewBag.Animal_ID = new SelectList(statusID, "Animal_ID", "Animal_Name", adoption.Animal_ID);
             //ViewBag.Payment_ID = new SelectList(db.Payments, "Payment_ID", "Payment_Description", adoption.Payment_ID);
             ViewBag.Adopt_Status_ID = new SelectList(db.Adoption_Status, "Adopt_Status_ID", "Adopt_Status_Name", adoption.Adopt_Status_ID);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Something Went Wrong!");
-                //return View("Error");
-            }
-            finally
-            {
-
-            }
             return View(adoption);
         }
 
         
         public ActionResult Delete(int? id)
         {
-            try { 
-            Id = Convert.ToInt32(id);
+            //try { 
+            //Id = Convert.ToInt32(id);
 
+            //if (id == null)
+            //{
+            //    throw new Exception("Something Went Wrong!");
+            //}
+            //Adoption adoption = db.Adoptions.Find(id);
+            //if (adoption == null)
+            //{
+            //        throw new Exception("Something Went Wrong!");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("Something Went Wrong!");
+            //    //return View("Error");
+            //}
+            //return View(adoption);
             if (id == null)
             {
                 throw new Exception("Something Went Wrong!");
@@ -892,19 +895,11 @@ namespace AdoptifySystem.Controllers
             Adoption adoption = db.Adoptions.Find(id);
             if (adoption == null)
             {
-                    throw new Exception("Something Went Wrong!");
-                }
-            }
-            catch (Exception ex)
-            {
                 throw new Exception("Something Went Wrong!");
-                //return View("Error");
-            }
-            finally
-            {
-
             }
             return View(adoption);
+
+           
         }
 
         // POST: Adoptions/Delete/5
@@ -925,14 +920,14 @@ namespace AdoptifySystem.Controllers
                 db.SaveChanges();
 
                 //Sending SMS
-                var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
-                var authToken = "4186739dfb2554741e7dff014074ff82";
-                TwilioClient.Init(accountSid, authToken);
-                var message = MessageResource.Create(
-                    to: new Twilio.Types.PhoneNumber("+27676367506"),
-                    from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "Unfortunately!" + " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+ " "+ " Adoption Process has been Cancelled. From Wollies!"
-                );
+                //var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
+                //var authToken = "4186739dfb2554741e7dff014074ff82";
+                //TwilioClient.Init(accountSid, authToken);
+                //var message = MessageResource.Create(
+                //    to: new Twilio.Types.PhoneNumber("+27676367506"),
+                //    from: new Twilio.Types.PhoneNumber("+14245431153"),
+                //    body: "Unfortunately!" + " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+ " "+ " Adoption Process has been Cancelled. From Wollies!"
+                //);
             }
             catch (Exception ex)
             {

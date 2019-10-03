@@ -130,7 +130,7 @@ namespace AdoptifySystem.Controllers
                 int count = mecidal_Card.Animal_Treatment1.Count();
                 if (count != 0)
                 {
-                    ViewBag.err = "You can not delete this Item as it is been used else where!!";
+                    TempData["DeleteErrorMessage"] = "You can not delete this Item as it is been used else where!!";
                     return RedirectToAction("SearchAnimalType");
                 }
                 else

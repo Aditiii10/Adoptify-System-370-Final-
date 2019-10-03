@@ -153,7 +153,12 @@
             if (successMessage != '')
                 alertify.error(successMessage);
         });
-
+         $(function () {
+            var successMessage = '@TempData["DeleteErrorMessage"]'
+            if (successMessage != '')
+                alertify.warning(successMessage);
+         });
+                
         @*function Delete(id) {
             alertify.confirm('Web Api CRUD Operations','Are You Sure to Delete this Record ?',function(){
                 window.location.href  = '@Url.Action("Delete","Employee")/'+id;

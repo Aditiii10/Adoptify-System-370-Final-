@@ -102,14 +102,11 @@ namespace AdoptifySystem.Controllers
             return View(veterinarian);
         }
 
-        // POST: Veterinarians/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Vet_ID,Vet_Name,Vet_Emial,Vet_Tel,Vet_Address")] Veterinarian veterinarian)
         {
-            try { 
             if (ModelState.IsValid)
             {
                 if (db.Veterinarians.Any(p => p.Vet_Name == veterinarian.Vet_Name)) //duplicate data
@@ -119,17 +116,13 @@ namespace AdoptifySystem.Controllers
 
                 }
 
-                else {
+                else
+                {
                     db.Entry(veterinarian).State = EntityState.Modified;
                     db.SaveChanges();
-                    TempData["EditMessage"] = "Successfully Updated Veternarian Details";
+                    TempData["EditMessage"] = "Updated Veternarian Details Successfully";
                     return RedirectToAction("Index");
                 }
-            }
-            }
-            catch (Exception err)
-            {
-                throw new Exception("Something Went Wrong!");
             }
             return View(veterinarian);
         }
@@ -160,7 +153,7 @@ namespace AdoptifySystem.Controllers
                 int count = veterinarian.Vet_Appointment_Master.Count();
                 if (count != 0)
                 {
-                    ViewBag.err = "You can not delete this Item as it is been used else where!!";
+                    TempData["DeleteErrorMessage"] =  "You can not delete this Item as it is been used else where!!";
                     return RedirectToAction("Index");
                 }
                 else

@@ -140,19 +140,18 @@
     <Property Name="Animal_Status_ID" Type="Int32" />
     <Property Name="Animal_Image_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Animal_Image_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Kennel_ID" Type="Int32" />
     <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt" FromRole="Animal" ToRole="Adoption" />
     <NavigationProperty Name="Animal_Status" Relationship="Self.fkani" FromRole="Animal" ToRole="Animal_Status" />
     <NavigationProperty Name="Animal_Type" Relationship="Self.fkani1" FromRole="Animal" ToRole="Animal_Type" />
     <NavigationProperty Name="Animal_Breed" Relationship="Self.fkani2" FromRole="Animal" ToRole="Animal_Breed" />
-    <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh" FromRole="Animal" ToRole="Animal_Kennel_History" />
+    <NavigationProperty Name="Kennel" Relationship="Self.fkani3" FromRole="Animal" ToRole="Kennel" />
     <NavigationProperty Name="CrossBreeds" Relationship="Self.fkcrb" FromRole="Animal" ToRole="CrossBreed" />
     <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc" FromRole="Animal" ToRole="Foster_Care" />
     <NavigationProperty Name="Mecidal_Card" Relationship="Self.fkmedcard" FromRole="Animal" ToRole="Mecidal_Card" />
     <NavigationProperty Name="Microchips" Relationship="Self.fkmicro" FromRole="Animal" ToRole="Microchip" />
     <NavigationProperty Name="Animal_Treatment" Relationship="Self.fktreat" FromRole="Animal" ToRole="Animal_Treatment" />
     <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkvetapl5" FromRole="Animal" ToRole="Vet_Appointment_Master" />
-    <Property Name="Kennel_ID" Type="Int32" />
-    <NavigationProperty Name="Kennel" Relationship="Wollies_ShelterModel.fkani3" FromRole="Animal" ToRole="Kennel" />
   </EntityType>
   <EntityType Name="Animal_Breed">
     <Key>
@@ -165,16 +164,6 @@
     <NavigationProperty Name="Animals" Relationship="Self.fkani2" FromRole="Animal_Breed" ToRole="Animal" />
     <NavigationProperty Name="Animal_Type" Relationship="Self.fkanibreed" FromRole="Animal_Breed" ToRole="Animal_Type" />
     <NavigationProperty Name="CrossBreeds" Relationship="Self.fkcrb1" FromRole="Animal_Breed" ToRole="CrossBreed" />
-  </EntityType>
-  <EntityType Name="Animal_Kennel_History">
-    <Key>
-      <PropertyRef Name="Animal_Kennel_History_ID" />
-    </Key>
-    <Property Name="Animal_Kennel_History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Animal_ID" Type="Int32" />
-    <Property Name="Kennel_ID" Type="Int32" />
-    <NavigationProperty Name="Animal" Relationship="Self.fkanikh" FromRole="Animal_Kennel_History" ToRole="Animal" />
-    <NavigationProperty Name="Kennel" Relationship="Self.fkanikh1" FromRole="Animal_Kennel_History" ToRole="Kennel" />
   </EntityType>
   <EntityType Name="Animal_Status">
     <Key>
@@ -473,9 +462,8 @@
     <Property Name="Kennel_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Kennel_Number" Type="Int32" />
     <Property Name="Kennel_Capacity" Type="Int32" />
-    <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh1" FromRole="Kennel" ToRole="Animal_Kennel_History" />
+    <NavigationProperty Name="Animals" Relationship="Self.fkani3" FromRole="Kennel" ToRole="Animal" />
     <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk1" FromRole="Kennel" ToRole="Emp_Kennel" />
-    <NavigationProperty Name="Animals" Relationship="Wollies_ShelterModel.fkani3" FromRole="Kennel" ToRole="Animal" />
   </EntityType>
   <EntityType Name="Mecidal_Card">
     <Key>
@@ -755,6 +743,22 @@
     <Property Name="Org_FaxNumber" Type="Int32" />
     <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="database_firewall_rules">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="start_ip_address" />
+      <PropertyRef Name="end_ip_address" />
+      <PropertyRef Name="create_date" />
+      <PropertyRef Name="modify_date" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
   <Association Name="fkado">
     <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
     <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
@@ -971,15 +975,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fkanikh">
-    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
-    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
+  <Association Name="fkani3">
+    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+    <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Animal">
-        <PropertyRef Name="Animal_ID" />
+      <Principal Role="Kennel">
+        <PropertyRef Name="Kennel_ID" />
       </Principal>
-      <Dependent Role="Animal_Kennel_History">
-        <PropertyRef Name="Animal_ID" />
+      <Dependent Role="Animal">
+        <PropertyRef Name="Kennel_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1076,18 +1080,6 @@
       </Principal>
       <Dependent Role="CrossBreed">
         <PropertyRef Name="Animal_Breed_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fkanikh1">
-    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
-    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Kennel">
-        <PropertyRef Name="Kennel_ID" />
-      </Principal>
-      <Dependent Role="Animal_Kennel_History">
-        <PropertyRef Name="Kennel_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1521,7 +1513,6 @@
     <EntitySet Name="AdoptionPayments" EntityType="Self.AdoptionPayment" />
     <EntitySet Name="Animals" EntityType="Self.Animal" />
     <EntitySet Name="Animal_Breed" EntityType="Self.Animal_Breed" />
-    <EntitySet Name="Animal_Kennel_History" EntityType="Self.Animal_Kennel_History" />
     <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" />
     <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" />
     <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" />
@@ -1571,6 +1562,7 @@
     <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" />
     <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" />
     <EntitySet Name="Wollies" EntityType="Self.Wolly" />
+    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
     <AssociationSet Name="fkado" Association="Self.fkado">
       <End Role="Title" EntitySet="Titles" />
       <End Role="Adopter" EntitySet="Adopters" />
@@ -1643,9 +1635,9 @@
       <End Role="Animal_Breed" EntitySet="Animal_Breed" />
       <End Role="Animal" EntitySet="Animals" />
     </AssociationSet>
-    <AssociationSet Name="fkanikh" Association="Self.fkanikh">
+    <AssociationSet Name="fkani3" Association="Self.fkani3">
+      <End Role="Kennel" EntitySet="Kennels" />
       <End Role="Animal" EntitySet="Animals" />
-      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
     </AssociationSet>
     <AssociationSet Name="fkcrb" Association="Self.fkcrb">
       <End Role="Animal" EntitySet="Animals" />
@@ -1678,10 +1670,6 @@
     <AssociationSet Name="fkcrb1" Association="Self.fkcrb1">
       <End Role="Animal_Breed" EntitySet="Animal_Breed" />
       <End Role="CrossBreed" EntitySet="CrossBreeds" />
-    </AssociationSet>
-    <AssociationSet Name="fkanikh1" Association="Self.fkanikh1">
-      <End Role="Kennel" EntitySet="Kennels" />
-      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
     </AssociationSet>
     <AssociationSet Name="fktreat1" Association="Self.fktreat1">
       <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
@@ -1823,21 +1811,142 @@
       <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
       <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
     </AssociationSet>
-    <AssociationSet Name="fkani3" Association="Wollies_ShelterModel.fkani3">
-      <End Role="Kennel" EntitySet="Kennels" />
-      <End Role="Animal" EntitySet="Animals" />
-    </AssociationSet>
+    <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
-  <Association Name="fkani3">
-    <End Type="Wollies_ShelterModel.Kennel" Role="Kennel" Multiplicity="0..1" />
-    <End Type="Wollies_ShelterModel.Animal" Role="Animal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Kennel">
-        <PropertyRef Name="Kennel_ID" />
-      </Principal>
-      <Dependent Role="Animal">
-        <PropertyRef Name="Kennel_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <ComplexType Name="AnimalType_SearchAnimalType_Result">
+    <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="BreedType_SearchBreedType_Result">
+    <Property Type="Int32" Name="Animal_Breed_ID" Nullable="false" />
+    <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Don_SearchDon_Result">
+    <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
+    <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
+  </ComplexType>
+  <ComplexType Name="Donor_SearchDonor_Result">
+    <Property Type="Int32" Name="Donor_ID" Nullable="false" />
+    <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Title_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Emp_SearchEmpType_Result">
+    <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Emp_Type_Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Emp_Type_Description" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Parent_SearchParent_Result">
+    <Property Type="Int32" Name="Foster_Parent_ID" Nullable="false" />
+    <Property Type="String" Name="Foster_Parent_Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_Surname" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_Address" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_CellNumber" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_WorkNumber" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Foster_Parent_Email" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Foster_Parent_IDNumber" Nullable="true" />
+    <Property Type="DateTime" Name="Foster_Parent_Last_Modified" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="Num_In_Household" Nullable="true" />
+    <Property Type="String" Name="Type_Of_Housing" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
+    <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Stock_SearchStock_Result">
+    <Property Type="Int32" Name="Stock_ID" Nullable="false" />
+    <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Stock_Quantity" Nullable="true" />
+    <Property Type="String" Name="Stock_Description" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Stock_Type_ID" Nullable="true" />
+    <Property Type="Int32" Name="Packaging_Type_ID" Nullable="true" />
+    <Property Type="Int32" Name="Unit_Type_ID" Nullable="true" />
+    <Property Type="Int32" Name="Unit_number" Nullable="true" />
+    <Property Type="Int32" Name="Stock_Type_ID1" Nullable="false" />
+    <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="Stock_SearchStockType_Result">
+    <Property Type="Int32" Name="Stock_Type_ID" Nullable="false" />
+    <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="Vet_SearchVet_Result">
+    <Property Type="Int32" Name="Vet_ID" Nullable="false" />
+    <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
+    <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
+  </ComplexType>
 </Schema>

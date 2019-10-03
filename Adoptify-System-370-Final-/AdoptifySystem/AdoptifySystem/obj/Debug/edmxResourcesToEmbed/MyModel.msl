@@ -109,7 +109,6 @@
     <EntitySetMapping Name="Animals">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Animal">
         <MappingFragment StoreEntitySet="Animal">
-          <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
           <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
           <ScalarProperty Name="Animal_Image" ColumnName="Animal_Image" />
           <ScalarProperty Name="Animal_Name" ColumnName="Animal_Name" />
@@ -126,6 +125,7 @@
           <ScalarProperty Name="Animal_Status_ID" ColumnName="Animal_Status_ID" />
           <ScalarProperty Name="Animal_Image_Name" ColumnName="Animal_Image_Name" />
           <ScalarProperty Name="Animal_Image_Type" ColumnName="Animal_Image_Type" />
+          <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -678,5 +678,146 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="database_firewall_rules">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.database_firewall_rules">
+        <MappingFragment StoreEntitySet="database_firewall_rules">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+          <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+          <ScalarProperty Name="create_date" ColumnName="create_date" />
+          <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AnimalType_SearchAnimalType" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.AnimalType_SearchAnimalType_Result">
+          <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+          <ScalarProperty Name="Animal_Type_Name" ColumnName="Animal_Type_Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="BreedType_SearchBreedType" FunctionName="Wollies_ShelterModel.Store.BreedType_SearchBreedType">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.BreedType_SearchBreedType_Result">
+          <ScalarProperty Name="Animal_Breed_ID" ColumnName="Animal_Breed_ID" />
+          <ScalarProperty Name="Animal_Breed_Name" ColumnName="Animal_Breed_Name" />
+          <ScalarProperty Name="Animal_Breed_Description" ColumnName="Animal_Breed_Description" />
+          <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Don_SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.Don_SearchDon_Result">
+          <ScalarProperty Name="Donation_Type_ID" ColumnName="Donation_Type_ID" />
+          <ScalarProperty Name="Donation_Type_Name" ColumnName="Donation_Type_Name" />
+          <ScalarProperty Name="Donation_Type_Description" ColumnName="Donation_Type_Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Donor_SearchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.Donor_SearchDonor_Result">
+          <ScalarProperty Name="Donor_ID" ColumnName="Donor_ID" />
+          <ScalarProperty Name="Donor_Name" ColumnName="Donor_Name" />
+          <ScalarProperty Name="Donor_Surname" ColumnName="Donor_Surname" />
+          <ScalarProperty Name="Donor_Email" ColumnName="Donor_Email" />
+          <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Emp_SearchEmpType" FunctionName="Wollies_ShelterModel.Store.Emp_SearchEmpType">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.Emp_SearchEmpType_Result">
+          <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
+          <ScalarProperty Name="Emp_Type_Name" ColumnName="Emp_Type_Name" />
+          <ScalarProperty Name="Emp_Type_Description" ColumnName="Emp_Type_Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Parent_SearchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.Parent_SearchParent_Result">
+          <ScalarProperty Name="Foster_Parent_ID" ColumnName="Foster_Parent_ID" />
+          <ScalarProperty Name="Foster_Parent_Name" ColumnName="Foster_Parent_Name" />
+          <ScalarProperty Name="Foster_Parent_Surname" ColumnName="Foster_Parent_Surname" />
+          <ScalarProperty Name="Foster_Parent_Address" ColumnName="Foster_Parent_Address" />
+          <ScalarProperty Name="Foster_Parent_CellNumber" ColumnName="Foster_Parent_CellNumber" />
+          <ScalarProperty Name="Foster_Parent_WorkNumber" ColumnName="Foster_Parent_WorkNumber" />
+          <ScalarProperty Name="Foster_Parent_Email" ColumnName="Foster_Parent_Email" />
+          <ScalarProperty Name="Foster_Parent_IDNumber" ColumnName="Foster_Parent_IDNumber" />
+          <ScalarProperty Name="Foster_Parent_Last_Modified" ColumnName="Foster_Parent_Last_Modified" />
+          <ScalarProperty Name="Num_In_Household" ColumnName="Num_In_Household" />
+          <ScalarProperty Name="Type_Of_Housing" ColumnName="Type_Of_Housing" />
+          <ScalarProperty Name="Ownership_Housing" ColumnName="Ownership_Housing" />
+          <ScalarProperty Name="Hours_Left_Alone" ColumnName="Hours_Left_Alone" />
+          <ScalarProperty Name="Adopter_ID" ColumnName="Adopter_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Wollies_ShelterModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Wollies_ShelterModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Wollies_ShelterModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Wollies_ShelterModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Wollies_ShelterModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="Stock_SearchStock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStock_Result">
+          <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
+          <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
+          <ScalarProperty Name="Stock_Quantity" ColumnName="Stock_Quantity" />
+          <ScalarProperty Name="Stock_Description" ColumnName="Stock_Description" />
+          <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
+          <ScalarProperty Name="Packaging_Type_ID" ColumnName="Packaging_Type_ID" />
+          <ScalarProperty Name="Unit_Type_ID" ColumnName="Unit_Type_ID" />
+          <ScalarProperty Name="Unit_number" ColumnName="Unit_number" />
+          <ScalarProperty Name="Stock_Type_ID1" ColumnName="Stock_Type_ID1" />
+          <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
+          <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Stock_SearchStockType" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStockType_Result">
+          <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
+          <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
+          <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Vet_SearchVet" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.Vet_SearchVet_Result">
+          <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
+          <ScalarProperty Name="Vet_Name" ColumnName="Vet_Name" />
+          <ScalarProperty Name="Vet_Emial" ColumnName="Vet_Emial" />
+          <ScalarProperty Name="Vet_Tel" ColumnName="Vet_Tel" />
+          <ScalarProperty Name="Vet_Address" ColumnName="Vet_Address" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

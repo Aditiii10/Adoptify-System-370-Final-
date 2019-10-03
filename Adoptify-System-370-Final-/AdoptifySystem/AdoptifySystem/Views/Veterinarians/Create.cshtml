@@ -5,15 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*@section Scripts {
-   @Scripts.Render("~/bundles/jqueryval")
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
-<script type="text/javascript">
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWS2RFX5WP2nl4kXOGpCZwjHsYFEQp5iA&=false&libraries=places"></script>
+    <script type="text/javascript">
 
         google.maps.event.addDomListener(window, 'load', function () {
             var options = {
-                types: ['(cities)'],
-                componentRestrictions: { country: "ZA" }
+                types: ['(regions)'],
+                componentRestrictions: { country: "za" }
             };
 
             var input = document.getElementById('Vet_Address');
@@ -21,8 +22,9 @@
 
 
         });
-</script>
-    }*@
+    </script>
+   
+}
 
 
 <div id="main">
@@ -42,32 +44,32 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div>
-                <label title = "Enter Vet Name" >Name:</label><br />
+                <label title="Enter Vet Name">Name:</label><br />
 
-                @Html.EditorFor(model => model.Vet_Name, new { htmlAttributes = new { @class = "form-control", required = "required",  placeholder = "Enter Vet Name" } })
+                @Html.EditorFor(model => model.Vet_Name, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Name" } })
                 @Html.ValidationMessageFor(model => model.Vet_Name, "", new { @class = "text-danger" })
 
             </div>
 
             <div>
-                <label title = "Enter Vet Email">Email:</label> <br />
+                <label title="Enter Vet Email">Email:</label> <br />
 
-                @Html.EditorFor(model => model.Vet_Emial, new { htmlAttributes = new { @class = "form-control", @type = "email", required = "required",  placeholder = "Enter Vet Name" } })
+                @Html.EditorFor(model => model.Vet_Emial, new { htmlAttributes = new { @class = "form-control", @type = "email", required = "required", placeholder = "Enter Vet Name" } })
                 @Html.ValidationMessageFor(model => model.Vet_Emial, "", new { @class = "text-danger" })
 
             </div>
 
             <div>
-                <lable title = "Enter Vet Tel">Tel:</lable><br />
-                @Html.EditorFor(model => model.Vet_Tel, new { htmlAttributes = new { @class = "form-control", @type = "tel", required = "required",  placeholder = "Enter Vet Tel" } })
+                <lable title="Enter Vet Tel">Tel:</lable><br />
+                @Html.EditorFor(model => model.Vet_Tel, new { htmlAttributes = new { @class = "form-control", @type = "tel", required = "required", placeholder = "Enter Vet Tel" } })
                 @Html.ValidationMessageFor(model => model.Vet_Tel, "", new { @class = "text-danger" })
 
             </div>
 
             <div>
-                <lable title = "Enter Vet Address">Address:</lable><br />
+                <lable title="Enter Vet Address">Address:</lable><br />
 
-                @Html.EditorFor(model => model.Vet_Address, new { htmlAttributes = new { @class = "form-control", required = "required",  placeholder = "Enter Vet Address" } })
+                @Html.EditorFor(model => model.Vet_Address, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Address" } })
                 @Html.ValidationMessageFor(model => model.Vet_Address, "", new { @class = "text-danger" })
 
             </div><br />

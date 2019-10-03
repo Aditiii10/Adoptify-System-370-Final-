@@ -293,10 +293,10 @@
     <Compile Include="AnimalTypePrice.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Animal_Breed.cs">
+    <Compile Include="AnimalType_SearchAnimalType_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Animal_Kennel_History.cs">
+    <Compile Include="Animal_Breed.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Animal_Status.cs">
@@ -317,6 +317,9 @@
     <Compile Include="Audit_Log.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="BreedType_SearchBreedType_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\Aditi\AdoptersController.cs" />
     <Compile Include="Controllers\Aditi\Adopter_ContractController.cs" />
     <Compile Include="Controllers\Aditi\Adopter_RelativeController.cs" />
@@ -328,7 +331,6 @@
     <Compile Include="Controllers\Animal_TreatmentController.cs" />
     <Compile Include="Controllers\BackupController.cs" />
     <Compile Include="Controllers\Cassie\AnimalsDetailsReportController.cs" />
-    <Compile Include="Controllers\Cassie\Animal_Kennel_HistoryController.cs" />
     <Compile Include="Controllers\Cassie\Customer_EventController.cs" />
     <Compile Include="Controllers\Cassie\Event_Controller.cs" />
     <Compile Include="Controllers\Cassie\Event_TypeController.cs" />
@@ -359,6 +361,9 @@
     <Compile Include="Customer_Event.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="database_firewall_rules.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Donation.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -371,6 +376,12 @@
     <Compile Include="Donor.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Donor_SearchDonor_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Don_SearchDon_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Employee.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -381,6 +392,9 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Emp_Kennel.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Emp_SearchEmpType_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Event_.cs">
@@ -454,6 +468,9 @@
     <Compile Include="Packaging_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Parent_SearchParent_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="patients.cs" />
     <Compile Include="Payment.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
@@ -465,8 +482,20 @@
     <Compile Include="Role_.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Stock.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Stock_SearchStockType_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Stock_SearchStock_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Stock_Type.cs">
@@ -506,6 +535,9 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Vet_Appointment_Master.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vet_SearchVet_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Views\Videoplayer\VideoplayerController.cs" />
@@ -867,11 +899,6 @@
     <Content Include="Views\VetAppointment\Delete.cshtml" />
     <Content Include="Views\VetAppointment\Edit.cshtml" />
     <Content Include="Views\VetAppointment\Index.cshtml" />
-    <Content Include="Views\Animal_Kennel_History\Create.cshtml" />
-    <Content Include="Views\Animal_Kennel_History\Delete.cshtml" />
-    <Content Include="Views\Animal_Kennel_History\Details.cshtml" />
-    <Content Include="Views\Animal_Kennel_History\Edit.cshtml" />
-    <Content Include="Views\Animal_Kennel_History\Index.cshtml" />
     <Content Include="Views\Event_\Create.cshtml" />
     <Content Include="Views\Event_\Delete.cshtml" />
     <Content Include="Views\Event_\Details.cshtml" />

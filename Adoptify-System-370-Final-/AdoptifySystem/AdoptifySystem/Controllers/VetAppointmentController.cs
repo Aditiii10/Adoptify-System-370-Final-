@@ -145,7 +145,7 @@ namespace AdoptifySystem.Controllers
                 int count = vet_Appointment_Master.Mecidal_Card.Count();
                 if (count != 0)
                 {
-                    ViewBag.err = "You can not delete this Item as it is been used else where!!";
+                    TempData["DeleteErrorMessage"] = "You can not delete this Item as it is been used else where!!";
                     return RedirectToAction("Index");
                 }
 

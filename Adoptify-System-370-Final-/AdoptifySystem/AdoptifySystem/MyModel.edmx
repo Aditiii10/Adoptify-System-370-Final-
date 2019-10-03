@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -623,6 +623,24 @@
           <Property Name="Org_ContactNumber" Type="int" />
           <Property Name="Org_FaxNumber" Type="int" />
           <Property Name="Org_Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="fk2">
           <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="1" />
@@ -1368,6 +1386,64 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AnimalType_SearchAnimalType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="BreedType_SearchBreedType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Don_SearchDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Donor_SearchDonor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Emp_SearchEmpType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="Parent_SearchParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Stock_SearchStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Stock_SearchStockType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Vet_SearchVet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="Wollies_ShelterModelStoreContainer">
           <EntitySet Name="Adopter" EntityType="Self.Adopter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
@@ -1427,6 +1503,16 @@
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Wollies" EntityType="Self.Wollies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="fk2" Association="Self.fk2">
             <End Role="Animal_Type" EntitySet="Animal_Type" />
             <End Role="AnimalTypePrice" EntitySet="AnimalTypePrice" />
@@ -1676,7 +1762,8 @@
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1820,19 +1907,18 @@
           <Property Name="Animal_Status_ID" Type="Int32" />
           <Property Name="Animal_Image_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Animal_Image_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Kennel_ID" Type="Int32" />
           <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt" FromRole="Animal" ToRole="Adoption" />
           <NavigationProperty Name="Animal_Status" Relationship="Self.fkani" FromRole="Animal" ToRole="Animal_Status" />
           <NavigationProperty Name="Animal_Type" Relationship="Self.fkani1" FromRole="Animal" ToRole="Animal_Type" />
           <NavigationProperty Name="Animal_Breed" Relationship="Self.fkani2" FromRole="Animal" ToRole="Animal_Breed" />
-          <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh" FromRole="Animal" ToRole="Animal_Kennel_History" />
+          <NavigationProperty Name="Kennel" Relationship="Self.fkani3" FromRole="Animal" ToRole="Kennel" />
           <NavigationProperty Name="CrossBreeds" Relationship="Self.fkcrb" FromRole="Animal" ToRole="CrossBreed" />
           <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc" FromRole="Animal" ToRole="Foster_Care" />
           <NavigationProperty Name="Mecidal_Card" Relationship="Self.fkmedcard" FromRole="Animal" ToRole="Mecidal_Card" />
           <NavigationProperty Name="Microchips" Relationship="Self.fkmicro" FromRole="Animal" ToRole="Microchip" />
           <NavigationProperty Name="Animal_Treatment" Relationship="Self.fktreat" FromRole="Animal" ToRole="Animal_Treatment" />
           <NavigationProperty Name="Vet_Appointment_Master" Relationship="Self.fkvetapl5" FromRole="Animal" ToRole="Vet_Appointment_Master" />
-          <Property Name="Kennel_ID" Type="Int32" />
-          <NavigationProperty Name="Kennel" Relationship="Wollies_ShelterModel.fkani3" FromRole="Animal" ToRole="Kennel" />
         </EntityType>
         <EntityType Name="Animal_Breed">
           <Key>
@@ -1845,16 +1931,6 @@
           <NavigationProperty Name="Animals" Relationship="Self.fkani2" FromRole="Animal_Breed" ToRole="Animal" />
           <NavigationProperty Name="Animal_Type" Relationship="Self.fkanibreed" FromRole="Animal_Breed" ToRole="Animal_Type" />
           <NavigationProperty Name="CrossBreeds" Relationship="Self.fkcrb1" FromRole="Animal_Breed" ToRole="CrossBreed" />
-        </EntityType>
-        <EntityType Name="Animal_Kennel_History">
-          <Key>
-            <PropertyRef Name="Animal_Kennel_History_ID" />
-          </Key>
-          <Property Name="Animal_Kennel_History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Animal_ID" Type="Int32" />
-          <Property Name="Kennel_ID" Type="Int32" />
-          <NavigationProperty Name="Animal" Relationship="Self.fkanikh" FromRole="Animal_Kennel_History" ToRole="Animal" />
-          <NavigationProperty Name="Kennel" Relationship="Self.fkanikh1" FromRole="Animal_Kennel_History" ToRole="Kennel" />
         </EntityType>
         <EntityType Name="Animal_Status">
           <Key>
@@ -2153,9 +2229,8 @@
           <Property Name="Kennel_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Kennel_Number" Type="Int32" />
           <Property Name="Kennel_Capacity" Type="Int32" />
-          <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh1" FromRole="Kennel" ToRole="Animal_Kennel_History" />
+          <NavigationProperty Name="Animals" Relationship="Self.fkani3" FromRole="Kennel" ToRole="Animal" />
           <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk1" FromRole="Kennel" ToRole="Emp_Kennel" />
-          <NavigationProperty Name="Animals" Relationship="Wollies_ShelterModel.fkani3" FromRole="Kennel" ToRole="Animal" />
         </EntityType>
         <EntityType Name="Mecidal_Card">
           <Key>
@@ -2435,6 +2510,22 @@
           <Property Name="Org_FaxNumber" Type="Int32" />
           <Property Name="Org_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <Association Name="fkado">
           <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
           <End Role="Adopter" Type="Self.Adopter" Multiplicity="*" />
@@ -2651,15 +2742,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkanikh">
-          <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
-          <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
+        <Association Name="fkani3">
+          <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+          <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Animal">
-              <PropertyRef Name="Animal_ID" />
+            <Principal Role="Kennel">
+              <PropertyRef Name="Kennel_ID" />
             </Principal>
-            <Dependent Role="Animal_Kennel_History">
-              <PropertyRef Name="Animal_ID" />
+            <Dependent Role="Animal">
+              <PropertyRef Name="Kennel_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2756,18 +2847,6 @@
             </Principal>
             <Dependent Role="CrossBreed">
               <PropertyRef Name="Animal_Breed_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkanikh1">
-          <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
-          <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Kennel">
-              <PropertyRef Name="Kennel_ID" />
-            </Principal>
-            <Dependent Role="Animal_Kennel_History">
-              <PropertyRef Name="Kennel_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3201,7 +3280,6 @@
           <EntitySet Name="AdoptionPayments" EntityType="Self.AdoptionPayment" />
           <EntitySet Name="Animals" EntityType="Self.Animal" />
           <EntitySet Name="Animal_Breed" EntityType="Self.Animal_Breed" />
-          <EntitySet Name="Animal_Kennel_History" EntityType="Self.Animal_Kennel_History" />
           <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" />
           <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" />
           <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" />
@@ -3251,6 +3329,7 @@
           <EntitySet Name="Volunteer_Hours" EntityType="Self.Volunteer_Hours" />
           <EntitySet Name="Volunteer_Work_Type" EntityType="Self.Volunteer_Work_Type" />
           <EntitySet Name="Wollies" EntityType="Self.Wolly" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
           <AssociationSet Name="fkado" Association="Self.fkado">
             <End Role="Title" EntitySet="Titles" />
             <End Role="Adopter" EntitySet="Adopters" />
@@ -3323,9 +3402,9 @@
             <End Role="Animal_Breed" EntitySet="Animal_Breed" />
             <End Role="Animal" EntitySet="Animals" />
           </AssociationSet>
-          <AssociationSet Name="fkanikh" Association="Self.fkanikh">
+          <AssociationSet Name="fkani3" Association="Self.fkani3">
+            <End Role="Kennel" EntitySet="Kennels" />
             <End Role="Animal" EntitySet="Animals" />
-            <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
           </AssociationSet>
           <AssociationSet Name="fkcrb" Association="Self.fkcrb">
             <End Role="Animal" EntitySet="Animals" />
@@ -3358,10 +3437,6 @@
           <AssociationSet Name="fkcrb1" Association="Self.fkcrb1">
             <End Role="Animal_Breed" EntitySet="Animal_Breed" />
             <End Role="CrossBreed" EntitySet="CrossBreeds" />
-          </AssociationSet>
-          <AssociationSet Name="fkanikh1" Association="Self.fkanikh1">
-            <End Role="Kennel" EntitySet="Kennels" />
-            <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
           </AssociationSet>
           <AssociationSet Name="fktreat1" Association="Self.fktreat1">
             <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
@@ -3503,23 +3578,144 @@
             <End Role="Volunteer_Work_Type" EntitySet="Volunteer_Work_Type" />
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
-          <AssociationSet Name="fkani3" Association="Wollies_ShelterModel.fkani3">
-            <End Role="Kennel" EntitySet="Kennels" />
-            <End Role="Animal" EntitySet="Animals" />
-          </AssociationSet>
+          <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <Association Name="fkani3">
-          <End Type="Wollies_ShelterModel.Kennel" Role="Kennel" Multiplicity="0..1" />
-          <End Type="Wollies_ShelterModel.Animal" Role="Animal" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Kennel">
-              <PropertyRef Name="Kennel_ID" />
-            </Principal>
-            <Dependent Role="Animal">
-              <PropertyRef Name="Kennel_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <ComplexType Name="AnimalType_SearchAnimalType_Result">
+          <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Animal_Type_Name" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="BreedType_SearchBreedType_Result">
+          <Property Type="Int32" Name="Animal_Breed_ID" Nullable="false" />
+          <Property Type="String" Name="Animal_Breed_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Animal_Breed_Description" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Animal_Type_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Don_SearchDon_Result">
+          <Property Type="Int32" Name="Donation_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Donation_Type_Name" Nullable="true" MaxLength="600" />
+          <Property Type="String" Name="Donation_Type_Description" Nullable="true" MaxLength="600" />
+        </ComplexType>
+        <ComplexType Name="Donor_SearchDonor_Result">
+          <Property Type="Int32" Name="Donor_ID" Nullable="false" />
+          <Property Type="String" Name="Donor_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Donor_Surname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Donor_Email" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Title_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Emp_SearchEmpType_Result">
+          <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Emp_Type_Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Emp_Type_Description" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Parent_SearchParent_Result">
+          <Property Type="Int32" Name="Foster_Parent_ID" Nullable="false" />
+          <Property Type="String" Name="Foster_Parent_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_Surname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_Address" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_CellNumber" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_WorkNumber" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Foster_Parent_Email" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Foster_Parent_IDNumber" Nullable="true" />
+          <Property Type="DateTime" Name="Foster_Parent_Last_Modified" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Num_In_Household" Nullable="true" />
+          <Property Type="String" Name="Type_Of_Housing" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
+          <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Stock_SearchStock_Result">
+          <Property Type="Int32" Name="Stock_ID" Nullable="false" />
+          <Property Type="String" Name="Stock_Name" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Stock_Quantity" Nullable="true" />
+          <Property Type="String" Name="Stock_Description" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Stock_Type_ID" Nullable="true" />
+          <Property Type="Int32" Name="Packaging_Type_ID" Nullable="true" />
+          <Property Type="Int32" Name="Unit_Type_ID" Nullable="true" />
+          <Property Type="Int32" Name="Unit_number" Nullable="true" />
+          <Property Type="Int32" Name="Stock_Type_ID1" Nullable="false" />
+          <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="Stock_SearchStockType_Result">
+          <Property Type="Int32" Name="Stock_Type_ID" Nullable="false" />
+          <Property Type="String" Name="Stock_Type_Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Stock_Type_Description" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="Vet_SearchVet_Result">
+          <Property Type="Int32" Name="Vet_ID" Nullable="false" />
+          <Property Type="String" Name="Vet_Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3634,7 +3830,6 @@
           <EntitySetMapping Name="Animals">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Animal">
               <MappingFragment StoreEntitySet="Animal">
-                <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
                 <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
                 <ScalarProperty Name="Animal_Image" ColumnName="Animal_Image" />
                 <ScalarProperty Name="Animal_Name" ColumnName="Animal_Name" />
@@ -3651,6 +3846,7 @@
                 <ScalarProperty Name="Animal_Status_ID" ColumnName="Animal_Status_ID" />
                 <ScalarProperty Name="Animal_Image_Name" ColumnName="Animal_Image_Name" />
                 <ScalarProperty Name="Animal_Image_Type" ColumnName="Animal_Image_Type" />
+                <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4203,6 +4399,147 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AnimalType_SearchAnimalType" FunctionName="Wollies_ShelterModel.Store.AnimalType_SearchAnimalType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.AnimalType_SearchAnimalType_Result">
+                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+                <ScalarProperty Name="Animal_Type_Name" ColumnName="Animal_Type_Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="BreedType_SearchBreedType" FunctionName="Wollies_ShelterModel.Store.BreedType_SearchBreedType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.BreedType_SearchBreedType_Result">
+                <ScalarProperty Name="Animal_Breed_ID" ColumnName="Animal_Breed_ID" />
+                <ScalarProperty Name="Animal_Breed_Name" ColumnName="Animal_Breed_Name" />
+                <ScalarProperty Name="Animal_Breed_Description" ColumnName="Animal_Breed_Description" />
+                <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Don_SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Don_SearchDon_Result">
+                <ScalarProperty Name="Donation_Type_ID" ColumnName="Donation_Type_ID" />
+                <ScalarProperty Name="Donation_Type_Name" ColumnName="Donation_Type_Name" />
+                <ScalarProperty Name="Donation_Type_Description" ColumnName="Donation_Type_Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Donor_SearchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Donor_SearchDonor_Result">
+                <ScalarProperty Name="Donor_ID" ColumnName="Donor_ID" />
+                <ScalarProperty Name="Donor_Name" ColumnName="Donor_Name" />
+                <ScalarProperty Name="Donor_Surname" ColumnName="Donor_Surname" />
+                <ScalarProperty Name="Donor_Email" ColumnName="Donor_Email" />
+                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Emp_SearchEmpType" FunctionName="Wollies_ShelterModel.Store.Emp_SearchEmpType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Emp_SearchEmpType_Result">
+                <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
+                <ScalarProperty Name="Emp_Type_Name" ColumnName="Emp_Type_Name" />
+                <ScalarProperty Name="Emp_Type_Description" ColumnName="Emp_Type_Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Parent_SearchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Parent_SearchParent_Result">
+                <ScalarProperty Name="Foster_Parent_ID" ColumnName="Foster_Parent_ID" />
+                <ScalarProperty Name="Foster_Parent_Name" ColumnName="Foster_Parent_Name" />
+                <ScalarProperty Name="Foster_Parent_Surname" ColumnName="Foster_Parent_Surname" />
+                <ScalarProperty Name="Foster_Parent_Address" ColumnName="Foster_Parent_Address" />
+                <ScalarProperty Name="Foster_Parent_CellNumber" ColumnName="Foster_Parent_CellNumber" />
+                <ScalarProperty Name="Foster_Parent_WorkNumber" ColumnName="Foster_Parent_WorkNumber" />
+                <ScalarProperty Name="Foster_Parent_Email" ColumnName="Foster_Parent_Email" />
+                <ScalarProperty Name="Foster_Parent_IDNumber" ColumnName="Foster_Parent_IDNumber" />
+                <ScalarProperty Name="Foster_Parent_Last_Modified" ColumnName="Foster_Parent_Last_Modified" />
+                <ScalarProperty Name="Num_In_Household" ColumnName="Num_In_Household" />
+                <ScalarProperty Name="Type_Of_Housing" ColumnName="Type_Of_Housing" />
+                <ScalarProperty Name="Ownership_Housing" ColumnName="Ownership_Housing" />
+                <ScalarProperty Name="Hours_Left_Alone" ColumnName="Hours_Left_Alone" />
+                <ScalarProperty Name="Adopter_ID" ColumnName="Adopter_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Wollies_ShelterModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Wollies_ShelterModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Wollies_ShelterModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Wollies_ShelterModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Wollies_ShelterModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="Stock_SearchStock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStock_Result">
+                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
+                <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
+                <ScalarProperty Name="Stock_Quantity" ColumnName="Stock_Quantity" />
+                <ScalarProperty Name="Stock_Description" ColumnName="Stock_Description" />
+                <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
+                <ScalarProperty Name="Packaging_Type_ID" ColumnName="Packaging_Type_ID" />
+                <ScalarProperty Name="Unit_Type_ID" ColumnName="Unit_Type_ID" />
+                <ScalarProperty Name="Unit_number" ColumnName="Unit_number" />
+                <ScalarProperty Name="Stock_Type_ID1" ColumnName="Stock_Type_ID1" />
+                <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
+                <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Stock_SearchStockType" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStockType_Result">
+                <ScalarProperty Name="Stock_Type_ID" ColumnName="Stock_Type_ID" />
+                <ScalarProperty Name="Stock_Type_Name" ColumnName="Stock_Type_Name" />
+                <ScalarProperty Name="Stock_Type_Description" ColumnName="Stock_Type_Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Vet_SearchVet" FunctionName="Wollies_ShelterModel.Store.Vet_SearchVet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Wollies_ShelterModel.Vet_SearchVet_Result">
+                <ScalarProperty Name="Vet_ID" ColumnName="Vet_ID" />
+                <ScalarProperty Name="Vet_Name" ColumnName="Vet_Name" />
+                <ScalarProperty Name="Vet_Emial" ColumnName="Vet_Emial" />
+                <ScalarProperty Name="Vet_Tel" ColumnName="Vet_Tel" />
+                <ScalarProperty Name="Vet_Address" ColumnName="Vet_Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
