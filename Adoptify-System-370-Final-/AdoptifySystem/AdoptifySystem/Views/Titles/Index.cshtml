@@ -8,6 +8,13 @@
 
 <p>
     @Html.ActionLink("Add New", "Create", "Titles", new { @class = "btn btn-success", @Title = "Click to Add Title" })
+
+    
+    <br/>
+    <b>Search Criteria:  </b>
+    <br />
+    @Html.TextBox("search")<input type="submit" value="Search" ? class="btn btn-primary" title="Click to Search" />
+    
 </p>
 <table class="table-bordered table">
     <tr class="table-primary">
@@ -32,3 +39,11 @@
     }
 
 </table>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-12">
+        <br />
+        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page" })
+        <br />
+    </div>
+</div>

@@ -10,9 +10,9 @@
     @Html.ActionLink("Add New", "Create", "Volunteer_Work_Type", new { @class = "btn btn-success", @Title = "Click to Add Volunteer Work Type" })
     @using (Html.BeginForm("Index", "Volunteer_Work_Type", FormMethod.Get))
     {
-        <b>Search by:</b>@Html.RadioButton("Searchby", "Vol_WorkType_Name", true) <text>Volunteer Work Type Name</text>
-        @Html.RadioButton("Searchby", "Vol_WorkType_Description")<text>Volunteer Work Type Description</text><br />
-        @Html.TextBox("search")<input type="submit" value="Search" ? />
+        <b>Search Criteria:  </b>
+        <br />
+        @Html.TextBox("search")<input type="submit" value="Search" ? class="btn btn-primary" title="Click to Search" />
     }
 </p>
 <table class="table-bordered table">
@@ -44,3 +44,11 @@
     }
 
 </table>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-12">
+        <br />
+        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page" })
+        <br />
+    </div>
+</div>
