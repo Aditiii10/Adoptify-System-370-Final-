@@ -13,14 +13,14 @@
     @using (Html.BeginForm("Index", "Adopters", FormMethod.Get))
 
     {
-        <b>Search by:</b>@Html.RadioButton("Searchby", "Adopter_Name", true) <text>Adopter Name</text>
-        @Html.RadioButton("Searchby", "Adopter_Surname")<text>Adopter Surname</text><br />
-        @Html.TextBox("search")<input type="submit" value="Search" ? />
+        <b>Search Criteria:  </b>
+        <br />
+        @Html.TextBox("search")<input type="submit" value="Search" ? class="btn btn-primary" title="Click to Search" />
     }
 </p>
 
-<table class="table">
-    <tr>
+<table class="table-bordered table">
+    <tr class="table-primary">
         <th>
             @Html.DisplayNameFor(model => model.Adopter_Name)
         </th>
@@ -213,18 +213,18 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Adopter_Status.Adopter_Status_Name)
                 </td>*@
-        <td>
-            @Html.ActionLink("Update", "Edit", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-success" })
-            @Html.ActionLink("More Info", "Details", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("Delete", "Delete", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-danger" })          
-        </td>
+            <td>
+                @Html.ActionLink("Update", "Edit", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-success" })
+                @Html.ActionLink("More Info", "Details", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Delete", "Delete", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-danger" })
+            </td>
         </tr>
     }
 
 </table>
 
 <div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
+    <div class="col-md-offset-2 col-md-12">
         <br />
         @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page"  })
         <br />

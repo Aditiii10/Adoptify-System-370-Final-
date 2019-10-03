@@ -98,33 +98,32 @@ namespace AdoptifySystem.Models
         public Nullable<int> Age_of_Children { get; set; }
 
 
-        [Display(Name = "Property Securely Closed")]
+        [Display(Name = "Is the Property Securely Closed?")]
         [Required]
         public Nullable<bool> Property_Securely_Closed { get; set; }
 
 
-        [Display(Name = "Property Include a Pool")]
+        [Display(Name = "Does the Property Include a Pool?")]
         [Required]
         public Nullable<bool> Properyty_Include_Pool { get; set; }
 
 
-        [Display(Name = "Is the Pool Secured")]
+        [Display(Name = "Is the Pool Secured?")]
         [Required]
         public Nullable<bool> Pool_Secured { get; set; }
 
 
-        [Display(Name = "Is There an Animal Shelter Available")]
+        [Display(Name = "Is There an Animal Shelter Available?")]
         [Required]
         public Nullable<bool> Animal_Shelter_Available { get; set; }
 
 
-        [Display(Name = "Does the Adopter have a Sick Animal")]
+        [Display(Name = "Does the Adopter have a Sick Animal?")]
         [Required]
         public Nullable<bool> Sick_Animal { get; set; }
 
 
         [Display(Name = "Sick Animal Diagnosis")]
-        [Required]
         public string Sick_Animal_Diagnosis { get; set; }
 
 
@@ -133,7 +132,7 @@ namespace AdoptifySystem.Models
         public string Animal_Sleep_Location { get; set; }
 
 
-        [Display(Name = "Has the Adopter Given an Animal Away")]
+        [Display(Name = "Has the Adopter Given an Animal Away?")]
         [Required]
         public Nullable<bool> Given_Animal_Away { get; set; }
 
@@ -148,27 +147,27 @@ namespace AdoptifySystem.Models
         public string Type_of_House { get; set; }
 
 
-        [Display(Name = "Has the Adopter Adopted Before")]
+        [Display(Name = "Has the Adopter Adopted Before?")]
         [Required]
         public Nullable<bool> Adopted_Before { get; set; }
 
 
-        [Display(Name = "Select if the House is enclosed in an estate/complex")]
+        [Display(Name = "Is the House is Enclosed in an Estate/Complex?")]
         [Required]
         public Nullable<bool> Complex_or_Flat { get; set; }
 
 
-        [Display(Name = "Are Animals Allowed")]
+        [Display(Name = "Are Animals Allowed?")]
         [Required]
         public Nullable<bool> Animal_Allowed { get; set; }
 
 
-        [Display(Name = "Will the Animal be Chained")]
+        [Display(Name = "Will the Animal be Caged")]
         [Required]
         public string Animal_Captivity { get; set; }
 
 
-        [Display(Name = "Current Animal's Vaccines Updated")]
+        [Display(Name = "Are the Current Animal's Vaccines Updated?")]
         [Required]
         public Nullable<bool> Animal_Vaccines_Updated { get; set; }
 
