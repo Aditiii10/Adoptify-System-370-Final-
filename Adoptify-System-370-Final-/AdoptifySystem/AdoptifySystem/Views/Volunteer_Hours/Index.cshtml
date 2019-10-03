@@ -4,19 +4,19 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Volunteer Hours List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New", "Create", "Volunteer_Hours", new { @class = "btn btn-success", @Title = "Click to Add Volunteer Hours" })
     @using (Html.BeginForm("Index", "Volunteer_Hours", FormMethod.Get))
     {
-        <b>Search by:</b>@Html.RadioButton("Searchby", "Vol_workDate", true) <text>Volunteer Work Date</text>
+        <b>Search Criteria:  </b>
         <br />
-        @Html.TextBox("search")<input type="submit" value="Search" ? />
+        @Html.TextBox("search")<input type="submit" value="Search" ? class="btn btn-primary" title="Click to Search" />
     }
 </p>
-<table class="table">
-    <tr>
+<table class="table-bordered table">
+    <tr class="table-primary">
         <th>
             @Html.DisplayNameFor(model => model.Vol_workDate)
         </th>
@@ -35,29 +35,38 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vol_workDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vol_Start_Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vol_End_Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Volunteer.Vol_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Volunteer_Work_Type.Vol_WorkType_Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Vol_Hours_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Vol_Hours_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Vol_Hours_ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vol_workDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vol_Start_Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vol_End_Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volunteer.Vol_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volunteer_Work_Type.Vol_WorkType_Name)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", "Volunteer_Hours", new { id = item.Vol_Hours_ID }, new { @class = "btn btn-danger", style = "float:right", @Title = "Click to Delete Volunteer Hours" })
+                @Html.ActionLink("More Info", "Details", "Volunteer_Hours", new { id = item.Vol_Hours_ID }, new { @class = "btn btn-primary", style = "float:right", @Title = "Click to View Volunteer Hours Information" })
+                @Html.ActionLink("Update", "Edit", "Volunteer_Hours", new { id = item.Vol_Hours_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Volunteer Hours" })
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+<div class="col-md-offset-2 col-md-12">
+    <br />
+    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page" })
+    <br />
+</div>
+</div>
