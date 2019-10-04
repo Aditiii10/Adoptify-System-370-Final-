@@ -505,6 +505,15 @@
     <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
     <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
   </EntityType>
+  <EntityType Name="Timer">
+    <Key>
+      <PropertyRef Name="Timer_Id" />
+    </Key>
+    <Property Name="Timer_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Hours" Type="int" />
+    <Property Name="Minutes" Type="int" />
+    <Property Name="Seconds" Type="int" />
+  </EntityType>
   <EntityType Name="TimeSheet">
     <Key>
       <PropertyRef Name="TimeSheet_ID" />
@@ -1486,6 +1495,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblFileDetail" EntityType="Self.tblFileDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Timer" EntityType="Self.Timer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />

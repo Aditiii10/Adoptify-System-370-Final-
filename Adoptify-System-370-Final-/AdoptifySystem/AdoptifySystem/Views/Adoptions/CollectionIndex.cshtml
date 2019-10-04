@@ -41,9 +41,9 @@
                     Collection Date
                 </th>
             *@
-            <th>
+            @*<th>
                 Payment Type
-            </th>
+            </th>*@
             <th>
                 Adoption Status
             </th>
@@ -72,9 +72,10 @@
             @Html.DisplayFor(modelItem => item.Collection_Date)
         </td>
 
-        *@<td>
+        *@
+        @*<td>
             @Html.DisplayFor(modelItem => item.AdoptionPayment.Payment_Type_ID)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
         </td>

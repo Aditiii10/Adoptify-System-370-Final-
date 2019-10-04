@@ -1868,6 +1868,7 @@
     <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="Timers" EntityType="Wollies_ShelterModel.Timer" />
   </EntityContainer>
   <ComplexType Name="AnimalType_SearchAnimalType_Result">
     <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -1949,4 +1950,13 @@
     <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
     <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
   </ComplexType>
+  <EntityType Name="Timer">
+    <Key>
+      <PropertyRef Name="Timer_Id" />
+    </Key>
+    <Property Name="Timer_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Hours" Type="Int32" />
+    <Property Name="Minutes" Type="Int32" />
+    <Property Name="Seconds" Type="Int32" />
+  </EntityType>
 </Schema>

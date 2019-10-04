@@ -513,6 +513,9 @@
     <Compile Include="tblFileDetail1.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Timer.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="TimeSheet.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -785,7 +788,6 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Email\SendEmailView.cshtml" />
-    <Content Include="Views\Backup\BackupDatabase.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -963,6 +965,8 @@
     <Content Include="Views\SMSMessage\SendMessage.cshtml" />
     <Content Include="Views\Videoplayer\VideoView.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Backup\Index.cshtml" />
+    <Content Include="Views\Backup\Backup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesHCReport\" />

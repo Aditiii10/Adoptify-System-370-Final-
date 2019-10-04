@@ -400,7 +400,7 @@ namespace AdoptifySystem.Controllers
             
             ViewBag.ID = id;
             ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
-            ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
+                ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old";
             Id = Convert.ToInt32(id);
             }
             catch (Exception ex)
@@ -446,7 +446,7 @@ namespace AdoptifySystem.Controllers
                 var message = MessageResource.Create(
                     to: new Twilio.Types.PhoneNumber("+27676367506"),
                     from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+""+ "You have Successfully Collected your Adopted Animal name" +" "+ adoption.Animal.Animal_Name+ ""+" from Wollies Animal Shelter on the Date of"+""+ date
+                    body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + " " + "You have Successfully Collected your Adopted Animal name" +" "+ adoption.Animal.Animal_Name+ ""+" from Wollies Animal Shelter on the Date of"+""+ date
                 );
                 return View("Finalise");
             }
@@ -477,7 +477,7 @@ namespace AdoptifySystem.Controllers
             {
                 ViewBag.ID = id;
                 ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
-                ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
+                ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old";
                 Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
                 aaa.Adopt_Status_ID = 7;
                 aaa.Animal.Animal_Status_ID = 4;
