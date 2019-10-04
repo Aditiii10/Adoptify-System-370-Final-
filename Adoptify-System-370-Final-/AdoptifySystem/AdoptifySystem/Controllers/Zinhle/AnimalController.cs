@@ -50,7 +50,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
 
-        public ContentResult test(string Cross_Breed, Animal animal, string breeds, Microchip micro, HttpPostedFileBase animalPicture,FormCollection form)
+        public ContentResult test(string Cross_Breed, Animal animal, string[] breeds, Microchip micro, HttpPostedFileBase animalPicture,FormCollection form)
         {
             try
             {
@@ -66,6 +66,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     animal.Animal_Image_Name = Path.GetFileName(animalPicture.FileName);
                     animal.Animal_Image_Type = animalPicture.ContentType;
                     animal.Animal_Image = bytes;
+                    
 
                 }
 
@@ -84,18 +85,23 @@ namespace AdoptifySystem.Controllers.Zinhle
                 if (Cross_Breed == "True")
                 {
                     // Split authors separated by a comma followed by space  
-                    string[] breed = breeds.Split(',');
+                    string[] breed = breeds[0].Split(',');
                         foreach (var item in breed)
                     {
                         CrossBreed cross = new CrossBreed();
                         cross.Animal_ID = animal.Animal_ID;
                         cross.Animal_Breed_ID = Convert.ToInt32(item);
+                        db.CrossBreeds.Add(cross);
+                        db.SaveChanges();
                     }
                 }
                 else {
                     CrossBreed cross = new CrossBreed();
                     cross.Animal_ID = animal.Animal_ID;
                     cross.Animal_Breed_ID = Convert.ToInt32(breeds);
+                    db.CrossBreeds.Add(cross);
+                    db.SaveChanges();
+
                 }
                 if (micro.Animal_Microchip_Code != null || micro.Implanters_PIN_Number != null || micro.Owner_Name != null || micro.Owner_Address != null || micro.Owner_Contact_Number != null)
                 {

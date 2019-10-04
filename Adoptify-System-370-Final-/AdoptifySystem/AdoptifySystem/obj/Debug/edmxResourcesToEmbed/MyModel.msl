@@ -125,6 +125,7 @@
           <ScalarProperty Name="Animal_Status_ID" ColumnName="Animal_Status_ID" />
           <ScalarProperty Name="Animal_Image_Name" ColumnName="Animal_Image_Name" />
           <ScalarProperty Name="Animal_Image_Type" ColumnName="Animal_Image_Type" />
+          <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -135,15 +136,6 @@
           <ScalarProperty Name="Animal_Breed_Name" ColumnName="Animal_Breed_Name" />
           <ScalarProperty Name="Animal_Breed_Description" ColumnName="Animal_Breed_Description" />
           <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Animal_Kennel_History">
-      <EntityTypeMapping TypeName="Wollies_ShelterModel.Animal_Kennel_History">
-        <MappingFragment StoreEntitySet="Animal_Kennel_History">
-          <ScalarProperty Name="Animal_Kennel_History_ID" ColumnName="Animal_Kennel_History_ID" />
-          <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
-          <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -407,9 +399,8 @@
       <EntityTypeMapping TypeName="Wollies_ShelterModel.HomeCheckReport">
         <MappingFragment StoreEntitySet="HomeCheckReport">
           <ScalarProperty Name="HomeCheckReportID" ColumnName="HomeCheckReportID" />
-          <ScalarProperty Name="HomeCheck_ID" ColumnName="HomeCheck_ID" />
+          <ScalarProperty Name="Adoption_ID" ColumnName="Adoption_ID" />
           <ScalarProperty Name="HomeCheckStatus" ColumnName="HomeCheckStatus" />
-          <ScalarProperty Name="HCDoc" ColumnName="HCDoc" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -519,6 +510,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Tables">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Table">
         <MappingFragment StoreEntitySet="Table">
@@ -547,6 +549,16 @@
           <ScalarProperty Name="SQLID" ColumnName="SQLID" />
           <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
           <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Timers">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.Timer">
+        <MappingFragment StoreEntitySet="Timer">
+          <ScalarProperty Name="Timer_Id" ColumnName="Timer_Id" />
+          <ScalarProperty Name="Hours" ColumnName="Hours" />
+          <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+          <ScalarProperty Name="Seconds" ColumnName="Seconds" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -756,6 +768,30 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Wollies_ShelterModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Wollies_ShelterModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Wollies_ShelterModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Wollies_ShelterModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Wollies_ShelterModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Wollies_ShelterModel.Store.sp_upgraddiagrams" />
     <FunctionImportMapping FunctionImportName="Stock_SearchStock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock">
       <ResultMapping>
         <ComplexTypeMapping TypeName="Wollies_ShelterModel.Stock_SearchStock_Result">

@@ -91,7 +91,7 @@
                                     @Html.DisplayFor(modelItem => item.Stocks.Count)<br />
                                 </div>
                                 <div class="modal-footer">
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Stock_Type_ID }, new { @class = "btn btn-danger" ,@title="Click to Delete Stock Type" }) |
+                                    @Html.ActionLink("Delete", "Deletestocktype", new { id = item.Stock_Type_ID }, new { @class = "btn btn-danger" ,@title="Click to Delete Stock Type" }) |
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     @Html.ActionLink("Maintain", "MaintainStockType", new { id = item.Stock_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" ,@title="Click to Maintian Stock Type" })
                                 </div>

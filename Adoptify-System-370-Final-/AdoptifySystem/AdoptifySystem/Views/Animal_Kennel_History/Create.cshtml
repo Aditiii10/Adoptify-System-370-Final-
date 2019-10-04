@@ -1,46 +1,146 @@
-﻿@model AdoptifySystem.Animal_Kennel_History
+﻿@model AdoptifySystem.Models.nickeymodel.Innovation
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="main">
+    <style>
+        .row {
+            display: flex;
+        }
 
-    <h2>Create</h2>
+        .column {
+            flex: 50%;
+        }
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>Animal_Kennel_History</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Animal_ID, "Animal_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("Animal_ID", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Animal_ID, "", new { @class = "text-danger" })
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+        img {
+            border-radius: 5px 5px 0 0;
+        }
+    </style>
+    <div id="main">
+        <h1 class="table-primary" style="width:100%">Clock-in Detail</h1>
+        <div id="animal" class="row">
+            @if (Model.animals != null)
+            {
+                <div id="animalpick" class="column">
+                    <select id="selectedanimal" onchange="LoadAnimal()" class="custom-select">
+                        <option>--Select Animal---</option>
+                        @foreach (var item in Model.animals)
+                        {
+                            <option value="@item.Animal_ID">@item.Animal_Name</option>
+                            
+                        }
+                    </select>
                 </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Kennel_ID, "Kennel_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("Kennel_ID", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Kennel_ID, "", new { @class = "text-danger" })
+                <div id="animaldetails" class="column">
+                    <div class="card border-primary mb-3">
+                        <h3 class="card-header">Animal Name</h3>
+                        <img style="height: 200px; width: 100%; display: block;" src="" alt="Card image">
+                        <div class="card-body">
+                            <ul>
+                                <li>Current Kennel</li>
+                                <li>Animal Type</li>
+                                <li>Animal Breed</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
+            }
+            else
+            {
+                <h1>Go Add animal @Html.ActionLink("SearchAnimal", "Animal")</h1>
+            }
         </div>
-    }
+        <div id="kennel" class="row">
+            @if (Model != null)
+            {
+                <div id="kennelpick" class="column">
+                    <select id="selectedkennel" name="Kennel_ID" onchange="LoadKennel()" class="custom-select">
+                        <option>--Select Kennel---</option>
+                        @foreach (var item in Model.Kennels)
+                        {
+                            <option value="@item.Kennel_ID">@item.Kennel_Name</option>
+                        }
+                    </select>
+                </div>
+                <div id="kenneldetails" class="column">
+                    
+                </div>
+            }
+            else
+            {
+                <h1>Go Add animal @Html.ActionLink("SearchAnimal", "Animal")</h1>
+            }
+        </div>
+    </div>
+<script>
+    function LoadAnimal() {
+        var x = document.getElementById("selectedanimal");
+        if (x.selectedIndex == 0) {
+            alert("Select a Animal");
+        } else {
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-    </div>
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "/Animal_Kennel_History/Search_Animal",
+                    data: { 'inid': x.value },
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        console.log(data);
+                        var s = '<h3 class="card-header">' + data.Animal_Name + '</h3>';
+                        s += '<img style="height: 200px; width: 100%; display: block;"src="' + +'" alt="Card image">';
+                        s += '<div class="card-body"><ul><li>Current Kennel:' + data.Kennel.Kennel_Name + '</li>';
+                        //foreach(var item in data.crossbreed)
+                        //{
+                            
+                        //}
+                        
+                        $("#DonorDetails").html(s);
+                        var text = document.getElementById("__searchit1");
+                        text.classList.add("is-valid");
+                    },
+                    error: function (error) {
+                        alert("There was an internal error");
+                    }
+                })
+        }
+
+    }
+    function LoadKennel() {
+         var x = document.getElementById("selectedkennel");
+        if (x.selectedIndex == 0) {
+            alert("Select a Kennel");
+        } else {
+           $.ajax(
+                {
+                    type: "GET",
+                    url: "/Animal_Kennel_History/Search_Kennel",
+                    data: { 'inid': x.value },
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        console.log(data);
+                        //render products to appropriate dropdown
+                        //render products to appropriate dropdown
+                        var s = '<div class="card border-primary mb-3">';
+                        s += '<div class="card-header">' + data.Kennel_Name + '</div><div class="card-body"><ul>';
+                        s += '<li>Space Left: ' + data.Kennel_Space + '</li><li>Capacity of Kennel: ' + data.Kennel_Capacity + '</li>';
+                        s += '</ul></div></div>';
+                        $("#kenneldetails").html(s);
+                        //var text = document.getElementById("__searchit1");
+                        //text.classList.add("is-valid");
+                    },
+                    error: function (error) {
+                        alert("There was an internal error");
+                    }
+                })
+        }
+    }
+</script>

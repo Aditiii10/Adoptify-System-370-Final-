@@ -10,14 +10,13 @@
 namespace AdoptifySystem
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class HomeCheckReport
+    public partial class sp_helpdiagrams_Result
     {
-        public int HomeCheckReportID { get; set; }
-        public Nullable<int> Adoption_ID { get; set; }
-        public Nullable<bool> HomeCheckStatus { get; set; }
-    
-        public virtual Adoption Adoption { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

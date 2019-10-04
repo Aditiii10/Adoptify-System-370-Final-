@@ -33,7 +33,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception)
             {
 
-                return RedirectToAction("Index", "Home");
+                throw new Exception("Something Went Wrong!");
             }
             
 
@@ -42,6 +42,8 @@ namespace AdoptifySystem.Controllers
         [HttpPost]
         public ContentResult AddDonor(Donor donor,string button)
         {
+            try
+            {
                 List<Donor> donors = new List<Donor>();
                 donors = db.Donors.ToList();
                 if (donors.Count != 0)
@@ -68,25 +70,41 @@ namespace AdoptifySystem.Controllers
                 {
                     db.Donors.Add(donor);
                     db.SaveChanges();
-                    
+
                 }
-            return Content("");
+                return Content("");
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+                
         }
         public ActionResult MaintainDonor(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                Donor donor = db.Donors.Find(id);
+                if (donor == null)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                flex.Titles = db.Titles.ToList();
+                flex.donor = donor;
+
+                return View(flex);
             }
-            Donor donor = db.Donors.Find(id);
-            if (donor == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                throw new Exception("Something Went Wrong!");
             }
-            flex.Titles = db.Titles.ToList();
-            flex.donor = donor;
             
-            return View(flex);
         }
         [HttpPost]
         public ContentResult MaintainDonor(Donor donor)
@@ -108,10 +126,9 @@ namespace AdoptifySystem.Controllers
                     db.SaveChanges();
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    ViewBag.err = e.Message;
-                return Content("");
+                throw new Exception("Something Went Wrong!");
             }
             return Content("");
         }
@@ -132,6 +149,7 @@ namespace AdoptifySystem.Controllers
             {
                 ViewBag.err = e.Message;
                 ViewBag.errormessage = "";
+                throw new Exception("Something Went Wrong!");
             }
             return View(flex);
         }
@@ -234,23 +252,32 @@ namespace AdoptifySystem.Controllers
         public JsonResult search_donor(string inid)
         {
             //List<Animal_Breed> breeds = new List<Animal_Breed>();
-            if (inid == "")
+            try
             {
-                TempData[""] = "Pick a Donor please";
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-            int id = Convert.ToInt32(inid);
-            id = id -1;
-            flex.donor = flex.DonorList.ElementAt(id);
-            if (flex.donor == null)
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-            Donor data = new Donor();
-            data.Donor_Name = flex.donor.Donor_Name;
-            data.Donor_Surname = flex.donor.Donor_Surname;
+                if (inid == "")
+                {
+                    TempData[""] = "Pick a Donor please";
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+                int id = Convert.ToInt32(inid);
+                id = id - 1;
+                flex.donor = flex.DonorList.ElementAt(id);
+                if (flex.donor == null)
+                {
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+                Donor data = new Donor();
+                data.Donor_Name = flex.donor.Donor_Name;
+                data.Donor_Surname = flex.donor.Donor_Surname;
 
-            return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+            
         }
         //public ActionResult search_stock(string inid)
         //{
@@ -273,96 +300,132 @@ namespace AdoptifySystem.Controllers
         [HttpGet]
         public JsonResult search_stock(string inid)
         {
-            if (inid == "")
+            try
             {
-                TempData[""] = "Pick a Stock please";
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-            int id = Convert.ToInt32(inid) -1;
-            flex.stock = flex.Stocklist.ElementAt(id);
+                if (inid == "")
+                {
+                    TempData[""] = "Pick a Stock please";
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+                int id = Convert.ToInt32(inid) - 1;
+                flex.stock = flex.Stocklist.ElementAt(id);
 
-            if (flex.stock == null)
-            {
-                return Json(true, JsonRequestBehavior.AllowGet);
+                if (flex.stock == null)
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                Stock data = new Stock();
+                data.Stock_Name = flex.stock.Stock_Name;
+                return Json(data, JsonRequestBehavior.AllowGet);
             }
-            Stock data = new Stock();
-            data.Stock_Name = flex.stock.Stock_Name;
-            return Json(data, JsonRequestBehavior.AllowGet);
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+            
 
         }
         public ActionResult add_stock(string Donation_Quantity)
         {
-            if (flex.donor == null)
+            try
             {
-                return View("AddDonation", flex);
-            }
-            if (Donation_Quantity == "")
-            {
-                return View("AddDonation", flex);
-            }
-            Donation_Line dl = new Donation_Line();
-            dl.Donation_Quantity = Convert.ToInt32(Donation_Quantity);
-            dl.Stock = flex.stock;
-            dl.Stock_ID = flex.stock.Stock_ID;
-            var Donation_Type = db.Donation_Type.Where(z=> z.Donation_Type_Name == "Stock").FirstOrDefault();
-            if (Donation_Type == null)
-            {
-                
-                return View("AddDonation", flex);
-            }
-            dl.Donation_Type = Donation_Type;
-            dl.Donation_Type_ID = Donation_Type.Donation_Type_ID;
-            donlist.Add(dl);
-            if (donlist == null)
-            {
-                return View("AddDonation", flex);
-            }
+                if (flex.donor == null)
+                {
+                    return View("AddDonation", flex);
+                }
+                if (Donation_Quantity == "")
+                {
+                    return View("AddDonation", flex);
+                }
+                Donation_Line dl = new Donation_Line();
+                dl.Donation_Quantity = Convert.ToInt32(Donation_Quantity);
+                dl.Stock = flex.stock;
+                dl.Stock_ID = flex.stock.Stock_ID;
+                var Donation_Type = db.Donation_Type.Where(z => z.Donation_Type_Name == "Stock").FirstOrDefault();
+                if (Donation_Type == null)
+                {
 
-            flex.adddonationlist = donlist;
-            return View("AddDonation", flex);
+                    return View("AddDonation", flex);
+                }
+                dl.Donation_Type = Donation_Type;
+                dl.Donation_Type_ID = Donation_Type.Donation_Type_ID;
+                donlist.Add(dl);
+                if (donlist == null)
+                {
+                    return View("AddDonation", flex);
+                }
+
+                flex.adddonationlist = donlist;
+                return View("AddDonation", flex);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something Went Wrong!");
+                // return View("Error");
+            }
+           
 
         }
         public ActionResult add_money(string Donation_Quantity)
         {
-            if (flex.donor == null)
+            try
             {
-                return View("AddDonation", flex);
-            }
-            if (Donation_Quantity == "")
-            {
-                return View("AddDonation", flex);
-            }
-            Donation_Line don = new Donation_Line();
+                if (flex.donor == null)
+                {
+                    return View("AddDonation", flex);
+                }
+                if (Donation_Quantity == "")
+                {
+                    return View("AddDonation", flex);
+                }
+                Donation_Line don = new Donation_Line();
 
-            var Donation_Type = db.Donation_Type.Where(z => z.Donation_Type_Name == "Money").FirstOrDefault();
-            don.Donation_Quantity = Convert.ToDecimal(Donation_Quantity);
-            if (Donation_Type == null)
-            {
+                var Donation_Type = db.Donation_Type.Where(z => z.Donation_Type_Name == "Money").FirstOrDefault();
+                don.Donation_Quantity = Convert.ToDecimal(Donation_Quantity);
+                if (Donation_Type == null)
+                {
+                    return View("AddDonation", flex);
+                }
+                don.Donation_Type = Donation_Type;
+                don.Donation_Type_ID = Donation_Type.Donation_Type_ID;
+                donlist.Add(don);
+                //flex.donor
+                flex.adddonationlist = donlist;
+
                 return View("AddDonation", flex);
             }
-            don.Donation_Type = Donation_Type;
-            don.Donation_Type_ID = Donation_Type.Donation_Type_ID;
-            donlist.Add(don);
-            //flex.donor
-            flex.adddonationlist = donlist;
+            catch (Exception)
+            {
 
-            return View("AddDonation", flex);
+                throw new Exception("Something Went Wrong!");
+            }
+            
 
         }
 
         public ActionResult removefromlist(int? donationline)
         {
-            if (donationline != null)
+            try
             {
-                int id = Convert.ToInt32(donationline);
-                donlist.RemoveAt(id);
-                flex.adddonationlist = donlist;
-                return View("AddDonation", flex);
+                if (donationline != null)
+                {
+                    int id = Convert.ToInt32(donationline);
+                    donlist.RemoveAt(id);
+                    flex.adddonationlist = donlist;
+                    return View("AddDonation", flex);
+                }
+                else
+                {
+                    return View("AddDonation", flex);
+                }
             }
-            else
+            catch (Exception)
             {
-                return View("AddDonation", flex);
+
+                throw new Exception("Something Went Wrong!");
             }
+            
         }
         public ActionResult save(string button)
         {
@@ -431,7 +494,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                return View("AddDonation", flex);
+                throw new Exception("Something Went Wrong!");
             }
             
 
@@ -455,7 +518,7 @@ namespace AdoptifySystem.Controllers
             {
                 ViewBag.err = e.Message;
                 ViewBag.errormessage = "there was a network error: " + e.Message;
-                return View();
+                throw new Exception("Something Went Wrong!");
             }
           
         }
@@ -480,7 +543,7 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     ViewBag.err = "there was a network error: " + e.Message;
-                    return View("SearchDonor");
+                    throw new Exception("Something Went Wrong!");
                 }
             }
             else
@@ -500,7 +563,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                return RedirectToAction("Index", "Home");
+                throw new Exception("Something Went Wrong!");
             }
 
 
@@ -527,7 +590,7 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     ViewBag.err = "there was a network error: " + e.Message;
-                    return RedirectToAction("SearchDonation");
+                    throw new Exception("Something Went Wrong!");
                 }
             }
             else
@@ -584,8 +647,8 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     ViewBag.errorMessage = "There was an Error with network please try again: "+e.Message;
-                    return Content("");
-                }
+                throw new Exception("Something Went Wrong!");
+            }
             return Content("");
 
         }
@@ -607,7 +670,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.errormessage = "there was a network error: "+ e.Message;
-                return View();
+                throw new Exception("Something Went Wrong!");
             }
             
         }
@@ -632,7 +695,7 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     ViewBag.err = "there was a network error: " + e.Message;
-                    return View("SearchDonationType");
+                    throw new Exception("Something Went Wrong!");
                 }
             }
             else
@@ -643,16 +706,25 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult MaintainDonationType(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                Donation_Type donation_Type = db.Donation_Type.Find(id);
+                if (donation_Type == null)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(donation_Type);
             }
-            Donation_Type donation_Type = db.Donation_Type.Find(id);
-            if (donation_Type == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                throw new Exception("Something Went Wrong!");
             }
-            return View(donation_Type);
+            
         }
         [HttpPost]
         public ContentResult MaintainDonationType(Donation_Type Donationtype)
@@ -674,33 +746,43 @@ namespace AdoptifySystem.Controllers
                 catch(Exception e)
                 {
                     ViewBag.err = e.Message;
-                return Content("");
+                throw new Exception("Something Went Wrong!");
             }
             return Content("");
         }
         public ActionResult DeleteDonor(int? id)
         {
-
-            if (id != null)
+            try
             {
-                Donor donor = db.Donors.Find(id);
-                int count = donor.Donations.Count();
-                if (count != 0)
+                if (id != null)
                 {
-                    //you cant delete becasue its referenced to another table
-                    ViewBag.err = "You can not delete this";
-                    return RedirectToAction("SearchDonor");
+                    Donor donor = db.Donors.Find(id);
+                    int count = donor.Donations.Count();
+                    if (count != 0)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return RedirectToAction("SearchDonor");
+                    }
+                    else
+                    {
+                        db.Donors.Remove(donor);
+                        db.SaveChanges();
+                        return RedirectToAction("SearchDonor");
+                    }
                 }
-                else
-                {
-                    db.Donors.Remove(donor);
-                    db.SaveChanges();
-                    return RedirectToAction("SearchDonor");
-                }
+                return RedirectToAction("SearchDonor");
             }
-            return RedirectToAction("SearchDonor");
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+            
         }
         public ActionResult DeleteDonationType(int? id)
+            {
+            try
             {
 
                 if (id != null)
@@ -721,158 +803,198 @@ namespace AdoptifySystem.Controllers
                     }
                 }
                 return RedirectToAction("SearchDonationType");
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+
 
             }
         public ActionResult CreateathankyoudocumentforDonors(string text)
         {
-
-            using (WordDocument document = new WordDocument())
+            try
             {
-                List<Donor> donlist = db.Donors.ToList();
-                //Adds new section to the document
-                IWSection section = document.AddSection();
-                ////Adds new paragraph to the section
-                ////Adds line break to the paragraph
-                ////string torepalcae = "pageBreakPara";
-                //IWParagraph pageBreakPara = section.AddParagraph();
-                ////IWParagraph title = section.AddParagraph();
-                //pageBreakPara.AppendText("Dear ");
-                //pageBreakPara.AppendBreak(BreakType.LineBreak);
-                ////Adds page break to the paragraph'
-                //pageBreakPara.AppendText("This will be paragraph that we enter details");
-                //pageBreakPara.AppendBreak(BreakType.PageBreak);
-                //pageBreakPara.AppendText("After page break");
-                //int x = 0;
-
-                foreach(var item in donlist)
+                using (WordDocument document = new WordDocument())
                 {
-                    //string torepalcae = "pageBreakPara";
-                    IWParagraph dunkin = section.AddParagraph();
-                    //IWParagraph title = section.AddParagraph();
-                    dunkin.AppendText("Dear " + item.Donor_Name);
-                    //Adds page break to the paragraph'
-                    dunkin.AppendText("This will be paragraph that we enter details");
-                    dunkin.AppendBreak(BreakType.PageBreak);
-                    dunkin.AppendText("After page break");
-            
+                    List<Donor> donlist = db.Donors.ToList();
+                    //Adds new section to the document
+                    IWSection section = document.AddSection();
+                    ////Adds new paragraph to the section
+                    ////Adds line break to the paragraph
+                    ////string torepalcae = "pageBreakPara";
+                    //IWParagraph pageBreakPara = section.AddParagraph();
+                    ////IWParagraph title = section.AddParagraph();
+                    //pageBreakPara.AppendText("Dear ");
+                    //pageBreakPara.AppendBreak(BreakType.LineBreak);
+                    ////Adds page break to the paragraph'
+                    //pageBreakPara.AppendText("This will be paragraph that we enter details");
+                    //pageBreakPara.AppendBreak(BreakType.PageBreak);
+                    //pageBreakPara.AppendText("After page break");
+                    //int x = 0;
+
+                    foreach (var item in donlist)
+                    {
+                        //string torepalcae = "pageBreakPara";
+                        IWParagraph dunkin = section.AddParagraph();
+                        //IWParagraph title = section.AddParagraph();
+                        dunkin.AppendText("Dear " + item.Donor_Name);
+                        //Adds page break to the paragraph'
+                        dunkin.AppendText("This will be paragraph that we enter details");
+                        dunkin.AppendBreak(BreakType.PageBreak);
+                        dunkin.AppendText("After page break");
+
+                    }
+                    //Saves and closes the document instance
+                    //Saves the Word document to disk in DOCX format
+                    document.Save("Result.docx", FormatType.Docx, HttpContext.ApplicationInstance.Response, HttpContentDisposition.Attachment);
                 }
-                //Saves and closes the document instance
-                //Saves the Word document to disk in DOCX format
-                document.Save("Result.docx", FormatType.Docx, HttpContext.ApplicationInstance.Response, HttpContentDisposition.Attachment);
+                return View();
             }
-            return View();
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+            
         }
         public ActionResult UploadDonor(HttpPostedFileBase xmlfile)
         {
-            if (xmlfile.ContentType.Equals("application/xml") || xmlfile.ContentType.Equals("text/xml"))
+            try
             {
-                var xmlPath = Server.MapPath("~/FileUpload" + xmlfile.FileName);
-                xmlfile.SaveAs(xmlPath);
-                List<Donor> customers = new List<Donor>();
-
-                //Load the XML file in XmlDocument.
-                XmlDocument doc = new XmlDocument();
-                doc.Load(xmlPath);
-
-                //Loop through the selected Nodes.
-                foreach (XmlNode node in doc.SelectNodes("/Donors/Donor"))
+                if (xmlfile.ContentType.Equals("application/xml") || xmlfile.ContentType.Equals("text/xml"))
                 {
-                    //Fetch the Node values and assign it to Model.
-                    customers.Add(new Donor
-                    {
-                        Donor_ID = int.Parse(node["Donor_ID"].InnerText),
-                        Donor_Name = node["Donor_Name"].InnerText,
-                        Donor_Surname = node["Donor_Surname"].InnerText,
-                        Donor_Email = node["Donor_Email"].InnerText,
-                        Title_ID = int.Parse(node["Title_ID"].InnerText),
-                    });
-                }
-                using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
-                {
-                    foreach (var i in customers)
-                    {
-                        var v = db.Donors.Where(a => a.Donor_ID.Equals(i.Donor_ID)).FirstOrDefault();
+                    var xmlPath = Server.MapPath("~/FileUpload" + xmlfile.FileName);
+                    xmlfile.SaveAs(xmlPath);
+                    List<Donor> customers = new List<Donor>();
 
-                        if (v != null)
+                    //Load the XML file in XmlDocument.
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(xmlPath);
+
+                    //Loop through the selected Nodes.
+                    foreach (XmlNode node in doc.SelectNodes("/Donors/Donor"))
+                    {
+                        //Fetch the Node values and assign it to Model.
+                        customers.Add(new Donor
                         {
-                            v.Donor_ID = i.Donor_ID;
-                            v.Donor_Name = i.Donor_Name;
-                            v.Donor_Surname = i.Donor_Surname;
-                            v.Donor_Email = i.Donor_Email;
-                            v.Title_ID = i.Title_ID;
-                        }
-                        else
+                            Donor_ID = int.Parse(node["Donor_ID"].InnerText),
+                            Donor_Name = node["Donor_Name"].InnerText,
+                            Donor_Surname = node["Donor_Surname"].InnerText,
+                            Donor_Email = node["Donor_Email"].InnerText,
+                            Title_ID = int.Parse(node["Title_ID"].InnerText),
+                        });
+                    }
+                    using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
+                    {
+                        foreach (var i in customers)
                         {
-                            db.Donors.Add(i);
+                            var v = db.Donors.Where(a => a.Donor_ID.Equals(i.Donor_ID)).FirstOrDefault();
+
+                            if (v != null)
+                            {
+                                v.Donor_ID = i.Donor_ID;
+                                v.Donor_Name = i.Donor_Name;
+                                v.Donor_Surname = i.Donor_Surname;
+                                v.Donor_Email = i.Donor_Email;
+                                v.Title_ID = i.Title_ID;
+                            }
+                            else
+                            {
+                                db.Donors.Add(i);
+                            }
+                            db.SaveChanges();
                         }
-                        db.SaveChanges();
                     }
                 }
-            }
-            else
-            {
+                else
+                {
 
+                }
+                return RedirectToAction("SearchDonor");
             }
-            return RedirectToAction("SearchDonor");
+            catch (Exception)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
+            
         }
 
         public ActionResult export()
         {
-            List<Donor> donlist = db.Donors.ToList();
-            if (donlist.Count > 0)
+            try
             {
-                var xEle = new XElement("Donors",
-                    from don in donlist
-                    select new XElement("Donor",
-                        new XElement("Donor_ID", don.Donor_ID),
-                        new XElement("Donor_Name", don.Donor_Name),
-                        new XElement("Donor_Surname", don.Donor_Surname),
-                        new XElement("Donor_Email", don.Donor_Email),
-                        new XElement("Title_ID", don.Title_ID),
-                        new XElement("Donations", don.Donations)
+                List<Donor> donlist = db.Donors.ToList();
+                if (donlist.Count > 0)
+                {
+                    var xEle = new XElement("Donors",
+                        from don in donlist
+                        select new XElement("Donor",
+                            new XElement("Donor_ID", don.Donor_ID),
+                            new XElement("Donor_Name", don.Donor_Name),
+                            new XElement("Donor_Surname", don.Donor_Surname),
+                            new XElement("Donor_Email", don.Donor_Email),
+                            new XElement("Title_ID", don.Title_ID),
+                            new XElement("Donations", don.Donations)
 
-                        ));
-               // HttpContextBase context = HttpContextBase.Response;
-                Response.Write(xEle);
-                Response.ContentType = "application/xml";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=DonorsList.xml");
-                Response.End();
+                            ));
+                    // HttpContextBase context = HttpContextBase.Response;
+                    Response.Write(xEle);
+                    Response.ContentType = "application/xml";
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=DonorsList.xml");
+                    Response.End();
+                }
+                //var data = db.Donors.Select(
+                //       donor => new MetadataDonor
+                //       {
+                //           Donor_ID = donor.Donor_ID,
+                //           Donor_Name = donor.Donor_Name,
+                //           Donor_Surname = donor.Donor_Surname,
+                //           Donor_Email = donor.Donor_Email,
+                //           //Title_ID = Convert.ToInt32(donor.Title_ID)
+
+                //       }).ToList();
+
+                //Response.ClearContent();
+                //Response.Buffer = true;
+                //Response.AddHeader("content-disposition", "attachment;filename = Donorslist.xml");
+                //Response.ContentType = "text/xml";
+                //var serializer = new
+                //System.Xml.Serialization.XmlSerializer(data.GetType());
+                //serializer.Serialize(Response.OutputStream, data);
+                return View("SearchDonor");
             }
-            //var data = db.Donors.Select(
-            //       donor => new MetadataDonor
-            //       {
-            //           Donor_ID = donor.Donor_ID,
-            //           Donor_Name = donor.Donor_Name,
-            //           Donor_Surname = donor.Donor_Surname,
-            //           Donor_Email = donor.Donor_Email,
-            //           //Title_ID = Convert.ToInt32(donor.Title_ID)
+            catch (Exception)
+            {
 
-            //       }).ToList();
-
-            //Response.ClearContent();
-            //Response.Buffer = true;
-            //Response.AddHeader("content-disposition", "attachment;filename = Donorslist.xml");
-            //Response.ContentType = "text/xml";
-            //var serializer = new
-            //System.Xml.Serialization.XmlSerializer(data.GetType());
-            //serializer.Serialize(Response.OutputStream, data);
-            return View("SearchDonor");
+                throw new Exception("Something Went Wrong!");
+            }
+            
         }
         public ActionResult ViewDonor(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Donor donor = db.Donors.Find(id);
-            if (donor == null)
-            {
-                return HttpNotFound();
-            }
-            flex.Titles = db.Titles.ToList();
-            flex.donor = donor;
+                if (id == null)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                Donor donor = db.Donors.Find(id);
+                if (donor == null)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                flex.Titles = db.Titles.ToList();
+                flex.donor = donor;
 
-            return View(flex);
+                return View(flex);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
+            
         }
 
     }

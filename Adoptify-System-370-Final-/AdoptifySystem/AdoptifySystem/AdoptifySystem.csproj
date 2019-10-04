@@ -246,9 +246,6 @@
     <Compile Include="Animal_Breed.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Animal_Kennel_History.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Animal_Status.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -423,6 +420,12 @@
     <Compile Include="Role_.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Stock.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
@@ -436,6 +439,9 @@
     <Compile Include="Stock_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Table.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -443,6 +449,9 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblFileDetail1.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Timer.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TimeSheet.cs">

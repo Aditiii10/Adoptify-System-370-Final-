@@ -457,6 +457,8 @@
         if (b == 0) {
             alert("Pick a Breed");
             isvalid = false;
+        } else {
+            alert(breed1.value);
         }
         
         if (isvalid)
@@ -482,7 +484,7 @@
             formData.append("Animal_Gender", $('input[name="Animal_Gender"]:checked').val());
             formData.append("Animal_Type_ID",Animal_Type_ID.value );
             formData.append("Cross_Breed", $('input[name="Cross_Breed"]:checked').val());
-            formData.append("breed",array);
+            formData.append("breeds",array);
             formData.append("Animal_Entry_Date", Animal_Entry_Date.value);
             formData.append("Animal_Location", Animal_Location.value);
 
@@ -507,7 +509,7 @@
                     $("#loader").hide();
                     isvalid = true;
                     alert("Yes");
-                    
+                    window.location.href = '@Url.Action("Create","Animal_Kennel_History")';
                 },
                 error: function (error) {
                     $("#loader").hide();
@@ -517,9 +519,9 @@
                 }
             });
 
-            if (isvalid) {
-                window.location.href = '@Url.Action("Create","Animal_Kennel_History")';
-            }
+            //if (isvalid) {
+                
+            //}
         } else {
             alert("all is not valid");
         }

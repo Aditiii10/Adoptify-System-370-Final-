@@ -42,7 +42,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                return RedirectToAction("Index");
+                throw new Exception("Something Went Wrong!");
 
             }
 
@@ -121,7 +121,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             {
                 TempData["EditMessage"] = e.Message;
                 //return RedirectToAction("AddEmployee");
-                return Content("");
+                throw new Exception("Something Went Wrong!");
             }
            // return new JsonResult { Data = new { status = status } };
         }
@@ -248,7 +248,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                return RedirectToAction("Index");
+                throw new Exception("Something Went Wrong!");
 
             }
         }
@@ -262,8 +262,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                     Employee searchemployee_type = db.Employees.Find(emp.Emp_ID);
                     if (searchemployee_type == null)
                     {
-                        return HttpNotFound();
-                    }
+                    throw new Exception("Something Went Wrong!");
+                }
 
                 searchemployee_type.Emp_Name = emp.Emp_Name;
                 searchemployee_type.Emp_Surname = emp.Emp_Surname;
@@ -326,9 +326,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                 catch (Exception e)
                 {
                     TempData["ErrorMessage"] = e.Message;
-                    
-                    return RedirectToAction("Index", "Home");
-                }
+                throw new Exception("Something Went Wrong!");
+            }
 
             //return RedirectToAction("Index", "Home");
           
@@ -373,7 +372,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
-                return Content("");
+                throw new Exception("Something Went Wrong!");
             }
             return Content("");
     }
@@ -389,7 +388,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return RedirectToAction("Index", "Home");
+                throw new Exception("Something Went Wrong!");
             }
 
 
@@ -398,68 +397,85 @@ namespace AdoptifySystem.Controllers.Zinhle
 
          public ActionResult DeleteEmployee(int? id)
         {
-            if (id != null)
+            try
             {
-                Employee emp = db.Employees.Find(id);
-                int timesheet = emp.TimeSheets.Count();
-                int kennel = emp.Emp_Kennel.Count();
-                int homechecks = emp.HomeChecks.Count();
-                int audit = 0;
-                if (emp.User_.Count != 0)
+                if (id != null)
                 {
-                    User_ user = emp.User_.FirstOrDefault();
-                    audit = user.Audit_Log.Count();
-                   
-                    
-                    
-                }
-                if (timesheet != 0 || kennel != 0|| homechecks != 0 || audit !=0)
-                {
-                    //you cant delete becasue its referenced to another table
-                    ViewBag.err = "You can not delete this";
-                    return RedirectToAction("SearchEmployee");
-                }
-                else
-                {
-                    db.Database.CommandTimeout = 150;
-
+                    Employee emp = db.Employees.Find(id);
+                    int timesheet = emp.TimeSheets.Count();
+                    int kennel = emp.Emp_Kennel.Count();
+                    //int homechecks = emp.h.Count();
+                    int audit = 0;
                     if (emp.User_.Count != 0)
                     {
                         User_ user = emp.User_.FirstOrDefault();
-                        foreach (var item in user.UserRoles)
-                        {
-                            db.UserRoles.Remove(item);
-                            if (user.UserRoles.Count == 0)
-                            {
-                                break;
-                            }
-                        }
-                        db.User_.Remove(user);
-                        db.SaveChanges();
+                        audit = user.Audit_Log.Count();
+
+
+
                     }
-                    
-                    db.Employees.Remove(emp);
-                    db.SaveChanges();
-                    return RedirectToAction("SearchEmployee");
+                    if (timesheet != 0 || kennel != 0 ||/* homechecks != 0 ||*/ audit != 0)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return RedirectToAction("SearchEmployee");
+                    }
+                    else
+                    {
+                        db.Database.CommandTimeout = 150;
+
+                        if (emp.User_.Count != 0)
+                        {
+                            User_ user = emp.User_.FirstOrDefault();
+                            foreach (var item in user.UserRoles)
+                            {
+                                db.UserRoles.Remove(item);
+                                if (user.UserRoles.Count == 0)
+                                {
+                                    break;
+                                }
+                            }
+                            db.User_.Remove(user);
+                            db.SaveChanges();
+                        }
+
+                        db.Employees.Remove(emp);
+                        db.SaveChanges();
+                        return RedirectToAction("SearchEmployee");
+                    }
                 }
+                return RedirectToAction("SearchEmployee");
             }
-            return RedirectToAction("SearchEmployee");
+            catch (Exception)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
+           
         }
         public ActionResult MaintainEmployeeType(int? id)
         {
-            if (id == null)
+            try
             {
-                TempData["EditMessage"] = "Error is completed";
-                return RedirectToAction("SearchEmployee");
+                if (id == null)
+                {
+                    TempData["EditMessage"] = "Error is completed";
+                    return RedirectToAction("SearchEmployee");
+                }
+                Employee_Type employeetype = db.Employee_Type.Find(id);
+                if (employeetype == null)
+                {
+                    TempData["EditMessage"] = "Employee Succesfully Updated";
+                    return RedirectToAction("Index", "Home");
+                }
+                TempData["SuccessMessage"] = "Employee Succesfully Updated";
+                return View(employeetype);
             }
-            Employee_Type employeetype = db.Employee_Type.Find(id);
-            if (employeetype == null)
+            catch (Exception)
             {
-                TempData["EditMessage"] = "Employee Succesfully Updated";
-                return RedirectToAction("Index","Home");
+
+                throw new Exception("Something Went Wrong!");
             }
-            TempData["SuccessMessage"] = "Employee Succesfully Updated";
-            return View(employeetype);
+            
         }
         [HttpPost]
         public ContentResult MaintainEmployeeType(Employee_Type employee_type)
@@ -482,7 +498,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 catch (Exception e)
                 {
                     TempData["EditMessage"] = e.Message;
-                return Content("");
+                throw new Exception("Something Went Wrong!");
             }
             return Content("");
 
@@ -498,39 +514,48 @@ namespace AdoptifySystem.Controllers.Zinhle
                 employee_Types = db.Employee_Type.ToList();
                 if (employee_Types.Count == 0)
                 {
-
+                    throw new Exception("Something Went Wrong!");
                 }
                 return View(employee_Types);
             }
             catch (Exception e)
             {
                 TempData["EditMessage"] = "there was a network error: " + e.Message;
-                return RedirectToAction("Index","Home") ;
+                throw new Exception("Something Went Wrong!");
             }
 
         }
 
         public ActionResult DeleteEmployeeType(int? id)
         {
-
-            if (id != null)
+            try
             {
-                Employee_Type employee_type = db.Employee_Type.Find(id);
-                int count = employee_type.Employees.Count();
-                if (count != 0)
+                if (id != null)
                 {
-                    //you cant delete becasue its referenced to another table
-                    ViewBag.err = "You can not delete this";
-                    return RedirectToAction("SearchEmployeeType");
+                    Employee_Type employee_type = db.Employee_Type.Find(id);
+                    int count = employee_type.Employees.Count();
+                    if (count != 0)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return RedirectToAction("SearchEmployeeType");
+                    }
+                    else
+                    {
+                        db.Employee_Type.Remove(employee_type);
+                        db.SaveChanges();
+                        return RedirectToAction("SearchEmployeeType");
+                    }
                 }
-                else
-                {
-                    db.Employee_Type.Remove(employee_type);
-                    db.SaveChanges();
-                    return RedirectToAction("SearchEmployeeType");
-                }
+                return RedirectToAction("SearchEmployeeType");
             }
-            return RedirectToAction("SearchEmployeeType");
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+
+            
         }
         public ActionResult BarCodeGenerated()
         {

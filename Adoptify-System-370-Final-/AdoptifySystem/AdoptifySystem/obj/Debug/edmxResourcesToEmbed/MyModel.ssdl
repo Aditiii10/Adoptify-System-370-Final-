@@ -118,6 +118,7 @@
     <Property Name="Animal_Status_ID" Type="int" />
     <Property Name="Animal_Image_Name" Type="nvarchar(max)" />
     <Property Name="Animal_Image_Type" Type="nvarchar(max)" />
+    <Property Name="Kennel_ID" Type="int" />
   </EntityType>
   <EntityType Name="Animal_Breed">
     <Key>
@@ -127,14 +128,6 @@
     <Property Name="Animal_Breed_Name" Type="nvarchar" MaxLength="200" />
     <Property Name="Animal_Breed_Description" Type="nvarchar" MaxLength="200" />
     <Property Name="Animal_Type_ID" Type="int" />
-  </EntityType>
-  <EntityType Name="Animal_Kennel_History">
-    <Key>
-      <PropertyRef Name="Animal_Kennel_History_ID" />
-    </Key>
-    <Property Name="Animal_Kennel_History_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Animal_ID" Type="int" />
-    <Property Name="Kennel_ID" Type="int" />
   </EntityType>
   <EntityType Name="Animal_Status">
     <Key>
@@ -375,9 +368,8 @@
       <PropertyRef Name="HomeCheckReportID" />
     </Key>
     <Property Name="HomeCheckReportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="HomeCheck_ID" Type="int" />
+    <Property Name="Adoption_ID" Type="int" />
     <Property Name="HomeCheckStatus" Type="bit" />
-    <Property Name="HCDoc" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Kennel">
     <Key>
@@ -475,6 +467,16 @@
     <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
     <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="Table">
     <Key>
       <PropertyRef Name="Co_ID" />
@@ -502,6 +504,15 @@
     <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
     <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
+  </EntityType>
+  <EntityType Name="Timer">
+    <Key>
+      <PropertyRef Name="Timer_Id" />
+    </Key>
+    <Property Name="Timer_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Hours" Type="int" />
+    <Property Name="Minutes" Type="int" />
+    <Property Name="Seconds" Type="int" />
   </EntityType>
   <EntityType Name="TimeSheet">
     <Key>
@@ -779,6 +790,18 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fkani3">
+    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+    <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kennel">
+        <PropertyRef Name="Kennel_ID" />
+      </Principal>
+      <Dependent Role="Animal">
+        <PropertyRef Name="Kennel_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkanibreed">
     <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="0..1" />
     <End Role="Animal_Breed" Type="Self.Animal_Breed" Multiplicity="*" />
@@ -788,30 +811,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
       </Principal>
       <Dependent Role="Animal_Breed">
         <PropertyRef Name="Animal_Type_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fkanikh">
-    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
-    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Animal">
-        <PropertyRef Name="Animal_ID" />
-      </Principal>
-      <Dependent Role="Animal_Kennel_History">
-        <PropertyRef Name="Animal_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fkanikh1">
-    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
-    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Kennel">
-        <PropertyRef Name="Kennel_ID" />
-      </Principal>
-      <Dependent Role="Animal_Kennel_History">
-        <PropertyRef Name="Kennel_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1140,14 +1139,14 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     </ReferentialConstraint>
   </Association>
   <Association Name="fkhoch1">
-    <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="0..1" />
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
     <End Role="HomeCheckReport" Type="Self.HomeCheckReport" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="HomeCheck">
-        <PropertyRef Name="HomeCheck_ID" />
+      <Principal Role="Adoption">
+        <PropertyRef Name="Adoption_ID" />
       </Principal>
       <Dependent Role="HomeCheckReport">
-        <PropertyRef Name="HomeCheck_ID" />
+        <PropertyRef Name="Adoption_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1406,9 +1405,40 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
   <Function Name="Emp_SearchEmpType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="Parent_SearchParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="Stock_SearchStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
   </Function>
@@ -1428,7 +1458,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="AdoptionPayment" EntityType="Self.AdoptionPayment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal" EntityType="Self.Animal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Breed" EntityType="Self.Animal_Breed" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Animal_Kennel_History" EntityType="Self.Animal_Kennel_History" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" Schema="dbo" store:Type="Tables" />
@@ -1462,9 +1491,11 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblFileDetail" EntityType="Self.tblFileDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Timer" EntityType="Self.Timer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" Schema="dbo" store:Type="Tables" />
@@ -1535,17 +1566,13 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
       <End Role="Animal_Breed" EntitySet="Animal_Breed" />
       <End Role="Animal" EntitySet="Animal" />
     </AssociationSet>
+    <AssociationSet Name="fkani3" Association="Self.fkani3">
+      <End Role="Kennel" EntitySet="Kennel" />
+      <End Role="Animal" EntitySet="Animal" />
+    </AssociationSet>
     <AssociationSet Name="fkanibreed" Association="Self.fkanibreed">
       <End Role="Animal_Type" EntitySet="Animal_Type" />
       <End Role="Animal_Breed" EntitySet="Animal_Breed" />
-    </AssociationSet>
-    <AssociationSet Name="fkanikh" Association="Self.fkanikh">
-      <End Role="Animal" EntitySet="Animal" />
-      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
-    </AssociationSet>
-    <AssociationSet Name="fkanikh1" Association="Self.fkanikh1">
-      <End Role="Kennel" EntitySet="Kennel" />
-      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
     </AssociationSet>
     <AssociationSet Name="fkaudlog" Association="Self.fkaudlog">
       <End Role="User_" EntitySet="User_" />
@@ -1656,7 +1683,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
       <End Role="HomeCheck" EntitySet="HomeCheck" />
     </AssociationSet>
     <AssociationSet Name="fkhoch1" Association="Self.fkhoch1">
-      <End Role="HomeCheck" EntitySet="HomeCheck" />
+      <End Role="Adoption" EntitySet="Adoption" />
       <End Role="HomeCheckReport" EntitySet="HomeCheckReport" />
     </AssociationSet>
     <AssociationSet Name="fkmedcard" Association="Self.fkmedcard">

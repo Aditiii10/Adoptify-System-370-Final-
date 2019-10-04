@@ -96,6 +96,7 @@
     <NavigationProperty Name="AdoptionPayments" Relationship="Self.fkcr1" FromRole="Adoption" ToRole="AdoptionPayment" />
     <NavigationProperty Name="Event_Schedule" Relationship="Self.fkech1" FromRole="Adoption" ToRole="Event_Schedule" />
     <NavigationProperty Name="HomeChecks" Relationship="Self.fkhoch" FromRole="Adoption" ToRole="HomeCheck" />
+    <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="Adoption" ToRole="HomeCheckReport" />
   </EntityType>
   <EntityType Name="Adoption_Status">
     <Key>
@@ -139,11 +140,12 @@
     <Property Name="Animal_Status_ID" Type="Int32" />
     <Property Name="Animal_Image_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Animal_Image_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Kennel_ID" Type="Int32" />
     <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt" FromRole="Animal" ToRole="Adoption" />
     <NavigationProperty Name="Animal_Status" Relationship="Self.fkani" FromRole="Animal" ToRole="Animal_Status" />
     <NavigationProperty Name="Animal_Type" Relationship="Self.fkani1" FromRole="Animal" ToRole="Animal_Type" />
     <NavigationProperty Name="Animal_Breed" Relationship="Self.fkani2" FromRole="Animal" ToRole="Animal_Breed" />
-    <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh" FromRole="Animal" ToRole="Animal_Kennel_History" />
+    <NavigationProperty Name="Kennel" Relationship="Self.fkani3" FromRole="Animal" ToRole="Kennel" />
     <NavigationProperty Name="CrossBreeds" Relationship="Self.fkcrb" FromRole="Animal" ToRole="CrossBreed" />
     <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc" FromRole="Animal" ToRole="Foster_Care" />
     <NavigationProperty Name="Mecidal_Card" Relationship="Self.fkmedcard" FromRole="Animal" ToRole="Mecidal_Card" />
@@ -162,16 +164,6 @@
     <NavigationProperty Name="Animals" Relationship="Self.fkani2" FromRole="Animal_Breed" ToRole="Animal" />
     <NavigationProperty Name="Animal_Type" Relationship="Self.fkanibreed" FromRole="Animal_Breed" ToRole="Animal_Type" />
     <NavigationProperty Name="CrossBreeds" Relationship="Self.fkcrb1" FromRole="Animal_Breed" ToRole="CrossBreed" />
-  </EntityType>
-  <EntityType Name="Animal_Kennel_History">
-    <Key>
-      <PropertyRef Name="Animal_Kennel_History_ID" />
-    </Key>
-    <Property Name="Animal_Kennel_History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Animal_ID" Type="Int32" />
-    <Property Name="Kennel_ID" Type="Int32" />
-    <NavigationProperty Name="Animal" Relationship="Self.fkanikh" FromRole="Animal_Kennel_History" ToRole="Animal" />
-    <NavigationProperty Name="Kennel" Relationship="Self.fkanikh1" FromRole="Animal_Kennel_History" ToRole="Kennel" />
   </EntityType>
   <EntityType Name="Animal_Status">
     <Key>
@@ -452,17 +444,15 @@
     <Property Name="Emp_ID" Type="Int32" />
     <NavigationProperty Name="Adoption" Relationship="Self.fkhoch" FromRole="HomeCheck" ToRole="Adoption" />
     <NavigationProperty Name="Employee" Relationship="Self.fkho" FromRole="HomeCheck" ToRole="Employee" />
-    <NavigationProperty Name="HomeCheckReports" Relationship="Self.fkhoch1" FromRole="HomeCheck" ToRole="HomeCheckReport" />
   </EntityType>
   <EntityType Name="HomeCheckReport">
     <Key>
       <PropertyRef Name="HomeCheckReportID" />
     </Key>
     <Property Name="HomeCheckReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="HomeCheck_ID" Type="Int32" />
+    <Property Name="Adoption_ID" Type="Int32" />
     <Property Name="HomeCheckStatus" Type="Boolean" />
-    <Property Name="HCDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="HomeCheck" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="HomeCheck" />
+    <NavigationProperty Name="Adoption" Relationship="Self.fkhoch1" FromRole="HomeCheckReport" ToRole="Adoption" />
   </EntityType>
   <EntityType Name="Kennel">
     <Key>
@@ -472,7 +462,7 @@
     <Property Name="Kennel_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Kennel_Number" Type="Int32" />
     <Property Name="Kennel_Capacity" Type="Int32" />
-    <NavigationProperty Name="Animal_Kennel_History" Relationship="Self.fkanikh1" FromRole="Kennel" ToRole="Animal_Kennel_History" />
+    <NavigationProperty Name="Animals" Relationship="Self.fkani3" FromRole="Kennel" ToRole="Animal" />
     <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk1" FromRole="Kennel" ToRole="Emp_Kennel" />
   </EntityType>
   <EntityType Name="Mecidal_Card">
@@ -578,6 +568,16 @@
     <Property Name="Stock_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Stocks" Relationship="Self.fkstock" FromRole="Stock_Type" ToRole="Stock" />
   </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
   <EntityType Name="Table">
     <Key>
       <PropertyRef Name="Co_ID" />
@@ -605,6 +605,15 @@
     <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Timer">
+    <Key>
+      <PropertyRef Name="Timer_Id" />
+    </Key>
+    <Property Name="Timer_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Hours" Type="Int32" />
+    <Property Name="Minutes" Type="Int32" />
+    <Property Name="Seconds" Type="Int32" />
   </EntityType>
   <EntityType Name="TimeSheet">
     <Key>
@@ -903,6 +912,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fkhoch1">
+    <End Role="Adoption" Type="Self.Adoption" Multiplicity="0..1" />
+    <End Role="HomeCheckReport" Type="Self.HomeCheckReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Adoption">
+        <PropertyRef Name="Adoption_ID" />
+      </Principal>
+      <Dependent Role="HomeCheckReport">
+        <PropertyRef Name="Adoption_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkcr2">
     <End Role="Animal_Type" Type="Self.Animal_Type" Multiplicity="0..1" />
     <End Role="AdoptionPayment" Type="Self.AdoptionPayment" Multiplicity="*" />
@@ -963,15 +984,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fkanikh">
-    <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
-    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
+  <Association Name="fkani3">
+    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
+    <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Animal">
-        <PropertyRef Name="Animal_ID" />
+      <Principal Role="Kennel">
+        <PropertyRef Name="Kennel_ID" />
       </Principal>
-      <Dependent Role="Animal_Kennel_History">
-        <PropertyRef Name="Animal_ID" />
+      <Dependent Role="Animal">
+        <PropertyRef Name="Kennel_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1068,18 +1089,6 @@
       </Principal>
       <Dependent Role="CrossBreed">
         <PropertyRef Name="Animal_Breed_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fkanikh1">
-    <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
-    <End Role="Animal_Kennel_History" Type="Self.Animal_Kennel_History" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Kennel">
-        <PropertyRef Name="Kennel_ID" />
-      </Principal>
-      <Dependent Role="Animal_Kennel_History">
-        <PropertyRef Name="Kennel_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1359,18 +1368,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fkhoch1">
-    <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="0..1" />
-    <End Role="HomeCheckReport" Type="Self.HomeCheckReport" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="HomeCheck">
-        <PropertyRef Name="HomeCheck_ID" />
-      </Principal>
-      <Dependent Role="HomeCheckReport">
-        <PropertyRef Name="HomeCheck_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fkmedcard1">
     <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="0..1" />
     <End Role="Mecidal_Card" Type="Self.Mecidal_Card" Multiplicity="*" />
@@ -1525,7 +1522,6 @@
     <EntitySet Name="AdoptionPayments" EntityType="Self.AdoptionPayment" />
     <EntitySet Name="Animals" EntityType="Self.Animal" />
     <EntitySet Name="Animal_Breed" EntityType="Self.Animal_Breed" />
-    <EntitySet Name="Animal_Kennel_History" EntityType="Self.Animal_Kennel_History" />
     <EntitySet Name="Animal_Status" EntityType="Self.Animal_Status" />
     <EntitySet Name="Animal_Treatment" EntityType="Self.Animal_Treatment" />
     <EntitySet Name="Animal_Type" EntityType="Self.Animal_Type" />
@@ -1559,9 +1555,11 @@
     <EntitySet Name="Role_" EntityType="Self.Role_" />
     <EntitySet Name="Stocks" EntityType="Self.Stock" />
     <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Tables" EntityType="Self.Table" />
     <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetail" />
     <EntitySet Name="tblFileDetails1" EntityType="Self.tblFileDetail1" />
+    <EntitySet Name="Timers" EntityType="Self.Timer" />
     <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
     <EntitySet Name="Titles" EntityType="Self.Title" />
     <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" />
@@ -1623,6 +1621,10 @@
       <End Role="Adoption" EntitySet="Adoptions" />
       <End Role="HomeCheck" EntitySet="HomeChecks" />
     </AssociationSet>
+    <AssociationSet Name="fkhoch1" Association="Self.fkhoch1">
+      <End Role="Adoption" EntitySet="Adoptions" />
+      <End Role="HomeCheckReport" EntitySet="HomeCheckReports" />
+    </AssociationSet>
     <AssociationSet Name="fkcr2" Association="Self.fkcr2">
       <End Role="Animal_Type" EntitySet="Animal_Type" />
       <End Role="AdoptionPayment" EntitySet="AdoptionPayments" />
@@ -1643,9 +1645,9 @@
       <End Role="Animal_Breed" EntitySet="Animal_Breed" />
       <End Role="Animal" EntitySet="Animals" />
     </AssociationSet>
-    <AssociationSet Name="fkanikh" Association="Self.fkanikh">
+    <AssociationSet Name="fkani3" Association="Self.fkani3">
+      <End Role="Kennel" EntitySet="Kennels" />
       <End Role="Animal" EntitySet="Animals" />
-      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
     </AssociationSet>
     <AssociationSet Name="fkcrb" Association="Self.fkcrb">
       <End Role="Animal" EntitySet="Animals" />
@@ -1678,10 +1680,6 @@
     <AssociationSet Name="fkcrb1" Association="Self.fkcrb1">
       <End Role="Animal_Breed" EntitySet="Animal_Breed" />
       <End Role="CrossBreed" EntitySet="CrossBreeds" />
-    </AssociationSet>
-    <AssociationSet Name="fkanikh1" Association="Self.fkanikh1">
-      <End Role="Kennel" EntitySet="Kennels" />
-      <End Role="Animal_Kennel_History" EntitySet="Animal_Kennel_History" />
     </AssociationSet>
     <AssociationSet Name="fktreat1" Association="Self.fktreat1">
       <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
@@ -1775,10 +1773,6 @@
       <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
       <End Role="Foster_Care" EntitySet="Foster_Care" />
     </AssociationSet>
-    <AssociationSet Name="fkhoch1" Association="Self.fkhoch1">
-      <End Role="HomeCheck" EntitySet="HomeChecks" />
-      <End Role="HomeCheckReport" EntitySet="HomeCheckReports" />
-    </AssociationSet>
     <AssociationSet Name="fkmedcard1" Association="Self.fkmedcard1">
       <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
       <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
@@ -1845,6 +1839,36 @@
     <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Wollies_ShelterModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
     <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
@@ -1898,6 +1922,17 @@
     <Property Type="String" Name="Ownership_Housing" Nullable="true" MaxLength="200" />
     <Property Type="Int32" Name="Hours_Left_Alone" Nullable="true" />
     <Property Type="Int32" Name="Adopter_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
   </ComplexType>
   <ComplexType Name="Stock_SearchStock_Result">
     <Property Type="Int32" Name="Stock_ID" Nullable="false" />

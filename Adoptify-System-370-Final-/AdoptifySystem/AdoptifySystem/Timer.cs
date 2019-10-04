@@ -12,12 +12,11 @@ namespace AdoptifySystem
     using System;
     using System.Collections.Generic;
     
-    public partial class HomeCheckReport
+    public partial class Timer
     {
-        public int HomeCheckReportID { get; set; }
-        public Nullable<int> Adoption_ID { get; set; }
-        public Nullable<bool> HomeCheckStatus { get; set; }
-    
-        public virtual Adoption Adoption { get; set; }
+        public int Timer_Id { get; set; }
+        public Nullable<int> Hours { get; set; }
+        public Nullable<int> Minutes { get; set; }
+        public Nullable<int> Seconds { get; set; }
     }
 }

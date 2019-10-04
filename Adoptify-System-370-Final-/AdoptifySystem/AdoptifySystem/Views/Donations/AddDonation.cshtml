@@ -407,6 +407,7 @@
     });
 
     function LoadDonor() {
+
         if ($(pa).val() == 0) {
             alert("Select a Donor");
         } else {
@@ -451,6 +452,8 @@
                     },
                     error: function (error) {
                         alert("There was an internal error");
+                    
+                        text.classList.add("is-valid");
                     }
                 })
         }
