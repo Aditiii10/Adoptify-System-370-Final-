@@ -472,6 +472,21 @@
           <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="Subsystem">
+          <Key>
+            <PropertyRef Name="Subsystem_Id" />
+          </Key>
+          <Property Name="Subsystem_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subsystem_Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SubsystemRole">
+          <Key>
+            <PropertyRef Name="SubsystemRole_Id" />
+          </Key>
+          <Property Name="SubsystemRole_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subsystem_Id" Type="int" />
+          <Property Name="Role_ID" Type="int" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -1239,6 +1254,30 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fksubrol">
+          <End Role="Subsystem" Type="Self.Subsystem" Multiplicity="0..1" />
+          <End Role="SubsystemRole" Type="Self.SubsystemRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsystem">
+              <PropertyRef Name="Subsystem_Id" />
+            </Principal>
+            <Dependent Role="SubsystemRole">
+              <PropertyRef Name="Subsystem_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fksubrol1">
+          <End Role="Role_" Type="Self.Role_" Multiplicity="0..1" />
+          <End Role="SubsystemRole" Type="Self.SubsystemRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role_">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="SubsystemRole">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fktime">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
@@ -1496,6 +1535,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subsystem" EntityType="Self.Subsystem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubsystemRole" EntityType="Self.SubsystemRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFileDetail" EntityType="Self.tblFileDetail" Schema="dbo" store:Type="Tables" />
@@ -1718,6 +1759,14 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <AssociationSet Name="fkstock2" Association="Self.fkstock2">
             <End Role="Unit_Type" EntitySet="Unit_Type" />
             <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
+          <AssociationSet Name="fksubrol" Association="Self.fksubrol">
+            <End Role="Subsystem" EntitySet="Subsystem" />
+            <End Role="SubsystemRole" EntitySet="SubsystemRole" />
+          </AssociationSet>
+          <AssociationSet Name="fksubrol1" Association="Self.fksubrol1">
+            <End Role="Role_" EntitySet="Role_" />
+            <End Role="SubsystemRole" EntitySet="SubsystemRole" />
           </AssociationSet>
           <AssociationSet Name="fktime" Association="Self.fktime">
             <End Role="Employee" EntitySet="Employee" />
@@ -2317,6 +2366,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Role_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserRoles" Relationship="Self.fkuserol1" FromRole="Role_" ToRole="UserRole" />
+          <NavigationProperty Name="SubsystemRoles" Relationship="Wollies_ShelterModel.fksubrol1" FromRole="Role_" ToRole="SubsystemRole" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -3645,6 +3695,16 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Timers" EntityType="Wollies_ShelterModel.Timer" />
+          <EntitySet Name="Subsystems" EntityType="Wollies_ShelterModel.Subsystem" />
+          <EntitySet Name="SubsystemRoles" EntityType="Wollies_ShelterModel.SubsystemRole" />
+          <AssociationSet Name="fksubrol1" Association="Wollies_ShelterModel.fksubrol1">
+            <End Role="Role_" EntitySet="Role_" />
+            <End Role="SubsystemRole" EntitySet="SubsystemRoles" />
+          </AssociationSet>
+          <AssociationSet Name="fksubrol" Association="Wollies_ShelterModel.fksubrol">
+            <End Role="Subsystem" EntitySet="Subsystems" />
+            <End Role="SubsystemRole" EntitySet="SubsystemRoles" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -3735,6 +3795,48 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Minutes" Type="Int32" />
           <Property Name="Seconds" Type="Int32" />
         </EntityType>
+        <EntityType Name="Subsystem">
+          <Key>
+            <PropertyRef Name="Subsystem_Id" />
+          </Key>
+          <Property Name="Subsystem_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subsystem_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SubsystemRoles" Relationship="Wollies_ShelterModel.fksubrol" FromRole="Subsystem" ToRole="SubsystemRole" />
+        </EntityType>
+        <EntityType Name="SubsystemRole">
+          <Key>
+            <PropertyRef Name="SubsystemRole_Id" />
+          </Key>
+          <Property Name="SubsystemRole_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subsystem_Id" Type="Int32" />
+          <Property Name="Role_ID" Type="Int32" />
+          <NavigationProperty Name="Role_" Relationship="Wollies_ShelterModel.fksubrol1" FromRole="SubsystemRole" ToRole="Role_" />
+          <NavigationProperty Name="Subsystem" Relationship="Wollies_ShelterModel.fksubrol" FromRole="SubsystemRole" ToRole="Subsystem" />
+        </EntityType>
+        <Association Name="fksubrol1">
+          <End Type="Wollies_ShelterModel.Role_" Role="Role_" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.SubsystemRole" Role="SubsystemRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role_">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="SubsystemRole">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fksubrol">
+          <End Type="Wollies_ShelterModel.Subsystem" Role="Subsystem" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.SubsystemRole" Role="SubsystemRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsystem">
+              <PropertyRef Name="Subsystem_Id" />
+            </Principal>
+            <Dependent Role="SubsystemRole">
+              <PropertyRef Name="Subsystem_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4566,6 +4668,23 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
                 <ScalarProperty Name="Minutes" ColumnName="Minutes" />
                 <ScalarProperty Name="Hours" ColumnName="Hours" />
                 <ScalarProperty Name="Timer_Id" ColumnName="Timer_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subsystems">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.Subsystem">
+              <MappingFragment StoreEntitySet="Subsystem">
+                <ScalarProperty Name="Subsystem_Name" ColumnName="Subsystem_Name" />
+                <ScalarProperty Name="Subsystem_Id" ColumnName="Subsystem_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubsystemRoles">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.SubsystemRole">
+              <MappingFragment StoreEntitySet="SubsystemRole">
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Subsystem_Id" ColumnName="Subsystem_Id" />
+                <ScalarProperty Name="SubsystemRole_Id" ColumnName="SubsystemRole_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

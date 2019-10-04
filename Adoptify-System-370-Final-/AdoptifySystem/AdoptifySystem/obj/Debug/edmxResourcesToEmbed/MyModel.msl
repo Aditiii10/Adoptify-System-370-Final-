@@ -829,5 +829,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Subsystems">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.Subsystem">
+        <MappingFragment StoreEntitySet="Subsystem">
+          <ScalarProperty Name="Subsystem_Name" ColumnName="Subsystem_Name" />
+          <ScalarProperty Name="Subsystem_Id" ColumnName="Subsystem_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubsystemRoles">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.SubsystemRole">
+        <MappingFragment StoreEntitySet="SubsystemRole">
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="Subsystem_Id" ColumnName="Subsystem_Id" />
+          <ScalarProperty Name="SubsystemRole_Id" ColumnName="SubsystemRole_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

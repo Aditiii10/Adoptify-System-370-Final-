@@ -127,6 +127,10 @@
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Timer" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Subsystem" Width="1.5" PointX="12.75" PointY="32.75" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.SubsystemRole" Width="1.5" PointX="15" PointY="32.5" />
+        <AssociationConnector Association="Wollies_ShelterModel.fksubrol1" />
+        <AssociationConnector Association="Wollies_ShelterModel.fksubrol" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

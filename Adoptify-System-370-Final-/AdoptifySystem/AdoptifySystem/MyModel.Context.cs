@@ -87,6 +87,8 @@ namespace AdoptifySystem
         public virtual DbSet<Wolly> Wollies { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
         public virtual DbSet<Timer> Timers { get; set; }
+        public virtual DbSet<Subsystem> Subsystems { get; set; }
+        public virtual DbSet<SubsystemRole> SubsystemRoles { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {
