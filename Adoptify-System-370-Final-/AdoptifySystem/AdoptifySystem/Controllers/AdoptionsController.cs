@@ -70,6 +70,7 @@ namespace AdoptifySystem.Controllers
             
             if (adoption != null)
                 {
+                    ViewBag.Emp_ID = new SelectList(db.Employees, "Emp_ID", "Emp_Name", "Emp_Surname");
                     ViewBag.ID = id;
                     ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email + ", Address:" +" "+ adoption.Adopter.Adopter_Address;
                     ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old";
@@ -93,7 +94,7 @@ namespace AdoptifySystem.Controllers
 
             return View("HomeCheckSchedule");
         }
-        public ActionResult Save(String NDate="")
+        public ActionResult Save([Bind(Include = "Emp_ID")] HomeCheck homeCheck, String NDate="")
         {
             try
             {
@@ -119,6 +120,7 @@ namespace AdoptifySystem.Controllers
                 HomeCheck obj = new HomeCheck();
                 obj.Adoption_ID = Id;
                 obj.HomeCheck_Datetime = dd;
+                //obj.Emp_ID = ;
                 db.HomeChecks.Add(obj);
                 db.SaveChanges();
                 //Sending SMS
@@ -133,8 +135,9 @@ namespace AdoptifySystem.Controllers
                 myList = db.Adoptions.ToList();
                 TempData["HCSCMessage"] = "Please Save The Current HomeCheck on the Calendar Schedular";
                 TempData["HomeCheckMessage"] = "HomeCheck Successfully Booked";
+                ViewBag.Emp_ID = new SelectList(db.Employees, "Emp_ID", "Emp_Name", homeCheck.Emp_ID);
                 //return View("HomeCheckSchedule");
-               
+
             }
             catch (Exception ex)
             {
@@ -236,16 +239,15 @@ namespace AdoptifySystem.Controllers
                         db.HomeCheckReports.Add(obj);
                         db.SaveChanges();
 
-
                         //Sending SMS
-                        var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
-                    var authToken = "4186739dfb2554741e7dff014074ff82";
-                    TwilioClient.Init(accountSid, authToken);
-                    var message = MessageResource.Create(
-                        to: new Twilio.Types.PhoneNumber("+27676367506"),
-                        from: new Twilio.Types.PhoneNumber("+14245431153"),
-                            body: "We are sorry to inform you"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " +adoption.Adopter.Adopter_Surname+" "+ "that Your HomeCheck Report was unsuccessful And Dispproved. From Wollies Animal Shelter!"
-                    );
+                    //    var accountSid = "AC4b74118b2030829577ecb11b15da7bc9";
+                    //var authToken = "4186739dfb2554741e7dff014074ff82";
+                    //TwilioClient.Init(accountSid, authToken);
+                    //var message = MessageResource.Create(
+                    //    to: new Twilio.Types.PhoneNumber("+27676367506"),
+                    //    from: new Twilio.Types.PhoneNumber("+14245431153"),
+                    //        body: "We are sorry to inform you"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " +adoption.Adopter.Adopter_Surname+" "+ "that Your HomeCheck Report was unsuccessful And Dispproved. From Wollies Animal Shelter!"
+                    //);
                 }
 
 
@@ -778,11 +780,11 @@ namespace AdoptifySystem.Controllers
         // GET: Adoptions/Create
         public ActionResult Create()
         {
-            //db.Database.CommandTimeout = 300; 
+            try
+            {  //db.Database.CommandTimeout = 300; 
             var statusID = new List<Animal>();
             var adoptions = db.Animals.ToList();
-            try
-            {
+          
                 animalsss = db.Animals.ToList();
 
             foreach (Animal item in animalsss)

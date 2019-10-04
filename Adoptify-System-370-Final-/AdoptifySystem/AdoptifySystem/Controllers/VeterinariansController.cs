@@ -109,20 +109,19 @@ namespace AdoptifySystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Veterinarians.Any(p => p.Vet_Name == veterinarian.Vet_Name)) //duplicate data
-                {
-                    ViewBag.Message = "Vet already exists";
-                    /*ModelState.AddModelError("txtName", "Vet Name already exists.")*/
+                //if (db.Veterinarians.Any(p => p.Vet_Name == veterinarian.Vet_Name)) //duplicate data
+                //{
+                //    ViewBag.Message = "Vet already exists";
+                //    /*ModelState.AddModelError("txtName", "Vet Name already exists.")*/
 
-                }
+                //}
 
-                else
-                {
+               
                     db.Entry(veterinarian).State = EntityState.Modified;
                     db.SaveChanges();
                     TempData["EditMessage"] = "Updated Veternarian Details Successfully";
                     return RedirectToAction("Index");
-                }
+                
             }
             return View(veterinarian);
         }
