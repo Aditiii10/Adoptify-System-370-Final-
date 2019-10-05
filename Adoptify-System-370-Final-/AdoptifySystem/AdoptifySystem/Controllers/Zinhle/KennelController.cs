@@ -123,7 +123,35 @@ namespace AdoptifySystem.Controllers.Zinhle
 
 
         }
-        
+        [HttpPost]
+        public ActionResult SearchKennel(string search)
+        {
+            try
+            {
+                if (!(search == ""))
+                {
+                    db.Database.CommandTimeout = 300;
+                    var kennel = db.Kennels.Where(z => z.Kennel_Name.StartsWith(search)).ToList();
+                    if (kennel == null)
+                    {
+                        return RedirectToAction("SearchKennel");
+                    }
+                    List<Kennel> kennels = new List<Kennel>();
+                    kennels = kennel;
+
+                    return View("SearchKennel", kennels);
+
+                }
+                TempData["SuccessMessage"] = "Enter Valid Details";
+                return RedirectToAction("SearchKennel");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something Wrong");
+            }
+
+
+        }
 
     }
 }

@@ -440,7 +440,31 @@ namespace AdoptifySystem.Controllers.Zinhle
         [HttpPost]
         public ActionResult SearchAnimalType(string search)
         {
-            return View();
+            try
+            {
+                if (!(search == ""))
+                {
+                    db.Database.CommandTimeout = 300;
+                    var animaltype = db.Animal_Type.Where(z => z.Animal_Type_Name.StartsWith(search)).ToList();
+                    if (animaltype == null)
+                    {
+                        return RedirectToAction("SearchAnimalType");
+                    }
+                    List<Animal_Type> animals = new List<Animal_Type>();
+                    animals = animaltype;
+
+                    return View("SearchAnimalType", animals);
+
+                }
+                TempData["SuccessMessage"] = "Enter Valid Details";
+                return RedirectToAction("SearchAnimalType");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something Wrong");
+            }
+           
+            
         }
         public ActionResult AddBreedType()
         {
