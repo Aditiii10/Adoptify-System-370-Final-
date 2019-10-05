@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Name</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Adopter_Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Name" } })
+                            @Html.EditorFor(model => model.Adopter_Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Name", required = "required" } })
                             <br />
                             @Html.ValidationMessageFor(model => model.Adopter_Name, "", new { @class = "text-danger" })
                         </div>
@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Surname</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Adopter_Surname, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Surname" } })
+                            @Html.EditorFor(model => model.Adopter_Surname, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Surname", required = "required" } })
                             <br />
                             @Html.ValidationMessageFor(model => model.Adopter_Surname, "", new { @class = "text-danger" })
                         </div>
@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Email</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Adopter_Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Email" } })
+                            @Html.EditorFor(model => model.Adopter_Email, new { htmlAttributes = new { @class = "form-control", @type = "email", placeholder = "Enter Adopter Email", required = "required" } })
                             @Html.ValidationMessageFor(model => model.Adopter_Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Title</lable>
                         <div class="col-md-10">
-                            @Html.DropDownList("Title_ID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("Title_ID", null, htmlAttributes: new { @class = "form-control", required = "required" })
                             <br />
                             @Html.ValidationMessageFor(model => model.Title_ID, "", new { @class = "text-danger" })
                         </div>
@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Address</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Adopter_Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Address" } })
+                            @Html.EditorFor(model => model.Adopter_Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Address", required = "required" } })
                             <br />
                             @Html.ValidationMessageFor(model => model.Adopter_Address, "", new { @class = "text-danger" })
                         </div>
@@ -84,7 +84,7 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Postal Address</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Adopter_PostalAddress, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Postal Address" } })
+                            @Html.EditorFor(model => model.Adopter_PostalAddress, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Postal Address", required = "required" } })
                             <br />
                             @Html.ValidationMessageFor(model => model.Adopter_PostalAddress, "", new { @class = "text-danger" })
                         </div>
@@ -111,7 +111,7 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Cell Number</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Adopter_CellNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Cell Number" } })
+                            @Html.EditorFor(model => model.Adopter_CellNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Cell Number", required = "required" } })
                             <br />
                             @Html.ValidationMessageFor(model => model.Adopter_CellNumber, "", new { @class = "text-danger" })
                         </div>
@@ -129,7 +129,7 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Employer</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Adopter_Employer, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Employer" } })
+                            @Html.EditorFor(model => model.Adopter_Employer, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Employer", required = "required" } })
                             <br />
                             @Html.ValidationMessageFor(model => model.Adopter_Employer, "", new { @class = "text-danger" })
                         </div>
@@ -138,25 +138,25 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Occupation</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Adopter_Occupation, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Occupation" } })
+                            @Html.EditorFor(model => model.Adopter_Occupation, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Adopter Occupation", required = "required" } })
                             <br />
                             @Html.ValidationMessageFor(model => model.Adopter_Occupation, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     @*<div class="form-group">
-                            @Html.LabelFor(model => model.Adopter_Status_ID, "Adopter_Status_ID", htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("Adopter_Status_ID", null, htmlAttributes: new { @class = "form-control" })
-                                <br />
-                                @Html.ValidationMessageFor(model => model.Adopter_Status_ID, "", new { @class = "text-danger" })
-                            </div>
-                        </div>*@
+                    @Html.LabelFor(model => model.Adopter_Status_ID, "Adopter_Status_ID", htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("Adopter_Status_ID", null, htmlAttributes: new { @class = "form-control" })
+                        <br />
+                        @Html.ValidationMessageFor(model => model.Adopter_Status_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
 
                     <div class="form-group">
                         <lable class="control-label col-md-2">Number of Family Memebers</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Amount_of_Family_Memebers, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Amount of Family Members" } })
+                            @Html.EditorFor(model => model.Amount_of_Family_Memebers, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Amount of Family Members", required = "required" } })
                             <br />
                             @Html.ValidationMessageFor(model => model.Amount_of_Family_Memebers, "", new { @class = "text-danger" })
                         </div>
@@ -165,7 +165,7 @@
                     <div class="form-group">
                         <lable class="control-label col-md-2">Number of Children</lable>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.No_of_Children, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Number Of Children" } })
+                            @Html.EditorFor(model => model.No_of_Children, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Number Of Children", required = "required" } })
                             <br />
                             @Html.ValidationMessageFor(model => model.No_of_Children, "", new { @class = "text-danger" })
                         </div>
@@ -199,7 +199,7 @@
                     <hr />
                     <lable class="control-label col-md-2">Property Securely Closed</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Property_Securely_Closed" value="True" id="Property_Securely_Closed_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Property_Securely_Closed_Yes">Yes</label>
@@ -217,7 +217,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Properyty Include Pool</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Properyty_Include_Pool" value="True" id="Properyty_Include_Pool_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Properyty_Include_Pool_Yes">Yes</label>
@@ -236,7 +236,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Is the Pool Secured? (Only if Checked Yes to Previous Question)</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Pool_Secured" value="True" id="Pool_Secured_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Pool_Secured_Yes">Yes</label>
@@ -254,7 +254,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Animal Shelter Available</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Animal_Shelter_Available" value="True" id="Animal_Shelter_Available_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Animal_Shelter_Available_Yes">Yes</label>
@@ -272,7 +272,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Any Sick Animal at the Moment</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Sick_Animal" value="True" id="Sick_Animal_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Sick_Animal_Yes">Yes</label>
@@ -290,7 +290,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Sick Animal Diagnosis</lable>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Sick_Animal_Diagnosis, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Sick Animal's Diagnosis" } })
+                        @Html.EditorFor(model => model.Sick_Animal_Diagnosis, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Sick Animal's Diagnosis", required = "required" } })
                         <br />
                         @Html.ValidationMessageFor(model => model.Sick_Animal_Diagnosis, "", new { @class = "text-danger" })
                     </div>
@@ -299,7 +299,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Animal Sleeping Location</lable>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Animal_Sleep_Location, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Animal's Sleep Location" } })
+                        @Html.EditorFor(model => model.Animal_Sleep_Location, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Animal's Sleep Location", required = "required" } })
                         <br />
                         @Html.ValidationMessageFor(model => model.Animal_Sleep_Location, "", new { @class = "text-danger" })
                     </div>
@@ -308,7 +308,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Given Animal Away Before?</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Given_Animal_Away" value="True" id="Given_Animal_Away_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Given_Animal_Away_Yes">Yes</label>
@@ -324,9 +324,9 @@
                 </div>
 
                 <div class="form-group">
-                    <lable class="control-label col-md-2">HomeCheck Suburb</lable>
+                    <lable class="control-label col-md-2">HomeCheck Appointment Suburb</lable>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.HomeCheck_Suburb, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Suburb Location" } })
+                        @Html.EditorFor(model => model.HomeCheck_Suburb, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Suburb Location", required = "required" } })
                         <br />
                         @Html.ValidationMessageFor(model => model.HomeCheck_Suburb, "", new { @class = "text-danger" })
                     </div>
@@ -335,7 +335,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Type of House</lable>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Type_of_House, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Type Of House" } })
+                        @Html.EditorFor(model => model.Type_of_House, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Type Of House (Single or Double story", required = "required" } })
                         <br />
                         @Html.ValidationMessageFor(model => model.Type_of_House, "", new { @class = "text-danger" })
                     </div>
@@ -344,7 +344,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Have You Adopted Before?</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Adopted_Before" value="True" id="Adopted_Before_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Adopted_Before_Yes">Yes</label>
@@ -362,7 +362,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Complex or Flat</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Complex_or_Flat" value="True" id="Complex_or_Flat_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Complex_or_Flat_Yes">Complex</label>
@@ -380,7 +380,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Animal Allowed</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Animal_Allowed" value="True" id="Animal_Allowed_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Animal_Allowed_Yes">Yes</label>
@@ -397,7 +397,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Animal Captivity</lable>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Animal_Captivity, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter if the Animal will be Caged" } })
+                        @Html.EditorFor(model => model.Animal_Captivity, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter if the Animal will be Caged", required = "required" } })
                         <br />
                         @Html.ValidationMessageFor(model => model.Animal_Captivity, "", new { @class = "text-danger" })
                     </div>
@@ -406,7 +406,7 @@
                 <div class="form-group">
                     <lable class="control-label col-md-2">Animal Vaccines Updated</lable>
                     <div class="col-md-10">
-                        <div class="form-group">
+                        <div class="form-group" required="required">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" onclick="yesnoCheck()" name="Animal_Vaccines_Updated" value="True" id="Animal_Vaccines_Updated_Yes" class="custom-control-input">
                                 <label class="custom-control-label" for="Animal_Vaccines_Updated_Yes">Yes</label>

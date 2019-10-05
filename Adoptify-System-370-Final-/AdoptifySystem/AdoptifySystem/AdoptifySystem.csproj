@@ -122,6 +122,12 @@
       <HintPath>..\packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Smo.dll.1.0.1\lib\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.SmoExtended.dll.1.0.1\lib\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -326,6 +332,7 @@
     <Compile Include="Controllers\Aditi\VolunteersController.cs" />
     <Compile Include="Controllers\Aditi\Volunteer_HoursController.cs" />
     <Compile Include="Controllers\Aditi\Volunteer_Work_TypeController.cs" />
+    <Compile Include="Controllers\AdopterFileController.cs" />
     <Compile Include="Controllers\AdoptionFileController.cs" />
     <Compile Include="Controllers\AdoptionsController.cs" />
     <Compile Include="Controllers\Animal_TreatmentController.cs" />
@@ -436,6 +443,7 @@
     <Compile Include="Microchip.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdopterFileUpload.cs" />
     <Compile Include="Models\AdoptionFileUpload.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\HCReportFileUpload.cs" />
@@ -974,8 +982,11 @@
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Backup\Index.cshtml" />
     <Content Include="Views\Backup\Backup.cshtml" />
+    <Content Include="Views\Adoptions\Index2.cshtml" />
+    <Content Include="Views\AdopterFile\FileView.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="UploadedFilesAdopter\" />
     <Folder Include="UploadedFilesHCReport\" />
     <Folder Include="UploadedFilesMedCard\" />
     <Folder Include="UploadedFiles\" />

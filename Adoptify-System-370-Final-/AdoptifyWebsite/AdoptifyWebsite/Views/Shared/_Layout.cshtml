@@ -3,40 +3,410 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    <title>@ViewBag.Title - Adoptify System Application</title>
+
+
+    @*@Styles.Render("~/Content/css")*@
     @Scripts.Render("~/bundles/modernizr")
+
+    @* Favicon Adoptify Logo *@
+    <link rel="icon" href="~/AdopifyLogo.ico" width="20" height="20" />
+
+    <link href="~/AdoptifyStyleSheet.css" rel="stylesheet" />
+    <script src="https://code.jquery.com.jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+    @*<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">*@
+    @* <script src="~/Scripts/vetAppointmentScripts.js"></script>*@
+    <link href="~/Content/alertifyjs/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/alertifyjs/themes/default.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        .modal1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: black;
+            z-index: 99;
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+            -moz-opacity: 0.8;
+            min-height: 100%;
+            width: 100%;
+        }
+
+        .loading {
+            font-family: Arial;
+            font-size: 10pt;
+            /*border: 5px solid #67CFF5;
+            width: 200px;
+            height: 100px;*/
+            display: none;
+            position: fixed;
+            /*background-color: White;*/
+            z-index: 999;
+        }
+    </style>
+
 </head>
+
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+
+
+    @*<nav class="navbar navbar-inverse navbar-fixed-top" id="navbarstyle"  style="background-color:cornflowerblue">
+                <div class="container-fluid">
+                    <div class="navbar-header" style="font-family:serif">
+                        <h2><a class="navbar-brand" href="http://localhost:55003/Home/Index" style="font-size:45px"><span style="color:whitesmoke">WOLLIES ANIMAL SHELTER</span></a></h2>
+                    </div>
+                    <form class="navbar-form navbar-right" style="background-color:cornflowerblue">
+                        <div class="row">
+                            <div class="form-group">
+                                <h4 style="color: black; font-size: 20px; font-family: 'Lato', sans-serif; text-align:center">  Time Remaining: </h4>
+                            </div>
+                            <div class="form-group">
+                                <h4 id="demo" style="color:black; font-size: 14.5px; font-family: 'Lato', sans-serif"></h4>
+                                <a href="#"><p id="demo" style="color:black; font-size: 12px"></p></a>
+                            </div>
+                            <div class="form-group usr_buttons">
+                                <a class="navbar-brand" href="http://localhost:55003/Admin/Login"><i class="fas fa-user" style="color:black"></i><span style="color:black"> Logout</span></a>
+                            </div>
+                            <div class="form-group usr_buttons">
+                                <a class="navbar-brand" href="http://localhost:55003/Employee/Edit"><i class="fas fa-wrench"></i><span style="color:white"> Edit My Profile</span></a>
+                            </div>
+
+                        </div>
+                    </form>
+                    <form id="form1">
+                        <div class"row">
+                            <div class="col-md-5">
+                                <div id="menu" style="color:cornflowerblue">
+
+                                    <ul class="list-unstyled components">
+                                        <li>
+                                            <button class="accordion" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-home"></i>Home</button>
+                                            <ul class="collapse list-unstyled" id="homeSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Home Page", "Index", "Home")</a></li>
+                                            </ul>
+                                         </li>
+
+
+                                            <li><button class="accordion" href="http://localhost:55003/Home/Index"><i class="fas fa-home"></i>Home</button></li>
+
+                                        <li>
+
+
+                                            <button class="accordion" href="#customerSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-heart"></i>Animals</button>
+                                            <ul class="collapse list-unstyled" id="customerSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Animals", "SearchAnimal", "Animal")</a> </li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Animal", "AddTemporaryAnimal", "Animal")</a> </li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Animal Types", "SearchAnimalType", "Animal")</a> </li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Animal Type", "AddAnimalType", "Animal")</a> </li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Animal Breed", "SearchBreedType", "Animal")</a> </li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Animal Breed", "AddBreedType", "Animal")</a> </li>
+
+                                            </ul>
+                                            </li>
+                                        <li>
+                                            Employees
+                                            <button class="accordion act" href="#employeeSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-briefcase"></i> Employees</button>
+                                            <ul class="collapse list-unstyled" id="employeeSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Employees", "SearchEmployee", "Employees")</a> </li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Employee", "AddEmployee", "Employees")</a> </li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Employee Type", "SearchEmployeeType", "Employees")</a> </li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Employee Type", "AddEmployeeType", "Employees")</a> </li>
+
+                                            </ul>
+                                            </li>
+
+                                        <li>
+
+                                            <button class="accordion act" href="#productSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-box-open"></i>Stock</button>
+                                            <ul class="collapse list-unstyled" id="productSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Stock", "SearchStock", "Stock")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Stock", "AddStock", "Stock")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Stock Types", "SearchStockType", "Stock")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Stock Type", "AddStockType", "Stock")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Receive Stock", "ReceiveStock", "Stock")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Capture Stock Take", "CaptureStockTake", "Stock")</a></li>
+
+                                            </ul>
+
+                                        <li>
+
+                                            <button class="accordion" href="#orderingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-shopping-basket"></i>Adoption</button>
+                                            <ul class="collapse list-unstyled" id="orderingSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Adoption Home", "Index", "Adoptions")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Create Adoption", "Create", "Adoptions")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("HomeCheck Home", "HomeCheckIndex", "Adoptions")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("HomeCheck Report Home", "HomeCheckReportIndex", "Adoptions")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Adoption Payment Home", "AdoptionPaymentIndex", "Adoptions")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Animal Collection Home", "CollectionIndex", "Adoptions")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Return Animal From Adoption", "ReturnIndex", "Adoptions")</a></li>
+
+                                            </ul>
+
+                                        <li>
+
+                                            <button class="accordion" href="#supplierSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-grain"></i>Vet</button>
+                                            <ul class="collapse list-unstyled" id="supplierSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Veterinarian Home", "Index", "Veterinarians")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Create Veterinarian", "Create", "Veterinarians")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Vet Appointment Home", "Index", "VetAppointment")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Vet Appointment Home", "Create", "VetAppointment")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Medical Cards", "Index", "Mecidal_Card")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Capture Medical Cards", "Index", "Mecidal_Card")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Animal Treatment Home", "Index", "Animal_Treatment")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Animal Treatment Home", "Create", "Animal_Treatment")</a></li>
+
+                                            </ul>
+
+                                        <li>
+                                             Supplier Ordering
+                                            <button class="accordion" href="#supplierOrderingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-user"></i>Adopter</button>
+                                            <ul class="collapse list-unstyled" id="supplierOrderingSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Adopters Home", "Index", "Adopters")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Create Adopter", "Create", "Adopters")</a></li>
+
+                                            </ul>
+                                        <li>
+                                             Reporting
+                                            <button class="accordion" href="#reportingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-heart"></i>Foster Care</button>
+                                            <ul class="collapse list-unstyled" id="reportingSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Foster Care Home", "SearchFosterCareParent", "FosterCare")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Foster Care Parent", "AddFosterCareParent", "FosterCare")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Animal to Foster Care", "AddtoFosterCare", "FosterCare")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Remove from Foster Care", "RemovefromFosterCare", "FosterCare")</a></li>
+
+                                            </ul>
+        <li>
+                                             Reporting
+                                            <button class="accordion" href="#reportingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-alert"></i>Admin</button>
+                                            <ul class="collapse list-unstyled" id="reportingSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Employee Check-IN", "Checkin", "Admin")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Employee Check-Out", "Checkout", "Admin")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("User Roles", "SearchUserRole", "Admin")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Create User Roles", "AddUserRole", "Admin")</a></li>
+
+                                            </ul>
+                                        <li>
+
+                                             Reporting
+                                            <button class="accordion" href="#reportingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-home"></i>Kennel</button>
+                                            <ul class="collapse list-unstyled" id="reportingSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Kennel Home", "Index", "Kennels")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Create Kennel", "Create", "Kennels")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Animal Kenna History", "Index", "Animal_Kennel_History")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Move Animal to Kennel", "Create", "Animal_Kennel_History")</a></li>
+                                            </ul>
+
+                                        <li>
+
+
+                                             Reporting
+                                            <button class="accordion" href="#reportingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-heart-empty"></i>Donations</button>
+                                            <ul class="collapse list-unstyled" id="reportingSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Donors", "SearchDonor", "Donations")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Donor", "AddDonor", "Donations")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Donations", "SearchDonation", "Donations")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Donation", "AddDonation", "Donations")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Donation Types", "SearchDonationType", "Donations")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Donation Type", "AddDonationType", "Donations")</a></li>
+
+                                            </ul>
+                                        <li>
+
+                                             Reporting
+                                            <button class="accordion" href="#reportingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-user"></i>Volunteers</button>
+                                            <ul class="collapse list-unstyled" id="reportingSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Volunteers", "Index", "Volunteers")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Volunteer", "Create", "Volunteers")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Volunteer Work Hours", "Create", "Volunteers")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Volunteer Types", "Create", "Volunteers")</a></li>
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Add Volunteer Type", "Create", "Volunteers")</a></li>
+
+                                            </ul>
+
+                                        <li>
+                                             Reporting
+                                            <button class="accordion" href="#reportingSubmenu" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-stats"></i>Reporting</button>
+                                            <ul class="collapse list-unstyled" id="reportingSubmenu">
+                                                <li><a><span class="sub"></span>@Html.ActionLink("Report Screen", "Index", "ReportScreen")</a></li>
+
+                                            </ul>
+
+
+        </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </nav>*@
+    @*The navabar*@
+
+    <script>
+        window.onscroll = function () { myFunction() };
+
+        // Get the navbar
+        var navbar = document.getElementById("navbar");
+
+        // Get the offset position of the navbar
+        var sticky = navbar.offsetTop;
+
+        // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="top:0; width:100%">
+        <a href="https://wollies.org" title="Click on LOGO to navigate to Wollies Home Page">
+            <img src="~/AdoptifyLogo.PNG" width="80" height="80" alt="Adoptify Logo" />
+            <img src="~/Images/favicon.png" width="80" height="80" alt="Wollies Logo" />
+        </a>
+            <a class="navbar-brand" href="https://wollies.org" style="color:black" title="Click on TITLE to navigate to Wollies Home Page">Wollies Animal Shelter</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+
+                <ul class="navbar-nav mr-auto">
+                    @*<li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Animals</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @Html.ActionLink("Animals At The Shelter", "SearchAnimal", "Animal", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Adopter</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+
+                        @Html.ActionLink("Create Adopter", "Create", "Adopters", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>*@
+                    <li>
+                        @*<br /><div><label>||</label></div>*@
+                        <div class="navbar-brand">
+                            @Html.ActionLink("Animals At The Shelter", "SearchAnimal", "Animal", null, new { @class = "btn btn-success" })
+                        </div>
+                    </li>
+                    <li>
+                        @*<br /><div><label>||</label></div>*@
+                        <div class="navbar-brand">
+                            @Html.ActionLink("Create Potential Adopter", "Create", "Adopters", null, new { @class = "btn btn-danger" })
+                        </div>
+                    </li>
+
                 </ul>
+                @*@if (Request.IsAuthenticated)
+            {
+                <h1>@HttpContext.Current.User.Identity.Name</h1>
+            }*@
             </div>
-        </div>
+</nav>
+
+
+    @*//the Loader*@
+    <div class="loading" align="center">
+        <img src="~/Images/3ZzL.gif" width="300" height="200" /> 
     </div>
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            @*<div class="form-group">
+                <h4 style="color: black; font-size: 12px; font-family: 'Lato', sans-serif">  </h4>
+                </div>
+                    <div class="form-group">
+                <label>Inactivity Timer : </label>
+                <h4 id="demo" style="color:black; font-size: 12px; font-family: 'Lato', sans-serif"> <a href="#" id="demo" style="color:black; font-size: 20px"></a></h4>
+
+            </div>*@
+            <p>&copy; @DateTime.Now.Year - Adoptify System Developed by WaveyTec Group</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/alertify.min.js"></script>
+    @RenderSection("scripts", false)
+
+    <script type="text/javascript">
+        var modal, loading;
+        function ShowProgress() {
+            modal = document.createElement("DIV");
+            modal.className = "modal1";
+            document.body.appendChild(modal);
+            loading = document.getElementsByClassName("loading")[0];
+            loading.style.display = "block";
+            var top = Math.max(window.innerHeight / 2 - loading.offsetHeight / 2, 0);
+            var left = Math.max(window.innerWidth / 2 - loading.offsetWidth / 2, 0);
+            loading.style.top = top + "px";
+            loading.style.left = left + "px";
+        };
+        ShowProgress();
+    </script>
+
+    <!-- Keep the Page Content Here.-->
+
+    <script type="text/javascript">
+        window.onload = function () {
+            setTimeout(function () {
+                document.body.removeChild(modal);
+                loading.style.display = "none";
+            }, 500); //Delay just used for example and must be set to 0.
+        };
+    </script>
+
+    @*<script>
+        // Set the date we're counting down to
+        var countDownDate = new Date().getTime() + (1 * 60 * 60 * 1000);
+
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            document.getElementById("demo").innerHTML = hours + "h "
+                + minutes + "m " + seconds + "s ";
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>*@
+
 </body>
 </html>

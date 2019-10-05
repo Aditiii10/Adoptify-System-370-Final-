@@ -527,4 +527,6 @@ C:\Users\Divin\Desktop\Divin2\Adoptify-System-370-Final-\Adoptify-System-370-Fin
 C:\Users\Divin\Desktop\Divin2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\bin\System.Xml.XPath.XDocument.dll
 C:\Users\Divin\Desktop\Divin2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\bin\Twilio.AspNet.Common.dll
 C:\Users\Divin\Desktop\Divin2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\bin\Twilio.AspNet.Mvc.dll
+C:\Users\Divin\Desktop\Divin2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\bin\Microsoft.SqlServer.Smo.dll
+C:\Users\Divin\Desktop\Divin2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\bin\Microsoft.SqlServer.SmoExtended.dll
 C:\Users\Divin\Desktop\Divin2\Adoptify-System-370-Final-\Adoptify-System-370-Final-\AdoptifySystem\AdoptifySystem\obj\Debug\AdoptifySystem.csprojAssemblyReference.cache

@@ -89,6 +89,7 @@ namespace AdoptifyWebsite
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
         public virtual DbSet<Wolly> Wollies { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<AdopterFile> AdopterFiles { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {

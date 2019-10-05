@@ -1,0 +1,305 @@
+﻿@model List<AdoptifyWebsite.Animal>
+@{
+    ViewBag.Title = "SearchAnimal";
+    Layout = "~/Views/Shared/_Layout.cshtml ";
+}
+<style>
+    #team .card {
+        border: none;
+        background: #ffffff;
+    }
+
+    .frontside .card,
+    .backside .card {
+        min-height: 312px;
+    }
+
+        .backside .card a {
+            font-size: 18px;
+            color: #007b5e !important;
+        }
+
+        .frontside .card .card-title,
+        .backside .card .card-title {
+            color: #007b5e !important;
+        }
+
+        .frontside .card .card-body img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+        }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    /* Float four columns side by side */
+    .frontside {
+        float: left;
+        width: 25%;
+        padding: 10px;
+    }
+    /* Remove extra left and right margins, due to padding in columns */
+    .row {
+        margin: 0 -5px;
+    }
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    /* Style the counter cards */
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+        padding: 16px;
+        text-align: center;
+        background-color: #f1f1f1;
+    }
+    /* Responsive columns - one column layout (vertical) on small screens */
+</style>
+<div id="main">
+    <div>
+        <div class="col-sm-12 table-primary"><h1>Animals Current At Wollies Animal Shelter</h1></div>
+    </div>
+    <br />
+    <h1>@ViewBag.errormessage</h1>
+    @*<div class="col-sm-10">
+        @Html.ActionLink("AddTemporaryAnimal", "AddTemporaryAnimal", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+    </div>*@
+    @*@using (Html.BeginForm("SearchAnimal", "Animal", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-5">
+                <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @style = "form-control" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" value="Search" title="Click to Search Animal" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+        <br />
+    }*@
+    <div class="row">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                if (item.Animal_Image_Type != null)
+                {
+
+                    <div class="box eight">
+                        <div class="date">
+                            <h1>@item.Animal_Name</h1>
+                        </div>
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Animal_Image)" style="width:70% ;height:55%;" class="img-thumbnail" alt="avatar">
+                        <div class="poster p7">
+                            <p class="card-text">@item.Animal_Status.Animal_Status_Name</p>
+                            <p class="card-text">@item.Animal_Type.Animal_Type_Name</p>
+                            @*<p class="card-text">@item.Animal_Breed.Animal_Breed_Name</p>*@
+                            <p class="card-text">@item.Animal_Gender</p>
+                            <p class="card-text">Age: @item.Animal_Age</p>
+
+                            @* @Html.ActionLink("Maintain", "MaintainAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-primary", @title = "Click to Maintian Animal" })*@
+                        </div>
+                    </div>
+                    <br />
+                }
+                else
+                {
+                    <div class="box eight">
+                        <div class="date">
+                            <h1>@item.Animal_Name</h1>
+                        </div>
+                        <img src="data:image/png;base64,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" style="width:70% ;height:55%;" class="img-thumbnail" alt="avatar">
+                        <div class="poster p7">
+                            <p class="card-text">@item.Animal_Status.Animal_Status_Name</p>
+                            <p class="card-text">@item.Animal_Type.Animal_Type_Name</p>
+                            @*<p class="card-text">@item.Animal_Breed.Animal_Breed_Name</p>*@
+                            <p class="card-text">@item.Animal_Gender</p>
+                            <p class="card-text">Age: @item.Animal_Age</p>
+                          
+                            @*@Html.ActionLink("Maintain", "MaintainAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-primary", @title = "Click to Maintian Animal" })*@
+                        </div>
+                    </div>
+                    <br />
+                }
+                <br />
+            }
+
+        }
+    </div>
+</div>
+<div>
+    @*<div class="frontside">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p> <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Animal_Image)" style="width:50% ;height:50%;" class="img-thumbnail" alt="avatar"></p>
+                    <h4 class="card-title">@item.Animal_Name</h4>
+                    <p class="card-text">@item.Animal_Status.Animal_Status_Name</p>
+                    @Html.ActionLink("Maintain", "MaintainAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered">
+                <tr class="thead-light">
+                    <th>
+                        Animals
+                    </th>
+
+                    <th>
+                        Animal ID
+                    </th>
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+                @if (Model == null)
+                {
+                    <tr>
+                        <td colspan="8">
+                            No results found
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="card">
+                                    <div>@item.Animal_Image</div>
+                              <div class="card-block">
+                                  <label><b>Animal Name:</b></label><label><b>@item.Animal_Name</b></label><br />
+                                  <label><b>Animal Status:</b></label><label><b>@item.Animal_Status</b></label><br />
+                                  <label><b>Location:</b></label><label><b>@item.Animal_Location</b></label><br />
+                               </div>
+
+                                </div>
+
+                            </td>
+                            @Html.DisplayFor(modelItem =>item.Animal_ID)
+                            <td>
+
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("MaintainAnimal", "MaintainAnimal", new { id = item.Animal_ID }, new { @class = "btn btn-warning" }) |
+
+                                <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Animal_ID">More info </button> |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Animal_ID}, new { @class = "btn btn-danger" }) |
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="@item.Animal_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">@item.Animal_ID</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span class="value">ID:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_ID) <br />
+                                        <span class="value">Name:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_Name) <br />
+                                        <span class="value">Location:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_Location) <br />
+                                        <span class="value">Gender:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_Gender) <br />
+                                        <span class="value">Description:</span>
+                                        @Html.DisplayFor(modelItem => item.Animal_Description)<br />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        @Html.ActionLink("Maintain", "MaintainDonor", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-warning" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            </table>*@
+</div>
+@section scripts{
+    <script>
+            $(function () {
+                var successMessage = '@TempData["SuccessMessage"]'
+                if (successMessage != '')
+                    alertify.success(successMessage);
+            });
+            $(function () {
+                var successMessage = '@TempData["EditMessage"]'
+                if (successMessage != '')
+                    alertify.warning(successMessage);
+            });
+            $(function () {
+                var successMessage = '@TempData["DeleteMessage"]'
+                if (successMessage != '')
+                    alertify.error(successMessage);
+            });
+
+    </script>
+}
+<style>
+    .box {
+        margin: 10px;
+        width: 300px;
+        height:550px;
+        text-align: center;
+        border-radius: 3px;
+        -webkit-transition: 200ms ease-in-out;
+        -o-transition: 200ms ease-in-out;
+        transition: 200ms ease-in-out;
+        -webkit-box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+        .box:hover {
+            margin-bottom: 5px;
+            -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.7);
+            box-shadow: 0 0 5px rgba(0,0,0,0.7);
+        }
+
+        .box h1 {
+            color: #fff;
+            padding: 30px;
+            /*margin-top: 100px;*/
+            text-align: center;
+            font-weight: 100;
+            font-size: 25px;
+            background: rgba(0,0,0,0.8);
+            -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.7);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+
+    .poster {
+        width: 150px;
+        height: 90px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        border-radius: 100px;
+    }
+
+        .poster h4 {
+            top: 16px;
+            color: #fff;
+            position: relative;
+            font-size: 80px;
+            text-align: center;
+            font-weight: 100;
+        }
+</style>

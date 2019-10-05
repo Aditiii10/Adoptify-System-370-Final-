@@ -33,19 +33,13 @@ namespace AdoptifySystem.Controllers
         static Adoption adoption = new Adoption();
         static int Id = 0;
         // GET: Adoptions
-        public ActionResult Index(string searchBy="", string search="")
+        public ActionResult Index()
         {
             //var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.Payment).Include(a => a.Adoption_Status);
            
             try
             {
-                //if (searchBy == "Animal_Name")
-                //    return View(db.Adoptions.Where(x => x.Animal.Animal_Name == search || search == null).ToList());
-                //else
-                //    return View(db.Adoptions.Where(x => x.Adopter.Adopter_Name == search || search == null).ToList());
-            return View(db.Adoptions.ToList());
-
-                //return View();
+                return View(db.Adoptions.ToList());
 
             }
             catch (Exception ex)
@@ -57,9 +51,64 @@ namespace AdoptifySystem.Controllers
             {
 
             }
+        
 
         }
-      
+
+        public ActionResult Index2()
+        {
+            var statusID = new List<Adoption>();
+            var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
+
+            try
+            {
+                foreach (var item in adoptions)
+                {
+                    if ( item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 2|| item.Adopt_Status_ID == 3|| item.Adopt_Status_ID == 4|| item.Adopt_Status_ID == 5 || item.Adopt_Status_ID == 6)
+                    {
+                        statusID.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
+            }
+            return View(statusID);
+
+
+        }
+
+        public ActionResult SearchAdopter(string searchBy = "", string search = "")
+        {
+            //var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.Payment).Include(a => a.Adoption_Status);
+
+            try
+            {
+                if (searchBy == "Animal_Name")
+                    return View(db.Adoptions.Where(x => x.Animal.Animal_Name == search || search == null).ToList());
+                else
+                    return View(db.Adoptions.Where(x => x.Adopter.Adopter_Name == search || search == null).ToList());
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something Went Wrong!");
+                //return View("Error");
+            }
+            finally
+            {
+
+            }
+            
+
+        }
+
 
         public ActionResult HomeCheckSchedule(int? id)
         {
@@ -120,7 +169,7 @@ namespace AdoptifySystem.Controllers
                 HomeCheck obj = new HomeCheck();
                 obj.Adoption_ID = Id;
                 obj.HomeCheck_Datetime = dd;
-                //obj.Emp_ID = ;
+                obj.Emp_ID = homeCheck.Emp_ID;
                 db.HomeChecks.Add(obj);
                 db.SaveChanges();
                 //Sending SMS
@@ -645,7 +694,7 @@ namespace AdoptifySystem.Controllers
             return View(statusID);
 
         }
-
+        static List<Adoption> statusID = new List<Adoption>();
         public ActionResult AdoptionPayemenHistory()
         {
             var statusID = new List<Adoption>();
@@ -668,14 +717,14 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-            return View(statusID);
+            return View(db.AdoptionPayments.ToList());
         }
 
         public ActionResult HomeCheckHistory()
         {
             var statusID = new List<Adoption>();
             var adoptions = db.HomeChecks.Include(a => a.Adoption).Include(a => a.Adoption.Animal).Include(a => a.Adoption.Adopter).ToList();
-            return View(statusID);
+            return View(db.HomeChecks.ToList());
         }
 
         public ActionResult HomeCheckReportHistory()
@@ -692,7 +741,7 @@ namespace AdoptifySystem.Controllers
 
             }
 
-            return View();
+            return View(db.HomeCheckReports.ToList());
         }
 
         public ActionResult AdoptionPaymentIndex()
@@ -773,17 +822,19 @@ namespace AdoptifySystem.Controllers
         }
 
 
-        
+
+        static List<Animal> adoptionsA = new List<Animal>();
 
 
-        
         // GET: Adoptions/Create
         public ActionResult Create()
         {
+
             try
-            {  //db.Database.CommandTimeout = 300; 
+            {
+              db.Database.CommandTimeout = 300; 
             var statusID = new List<Animal>();
-            var adoptions = db.Animals.ToList();
+                adoptionsA = db.Animals.ToList();
           
                 animalsss = db.Animals.ToList();
 
@@ -815,13 +866,15 @@ namespace AdoptifySystem.Controllers
         // POST: Adoptions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+     
+
+       [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Adoption_ID,Adoption_Date,Adoption_Form,Payment_ID,Adopter_ID,Adopt_Status_ID,Animal_ID,Collection_Date")] Adoption adoption, string ADate = "")
         {
            
             var statusID = new List<Animal>();
-            var adoptions = db.Animals.ToList();
+            adoptionsA = db.Animals.ToList();
             
                 if (ModelState.IsValid)
             {

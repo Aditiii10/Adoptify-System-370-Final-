@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AdoptifySystem.HomeCheckReport>
+﻿@model List<HomeCheckReport>
 
 @{
     ViewBag.Title = "HomeCheckReportHistory";
@@ -9,9 +9,10 @@
 
 <div id="main">
     <div class="" style="text-align:center;padding-left:120px">
-        <h1 style="color:white">HomeCheck Report History</h1>
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style='color:white'>HomeCheck Report History</h1>
+        </div>
     </div>
-    <h1>@ViewBag.errormessage</h1>
 
     @using (Html.BeginForm("HomeCheckReportHistory", "Adoptions", FormMethod.Post))
     {
@@ -28,8 +29,9 @@
             </div>
         </div>
     }
-    <table class="table">
-        <tr>
+    <br />
+    <table class="table-bordered table">
+        <tr class="table-primary">
             <th>
                 Adopter Details
             </th>
@@ -37,21 +39,13 @@
                 Animal Details
             </th>
             <th>
-                Adopter's Home Address
-            </th>
-            <th>
-                Home Check Status
-            </th>
-            <th>
-                HomeCheck Report Doc
+                Home Check Approval
             </th>
 
-            <th>
-                Download HomeCheck Reports
-            </th>
+
         </tr>
 
-        
+
         @if (Model == null)
         {
             <tr>
@@ -62,31 +56,29 @@
         }
         else
         {
-            foreach (var item in Model)
+            foreach (HomeCheckReport item in Model)
             {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.HomeCheck.Adoption.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.HomeCheck.Adoption.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.HomeCheck.Adoption.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.HomeCheck.Adoption.Adopter.Adopter_CellNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HomeCheck.Adoption.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.HomeCheck.Adoption.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.HomeCheck.Adoption.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.HomeCheck.Adoption.Animal.Animal_Age) years old
-        </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_CellNumber), Adress: @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Age) years old
+                    </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.HomeCheckStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HCDoc)
-        </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HomeCheckStatus)
+                    </td>
 
-        <td>
-            <button class="btn"><i class="fa fa-home"></i></button>
-            <input type="submit" value="Create" class="btn pull-right btn-success " />
-        </td>
-    </tr>
-           }
+                    @*<td>
+                            <button class="btn"><i class="fa fa-home"></i></button>
+                            <input type="submit" value="Create" class="btn pull-right btn-success " />
+                        </td>*@
+                </tr>
+            }
         }
 
     </table>
-
+    @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back to Adoption Home" })
+    @Html.ActionLink("Refresh", "AdoptionPaymentIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
 </div>

@@ -152,7 +152,7 @@ namespace AdoptifySystem.Controllers
                 int count = veterinarian.Vet_Appointment_Master.Count();
                 if (count != 0)
                 {
-                    TempData["DeleteErrorMessage"] =  "You can not delete this Item as it is been used else where!!";
+                    TempData["DeleteErrorMessage"] = "You can not delete this Veterinarian as it is been used else where!!";
                     return RedirectToAction("Index");
                 }
                 else

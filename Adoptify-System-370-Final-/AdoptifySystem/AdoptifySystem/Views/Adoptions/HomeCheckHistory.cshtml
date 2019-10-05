@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AdoptifySystem.HomeCheck>
+﻿@model List<HomeCheck>
 
 @{
     ViewBag.Title = "HomeCheckHistory";
@@ -55,7 +55,7 @@
         }
         else
         {
-            foreach (var item in Model)
+            foreach (HomeCheck item in Model)
             {
     <tr>
         <td>
