@@ -219,8 +219,8 @@
     </Key>
     <Property Name="Auditlog_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Auditlog_DateTime" Type="DateTime" Precision="3" />
-    <Property Name="Transaction_Type" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="Critical_Date" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Transaction_Type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Critical_Date" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="UserID" Type="Int32" />
     <NavigationProperty Name="User_" Relationship="Self.fkaudlog" FromRole="Audit_Log" ToRole="User_" />
   </EntityType>
@@ -541,6 +541,7 @@
     <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Role_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="UserRoles" Relationship="Self.fkuserol1" FromRole="Role_" ToRole="UserRole" />
+    <NavigationProperty Name="SubsystemRoles" Relationship="Wollies_ShelterModel.fksubrol1" FromRole="Role_" ToRole="SubsystemRole" />
   </EntityType>
   <EntityType Name="Stock">
     <Key>
@@ -1878,6 +1879,47 @@
     <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="AdopterFiles" EntityType="Wollies_ShelterModel.AdopterFile" />
+    <EntitySet Name="Subsystems" EntityType="Wollies_ShelterModel.Subsystem" />
+    <EntitySet Name="SubsystemRoles" EntityType="Wollies_ShelterModel.SubsystemRole" />
+    <AssociationSet Name="fksubrol1" Association="Wollies_ShelterModel.fksubrol1">
+      <End Role="Role_" EntitySet="Role_" />
+      <End Role="SubsystemRole" EntitySet="SubsystemRoles" />
+    </AssociationSet>
+    <AssociationSet Name="fksubrol" Association="Wollies_ShelterModel.fksubrol">
+      <End Role="Subsystem" EntitySet="Subsystems" />
+      <End Role="SubsystemRole" EntitySet="SubsystemRoles" />
+    </AssociationSet>
+    <FunctionImport Name="Kennel_Delete">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Kennel_insert">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="capacity" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Kennel_Update">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="capacity" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Kennel_View" ReturnType="Collection(Wollies_ShelterModel.Kennel_View_Result)" />
+    <FunctionImport Name="View_Kennel" EntitySet="Kennels" ReturnType="Collection(Wollies_ShelterModel.Kennel)" />
+    <FunctionImport Name="AddKennel">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="capacity" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateKennel">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="capacity" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteKennel">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="AnimalType_SearchAnimalType_Result">
     <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -1958,5 +2000,61 @@
     <Property Type="String" Name="Vet_Emial" Nullable="true" MaxLength="254" />
     <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
     <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
+  </ComplexType>
+  <EntityType Name="AdopterFile">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Subsystem">
+    <Key>
+      <PropertyRef Name="Subsystem_Id" />
+    </Key>
+    <Property Name="Subsystem_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subsystem_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SubsystemRoles" Relationship="Wollies_ShelterModel.fksubrol" FromRole="Subsystem" ToRole="SubsystemRole" />
+  </EntityType>
+  <EntityType Name="SubsystemRole">
+    <Key>
+      <PropertyRef Name="SubsystemRole_Id" />
+    </Key>
+    <Property Name="SubsystemRole_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subsystem_Id" Type="Int32" />
+    <Property Name="Role_ID" Type="Int32" />
+    <NavigationProperty Name="Role_" Relationship="Wollies_ShelterModel.fksubrol1" FromRole="SubsystemRole" ToRole="Role_" />
+    <NavigationProperty Name="Subsystem" Relationship="Wollies_ShelterModel.fksubrol" FromRole="SubsystemRole" ToRole="Subsystem" />
+  </EntityType>
+  <Association Name="fksubrol1">
+    <End Type="Wollies_ShelterModel.Role_" Role="Role_" Multiplicity="0..1" />
+    <End Type="Wollies_ShelterModel.SubsystemRole" Role="SubsystemRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role_">
+        <PropertyRef Name="Role_ID" />
+      </Principal>
+      <Dependent Role="SubsystemRole">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fksubrol">
+    <End Type="Wollies_ShelterModel.Subsystem" Role="Subsystem" Multiplicity="0..1" />
+    <End Type="Wollies_ShelterModel.SubsystemRole" Role="SubsystemRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subsystem">
+        <PropertyRef Name="Subsystem_Id" />
+      </Principal>
+      <Dependent Role="SubsystemRole">
+        <PropertyRef Name="Subsystem_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="Kennel_View_Result">
+    <Property Type="Int32" Name="Kennel_ID" Nullable="false" />
+    <Property Type="String" Name="Kennel_Name" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Kennel_Number" Nullable="true" />
+    <Property Type="Int32" Name="Kennel_Capacity" Nullable="true" />
   </ComplexType>
 </Schema>

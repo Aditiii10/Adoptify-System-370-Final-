@@ -87,6 +87,9 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
         public virtual DbSet<Wolly> Wollies { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<AdopterFile> AdopterFiles { get; set; }
+        public virtual DbSet<Subsystem> Subsystems { get; set; }
+        public virtual DbSet<SubsystemRole> SubsystemRoles { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {
@@ -270,6 +273,115 @@ namespace AdoptifySystem
                 new ObjectParameter("Name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vet_SearchVet_Result>("Vet_SearchVet", nameParameter);
+        }
+    
+        public virtual int Kennel_Delete(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Kennel_Delete", idParameter);
+        }
+    
+        public virtual int Kennel_insert(string name, Nullable<int> number, Nullable<int> capacity)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Kennel_insert", nameParameter, numberParameter, capacityParameter);
+        }
+    
+        public virtual int Kennel_Update(Nullable<int> iD, string name, Nullable<int> number, Nullable<int> capacity)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Kennel_Update", iDParameter, nameParameter, numberParameter, capacityParameter);
+        }
+    
+        public virtual ObjectResult<Kennel_View_Result> Kennel_View()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel_View_Result>("Kennel_View");
+        }
+    
+        public virtual ObjectResult<Kennel> View_Kennel()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel>("View_Kennel");
+        }
+    
+        public virtual ObjectResult<Kennel> View_Kennel(MergeOption mergeOption)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel>("View_Kennel", mergeOption);
+        }
+    
+        public virtual int AddKennel(string name, Nullable<int> number, Nullable<int> capacity)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddKennel", nameParameter, numberParameter, capacityParameter);
+        }
+    
+        public virtual int UpdateKennel(Nullable<int> iD, string name, Nullable<int> number, Nullable<int> capacity)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateKennel", iDParameter, nameParameter, numberParameter, capacityParameter);
+        }
+    
+        public virtual int DeleteKennel(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteKennel", idParameter);
         }
     }
 }

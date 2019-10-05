@@ -1,0 +1,150 @@
+﻿@model AdoptifySystem.Kennel
+
+@{
+    ViewBag.Title = "Maintain";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="main">
+    <div class="form-horizontal">
+        <div>
+            <div class="col-sm-12 table-primary"><h1>Maintain Kennel</h1></div>
+        </div>
+    </div>
+    <br />
+    <div class="form-horizontal">
+        <input hidden value="@Model.Kennel_ID" name="Kennel_ID" id="Kennel_ID"/>
+        <h4 style="color:red">@ViewBag.errormessage</h4>
+        <hr />
+        <div class="form-group">
+            <label class="col-md-10">Kennel Name</label>
+            <div class="col-md-10">
+
+                <input type="text" class="form-control" id="Kennel_Name" value="@Model.Kennel_Name" name="Kennel_Name" title="Enter the Kennel Name" placeholder="Kennel Name" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-10">Kennel Number</label>
+            <div class="col-md-10">
+                <input type="number" class="form-control" id="Kennel_Number" value="@Model.Kennel_Name" name="Kennel_Number" title="Enter the Kennel Number" placeholder="Kennel Number" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-10">Kennel Capacity</label>
+            <div class="col-md-10">
+                <input type="number" class="form-control" id="Kennel_Capacity" value="@Model.Kennel_Name" name="Kennel_Capacity" title="Enter the Kennel Capacity" placeholder="Kennel Capacity" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.ActionLink("Cancel", "SearchKennel", null, new { @class = "btn btn-warning", @title = "Click to go back to Search Animal Type screen" })
+                <button type="submit" name="button" title="Click to Add the Following Animal Type Details" value="Save" onclick="Save()" class="btn btn-success float-right">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+         $(function () {
+            var successMessage = '@TempData["EditMessage"]'
+            if (successMessage != '')
+                alertify.warning(successMessage);
+         });
+        $(function () {
+            var successMessage = '@TempData["DeleteMessage"]'
+            if (successMessage != '')
+                alertify.error(successMessage);
+        });
+
+function Save() {
+
+    var Kennel_ID = document.getElementById("Kennel_ID");
+    var Kennel_Number = document.getElementById("Kennel_Number");
+    var Kennel_Name = document.getElementById("Kennel_Name");
+    var Kennel_Capacity = document.getElementById("Kennel_Capacity");
+
+                var isvalid = true;
+
+                if (Kennel_Name.value == "") {
+                    //first remove
+                    Kennel_Name.classList.remove("is-valid");
+                    //then add the class you want
+                    Kennel_Name.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Kennel_Name.classList.remove("is-invalid");
+                    //then add the class you want
+                    Kennel_Name.classList.add("is-valid");
+    }
+         if (Kennel_Number.value == "") {
+                    //first remove
+                    Kennel_Number.classList.remove("is-valid");
+                    //then add the class you want
+                    Kennel_Number.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Kennel_Number.classList.remove("is-invalid");
+                    //then add the class you want
+                    Kennel_Number.classList.add("is-valid");
+    }
+       if (Kennel_Capacity.value == "") {
+                    //first remove
+                    Kennel_Capacity.classList.remove("is-valid");
+                    //then add the class you want
+                    Kennel_Capacity.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Kennel_Capacity.classList.remove("is-invalid");
+                    //then add the class you want
+                    Kennel_Capacity.classList.add("is-valid");
+                }
+                if (isvalid) {
+
+                    var formData = new FormData();
+
+                    formData.append("Kennel_ID", Kennel_ID.value);
+                    formData.append("Kennel_Name", Kennel_Name.value);
+                    formData.append("Kennel_Number", Kennel_Number.value );
+                    formData.append("Kennel_Capacity", Kennel_Capacity.value);
+
+                    $("#loader").show();
+                $.ajax(
+                    {
+                    type: "POST",
+                    data: formData,
+                    url: "/Kennel/MaintainKennel",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    success: function (d) {
+                        $("#loader").hide();
+                        isvalid = true;
+
+                    },
+                    error: function (error) {
+                        $("#loader").hide();
+                        isvalid = false;
+                        alert("There was an internal error try again later" + error);
+                }
+            });
+
+                    if (isvalid)
+                    {
+
+
+                        window.location.href = '@Url.Action("SearchKennel","Kennel")';
+                    }
+
+                }
+            }
+    </script>
+}

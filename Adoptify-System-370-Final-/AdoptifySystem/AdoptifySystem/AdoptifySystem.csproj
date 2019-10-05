@@ -216,6 +216,9 @@
     <Compile Include="Adopter.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AdopterFile.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Adopter_Contract.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -371,6 +374,9 @@
     <Compile Include="Kennel.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Kennel_View_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Mecidal_Card.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -437,6 +443,12 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Stock_Type.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subsystem.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubsystemRole.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
@@ -1547,11 +1559,11 @@
     <Content Include="Views\AnimalsDetailsReport\Animal.cshtml" />
     <Content Include="Views\ReportScreen\Index.cshtml" />
     <Content Include="Views\VetAppointReport\Index.cshtml" />
-    <Content Include="Views\Kennels\Create.cshtml" />
-    <Content Include="Views\Kennels\Delete.cshtml" />
-    <Content Include="Views\Kennels\Details.cshtml" />
-    <Content Include="Views\Kennels\Edit.cshtml" />
-    <Content Include="Views\Kennels\Index.cshtml" />
+    <Content Include="Views\Kennel\AddKennel.cshtml" />
+    <Content Include="Views\Kennel\Delete.cshtml" />
+    <Content Include="Views\Kennel\Details.cshtml" />
+    <Content Include="Views\Kennel\MaintainKennel.cshtml" />
+    <Content Include="Views\Kennel\SearchKennel.cshtml" />
     <Content Include="Views\Animal\AddAnimalType.cshtml" />
     <Content Include="Views\Animal\AddBreedType.cshtml" />
     <Content Include="Views\Animal\AddTemporaryAnimal.cshtml" />

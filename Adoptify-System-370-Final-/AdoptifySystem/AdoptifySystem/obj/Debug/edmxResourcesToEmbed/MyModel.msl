@@ -829,5 +829,48 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="AdopterFiles">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.AdopterFile">
+        <MappingFragment StoreEntitySet="AdopterFile">
+          <ScalarProperty Name="FILEURL" ColumnName="FILEURL" />
+          <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+          <ScalarProperty Name="SQLID" ColumnName="SQLID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subsystems">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.Subsystem">
+        <MappingFragment StoreEntitySet="Subsystem">
+          <ScalarProperty Name="Subsystem_Name" ColumnName="Subsystem_Name" />
+          <ScalarProperty Name="Subsystem_Id" ColumnName="Subsystem_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubsystemRoles">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.SubsystemRole">
+        <MappingFragment StoreEntitySet="SubsystemRole">
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="Subsystem_Id" ColumnName="Subsystem_Id" />
+          <ScalarProperty Name="SubsystemRole_Id" ColumnName="SubsystemRole_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Kennel_Delete" FunctionName="Wollies_ShelterModel.Store.Kennel_Delete" />
+    <FunctionImportMapping FunctionImportName="Kennel_insert" FunctionName="Wollies_ShelterModel.Store.Kennel_insert" />
+    <FunctionImportMapping FunctionImportName="Kennel_Update" FunctionName="Wollies_ShelterModel.Store.Kennel_Update" />
+    <FunctionImportMapping FunctionImportName="Kennel_View" FunctionName="Wollies_ShelterModel.Store.Kennel_View">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Wollies_ShelterModel.Kennel_View_Result">
+          <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
+          <ScalarProperty Name="Kennel_Name" ColumnName="Kennel_Name" />
+          <ScalarProperty Name="Kennel_Number" ColumnName="Kennel_Number" />
+          <ScalarProperty Name="Kennel_Capacity" ColumnName="Kennel_Capacity" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="View_Kennel" FunctionName="Wollies_ShelterModel.Store.Kennel_View" />
+    <FunctionImportMapping FunctionImportName="AddKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_insert" />
+    <FunctionImportMapping FunctionImportName="UpdateKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Update" />
+    <FunctionImportMapping FunctionImportName="DeleteKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Delete" />
   </EntityContainerMapping>
 </Mapping>

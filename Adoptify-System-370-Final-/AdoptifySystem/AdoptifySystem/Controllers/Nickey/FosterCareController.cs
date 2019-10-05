@@ -148,7 +148,7 @@ namespace AdoptifySystem.Controllers
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    throw new Exception("Something Went Wrong!");
                 }
                 Foster_Care_Parent foster_Care_Parent = db.Foster_Care_Parent.Find(id);
                 if (foster_Care_Parent == null)

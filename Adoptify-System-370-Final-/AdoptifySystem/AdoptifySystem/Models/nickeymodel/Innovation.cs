@@ -22,6 +22,7 @@ namespace AdoptifySystem.Models.nickeymodel
         public Animal animal { get; set; }
         public List<Animal> animals { get; set; }
         public List<Kennel> Kennels { get; set; }
+        public Kennel Kennel { get; set; }
         public Microchip micro { get; set; }
     }
 }

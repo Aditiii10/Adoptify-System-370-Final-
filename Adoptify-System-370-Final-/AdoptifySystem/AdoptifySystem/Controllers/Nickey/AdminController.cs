@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
 using AdoptifySystem;
+using System.Web.Helpers;
 
 namespace AdoptifySystem.Controllers
 {
@@ -17,7 +18,7 @@ namespace AdoptifySystem.Controllers
         private const string key = "qaz123!@@)(*";//this needs to be generated for each person so that it is unique barcode
         /* any 10-12 char string for use as private key in google authenticator
         use later for generate Google authenticator code.*/
-
+        
         //this is the Db that i will be unstatnitatiung to use thought the whole controller
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public static Flexible flex = new Flexible();
@@ -34,6 +35,7 @@ namespace AdoptifySystem.Controllers
             List<User_> Users;
             try
             {
+                
                 Users = db.User_.ToList();
             }
             catch (Exception e)
@@ -44,11 +46,13 @@ namespace AdoptifySystem.Controllers
 
             foreach (var item in Users)
             {
-                if (item.Username == login.Username && item.Password == login.Password)
+                var hashed = Crypto.Hash(login.Password, "MD5");
+                if (item.Username == login.Username && item.Password == hashed)
                 {
+                    
                     Session["Username"] = login.Username;
                     flex.currentuser = item;
-
+                    Session["ID"] = login.UserID;
                     //2FA Setup
                     TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
                     string UserUniqueKey = (login.Username + key);

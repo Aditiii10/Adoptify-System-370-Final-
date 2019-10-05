@@ -77,40 +77,63 @@ namespace AdoptifySystem.Controllers.Cassie
         [HttpGet]
         public JsonResult Search_Kennel(int inid)
         {
-           
-            int id = Convert.ToInt32(inid);
-            
-            var kennels = inno.Kennels.Select(x => new
+            try
             {
-                Kennel_ID = x.Kennel_ID,
-                Kennel_Name = x.Kennel_Name,
-                Kennel_Space = (x.Kennel_Capacity - x.Animals.Count),
-                Kennel_Capacity = x.Kennel_Capacity,
-            }).ToList();
-            var kennel = kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
-            ViewBag.breed = kennels;
-            return Json(kennel, JsonRequestBehavior.AllowGet);
+                int id = Convert.ToInt32(inid);
+                inno.Kennel = inno.Kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
+                var kennels = inno.Kennels.Select(x => new
+                {
+                    Kennel_ID = x.Kennel_ID,
+                    Kennel_Name = x.Kennel_Name,
+                    Kennel_Space = (x.Kennel_Capacity - x.Animals.Count),
+                    Kennel_Capacity = x.Kennel_Capacity,
+                }).ToList();
+                var kennel = kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
+                ViewBag.breed = kennels;
+                return Json(kennel, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something went Wrong");
+            }
+            
         }
         [HttpGet]
-        public JsonResult Search_Animal(int inid)
+        public ActionResult Search_Animal(int inid)
         {
-            
-            int id = Convert.ToInt32(inid);
-            
-            var animals = inno.animals.Select(x => new
+            try
             {
-                Animal_ID = x.Animal_ID,
-                Animal_Name = x.Animal_Name,
-                Kennel_Name = x.Kennel.Kennel_Name,
-                Animal_Image = x.Animal_Image,
-                Animal_Gender = x.Animal_Gender,
-                Animal_Age = x.Animal_Age,
-                CrossBreeds = x.CrossBreeds.ToArray(),
-                
-            }).ToList();
-            var animal = animals.Where(z => z.Animal_ID == id).FirstOrDefault();
-            ViewBag.breed = animal;
-            return Json(animal, JsonRequestBehavior.AllowGet);
+                int id = Convert.ToInt32(inid);
+                inno.animal = inno.animals.Where(z => z.Animal_ID == id).FirstOrDefault();
+                return View("Create", inno);
+            }
+            catch (Exception )
+            {
+
+                throw new Exception("Something went Wrong");
+            }
+               
+        }
+        public ActionResult Moveanimal(int inid)
+        {
+            try
+            {
+                if (inno.Kennel == null || inno.animal==null)
+                {
+
+                    return View("Create",inno);
+                }
+                int id = Convert.ToInt32(inid);
+                inno.animal = inno.animals.Where(z => z.Animal_ID == id).FirstOrDefault();
+
+                return View("Create", inno);
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something went Wrong");
+            }
+            
         }
     }
 }

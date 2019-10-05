@@ -68,6 +68,14 @@
     <Property Name="Adopter_Status_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Adopter_Status_Name" Type="nvarchar" MaxLength="100" />
   </EntityType>
+  <EntityType Name="AdopterFile">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+    <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
+  </EntityType>
   <EntityType Name="Adoption">
     <Key>
       <PropertyRef Name="Adoption_ID" />
@@ -174,8 +182,8 @@
     </Key>
     <Property Name="Auditlog_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Auditlog_DateTime" Type="datetime" />
-    <Property Name="Transaction_Type" Type="varchar" MaxLength="1" />
-    <Property Name="Critical_Date" Type="varchar" MaxLength="1" />
+    <Property Name="Transaction_Type" Type="varchar" MaxLength="200" />
+    <Property Name="Critical_Date" Type="varchar" MaxLength="200" />
     <Property Name="UserID" Type="int" />
   </EntityType>
   <EntityType Name="CrossBreed">
@@ -466,6 +474,21 @@
     <Property Name="Stock_Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Stock_Type_Name" Type="nvarchar" MaxLength="100" />
     <Property Name="Stock_Type_Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Subsystem">
+    <Key>
+      <PropertyRef Name="Subsystem_Id" />
+    </Key>
+    <Property Name="Subsystem_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subsystem_Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="SubsystemRole">
+    <Key>
+      <PropertyRef Name="SubsystemRole_Id" />
+    </Key>
+    <Property Name="SubsystemRole_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subsystem_Id" Type="int" />
+    <Property Name="Role_ID" Type="int" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -1234,6 +1257,30 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fksubrol">
+    <End Role="Subsystem" Type="Self.Subsystem" Multiplicity="0..1" />
+    <End Role="SubsystemRole" Type="Self.SubsystemRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subsystem">
+        <PropertyRef Name="Subsystem_Id" />
+      </Principal>
+      <Dependent Role="SubsystemRole">
+        <PropertyRef Name="Subsystem_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fksubrol1">
+    <End Role="Role_" Type="Self.Role_" Multiplicity="0..1" />
+    <End Role="SubsystemRole" Type="Self.SubsystemRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role_">
+        <PropertyRef Name="Role_ID" />
+      </Principal>
+      <Dependent Role="SubsystemRole">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fktime">
     <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
     <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
@@ -1406,6 +1453,21 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="Kennel_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Kennel_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Number" Type="int" Mode="In" />
+    <Parameter Name="capacity" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Kennel_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Number" Type="int" Mode="In" />
+    <Parameter Name="capacity" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Kennel_View" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="Parent_SearchParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
   </Function>
@@ -1453,6 +1515,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adopter_Relative" EntityType="Self.Adopter_Relative" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adopter_Status" EntityType="Self.Adopter_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdopterFile" EntityType="Self.AdopterFile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adoption" EntityType="Self.Adoption" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adoption_Status" EntityType="Self.Adoption_Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AdoptionPayment" EntityType="Self.AdoptionPayment" Schema="dbo" store:Type="Tables" />
@@ -1491,6 +1554,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="Role_" EntityType="Self.Role_" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subsystem" EntityType="Self.Subsystem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubsystemRole" EntityType="Self.SubsystemRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblFileDetail" EntityType="Self.tblFileDetail" Schema="dbo" store:Type="Tables" />
@@ -1713,6 +1778,14 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <AssociationSet Name="fkstock2" Association="Self.fkstock2">
       <End Role="Unit_Type" EntitySet="Unit_Type" />
       <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
+    <AssociationSet Name="fksubrol" Association="Self.fksubrol">
+      <End Role="Subsystem" EntitySet="Subsystem" />
+      <End Role="SubsystemRole" EntitySet="SubsystemRole" />
+    </AssociationSet>
+    <AssociationSet Name="fksubrol1" Association="Self.fksubrol1">
+      <End Role="Role_" EntitySet="Role_" />
+      <End Role="SubsystemRole" EntitySet="SubsystemRole" />
     </AssociationSet>
     <AssociationSet Name="fktime" Association="Self.fktime">
       <End Role="Employee" EntitySet="Employee" />

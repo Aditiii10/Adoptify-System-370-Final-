@@ -20,19 +20,26 @@ namespace AdoptifySystem.Controllers.Zinhle
         public JsonResult animalbreed(int categoryID)
         {
             //List<Animal_Breed> breeds = new List<Animal_Breed>();
-            
 
-            int id = Convert.ToInt32(categoryID);
-            var sbreeds = db.Animal_Breed.Where(a => a.Animal_Type_ID == id).OrderBy(a => a.Animal_Breed_Name).ToList();
-            var breeds = db.Animal_Breed.Select(x => new
+            try
             {
-                Animal_Breed_ID = x.Animal_Breed_ID,
-                Animal_Breed_Name = x.Animal_Breed_Name,
-                Animal_Type_ID = x.Animal_Type_ID,
-            }).ToList();
-            breeds = breeds.Where(z => z.Animal_Type_ID == id).ToList();
-            ViewBag.breed = breeds;
-            return Json(breeds, JsonRequestBehavior.AllowGet);
+                int id = Convert.ToInt32(categoryID);
+                var sbreeds = db.Animal_Breed.Where(a => a.Animal_Type_ID == id).OrderBy(a => a.Animal_Breed_Name).ToList();
+                var breeds = db.Animal_Breed.Select(x => new
+                {
+                    Animal_Breed_ID = x.Animal_Breed_ID,
+                    Animal_Breed_Name = x.Animal_Breed_Name,
+                    Animal_Type_ID = x.Animal_Type_ID,
+                }).ToList();
+                breeds = breeds.Where(z => z.Animal_Type_ID == id).ToList();
+                ViewBag.breed = breeds;
+                return Json(breeds, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
+            
         }
         public ActionResult AddTemporaryAnimal()
         {
@@ -44,7 +51,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return RedirectToAction("Index","Employees");
+                throw new Exception("Something Went Wrong!");
 
             }
 
@@ -76,7 +83,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     if (status == null)
                     {
                         TempData["EditMessage"] = "there are no status available.";
-                        return Content("AddTemporaryAnimal");
+                        throw new Exception("Something Went Wrong!");
                     }
                     animal.Animal_Status_ID = status.Animal_Status_ID;
                     db.Animals.Add(animal);
@@ -117,7 +124,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return Content("SearchAnimal");
+                throw new Exception("Something Went Wrong!");
 
             }
         }
@@ -191,7 +198,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return RedirectToAction("AddTemporaryAnimal", "Animal");
+                throw new Exception("Something Went Wrong!");
             }
 
 
@@ -310,8 +317,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return Content("");
-                }
+                throw new Exception("Something Went Wrong!");
+            }
             
             
             return Content("");

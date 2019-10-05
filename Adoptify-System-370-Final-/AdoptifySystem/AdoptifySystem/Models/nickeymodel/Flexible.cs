@@ -8,6 +8,7 @@ namespace AdoptifySystem.Models.nickeymodel
 {
     public class Flexible
     {
+        Wollies_ShelterEntities db = new Wollies_ShelterEntities();
     
         //these are the list of classes
         public List<Employee> employeelist { get; set; }
@@ -31,5 +32,131 @@ namespace AdoptifySystem.Models.nickeymodel
         public Donation donation { get; set; }
 
         public User_ currentuser { get; set; }
+
+        public bool CreateAuditTrail(int id,string usecase)
+        {
+            try
+            {
+                User_ user = db.User_.Where(z => z.UserID == id).FirstOrDefault();
+                if (user == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    Audit_Log audit = new Audit_Log();
+                    audit.Transaction_Type = "Create";
+                    audit.Auditlog_DateTime = DateTime.Now;
+                    audit.UserID = user.UserID;
+                    audit.Critical_Date = "Created a New" + usecase;
+                    db.Audit_Log.Add(audit);
+                    db.SaveChanges();
+                    return true;
+                }
+                
+                
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+           
+        }
+        public bool UpdateAuditTrail(int id, string usecase)
+        {
+            try
+            {
+                User_ user = db.User_.Where(z => z.UserID == id).FirstOrDefault();
+                if (user == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    Audit_Log audit = new Audit_Log();
+                    audit.Transaction_Type = "Update";
+                    audit.Auditlog_DateTime = DateTime.Now;
+                    audit.UserID = user.UserID;
+                    audit.Critical_Date = "Updated " + usecase;
+
+                    db.SaveChanges();
+                    return true;
+                }
+
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+        }
+        public bool DeleteAuditTrail(int id, string usecase)
+        {
+            try
+            {
+                User_ user = db.User_.Where(z => z.UserID == id).FirstOrDefault();
+                if (user == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    Audit_Log audit = new Audit_Log();
+                    audit.Transaction_Type = "Delete";
+                    audit.Auditlog_DateTime = DateTime.Now;
+                    audit.UserID = user.UserID;
+                    audit.Critical_Date = "Deleted a " + usecase;
+
+                    db.SaveChanges();
+                    return true;
+                }
+
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+        }
+
+        public bool LoginAuditTrail(int id, string usecase)
+        {
+            try
+            {
+                User_ user = db.User_.Where(z => z.UserID == id).FirstOrDefault();
+                if (user == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    Audit_Log audit = new Audit_Log();
+                    audit.Transaction_Type = "Read";
+                    audit.Auditlog_DateTime = DateTime.Now;
+                    audit.UserID = user.UserID;
+                    audit.Critical_Date = "Read a New" + usecase;
+
+                    db.SaveChanges();
+                    return true;
+                }
+
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+        }
+
+        
+
+
     }
 }

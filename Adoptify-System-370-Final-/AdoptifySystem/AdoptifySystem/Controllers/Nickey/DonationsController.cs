@@ -606,7 +606,7 @@ namespace AdoptifySystem.Controllers
             return View();
         }
         [HttpPost]
-        public ContentResult AddDonationType(Donation_Type donation_Type)
+        public ActionResult AddDonationType(Donation_Type donation_Type)
         {
 
                 try
@@ -624,7 +624,8 @@ namespace AdoptifySystem.Controllers
                             {
                                 count++;
                                 ViewBag.errorMessage = "There is a duplicate Donation Type Already";
-                                return Content("");
+                                return RedirectToAction("AddDonationType");
+                               // return Json("Failed");
                         }
 
                         }
@@ -632,16 +633,18 @@ namespace AdoptifySystem.Controllers
                         {
                             db.Donation_Type.Add(donation_Type);
                             db.SaveChanges();
-                        }
+                        flex.CreateAuditTrail(1, "Adopter");
+                    }
                     }
                     else
                     {
 
                         db.Donation_Type.Add(donation_Type);
                         db.SaveChanges();
-                       
 
-                    }
+                    flex.CreateAuditTrail(1,"Adopter");
+
+                }
                     
                 }
                 catch (Exception e)
@@ -649,7 +652,7 @@ namespace AdoptifySystem.Controllers
                     ViewBag.errorMessage = "There was an Error with network please try again: "+e.Message;
                 throw new Exception("Something Went Wrong!");
             }
-            return Content("");
+            return RedirectToAction("SearchDonationType");
 
         }
        
@@ -727,7 +730,7 @@ namespace AdoptifySystem.Controllers
             
         }
         [HttpPost]
-        public ContentResult MaintainDonationType(Donation_Type Donationtype)
+        public ActionResult MaintainDonationType(Donation_Type Donationtype)
         {
           try
                 {

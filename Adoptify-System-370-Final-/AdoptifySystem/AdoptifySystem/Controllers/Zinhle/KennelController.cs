@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdoptifySystem.Models.nickeymodel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,8 @@ namespace AdoptifySystem.Controllers.Zinhle
 {
     public class KennelController : Controller
     {
+        Wollies_ShelterEntities db = new Wollies_ShelterEntities();
+        public static Flexible flex = new Flexible();
         // GET: Kennel
         public ActionResult Index()
         {
@@ -18,20 +21,109 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult AddKennel(Kennel kennel)
+        {
+            try
+            {
+                db.AddKennel(kennel.Kennel_Name, kennel.Kennel_Number, kennel.Kennel_Capacity);
+                
+                RedirectToAction("SearchKennel");
+            }
+            catch (Exception e)
+            {
 
+                throw new Exception("Something Went Wrong!");
+            }
+            return View();
+        }
+        //Message = "The data reader is incompatible with the specified 'Wollies_ShelterModel.Kennel'. A member of the type, 'Kennel_ID', does not have a corresponding column in the data reader with the same name."
         public ActionResult SearchKennel()
         {
-            return View();
+            try
+            {
+                db.Database.CommandTimeout = 300;
+
+                return View(db.Kennels.ToList()) ;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+            
         }
 
-        public ActionResult MaintainKennel()
+        public ActionResult MaintainKennel(int id)
         {
-            return View();
-        }
 
-        public ActionResult MoveAnimalToKennel()
-        {
-            return View();
+            try
+            {
+                
+                Kennel kennel = db.Kennels.Find(id);
+                if (kennel == null)
+                {
+                    RedirectToAction("SearchKennel");
+                }
+                return View(kennel);
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+
         }
+        [HttpPost]
+        public ActionResult MaintainKennel(Kennel kennel)
+        {
+
+            try
+            {
+                db.UpdateKennel(kennel.Kennel_ID,kennel.Kennel_Name, kennel.Kennel_Number, kennel.Kennel_Capacity);
+                return RedirectToAction("SearchKennel");
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+
+        }
+        public ActionResult DeleteKennel(int? id)
+        {
+            try
+            {
+
+                if (id != null)
+                {
+                    Kennel kennel = db.Kennels.Find(id);
+                    int count = kennel.Animals.Count();
+                    if (count != 0)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return RedirectToAction("SearchKennel");
+                    }
+                    else
+                    {
+                        //db.Kennels.Remove(kennel);
+                        db.DeleteKennel(kennel.Kennel_ID);
+                        db.SaveChanges();
+                        return RedirectToAction("SearchKennel");
+                    }
+                }
+                return RedirectToAction("SearchKennel");
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+
+
+        }
+        
+
     }
 }

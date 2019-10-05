@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-10">
-                    @Html.ActionLink("Cancel", "SearchAnimalType", new { @id ="name" } ,new { @class = "btn btn-warning" ,@title="Click to go back to Search Animal Type screen"})
+                    @Html.ActionLink("Cancel", "SearchAnimalType",null ,new { @class = "btn btn-warning" ,@title="Click to go back to Search Animal Type screen"})
                     <button type="submit" name="button" title="Click to Add the Following Animal Type Details" value="Save" onclick="Save()" class="btn btn-success float-right">Save</button>
                 </div>
             </div>
@@ -115,9 +115,7 @@ function Save() {
 
                     if (isvalid)
                     {
-                        //$('#name').click();
-                        
-                        //window.location.href = '@Url.Action("SearchAnimalType","Animal")';
+                       window.location.href = '@Url.Action("SearchAnimalType","Animal")';
                     }
 
                 }

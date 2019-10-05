@@ -162,12 +162,6 @@
                             <input id="Username" name="Username" value="@item.Username" class="form-control" type="text" placeholder="Enter Username" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label><b>Employee Password</b></label>
-                        <div class="col-md-10">
-                            <input id="Password" name="Password" value="@item.Password" type="password" class="form-control" placeholder="Enter Password" maxlength="8" />
-                        </div>
-                    </div>
                     <div class="column">
                         <div>
                             <div class="col-sm-12 table-primary"><h1>Assign User Role </h1></div>
@@ -242,7 +236,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            @Html.ActionLink("Cancel", "SearchEmployee", new { @class = "btn btn-warning" ,@title="Click to go back to Search Employee screen" })
+            @Html.ActionLink("Cancel", "SearchEmployee",null, new { @class = "btn btn-warning" ,@title="Click to go back to Search Employee screen" })
             <button type="submit" name="button" value="Save" onclick="validate()" title="Click to update the Following Employee Details" class="btn btn-success float-right">Save</button>
         </div>
     </div>

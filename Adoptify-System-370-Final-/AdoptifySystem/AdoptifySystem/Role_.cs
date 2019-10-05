@@ -18,6 +18,7 @@ namespace AdoptifySystem
         public Role_()
         {
             this.UserRoles = new HashSet<UserRole>();
+            this.SubsystemRoles = new HashSet<SubsystemRole>();
         }
     
         public int Role_ID { get; set; }
@@ -25,5 +26,7 @@ namespace AdoptifySystem
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubsystemRole> SubsystemRoles { get; set; }
     }
 }

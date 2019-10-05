@@ -233,12 +233,12 @@ namespace AdoptifySystem.Controllers.Zinhle
                 db.Database.CommandTimeout = 150;
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    throw new Exception("Something Went Wrong!");
                 }
                 Employee employee = db.Employees.Find(id);
                 if (employee == null)
                 {
-                    return HttpNotFound();
+                    throw new Exception("Something Went Wrong!");
                 }
                 innovation.employee = employee;
 
