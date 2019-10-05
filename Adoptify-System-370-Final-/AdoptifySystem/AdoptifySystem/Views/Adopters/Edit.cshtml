@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        @*<h4>Adopter</h4>*@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Adopter_ID)
@@ -279,10 +278,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-dark" })
-                @Html.ActionLink("Update", "Index", "Adopters", new { id = Model.Adopter_ID }, new { @class = "btn btn-success" })
-
-                @*<input type="submit" value="Update" class="btn btn-success" />*@
+                @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-primary", @Title = "Click to go Back" })
+                @Html.ActionLink("Update", "Index", "Adopters", new { id = Model.Adopter_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter" })
             </div>
         </div>
     </div>

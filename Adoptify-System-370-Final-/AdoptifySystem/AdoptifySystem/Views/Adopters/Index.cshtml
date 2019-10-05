@@ -9,7 +9,7 @@
 <p>
     @*@Html.ActionLink("Create New", "Create")*@
 
-    @Html.ActionLink("Add New", "Create", "Adopters", new { @class = "btn btn-success" })
+    @Html.ActionLink("Add New", "Create", "Adopters", new { @class = "btn btn-success", @Title ="Click to Add Adopter"})
     @using (Html.BeginForm("Index", "Adopters", FormMethod.Get))
 
     {
@@ -214,9 +214,9 @@
                     @Html.DisplayFor(modelItem => item.Adopter_Status.Adopter_Status_Name)
                 </td>*@
             <td>
-                @Html.ActionLink("Update", "Edit", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-success" })
-                @Html.ActionLink("More Info", "Details", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Delete", "Delete", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Update", "Edit", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter"  })
+                @Html.ActionLink("More Info", "Details", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-primary", @Title = "Click to View More Info"  })
+                @Html.ActionLink("Delete", "Delete", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Adopter"  })
             </td>
         </tr>
     }

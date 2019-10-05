@@ -4,15 +4,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Adopter Relative List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New", "Create", "Adopter_Relative", new { @class = "btn btn-success", @Title ="Click to Add Adopter Relative"})
     @using (Html.BeginForm("Index", "Adopter_Relative", FormMethod.Get))
     {
-        <b>Search by:</b>@Html.RadioButton("Searchby", "Relative_Name", true) <text>Relative Name</text>
-        @Html.RadioButton("Searchby", "Relative_Surname")<text>Relative Surname</text><br />
-        @Html.TextBox("search")<input type="submit" value="Search" ? />
+        <b>Search Criteria:  </b>
+        <br />
+        @Html.TextBox("search")<input type="submit" value="Search" ? class="btn btn-primary" title="Click to Search" />
     }
 </p>
 
@@ -25,8 +25,8 @@
     });
     <script/>*@
 
-<table class="table">
-    <tr>
+<table class="table-bordered table">
+    <tr class="table-primary">
         <th>
             @Html.DisplayNameFor(model => model.Relative_Name)
         </th>
@@ -37,17 +37,17 @@
             @Html.DisplayNameFor(model => model.Relative_Email)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.Relative_Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Relative_PostalAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Relative_Home_Tel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Relative_Work_Tel)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Relative_Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_PostalAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_Home_Tel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_Work_Tel)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Relative_Cell)
         </th>
@@ -60,44 +60,53 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Relative_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Relative_Surname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Relative_Email)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Relative_Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Relative_PostalAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Relative_Home_Tel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Relative_Work_Tel)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.Relative_Cell)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Relationship)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Relative_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Relative_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Relative_ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Relative_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Relative_Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Relative_Email)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Relative_Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_PostalAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_Home_Tel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_Work_Tel)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Relative_Cell)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Relationship)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
+            </td>
+            <td>
+                @Html.ActionLink("Update", "Edit", "Adopter_Relative", new { id = item.Relative_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter Relative" })
+                @Html.ActionLink("More Info", "Details", "Adopter_Relative", new { id = item.Relative_ID }, new { @class = "btn btn-primary", @Title = "Click to View More Info" })
+                @Html.ActionLink("Delete", "Delete", "Adopter_Relative", new { id = item.Relative_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Adopter Relative" })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-12">
+        <br />
+        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page" })
+        <br />
+    </div>
+</div>
