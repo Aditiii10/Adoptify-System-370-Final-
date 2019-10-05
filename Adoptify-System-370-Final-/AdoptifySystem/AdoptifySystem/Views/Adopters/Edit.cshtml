@@ -4,289 +4,586 @@
     ViewBag.Title = "Edit";
 }
 
-<h2> Update Adopter Details</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Adopter_ID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_Surname, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_Surname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_Surname, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title_ID, "Title_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Title_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Title_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_Address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_Address, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_PostalAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_PostalAddress, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_PostalAddress, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_HomeNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_HomeNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_HomeNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_WorkNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_WorkNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_WorkNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_CellNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_CellNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_CellNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_CarRegistartion_Number, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_CarRegistartion_Number, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_CarRegistartion_Number, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_Employer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Adopter_Employer, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Adopter_Employer, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopter_Status_ID, "Adopter_Status_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Adopter_Status_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Adopter_Status_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Amount_of_Family_Memebers, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount_of_Family_Memebers, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount_of_Family_Memebers, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.No_of_Children, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.No_of_Children, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.No_of_Children, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Age_of_Children, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Age_of_Children, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Age_of_Children, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Property_Securely_Closed, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Property_Securely_Closed)
-                    @Html.ValidationMessageFor(model => model.Property_Securely_Closed, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Properyty_Include_Pool, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Properyty_Include_Pool)
-                    @Html.ValidationMessageFor(model => model.Properyty_Include_Pool, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pool_Secured, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Pool_Secured)
-                    @Html.ValidationMessageFor(model => model.Pool_Secured, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Animal_Shelter_Available, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Animal_Shelter_Available)
-                    @Html.ValidationMessageFor(model => model.Animal_Shelter_Available, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Sick_Animal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Sick_Animal)
-                    @Html.ValidationMessageFor(model => model.Sick_Animal, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Sick_Animal_Diagnosis, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Sick_Animal_Diagnosis, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Sick_Animal_Diagnosis, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Animal_Sleep_Location, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Animal_Sleep_Location, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Animal_Sleep_Location, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Given_Animal_Away, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Given_Animal_Away)
-                    @Html.ValidationMessageFor(model => model.Given_Animal_Away, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HomeCheck_Suburb, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HomeCheck_Suburb, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HomeCheck_Suburb, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Type_of_House, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Type_of_House, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Type_of_House, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Adopted_Before, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Adopted_Before)
-                    @Html.ValidationMessageFor(model => model.Adopted_Before, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Complex_or_Flat, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Complex_or_Flat)
-                    @Html.ValidationMessageFor(model => model.Complex_or_Flat, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Animal_Allowed, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Animal_Allowed)
-                    @Html.ValidationMessageFor(model => model.Animal_Allowed, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Animal_Captivity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Animal_Captivity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Animal_Captivity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Animal_Vaccines_Updated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Animal_Vaccines_Updated)
-                    @Html.ValidationMessageFor(model => model.Animal_Vaccines_Updated, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-primary", @Title = "Click to go Back" })
-                @Html.ActionLink("Update", "Index", "Adopters", new { id = Model.Adopter_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter" })
-            </div>
+<div id="main">
+    <br />
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Update Adopter</h1>
         </div>
     </div>
-}
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Adopter_ID)
+
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#home" title="Go to Adopter Details">Adopter Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#profile" title="Go to Adopter Homecheck Details">Adopter Homecheck Details</a>
+                </li>
+            </ul>
+
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade show active" id="home">
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_Name, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Adopter Name" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_Surname, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_Surname, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title_ID, "Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("Title_ID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Title_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_PostalAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_PostalAddress, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_PostalAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_HomeNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_HomeNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_HomeNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_WorkNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_WorkNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_WorkNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_CellNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_CellNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_CellNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_CarRegistartion_Number, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_CarRegistartion_Number, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_CarRegistartion_Number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopter_Employer, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Adopter_Employer, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Adopter_Employer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.Adopter_Status_ID, "Adopter_Status_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("Adopter_Status_ID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Adopter_Status_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Amount_of_Family_Memebers, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Amount_of_Family_Memebers, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Amount_of_Family_Memebers, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.No_of_Children, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.No_of_Children, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.No_of_Children, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Age_of_Children, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Age_of_Children, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Age_of_Children, "", new { @class = "text-danger" })
+                        </div>
+                        <br />
+                        <h4 style="color:red">Click on the Adopter Homecheck Details Tab to Continue</h4>
+                        <br />
+                        @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
+                        <br />
+                    </div>
+                </div>
+
+
+
+                <div class="tab-pane fade show" id="profile">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Property_Securely_Closed, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Property is Securely Closed" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Property_Securely_Closed == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Property_Securely_Closed" value="True" id="Property_Securely_Closed_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Property_Securely_Closed_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Property_Securely_Closed" value="False" id="Property_Securely_Closed_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Property_Securely_Closed_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Property_Securely_Closed" value="True" id="Property_Securely_Closed_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Property_Securely_Closed_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Property_Securely_Closed" value="False" id="Property_Securely_Closed_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Property_Securely_Closed_No">No</label>
+                                    </div>
+                                }
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Property_Securely_Closed, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Properyty_Include_Pool, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Property Includes a Pool" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Properyty_Include_Pool == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Properyty_Include_Pool" value="True" id="Properyty_Include_Pool_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Properyty_Include_Pool_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Properyty_Include_Pool" value="False" id="Properyty_Include_Pool_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Properyty_Include_Pool_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Properyty_Include_Pool" value="True" id="Properyty_Include_Pool_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Properyty_Include_Pool_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Properyty_Include_Pool" value="False" id="Properyty_Include_Pool_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Properyty_Include_Pool_No">No</label>
+                                    </div>
+                                }
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Properyty_Include_Pool, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Pool_Secured, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Pool is Secured" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Pool_Secured == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Pool_Secured" value="True" id="Pool_Secured_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Pool_Secured_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Pool_Secured" value="False" id="Pool_Secured_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Pool_Secured_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Pool_Secured" value="True" id="Pool_Secured_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Pool_Secured_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Pool_Secured" value="False" id="Pool_Secured_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Pool_Secured_No">No</label>
+                                    </div>
+                                }
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Pool_Secured, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Animal_Shelter_Available, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Animal Shelter is Available" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Animal_Shelter_Available == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Animal_Shelter_Available" value="True" id="Animal_Shelter_Available_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Shelter_Available_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Animal_Shelter_Available" value="False" id="Animal_Shelter_Available_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Shelter_Available_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Animal_Shelter_Available" value="True" id="Animal_Shelter_Available_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Shelter_Available_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Animal_Shelter_Available" value="False" id="Animal_Shelter_Available_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Shelter_Available_No">No</label>
+                                    </div>
+                                }
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Animal_Shelter_Available, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Sick_Animal, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if the Adopter has a Sick Animal" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Sick_Animal == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Sick_Animal" value="True" id="Sick_Animal_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Sick_Animal_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Sick_Animal" value="False" id="Sick_Animal_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Sick_Animal_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Sick_Animal" value="True" id="Sick_Animal_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Sick_Animal_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Sick_Animal" value="False" id="Sick_Animal_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Sick_Animal_No">No</label>
+                                    </div>
+                                }
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Sick_Animal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Sick_Animal_Diagnosis, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Sick_Animal_Diagnosis, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Sick_Animal_Diagnosis, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Animal_Sleep_Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Animal_Sleep_Location, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Animal_Sleep_Location, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Given_Animal_Away, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if the Adopter has given an Animal Away" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Given_Animal_Away == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Given_Animal_Away" value="True" id="Given_Animal_Away_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Given_Animal_Away_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Given_Animal_Away" value="False" id="Given_Animal_Away_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Given_Animal_Away_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Given_Animal_Away" value="True" id="Given_Animal_Away_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Given_Animal_Away_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Given_Animal_Away" value="False" id="Given_Animal_Away_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Given_Animal_Away_No">No</label>
+                                    </div>
+                                }
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Given_Animal_Away, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HomeCheck_Suburb, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.HomeCheck_Suburb, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.HomeCheck_Suburb, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Type_of_House, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Type_of_House, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Type_of_House, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adopted_Before, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if the Adopter has Adopted Before" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Adopted_Before == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Adopted_Before" value="True" id="Adopted_Before_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Adopted_Before_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Adopted_Before" value="False" id="Adopted_Before_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Adopted_Before_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Adopted_Before" value="True" id="Adopted_Before_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Adopted_Before_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Adopted_Before" value="False" id="Adopted_Before_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Adopted_Before_No">No</label>
+                                    </div>
+                                }
+
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Adopted_Before, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Complex_or_Flat, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if House is enclosed in an estate/complex" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Complex_or_Flat == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Complex_or_Flat" value="True" id="Complex_or_Flat_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Complex_or_Flat_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Complex_or_Flat" value="False" id="Complex_or_Flat_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Complex_or_Flat_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Complex_or_Flat" value="True" id="Complex_or_Flat_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Complex_or_Flat_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Complex_or_Flat" value="False" id="Complex_or_Flat_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Complex_or_Flat_No">No</label>
+                                    </div>
+                                }
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Complex_or_Flat, "", new { @class = "text-danger", style = "display:inline;" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Animal_Allowed, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Animals are Allowed" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Animal_Allowed == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Animal_Allowed" value="True" id="Animal_Allowed_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Allowed_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Animal_Allowed" value="False" id="Animal_Allowed_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Allowed_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Animal_Allowed" value="True" id="Animal_Allowed_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Allowed_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Animal_Allowed" value="False" id="Animal_Allowed_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Allowed_No">No</label>
+                                    </div>
+                                }
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Animal_Allowed, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Animal_Captivity, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Animal_Captivity, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Animal_Captivity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Animal_Vaccines_Updated, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Select if Animal's Vaccines are Updated" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.Animal_Vaccines_Updated == true)
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Animal_Vaccines_Updated" value="True" id="Animal_Vaccines_Updated_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Vaccines_Updated_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Animal_Vaccines_Updated" value="False" id="Animal_Vaccines_Updated_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Vaccines_Updated_No">No</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="Animal_Vaccines_Updated" value="True" id="Animal_Vaccines_Updated_Yes" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Vaccines_Updated_Yes">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input checked type="radio" name="Animal_Vaccines_Updated" value="False" id="Animal_Vaccines_Updated_No" class="custom-control-input">
+                                        <label class="custom-control-label" for="Animal_Vaccines_Updated_No">No</label>
+                                    </div>
+                                }
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Animal_Vaccines_Updated, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function Save() {
+                            var Property_Securely_Closed = document.getElementById("Property_Securely_Closed");
+                            var Properyty_Include_Pool = document.getElementById("Properyty_Include_Pool")
+                            var Pool_Secured = document.getElementById("Pool_Secured")
+                            var Animal_Shelter_Available = document.getElementById("Animal_Shelter_Available")
+                            var Sick_Animal = document.getElementById("Sick_Animal")
+                            var Given_Animal_Away = document.getElementById("Given_Animal_Away")
+                            var Adopted_Before = document.getElementById("Adopted_Before")
+                            var Complex_or_Flat = document.getElementById("Complex_or_Flat")
+                            var Animal_Allowed = document.getElementById("Animal_Allowed")
+                            var Animal_Vaccines_Updated = document.getElementById("Animal_Vaccines_Updated")
+                        }
+
+                    </script>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <br />
+                            @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
+                            @Html.ActionLink("Update", "Index", "Adopters", new { id = Model.Adopter_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Adopter" })
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>
 
 
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWS2RFX5WP2nl4kXOGpCZwjHsYFEQp5iA&=false&libraries=places">
+    </script>
+    <script type="text/javascript">
+
+        google.maps.event.addDomListener(window, 'load', function () {
+            var options = {
+                types: ['(regions)'],
+                componentRestrictions: { country: "za" }
+            };
+
+            var input = document.getElementById('Adopter_Address');
+            var input1 = document.getElementById('Adopter_PostalAddress');
+            var input2 = document.getElementById('HomeCheck_Suburb');
+            var places = new google.maps.places.Autocomplete(input, options);
+            var places1 = new google.maps.places.Autocomplete(input1, options);
+            var places2 = new google.maps.places.Autocomplete(input2, options);
+
+        });
+    </script>
+
     @Scripts.Render("~/bundles/jqueryval")
 }
