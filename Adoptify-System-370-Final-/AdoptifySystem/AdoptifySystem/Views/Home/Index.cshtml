@@ -102,14 +102,14 @@
     </div>*@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#home"  title="Go to home Dashboard" >Home Dashboard</a>
+        <a class="nav-link active" data-toggle="tab" href="#home" title="Go to home Dashboard">Home Dashboard</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile"  title="Go to Calendar View" >Schedule Calendar</a>
+        <a class="nav-link" data-toggle="tab" href="#profile" title="Go to Calendar View">Schedule Calendar</a>
     </li>
-    @*<li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-        </li>*@
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#weather" title="Go to Calendar View">Weather Forcast</a>
+    </li>
 </ul>
 
 <div id="myTabContent" class="tab-content">
@@ -128,8 +128,8 @@
                     </button>
                 </a>
             </div>
-        @*</div>*@
-        @*<div class="container active" style="width:100%; margin-left:30px">*@
+            @*</div>*@
+            @*<div class="container active" style="width:100%; margin-left:30px">*@
             <div class="jumbotron" style="width:190px;height:272px; background-color:#2ba6cb; float:left; margin-left:100px">
                 <i class="glyphicon glyphicon-heart-empty" style="font-size:80px; color:black; margin-left:-10px">
                 </i>
@@ -142,8 +142,8 @@
                     </button>
                 </a>
             </div>
-        @*</div>*@
-        @*<div class="container active" style="width:100%; margin-left:30px">*@
+            @*</div>*@
+            @*<div class="container active" style="width:100%; margin-left:30px">*@
             <div class="jumbotron" style="width:190px;height:272px; background-color:#2ba6cb; float:left; margin-left:100px">
                 <i class="glyphicon glyphicon-shopping-cart" style="font-size:80px; color:black; margin-left:-10px">
                 </i>
@@ -158,134 +158,143 @@
             </div>
 
         </div>
-        </div>
+    </div>
 
-        @*<br />
+    @*<br />
         <br />
         <hr />*@
 
-        @*<div id="chart_div" style="width:500px;height:400px">
+    @*<div id="chart_div" style="width:500px;height:400px">
             <%-- Here Chart Will Load --%>
         </div>*@
-        <div class="tab-pane fade" id="profile">
-            <br />
-            @*<div id="schedule" class="tabcontent">*@
-            @*<div class="tab-pane fade" id="schedule">*@
-            <div class="panel panel-default" id="" style="width:1200px">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Upcoming Events</h3>
-                </div>
+    <div class="tab-pane fade" id="profile">
+        <br />
+        @*<div id="schedule" class="tabcontent">*@
+        @*<div class="tab-pane fade" id="schedule">*@
+        <div class="panel panel-default" id="" style="width:1200px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Upcoming Events</h3>
+            </div>
 
-                <div id="calender"></div>
+            <div id="calender"></div>
 
-                <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header table-primary">
-                                <h5 class="modal-title"><span id="eventTitle"></span></h5>
-                                <button type="button" class="close" data-dismiss="modal">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header table-primary">
+                            <h5 class="modal-title"><span id="eventTitle"></span></h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
 
-                            </div>
-                            <div class="modal-body">
-                                <button id="btnDelete" class="btn btn-danger btn-sm pull-right">
-                                    <span class="glyphicon glyphicon-trash"></span> Remove
-                                </button>
-                                <button id="btnEdit" class="btn btn-warning btn-sm pull-right" style="margin-right:5px;">
-                                    <span class="glyphicon glyphicon-pencil"></span> Edit
-                                </button>
-                                <p id="pDetails"></p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <button id="btnDelete" class="btn btn-danger btn-sm pull-right">
+                                <span class="glyphicon glyphicon-trash"></span> Remove
+                            </button>
+                            <button id="btnEdit" class="btn btn-warning btn-sm pull-right" style="margin-right:5px;">
+                                <span class="glyphicon glyphicon-pencil"></span> Edit
+                            </button>
+                            <p id="pDetails"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-                <div id="myModalSave" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header table-primary">
-                                <h5 class="modal-title">Add Events to Schedule</h5>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div id="myModalSave" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header table-primary">
+                            <h5 class="modal-title">Add Events to Schedule</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                            </div>
-                            <div class="modal-body">
-                                <form class="form-horizontal">
-                                    <input type="hidden" id="hdEventID" value="0" />
-                                    <div class="form-group">
-                                        <label>Subject</label>
-                                        <input type="text" id="txtSubject" class="form-control" />
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal">
+                                <input type="hidden" id="hdEventID" value="0" />
+                                <div class="form-group">
+                                    <label>Subject</label>
+                                    <input type="text" id="txtSubject" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Start</label>
+                                    <div class="input-group date" id="dtp1">
+                                        <input type="text" id="txtStart" class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Start</label>
-                                        <div class="input-group date" id="dtp1">
-                                            <input type="text" id="txtStart" class="form-control" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
-                                        </div>
+                                </div>
+                                <div class="form-group" id="divEndDate" style="display:none">
+                                    <label>End</label>
+                                    <div class="input-group date" id="dtp2">
+                                        <input type="text" id="txtEnd" class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
-                                    <div class="form-group" id="divEndDate" style="display:none">
-                                        <label>End</label>
-                                        <div class="input-group date" id="dtp2">
-                                            <input type="text" id="txtEnd" class="form-control" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Theme Color</label>
-                                        <select id="ddThemeColor" class="form-control">
-                                            <option value="">Default</option>
-                                            <option value="red">Red-</option>
-                                            <option value="blue">Blue-Events</option>
-                                            <option value="orange">Orange-HomeCheck</option>
-                                            <option value="black">Black-Other</option>
-                                        </select>
-                                    </div>
-                                    <button type="button" id="btnSave" class="btn btn-success">Save</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Theme Color</label>
+                                    <select id="ddThemeColor" class="form-control">
+                                        <option value="">Default</option>
+                                        <option value="red">Red-</option>
+                                        <option value="blue">Blue-Events</option>
+                                        <option value="orange">Orange-HomeCheck</option>
+                                        <option value="black">Black-Other</option>
+                                    </select>
+                                </div>
+                                <button type="button" id="btnSave" class="btn btn-success">Save</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="tab-pane fade show active" id="weather">
+        <br />
+        <h2>Weather Forcast for Pretoria North Akasia for the next 7 days</h2>
+        <a class="weatherwidget-io" href="https://forecast7.com/en/n25d6828d18/pretoria-north/" data-label_1="PRETORIA NORTH, AKASIA" data-label_2="WEATHER" data-theme="original">PRETORIA NORTH, AKASIA WEATHER</a>
+        <script>
+            !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+        </script>
 
-@*</div>*@
+    </div>
+    </div>
 
-
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
-
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-
-@section Scripts{
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    @*</div>*@
 
 
-    <script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+    @section Scripts{
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+        <script>
             $(document).ready(function () {
                 var events = [];
                 var selectedEvent = null;
@@ -538,8 +547,8 @@
 
             //}
 
-    </script>
-}
+        </script>
+    }
 
 
 
