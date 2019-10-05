@@ -123,9 +123,22 @@ namespace AdoptifySystem.Controllers.Cassie
 
                     return View("Create",inno);
                 }
-                int id = Convert.ToInt32(inid);
-                inno.animal = inno.animals.Where(z => z.Animal_ID == id).FirstOrDefault();
+                if (inno.animal.Kennel_ID != 0)
+                {
+                    if (inno.Kennel.Kennel_ID == inno.animal.Kennel_ID)
+                    {
+                        return View("Create", inno);
+                    }
+                    var animal = db.Animals.Find(inno.animal.Animal_ID);
+                    if (animal == null)
+                    {
+                        return View("Create", inno);
+                    }
+                    animal.Kennel_ID = inno.Kennel.Kennel_ID;
+                    db.SaveChanges();
 
+                }
+                
                 return View("Create", inno);
             }
             catch (Exception)
