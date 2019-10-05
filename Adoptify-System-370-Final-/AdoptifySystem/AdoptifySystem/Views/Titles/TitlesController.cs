@@ -26,12 +26,12 @@ namespace AdoptifySystem.Views.Titles
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Title title = db.Titles.Find(id);
             if (title == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(title);
         }
@@ -64,12 +64,12 @@ namespace AdoptifySystem.Views.Titles
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Title title = db.Titles.Find(id);
             if (title == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(title);
         }
@@ -95,12 +95,12 @@ namespace AdoptifySystem.Views.Titles
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Title title = db.Titles.Find(id);
             if (title == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(title);
         }

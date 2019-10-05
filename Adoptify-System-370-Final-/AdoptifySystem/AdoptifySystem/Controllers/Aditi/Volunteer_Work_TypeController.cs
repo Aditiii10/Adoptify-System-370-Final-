@@ -26,12 +26,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer_Work_Type volunteer_Work_Type = db.Volunteer_Work_Type.Find(id);
             if (volunteer_Work_Type == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer_Work_Type);
         }
@@ -65,12 +65,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer_Work_Type volunteer_Work_Type = db.Volunteer_Work_Type.Find(id);
             if (volunteer_Work_Type == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer_Work_Type);
         }
@@ -96,12 +96,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer_Work_Type volunteer_Work_Type = db.Volunteer_Work_Type.Find(id);
             if (volunteer_Work_Type == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer_Work_Type);
         }

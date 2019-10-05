@@ -27,12 +27,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer volunteer = db.Volunteers.Find(id);
             if (volunteer == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer);
         }
@@ -67,12 +67,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer volunteer = db.Volunteers.Find(id);
             if (volunteer == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             ViewBag.Title_ID = new SelectList(db.Titles, "Title_ID", "Title_Description", volunteer.Title_ID);
             return View(volunteer);
@@ -100,12 +100,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer volunteer = db.Volunteers.Find(id);
             if (volunteer == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer);
         }

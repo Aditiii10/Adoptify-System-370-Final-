@@ -27,12 +27,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer_Hours volunteer_Hours = db.Volunteer_Hours.Find(id);
             if (volunteer_Hours == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer_Hours);
         }
@@ -69,12 +69,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer_Hours volunteer_Hours = db.Volunteer_Hours.Find(id);
             if (volunteer_Hours == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             ViewBag.Vol_ID = new SelectList(db.Volunteers, "Vol_ID", "Vol_Name", volunteer_Hours.Vol_ID);
             ViewBag.Vol_WorkType_ID = new SelectList(db.Volunteer_Work_Type, "Vol_WorkType_ID", "Vol_WorkType_Name", volunteer_Hours.Vol_WorkType_ID);
@@ -104,12 +104,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer_Hours volunteer_Hours = db.Volunteer_Hours.Find(id);
             if (volunteer_Hours == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer_Hours);
         }
