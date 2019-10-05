@@ -13,7 +13,7 @@ namespace AdoptifySystem.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;  //needed for Display annotation
     using System.ComponentModel;  //DisplayName annotation
-
+    
     public partial class Adopter
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
