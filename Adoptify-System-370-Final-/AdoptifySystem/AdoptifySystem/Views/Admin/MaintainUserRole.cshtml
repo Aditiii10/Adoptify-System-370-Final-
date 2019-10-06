@@ -1,4 +1,4 @@
-﻿@model AdoptifySystem.Role_
+﻿@model AdoptifySystem.Models.nickeymodel.Flexible
 @{
     ViewBag.Title = "MaintainUserRole";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,23 +11,48 @@
 
         <h2 class="table-primary">Maintain User Role</h2>
         <hr />
-        <input name="Role_ID" value="@Model.Role_ID" hidden />
+        <input name="Role_ID" value="@Model.role.Role_ID" hidden />
         <div class="form-group">
             <label class="form-control-label">Role Name</label>
             <div class="col-md-10">
-                <input type="text" class="form-control" id="Rolename" value="@Model.Role_Name" name="Role_Name" placeholder="Role Name">
+                <input type="text" class="form-control" id="Rolename" value="@Model.role.Role_Name" name="Role_Name" placeholder="Role Name">
                 <h1 class="invalid-feedback">Already Exists @ViewBag.err</h1>
-                <button type="button" class="btn btn-secondary" title="" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
-sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="Popover Title">
-                    Bottom
-                </button>
-                <span class="glyphicon glyphicon-trash"></span>
             </div>
         </div>
+        @foreach (var item in Model.subsystemslist)
+        {
+            int count = 0;
+            foreach (var role in Model.role.SubsystemRoles)
+            {
 
+                if (item.Subsystem_Id == role.Subsystem_Id)
+                {
+                    count++;
+                }
+            }
+            if (count != 0)
+            {
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" checked class="custom-control-input" id="Role @item.Subsystem_Id" name="Subsystem_Id" value="@item.Subsystem_Id">
+                    <label class="custom-control-label" for="Role @item.Subsystem_Id">@item.Subsystem_Name</label>
+                    <br>
+                </div>
+
+            }
+            else
+            {
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="Role @item.Subsystem_Id" name="Subsystem_Id" value="@item.Subsystem_Id">
+                    <label class="custom-control-label" for="Role @item.Subsystem_Id">@item.Subsystem_Name</label>
+                    <br>
+                </div>
+
+            }
+
+        }
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Cancel", "SearchUserRole", null, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Cancel", "SearchFosterCareDates", null, new { @class = "btn btn-warning" })
                 <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
             </div>
         </div>

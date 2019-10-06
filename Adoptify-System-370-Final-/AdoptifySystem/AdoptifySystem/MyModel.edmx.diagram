@@ -130,6 +130,8 @@
         <AssociationConnector Association="Wollies_ShelterModel.fkvetapl4" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkvolhrs1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.FosterCareDuration" Width="1.5" PointX="10.375" PointY="0.875" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkfosc2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

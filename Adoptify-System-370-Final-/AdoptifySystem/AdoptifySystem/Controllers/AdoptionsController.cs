@@ -549,7 +549,8 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-            return Redirect("http://localhost:55003/Adoptions/Index");
+            return Redirect("https://adoptifysystem.azurewebsites.net/Adoptions/Index");
+
 
         }
         [HttpPost]
@@ -593,7 +594,8 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-            return Redirect("http://localhost:55003/Adoptions/Index");
+            return Redirect("https://adoptifysystem.azurewebsites.net/Adoptions/Index");
+
         }
         public ActionResult ReturnAnimal(int? id)
         {
@@ -626,7 +628,7 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-            return Redirect("http://localhost:55003/Adoptions/Index");
+            return Redirect("https://adoptifysystem.azurewebsites.net/Adoptions/Index");
 
         }
         public ActionResult ReturnIndex()
@@ -910,7 +912,7 @@ namespace AdoptifySystem.Controllers
                     //var message = MessageResource.Create(
                     //    to: new Twilio.Types.PhoneNumber("+27676367506"),
                     //    from: new Twilio.Types.PhoneNumber("+14245431153"),
-                    //        body: "CONGRATULATION!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname+ "You have Successfully Started the Adoption Process with" + " " + adoption.Animal.Animal_Name + " " +"On the date of"+" "+ ADate + " "+   "!From Wollies Animal Shelter."
+                    //        body: "CONGRATULATION!" + " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + "You have Successfully Started the Adoption Process with" + " " + adoption.Animal.Animal_Name + " " + "On the date of" + " " + ADate + " " + "!From Wollies Animal Shelter."
                     //);
 
                     TempData["AdoptionCreateMessage"] = "Adoption Process Successfully Created";

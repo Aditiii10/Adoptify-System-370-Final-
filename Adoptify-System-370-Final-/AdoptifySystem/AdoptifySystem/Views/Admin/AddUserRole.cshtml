@@ -1,31 +1,35 @@
-﻿@model AdoptifySystem.Role_
+﻿@model AdoptifySystem.Models.nickeymodel.Flexible
 
 @{
     ViewBag.Title = "Add User Role";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using (Html.BeginForm())
+{
+    <br />
+    <div class="form-horizontal card border-primary" style="width:60%">
 
-    <div id="main">
-        <h2>Add User Role</h2>
-        @using (Html.BeginForm())
+        <h2 class="table-primary">Add User Role</h2>
+        <hr />
+        <div class="form-group">
+            <label class="form-control-label">Role Name</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="Rolename" name="Role_Name" placeholder="Role Name">
+            </div>
+        </div>
+        @foreach (var item in Model.subsystemslist)
         {
-            <div class="form-horizontal">
-                <h4 style="color:red">@ViewBag.errormessage</h4>
-                <hr />
-                <div class="form-group">
-                    <label class="form-control-label">Role Name</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="Rolename" name="Role_Name" placeholder="Role Name">
-                        <span class=" btn-info" data-container="body" data-toggle="popover" data-placement="right" data-content="Enter the User Role that is needed for User" data-original-title="User Role Name">Click Me</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        @Html.ActionLink("Cancel", "SearchUserRole", null, new { @class = "btn btn-warning" })
-                        <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
-                    </div>
-                </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Role @item.Subsystem_Id" name="Subsystem_Id" value="@item.Subsystem_Id">
+                <label class="custom-control-label" for="Role @item.Subsystem_Id">@item.Subsystem_Name</label>
+                <br>
             </div>
         }
-
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Cancel", "SearchUserRole", null, new { @class = "btn btn-warning" })
+                <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+            </div>
+        </div>
     </div>
+}

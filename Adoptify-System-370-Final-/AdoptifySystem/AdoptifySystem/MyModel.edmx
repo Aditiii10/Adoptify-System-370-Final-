@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -331,6 +331,7 @@
           <Property Name="Foster_Start_Date" Type="date" />
           <Property Name="Foster_Parent_ID" Type="int" />
           <Property Name="Animal_ID" Type="int" />
+          <Property Name="FosterCareDuration_Id" Type="int" />
         </EntityType>
         <EntityType Name="Foster_Care_Parent">
           <Key>
@@ -350,6 +351,13 @@
           <Property Name="Ownership_Housing" Type="varchar" MaxLength="200" />
           <Property Name="Hours_Left_Alone" Type="int" />
           <Property Name="Adopter_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="FosterCareDuration">
+          <Key>
+            <PropertyRef Name="FosterCareDuration_Id" />
+          </Key>
+          <Property Name="FosterCareDuration_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DurationTime" Type="int" />
         </EntityType>
         <EntityType Name="GoogleChartData">
           <Key>
@@ -1124,6 +1132,18 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkfosc2">
+          <End Role="FosterCareDuration" Type="Self.FosterCareDuration" Multiplicity="0..1" />
+          <End Role="Foster_Care" Type="Self.Foster_Care" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FosterCareDuration">
+              <PropertyRef Name="FosterCareDuration_Id" />
+            </Principal>
+            <Dependent Role="Foster_Care">
+              <PropertyRef Name="FosterCareDuration_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkho">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
@@ -1527,6 +1547,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Event_Type" EntityType="Self.Event_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FosterCareDuration" EntityType="Self.FosterCareDuration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoogleChartData" EntityType="Self.GoogleChartData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HomeCheck" EntityType="Self.HomeCheck" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HomeCheckReport" EntityType="Self.HomeCheckReport" Schema="dbo" store:Type="Tables" />
@@ -1721,6 +1742,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
             <End Role="Foster_Care" EntitySet="Foster_Care" />
           </AssociationSet>
+          <AssociationSet Name="fkfosc2" Association="Self.fkfosc2">
+            <End Role="FosterCareDuration" EntitySet="FosterCareDuration" />
+            <End Role="Foster_Care" EntitySet="Foster_Care" />
+          </AssociationSet>
           <AssociationSet Name="fkho" Association="Self.fkho">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="HomeCheck" EntitySet="HomeCheck" />
@@ -1822,8 +1847,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2229,6 +2253,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Animal_ID" Type="Int32" />
           <NavigationProperty Name="Animal" Relationship="Self.fkfosc" FromRole="Foster_Care" ToRole="Animal" />
           <NavigationProperty Name="Foster_Care_Parent" Relationship="Self.fkfosc1" FromRole="Foster_Care" ToRole="Foster_Care_Parent" />
+          <Property Name="FosterCareDuration_Id" Type="Int32" />
+          <NavigationProperty Name="FosterCareDuration" Relationship="Wollies_ShelterModel.fkfosc2" FromRole="Foster_Care" ToRole="FosterCareDuration" />
         </EntityType>
         <EntityType Name="Foster_Care_Parent">
           <Key>
@@ -3686,22 +3712,22 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
           <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Kennel_Delete">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Kennel_insert">
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -3716,7 +3742,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           </FunctionImport>
           <FunctionImport Name="Kennel_View" ReturnType="Collection(Wollies_ShelterModel.Kennel_View_Result)" />
           <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -3749,14 +3775,19 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="FosterCareDurations" EntityType="Wollies_ShelterModel.FosterCareDuration" />
+          <AssociationSet Name="fkfosc2" Association="Wollies_ShelterModel.fkfosc2">
+            <End Role="FosterCareDuration" EntitySet="FosterCareDurations" />
+            <End Role="Foster_Care" EntitySet="Foster_Care" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -3844,6 +3875,26 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
         </ComplexType>
+        <EntityType Name="FosterCareDuration">
+          <Key>
+            <PropertyRef Name="FosterCareDuration_Id" />
+          </Key>
+          <Property Name="FosterCareDuration_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DurationTime" Type="Int32" />
+          <NavigationProperty Name="Foster_Care" Relationship="Wollies_ShelterModel.fkfosc2" FromRole="FosterCareDuration" ToRole="Foster_Care" />
+        </EntityType>
+        <Association Name="fkfosc2">
+          <End Type="Wollies_ShelterModel.FosterCareDuration" Role="FosterCareDuration" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Foster_Care" Role="Foster_Care" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FosterCareDuration">
+              <PropertyRef Name="FosterCareDuration_Id" />
+            </Principal>
+            <Dependent Role="Foster_Care">
+              <PropertyRef Name="FosterCareDuration_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4197,6 +4248,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySetMapping Name="Foster_Care">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Foster_Care">
               <MappingFragment StoreEntitySet="Foster_Care">
+                <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
                 <ScalarProperty Name="Foster_Care_ID" ColumnName="Foster_Care_ID" />
                 <ScalarProperty Name="Foster_Care_Period" ColumnName="Foster_Care_Period" />
                 <ScalarProperty Name="Foster_Start_Date" ColumnName="Foster_Start_Date" />
@@ -4710,6 +4762,14 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="FosterCareDurations">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.FosterCareDuration">
+              <MappingFragment StoreEntitySet="FosterCareDuration">
+                <ScalarProperty Name="DurationTime" ColumnName="DurationTime" />
+                <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
