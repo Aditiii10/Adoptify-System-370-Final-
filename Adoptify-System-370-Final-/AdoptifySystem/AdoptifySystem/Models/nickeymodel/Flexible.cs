@@ -22,6 +22,7 @@ namespace AdoptifySystem.Models.nickeymodel
         public List<Foster_Care> Fostercarelist { get; set; }
         public List<Animal> animallist { get; set; }
         public List<Foster_Care_Parent> fostercareparent { get; set; }
+        public List<Subsystem> subsystemslist { get; set; }
 
         //these are the single classes
         public Donor donor { get; set; }
@@ -30,9 +31,9 @@ namespace AdoptifySystem.Models.nickeymodel
         public Animal animal { get; set; }
         public Stock stock { get; set; }
         public Donation donation { get; set; }
-
         public User_ currentuser { get; set; }
-
+        public Role_ role { get; set; }
+        
         public bool CreateAuditTrail(int id,string usecase)
         {
             try
@@ -154,8 +155,45 @@ namespace AdoptifySystem.Models.nickeymodel
             }
 
         }
+        public bool Authorize(int id,int insub)
+        {
+            bool isvalid = false;
+            try
+            {
+                User_ user = db.User_.Where(z => z.UserID == id).FirstOrDefault();
+                if (user == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach (var role in user.UserRoles)
+                    {
+                        foreach (var sub in role.Role_.SubsystemRoles)
+                        {
+                            if (sub.Subsystem_Id == insub)
+                            {
+                                isvalid = true;
+                                
+                            }
+                            break;
+                        }
+                        if (isvalid)
+                        {
+                            break;
+                        }
+                    }
+                    return isvalid;
+                }
+            }
+            catch (Exception)
+            {
 
-        
+                isvalid = false;
+            }
+            return isvalid;
+        }
+
 
 
     }

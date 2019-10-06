@@ -14,12 +14,12 @@
           <Property Name="Adopter_Surname" Type="nvarchar" MaxLength="200" />
           <Property Name="Adopter_Email" Type="nvarchar" MaxLength="200" />
           <Property Name="Title_ID" Type="int" />
-          <Property Name="Adopter_Address" Type="nvarchar" MaxLength="200" />
-          <Property Name="Adopter_PostalAddress" Type="nvarchar" MaxLength="200" />
-          <Property Name="Adopter_HomeNumber" Type="nvarchar" MaxLength="200" />
-          <Property Name="Adopter_WorkNumber" Type="nvarchar" MaxLength="200" />
-          <Property Name="Adopter_CellNumber" Type="nvarchar" MaxLength="200" />
-          <Property Name="Adopter_CarRegistartion_Number" Type="nvarchar" MaxLength="200" />
+          <Property Name="Adopter_Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Adopter_PostalAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="Adopter_HomeNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="Adopter_WorkNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="Adopter_CellNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="Adopter_CarRegistartion_Number" Type="nvarchar" MaxLength="10" />
           <Property Name="Adopter_Employer" Type="nvarchar" MaxLength="200" />
           <Property Name="Adopter_Status_ID" Type="int" />
           <Property Name="Amount_of_Family_Memebers" Type="int" />
@@ -273,17 +273,10 @@
           <Property Name="Emp_Date_Employed" Type="date" />
           <Property Name="Title_ID" Type="int" />
           <Property Name="Emp_Type_ID" Type="int" />
-          <Property Name="Employee_Status_ID" Type="int" />
+          <Property Name="Employee_Status" Type="bit" />
           <Property Name="Emp_Contract_Name" Type="nvarchar(max)" />
           <Property Name="Emp_Contract_Type" Type="nvarchar(max)" />
           <Property Name="BarcodeImageUrl" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="Employee_Status">
-          <Key>
-            <PropertyRef Name="Employee_Status_ID" />
-          </Key>
-          <Property Name="Employee_Status_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Employee_Status_Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Employee_Type">
           <Key>
@@ -338,6 +331,7 @@
           <Property Name="Foster_Start_Date" Type="date" />
           <Property Name="Foster_Parent_ID" Type="int" />
           <Property Name="Animal_ID" Type="int" />
+          <Property Name="FosterCareDuration_Id" Type="int" />
         </EntityType>
         <EntityType Name="Foster_Care_Parent">
           <Key>
@@ -357,6 +351,13 @@
           <Property Name="Ownership_Housing" Type="varchar" MaxLength="200" />
           <Property Name="Hours_Left_Alone" Type="int" />
           <Property Name="Adopter_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="FosterCareDuration">
+          <Key>
+            <PropertyRef Name="FosterCareDuration_Id" />
+          </Key>
+          <Property Name="FosterCareDuration_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DurationTime" Type="int" />
         </EntityType>
         <EntityType Name="GoogleChartData">
           <Key>
@@ -573,6 +574,7 @@
           <Property Name="Username" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Emp_ID" Type="int" Nullable="false" />
+          <Property Name="FirstTime" Type="bit" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -1058,18 +1060,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkemp2">
-          <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee_Status">
-              <PropertyRef Name="Employee_Status_ID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="Employee_Status_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fkempk">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="Emp_Kennel" Type="Self.Emp_Kennel" Multiplicity="*" />
@@ -1139,6 +1129,18 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Principal>
             <Dependent Role="Foster_Care">
               <PropertyRef Name="Foster_Parent_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkfosc2">
+          <End Role="FosterCareDuration" Type="Self.FosterCareDuration" Multiplicity="0..1" />
+          <End Role="Foster_Care" Type="Self.Foster_Care" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FosterCareDuration">
+              <PropertyRef Name="FosterCareDuration_Id" />
+            </Principal>
+            <Dependent Role="Foster_Care">
+              <PropertyRef Name="FosterCareDuration_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1539,13 +1541,13 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Donor" EntityType="Self.Donor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Emp_Kennel" EntityType="Self.Emp_Kennel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_Type" EntityType="Self.Employee_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_" EntityType="Self.Event_" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Schedule" EntityType="Self.Event_Schedule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Type" EntityType="Self.Event_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FosterCareDuration" EntityType="Self.FosterCareDuration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoogleChartData" EntityType="Self.GoogleChartData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HomeCheck" EntityType="Self.HomeCheck" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HomeCheckReport" EntityType="Self.HomeCheckReport" Schema="dbo" store:Type="Tables" />
@@ -1716,10 +1718,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Employee_Type" EntitySet="Employee_Type" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="fkemp2" Association="Self.fkemp2">
-            <End Role="Employee_Status" EntitySet="Employee_Status" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
           <AssociationSet Name="fkempk" Association="Self.fkempk">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
@@ -1742,6 +1740,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           </AssociationSet>
           <AssociationSet Name="fkfosc1" Association="Self.fkfosc1">
             <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
+            <End Role="Foster_Care" EntitySet="Foster_Care" />
+          </AssociationSet>
+          <AssociationSet Name="fkfosc2" Association="Self.fkfosc2">
+            <End Role="FosterCareDuration" EntitySet="FosterCareDuration" />
             <End Role="Foster_Care" EntitySet="Foster_Care" />
           </AssociationSet>
           <AssociationSet Name="fkho" Association="Self.fkho">
@@ -1858,12 +1860,12 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Adopter_Surname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Adopter_Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Title_ID" Type="Int32" />
-          <Property Name="Adopter_Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Adopter_PostalAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Adopter_HomeNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Adopter_WorkNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Adopter_CellNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Adopter_CarRegistartion_Number" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Adopter_Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Adopter_PostalAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Adopter_HomeNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Adopter_WorkNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Adopter_CellNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Adopter_CarRegistartion_Number" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Adopter_Employer" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Adopter_Status_ID" Type="Int32" />
           <Property Name="Amount_of_Family_Memebers" Type="Int32" />
@@ -2152,44 +2154,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Emp_Kennel_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Emp_ID" Type="Int32" />
           <Property Name="Kennel_ID" Type="Int32" />
-          <NavigationProperty Name="Employee" Relationship="Self.fkempk" FromRole="Emp_Kennel" ToRole="Employee" />
           <NavigationProperty Name="Kennel" Relationship="Self.fkempk1" FromRole="Emp_Kennel" ToRole="Kennel" />
-        </EntityType>
-        <EntityType Name="Employee">
-          <Key>
-            <PropertyRef Name="Emp_ID" />
-          </Key>
-          <Property Name="Emp_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Emp_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Emp_Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Emp_Gender" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Emp_ContactNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="Emp_IDNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Emp_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="Emp_Contract" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Emp_Date_Employed" Type="DateTime" Precision="0" />
-          <Property Name="Title_ID" Type="Int32" />
-          <Property Name="Emp_Type_ID" Type="Int32" />
-          <Property Name="Employee_Status_ID" Type="Int32" />
-          <Property Name="Emp_Contract_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Emp_Contract_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BarcodeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Emp_Kennel" Relationship="Self.fkempk" FromRole="Employee" ToRole="Emp_Kennel" />
-          <NavigationProperty Name="Event_Schedule" Relationship="Self.fkech" FromRole="Employee" ToRole="Event_Schedule" />
-          <NavigationProperty Name="Title" Relationship="Self.fkemp" FromRole="Employee" ToRole="Title" />
-          <NavigationProperty Name="Employee_Type" Relationship="Self.fkemp1" FromRole="Employee" ToRole="Employee_Type" />
-          <NavigationProperty Name="Employee_Status" Relationship="Self.fkemp2" FromRole="Employee" ToRole="Employee_Status" />
-          <NavigationProperty Name="HomeChecks" Relationship="Self.fkho" FromRole="Employee" ToRole="HomeCheck" />
-          <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
-          <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
-        </EntityType>
-        <EntityType Name="Employee_Status">
-          <Key>
-            <PropertyRef Name="Employee_Status_ID" />
-          </Key>
-          <Property Name="Employee_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Employee_Status_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employees" Relationship="Self.fkemp2" FromRole="Employee_Status" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="Wollies_ShelterModel.fkempk" FromRole="Emp_Kennel" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee_Type">
           <Key>
@@ -2198,7 +2164,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Emp_Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Emp_Type_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Emp_Type_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employees" Relationship="Self.fkemp1" FromRole="Employee_Type" ToRole="Employee" />
+          <NavigationProperty Name="Employees" Relationship="Wollies_ShelterModel.fkemp1" FromRole="Employee_Type" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Event_">
           <Key>
@@ -2231,7 +2197,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Emp_ID" Type="Int32" />
           <Property Name="Adoption_ID" Type="Int32" />
           <NavigationProperty Name="Adoption" Relationship="Self.fkech1" FromRole="Event_Schedule" ToRole="Adoption" />
-          <NavigationProperty Name="Employee" Relationship="Self.fkech" FromRole="Event_Schedule" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="Wollies_ShelterModel.fkech" FromRole="Event_Schedule" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Event_Type">
           <Key>
@@ -2252,6 +2218,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Animal_ID" Type="Int32" />
           <NavigationProperty Name="Animal" Relationship="Self.fkfosc" FromRole="Foster_Care" ToRole="Animal" />
           <NavigationProperty Name="Foster_Care_Parent" Relationship="Self.fkfosc1" FromRole="Foster_Care" ToRole="Foster_Care_Parent" />
+          <Property Name="FosterCareDuration_Id" Type="Int32" />
+          <NavigationProperty Name="FosterCareDuration" Relationship="Wollies_ShelterModel.fkfosc2" FromRole="Foster_Care" ToRole="FosterCareDuration" />
         </EntityType>
         <EntityType Name="Foster_Care_Parent">
           <Key>
@@ -2292,7 +2260,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Adoption_ID" Type="Int32" />
           <Property Name="Emp_ID" Type="Int32" />
           <NavigationProperty Name="Adoption" Relationship="Self.fkhoch" FromRole="HomeCheck" ToRole="Adoption" />
-          <NavigationProperty Name="Employee" Relationship="Self.fkho" FromRole="HomeCheck" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="Wollies_ShelterModel.fkho" FromRole="HomeCheck" ToRole="Employee" />
         </EntityType>
         <EntityType Name="HomeCheckReport">
           <Key>
@@ -2473,7 +2441,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Check_in" Type="DateTime" Precision="3" />
           <Property Name="Check_out" Type="DateTime" Precision="3" />
           <Property Name="Emp_ID" Type="Int32" />
-          <NavigationProperty Name="Employee" Relationship="Self.fktime" FromRole="TimeSheet" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="Wollies_ShelterModel.fktime" FromRole="TimeSheet" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Title">
           <Key>
@@ -2483,8 +2451,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Title_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Adopters" Relationship="Self.fkado" FromRole="Title" ToRole="Adopter" />
           <NavigationProperty Name="Donors" Relationship="Self.fkdonor" FromRole="Title" ToRole="Donor" />
-          <NavigationProperty Name="Employees" Relationship="Self.fkemp" FromRole="Title" ToRole="Employee" />
           <NavigationProperty Name="Volunteers" Relationship="Self.fkvol" FromRole="Title" ToRole="Volunteer" />
+          <NavigationProperty Name="Employees" Relationship="Wollies_ShelterModel.fkemp" FromRole="Title" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Unit_Type">
           <Key>
@@ -2503,8 +2471,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Emp_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Audit_Log" Relationship="Self.fkaudlog" FromRole="User_" ToRole="Audit_Log" />
-          <NavigationProperty Name="Employee" Relationship="Self.fkuser" FromRole="User_" ToRole="Employee" />
           <NavigationProperty Name="UserRoles" Relationship="Self.fkuserol" FromRole="User_" ToRole="UserRole" />
+          <Property Name="FirstTime" Type="Boolean" />
+          <NavigationProperty Name="Employee" Relationship="Wollies_ShelterModel.fkuser" FromRole="User_" ToRole="Employee" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -3086,18 +3055,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkempk">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Emp_Kennel" Type="Self.Emp_Kennel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Emp_ID" />
-            </Principal>
-            <Dependent Role="Emp_Kennel">
-              <PropertyRef Name="Emp_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fkempk1">
           <End Role="Kennel" Type="Self.Kennel" Multiplicity="0..1" />
           <End Role="Emp_Kennel" Type="Self.Emp_Kennel" Multiplicity="*" />
@@ -3107,90 +3064,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Principal>
             <Dependent Role="Emp_Kennel">
               <PropertyRef Name="Kennel_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkech">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Event_Schedule" Type="Self.Event_Schedule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Emp_ID" />
-            </Principal>
-            <Dependent Role="Event_Schedule">
-              <PropertyRef Name="Emp_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkemp">
-          <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Title">
-              <PropertyRef Name="Title_ID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="Title_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkemp1">
-          <End Role="Employee_Type" Type="Self.Employee_Type" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee_Type">
-              <PropertyRef Name="Emp_Type_ID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="Emp_Type_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkemp2">
-          <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee_Status">
-              <PropertyRef Name="Employee_Status_ID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="Employee_Status_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkho">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Emp_ID" />
-            </Principal>
-            <Dependent Role="HomeCheck">
-              <PropertyRef Name="Emp_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fktime">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Emp_ID" />
-            </Principal>
-            <Dependent Role="TimeSheet">
-              <PropertyRef Name="Emp_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkuser">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="User_" Type="Self.User_" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Emp_ID" />
-            </Principal>
-            <Dependent Role="User_">
-              <PropertyRef Name="Emp_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3384,8 +3257,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Donation_Type" EntityType="Self.Donation_Type" />
           <EntitySet Name="Donors" EntityType="Self.Donor" />
           <EntitySet Name="Emp_Kennel" EntityType="Self.Emp_Kennel" />
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
-          <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" />
           <EntitySet Name="Employee_Type" EntityType="Self.Employee_Type" />
           <EntitySet Name="Event_" EntityType="Self.Event_" />
           <EntitySet Name="Event_Schedule" EntityType="Self.Event_Schedule" />
@@ -3579,41 +3450,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Title" EntitySet="Titles" />
             <End Role="Donor" EntitySet="Donors" />
           </AssociationSet>
-          <AssociationSet Name="fkempk" Association="Self.fkempk">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
-          </AssociationSet>
           <AssociationSet Name="fkempk1" Association="Self.fkempk1">
             <End Role="Kennel" EntitySet="Kennels" />
             <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
-          </AssociationSet>
-          <AssociationSet Name="fkech" Association="Self.fkech">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
-          </AssociationSet>
-          <AssociationSet Name="fkemp" Association="Self.fkemp">
-            <End Role="Title" EntitySet="Titles" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="fkemp1" Association="Self.fkemp1">
-            <End Role="Employee_Type" EntitySet="Employee_Type" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="fkemp2" Association="Self.fkemp2">
-            <End Role="Employee_Status" EntitySet="Employee_Status" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="fkho" Association="Self.fkho">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="HomeCheck" EntitySet="HomeChecks" />
-          </AssociationSet>
-          <AssociationSet Name="fktime" Association="Self.fktime">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="TimeSheet" EntitySet="TimeSheets" />
-          </AssociationSet>
-          <AssociationSet Name="fkuser" Association="Self.fkuser">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="User_" EntitySet="User_" />
           </AssociationSet>
           <AssociationSet Name="fkevnt" Association="Self.fkevnt">
             <End Role="Event_Type" EntitySet="Event_Type" />
@@ -3740,7 +3579,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="SubsystemRole" EntitySet="SubsystemRoles" />
           </AssociationSet>
           <FunctionImport Name="Kennel_Delete">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Kennel_insert">
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -3767,8 +3606,42 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <Parameter Name="capacity" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteKennel">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Employees" EntityType="Wollies_ShelterModel.Employee" />
+          <AssociationSet Name="fkempk" Association="Wollies_ShelterModel.fkempk">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Emp_Kennel" EntitySet="Emp_Kennel" />
+          </AssociationSet>
+          <AssociationSet Name="fkech" Association="Wollies_ShelterModel.fkech">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Event_Schedule" EntitySet="Event_Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="fkemp" Association="Wollies_ShelterModel.fkemp">
+            <End Role="Title" EntitySet="Titles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="fkemp1" Association="Wollies_ShelterModel.fkemp1">
+            <End Role="Employee_Type" EntitySet="Employee_Type" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="fkho" Association="Wollies_ShelterModel.fkho">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="HomeCheck" EntitySet="HomeChecks" />
+          </AssociationSet>
+          <AssociationSet Name="fktime" Association="Wollies_ShelterModel.fktime">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="TimeSheet" EntitySet="TimeSheets" />
+          </AssociationSet>
+          <AssociationSet Name="fkuser" Association="Wollies_ShelterModel.fkuser">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="User_" EntitySet="User_" />
+          </AssociationSet>
+          <EntitySet Name="FosterCareDurations" EntityType="Wollies_ShelterModel.FosterCareDuration" />
+          <AssociationSet Name="fkfosc2" Association="Wollies_ShelterModel.fkfosc2">
+            <End Role="FosterCareDuration" EntitySet="FosterCareDurations" />
+            <End Role="Foster_Care" EntitySet="Foster_Care" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -3906,6 +3779,137 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Type="Int32" Name="Kennel_Number" Nullable="true" />
           <Property Type="Int32" Name="Kennel_Capacity" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Emp_ID" />
+          </Key>
+          <Property Name="Emp_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Emp_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Emp_Gender" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Emp_ContactNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_IDNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Contract" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Emp_Date_Employed" Type="DateTime" Precision="0" />
+          <Property Name="Title_ID" Type="Int32" />
+          <Property Name="Emp_Type_ID" Type="Int32" />
+          <Property Name="Employee_Status" Type="Boolean" />
+          <Property Name="Emp_Contract_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Contract_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BarcodeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Emp_Kennel" Relationship="Wollies_ShelterModel.fkempk" FromRole="Employee" ToRole="Emp_Kennel" />
+          <NavigationProperty Name="Event_Schedule" Relationship="Wollies_ShelterModel.fkech" FromRole="Employee" ToRole="Event_Schedule" />
+          <NavigationProperty Name="Title" Relationship="Wollies_ShelterModel.fkemp" FromRole="Employee" ToRole="Title" />
+          <NavigationProperty Name="Employee_Type" Relationship="Wollies_ShelterModel.fkemp1" FromRole="Employee" ToRole="Employee_Type" />
+          <NavigationProperty Name="HomeChecks" Relationship="Wollies_ShelterModel.fkho" FromRole="Employee" ToRole="HomeCheck" />
+          <NavigationProperty Name="TimeSheets" Relationship="Wollies_ShelterModel.fktime" FromRole="Employee" ToRole="TimeSheet" />
+          <NavigationProperty Name="User_" Relationship="Wollies_ShelterModel.fkuser" FromRole="Employee" ToRole="User_" />
+        </EntityType>
+        <Association Name="fkempk">
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Emp_Kennel" Role="Emp_Kennel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Emp_Kennel">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkech">
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Event_Schedule" Role="Event_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Event_Schedule">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkemp">
+          <End Type="Wollies_ShelterModel.Title" Role="Title" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Title">
+              <PropertyRef Name="Title_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Title_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkemp1">
+          <End Type="Wollies_ShelterModel.Employee_Type" Role="Employee_Type" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Type">
+              <PropertyRef Name="Emp_Type_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Emp_Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkho">
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.HomeCheck" Role="HomeCheck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="HomeCheck">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fktime">
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.TimeSheet" Role="TimeSheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="TimeSheet">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkuser">
+          <End Type="Wollies_ShelterModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="Wollies_ShelterModel.User_" Role="User_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="User_">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FosterCareDuration">
+          <Key>
+            <PropertyRef Name="FosterCareDuration_Id" />
+          </Key>
+          <Property Name="FosterCareDuration_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DurationTime" Type="Int32" />
+          <NavigationProperty Name="Foster_Care" Relationship="Wollies_ShelterModel.fkfosc2" FromRole="FosterCareDuration" ToRole="Foster_Care" />
+        </EntityType>
+        <Association Name="fkfosc2">
+          <End Type="Wollies_ShelterModel.FosterCareDuration" Role="FosterCareDuration" Multiplicity="0..1" />
+          <End Type="Wollies_ShelterModel.Foster_Care" Role="Foster_Care" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FosterCareDuration">
+              <PropertyRef Name="FosterCareDuration_Id" />
+            </Principal>
+            <Dependent Role="Foster_Care">
+              <PropertyRef Name="FosterCareDuration_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4178,35 +4182,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee">
-              <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
-                <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
-                <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />
-                <ScalarProperty Name="Emp_Gender" ColumnName="Emp_Gender" />
-                <ScalarProperty Name="Emp_ContactNumber" ColumnName="Emp_ContactNumber" />
-                <ScalarProperty Name="Emp_IDNumber" ColumnName="Emp_IDNumber" />
-                <ScalarProperty Name="Emp_Email" ColumnName="Emp_Email" />
-                <ScalarProperty Name="Emp_Contract" ColumnName="Emp_Contract" />
-                <ScalarProperty Name="Emp_Date_Employed" ColumnName="Emp_Date_Employed" />
-                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
-                <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
-                <ScalarProperty Name="Employee_Status_ID" ColumnName="Employee_Status_ID" />
-                <ScalarProperty Name="Emp_Contract_Name" ColumnName="Emp_Contract_Name" />
-                <ScalarProperty Name="Emp_Contract_Type" ColumnName="Emp_Contract_Type" />
-                <ScalarProperty Name="BarcodeImageUrl" ColumnName="BarcodeImageUrl" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employee_Status">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee_Status">
-              <MappingFragment StoreEntitySet="Employee_Status">
-                <ScalarProperty Name="Employee_Status_ID" ColumnName="Employee_Status_ID" />
-                <ScalarProperty Name="Employee_Status_Name" ColumnName="Employee_Status_Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Employee_Type">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee_Type">
               <MappingFragment StoreEntitySet="Employee_Type">
@@ -4258,6 +4233,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySetMapping Name="Foster_Care">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Foster_Care">
               <MappingFragment StoreEntitySet="Foster_Care">
+                <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
                 <ScalarProperty Name="Foster_Care_ID" ColumnName="Foster_Care_ID" />
                 <ScalarProperty Name="Foster_Care_Period" ColumnName="Foster_Care_Period" />
                 <ScalarProperty Name="Foster_Start_Date" ColumnName="Foster_Start_Date" />
@@ -4502,6 +4478,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySetMapping Name="User_">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.User_">
               <MappingFragment StoreEntitySet="User_">
+                <ScalarProperty Name="FirstTime" ColumnName="FirstTime" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -4783,6 +4760,35 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <FunctionImportMapping FunctionImportName="AddKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_insert" />
           <FunctionImportMapping FunctionImportName="UpdateKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Update" />
           <FunctionImportMapping FunctionImportName="DeleteKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Delete" />
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="BarcodeImageUrl" ColumnName="BarcodeImageUrl" />
+                <ScalarProperty Name="Emp_Contract_Type" ColumnName="Emp_Contract_Type" />
+                <ScalarProperty Name="Emp_Contract_Name" ColumnName="Emp_Contract_Name" />
+                <ScalarProperty Name="Employee_Status" ColumnName="Employee_Status" />
+                <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
+                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
+                <ScalarProperty Name="Emp_Date_Employed" ColumnName="Emp_Date_Employed" />
+                <ScalarProperty Name="Emp_Contract" ColumnName="Emp_Contract" />
+                <ScalarProperty Name="Emp_Email" ColumnName="Emp_Email" />
+                <ScalarProperty Name="Emp_IDNumber" ColumnName="Emp_IDNumber" />
+                <ScalarProperty Name="Emp_ContactNumber" ColumnName="Emp_ContactNumber" />
+                <ScalarProperty Name="Emp_Gender" ColumnName="Emp_Gender" />
+                <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />
+                <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FosterCareDurations">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.FosterCareDuration">
+              <MappingFragment StoreEntitySet="FosterCareDuration">
+                <ScalarProperty Name="DurationTime" ColumnName="DurationTime" />
+                <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

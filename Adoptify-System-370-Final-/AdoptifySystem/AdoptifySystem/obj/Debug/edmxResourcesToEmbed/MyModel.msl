@@ -267,35 +267,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Employees">
-      <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee">
-        <MappingFragment StoreEntitySet="Employee">
-          <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
-          <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
-          <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />
-          <ScalarProperty Name="Emp_Gender" ColumnName="Emp_Gender" />
-          <ScalarProperty Name="Emp_ContactNumber" ColumnName="Emp_ContactNumber" />
-          <ScalarProperty Name="Emp_IDNumber" ColumnName="Emp_IDNumber" />
-          <ScalarProperty Name="Emp_Email" ColumnName="Emp_Email" />
-          <ScalarProperty Name="Emp_Contract" ColumnName="Emp_Contract" />
-          <ScalarProperty Name="Emp_Date_Employed" ColumnName="Emp_Date_Employed" />
-          <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
-          <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
-          <ScalarProperty Name="Employee_Status_ID" ColumnName="Employee_Status_ID" />
-          <ScalarProperty Name="Emp_Contract_Name" ColumnName="Emp_Contract_Name" />
-          <ScalarProperty Name="Emp_Contract_Type" ColumnName="Emp_Contract_Type" />
-          <ScalarProperty Name="BarcodeImageUrl" ColumnName="BarcodeImageUrl" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Employee_Status">
-      <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee_Status">
-        <MappingFragment StoreEntitySet="Employee_Status">
-          <ScalarProperty Name="Employee_Status_ID" ColumnName="Employee_Status_ID" />
-          <ScalarProperty Name="Employee_Status_Name" ColumnName="Employee_Status_Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Employee_Type">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee_Type">
         <MappingFragment StoreEntitySet="Employee_Type">
@@ -347,6 +318,7 @@
     <EntitySetMapping Name="Foster_Care">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.Foster_Care">
         <MappingFragment StoreEntitySet="Foster_Care">
+          <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
           <ScalarProperty Name="Foster_Care_ID" ColumnName="Foster_Care_ID" />
           <ScalarProperty Name="Foster_Care_Period" ColumnName="Foster_Care_Period" />
           <ScalarProperty Name="Foster_Start_Date" ColumnName="Foster_Start_Date" />
@@ -591,6 +563,7 @@
     <EntitySetMapping Name="User_">
       <EntityTypeMapping TypeName="Wollies_ShelterModel.User_">
         <MappingFragment StoreEntitySet="User_">
+          <ScalarProperty Name="FirstTime" ColumnName="FirstTime" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Password" ColumnName="Password" />
@@ -872,5 +845,34 @@
     <FunctionImportMapping FunctionImportName="AddKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_insert" />
     <FunctionImportMapping FunctionImportName="UpdateKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Update" />
     <FunctionImportMapping FunctionImportName="DeleteKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Delete" />
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="BarcodeImageUrl" ColumnName="BarcodeImageUrl" />
+          <ScalarProperty Name="Emp_Contract_Type" ColumnName="Emp_Contract_Type" />
+          <ScalarProperty Name="Emp_Contract_Name" ColumnName="Emp_Contract_Name" />
+          <ScalarProperty Name="Employee_Status" ColumnName="Employee_Status" />
+          <ScalarProperty Name="Emp_Type_ID" ColumnName="Emp_Type_ID" />
+          <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
+          <ScalarProperty Name="Emp_Date_Employed" ColumnName="Emp_Date_Employed" />
+          <ScalarProperty Name="Emp_Contract" ColumnName="Emp_Contract" />
+          <ScalarProperty Name="Emp_Email" ColumnName="Emp_Email" />
+          <ScalarProperty Name="Emp_IDNumber" ColumnName="Emp_IDNumber" />
+          <ScalarProperty Name="Emp_ContactNumber" ColumnName="Emp_ContactNumber" />
+          <ScalarProperty Name="Emp_Gender" ColumnName="Emp_Gender" />
+          <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />
+          <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+          <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FosterCareDurations">
+      <EntityTypeMapping TypeName="Wollies_ShelterModel.FosterCareDuration">
+        <MappingFragment StoreEntitySet="FosterCareDuration">
+          <ScalarProperty Name="DurationTime" ColumnName="DurationTime" />
+          <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

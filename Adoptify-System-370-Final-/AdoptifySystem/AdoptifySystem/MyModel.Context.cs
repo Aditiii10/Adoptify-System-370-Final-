@@ -48,8 +48,6 @@ namespace AdoptifySystem
         public virtual DbSet<Donation_Type> Donation_Type { get; set; }
         public virtual DbSet<Donor> Donors { get; set; }
         public virtual DbSet<Emp_Kennel> Emp_Kennel { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<Employee_Status> Employee_Status { get; set; }
         public virtual DbSet<Employee_Type> Employee_Type { get; set; }
         public virtual DbSet<Event_> Event_ { get; set; }
         public virtual DbSet<Event_Schedule> Event_Schedule { get; set; }
@@ -90,6 +88,8 @@ namespace AdoptifySystem
         public virtual DbSet<AdopterFile> AdopterFiles { get; set; }
         public virtual DbSet<Subsystem> Subsystems { get; set; }
         public virtual DbSet<SubsystemRole> SubsystemRoles { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<FosterCareDuration> FosterCareDurations { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {

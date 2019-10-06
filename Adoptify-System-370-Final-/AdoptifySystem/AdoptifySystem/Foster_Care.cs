@@ -19,8 +19,10 @@ namespace AdoptifySystem
         public Nullable<System.DateTime> Foster_Start_Date { get; set; }
         public Nullable<int> Foster_Parent_ID { get; set; }
         public Nullable<int> Animal_ID { get; set; }
+        public Nullable<int> FosterCareDuration_Id { get; set; }
     
         public virtual Animal Animal { get; set; }
         public virtual Foster_Care_Parent Foster_Care_Parent { get; set; }
+        public virtual FosterCareDuration FosterCareDuration { get; set; }
     }
 }

@@ -332,9 +332,6 @@
     <Compile Include="Employee.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Employee_Status.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Employee_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -351,6 +348,9 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Event_Type.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FosterCareDuration.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Foster_Care.cs">
@@ -1605,9 +1605,13 @@
     <Content Include="Views\Audit_Log\Edit.cshtml" />
     <Content Include="Views\Audit_Log\Index.cshtml" />
     <Content Include="Views\Donations\ViewDonor.cshtml" />
+    <Content Include="Views\FosterCarePeriods\AddFosterCareDates.cshtml" />
+    <Content Include="Views\FosterCarePeriods\MaintainFosterCareDates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\AnimalImages\" />
+    <Folder Include="Images\EmployeeContracts\" />
     <Folder Include="Views\Title\" />
   </ItemGroup>
   <ItemGroup>

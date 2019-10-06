@@ -633,7 +633,7 @@ namespace AdoptifySystem.Controllers
                         {
                             db.Donation_Type.Add(donation_Type);
                             db.SaveChanges();
-                        flex.CreateAuditTrail(1, "Adopter");
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Donation Type");
                     }
                     }
                     else
@@ -641,8 +641,9 @@ namespace AdoptifySystem.Controllers
 
                         db.Donation_Type.Add(donation_Type);
                         db.SaveChanges();
-
-                    flex.CreateAuditTrail(1,"Adopter");
+                    //int id = Convert.ToInt32(Session["ID"].ToString());
+                    // HttpContext.Current.Session["ID"];
+                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Donation Type");
 
                 }
                     
@@ -665,9 +666,9 @@ namespace AdoptifySystem.Controllers
                 donation_Types = db.Donation_Type.ToList();
                 if(donation_Types.Count == 0)
                 {
-
+                    return RedirectToAction("Index","Home");
                 }
-                ViewBag.test = Session["Userid"];
+                
                 return View(donation_Types);
             }
             catch (Exception e)

@@ -58,15 +58,24 @@ namespace AdoptifySystem.Controllers.Zinhle
                 HttpPostedFileBase file = files[0];
                 saveEmp = emp;
                 //this is where we convert the contract to add to the database
-                byte[] bytes;
-                using (BinaryReader br = new BinaryReader(Contract.InputStream))
+                //byte[] bytes;
+                if (Contract != null)
                 {
+                    //using (BinaryReader br = new BinaryReader(Contract.InputStream))
+                    //{
 
-                    bytes = br.ReadBytes(Contract.ContentLength);
+                    //    bytes = br.ReadBytes(Contract.ContentLength);
+                    //}
+                    //saveEmp.Emp_Contract_Name = Path.GetFileName(Contract.FileName);
+                    //saveEmp.Emp_Contract_Type = Contract.ContentType;
+                    //saveEmp.Emp_Contract = bytes;
+                    file.SaveAs(HttpContext.Server.MapPath("~/Images/EmployeeContracts/")
+                                                  + Contract.FileName);
+                     emp.Emp_Contract_Name= Contract.FileName;
+
+
                 }
-                saveEmp.Emp_Contract_Name = Path.GetFileName(Contract.FileName);
-                saveEmp.Emp_Contract_Type = Contract.ContentType;
-                saveEmp.Emp_Contract = bytes;
+                
 
                 db.Employees.Add(saveEmp);
                 db.SaveChanges();
@@ -94,7 +103,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                 //var pass = md5.ComputeHash(Convert.FromBase64String(user.Password));
                 //user.Password = pass;
                 //we store the info
-
+                user.Password = Crypto.Hash(user.Password, "MD5");
+                user.FirstTime = true;
                 db.User_.Add(user);
                 db.SaveChanges();
                 //we store the User acces that is needed

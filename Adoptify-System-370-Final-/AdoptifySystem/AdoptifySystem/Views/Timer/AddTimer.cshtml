@@ -1,8 +1,9 @@
-﻿
+﻿@model AdoptifySystem.Timer
 @{
     ViewBag.Title = "AddTimer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <div id="main">
     <div class="form-horizontal">
@@ -11,32 +12,32 @@
         </div>
     </div>
     <br />
-        <div class="form-group">
-                <div class="input-group mb-3">
-                    <input type="number" id="hours" class="form-control" maxlength="2" style="text-align:center; width:50px;" placeholder="--" aria-label="Amount (to the nearest dollar)" />
-                    <div class="input-group-append">
-                        <span class="input-group-text">hours</span>
-                    </div>
-                    <input type="number" id="minutes" class="form-control" max="2" style="text-align:center;width:50px;" placeholder="--" aria-label="Amount (to the nearest dollar" />
-                    <div class="input-group-append">
-                        <span class="input-group-text">minutes</span>
-                    </div>
-                    <input type="number" id="seconds" class="form-control" max="2" style="text-align:center;width:50px;" placeholder="--" aria-label="Amount (to the nearest dollar" />
-                    <div class="input-group-append">
-                        <span class="input-group-text">seconds</span>
-                    </div>
-                </div>
-     
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                        <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right">Save</button>
-                    </div>
-                </div>
-                </div>
+    <div class="form-group">
+        <div class="input-group mb-3">
+            <input type="number" id="hours" class="form-control" maxlength="2" style="text-align:center; width:50px;" placeholder="--" aria-label="Amount (to the nearest dollar)" />
+            <div class="input-group-append">
+                <span class="input-group-text">hours</span>
             </div>
-        @section scripts{
-            <script>
+            <input type="number" id="minutes" class="form-control" max="2" style="text-align:center;width:50px;" placeholder="--" aria-label="Amount (to the nearest dollar" />
+            <div class="input-group-append">
+                <span class="input-group-text">minutes</span>
+            </div>
+            <input type="number" id="seconds" class="form-control" max="2" style="text-align:center;width:50px;" placeholder="--" aria-label="Amount (to the nearest dollar" />
+            <div class="input-group-append">
+                <span class="input-group-text">seconds</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
         $(function () {
             var successMessage = '@TempData["SuccessMessage"]'
             if (successMessage != '')
@@ -104,21 +105,22 @@ function Save() {
 
                     var formData = new FormData();
 
-                    formData.append("Animal_Type_Name", Animal_Type_Name.value );
-
+                    formData.append("Hours", hours.value);
+                    formData.append("Minutes", minutes.value);
+                    formData.append("Seconds", seconds.value);
                     $("#loader").show();
                 $.ajax(
                     {
                     type: "POST",
                     data: formData,
-                    url: "/Timer/AddTimer",
+                    url: "/Timer/MaintainTimer",
                         cache: false,
                         contentType: false,
                         processData: false,
                     success: function (d) {
                         $("#loader").hide();
                         isvalid = true;
-
+                        location.href = '@Url.Action("SearchBreedType","Animal")';
                     },
                     error: function (error) {
                         $("#loader").hide();
@@ -127,12 +129,7 @@ function Save() {
                 }
             });
 
-                    if (isvalid)
-                    {
-                        location.href = '@Url.Action("SearchBreedType","Animal")';
-                    }
-
                 }
             }
-            </script>
-        }
+    </script>
+}

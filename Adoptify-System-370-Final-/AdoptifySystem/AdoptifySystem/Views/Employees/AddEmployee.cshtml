@@ -30,7 +30,6 @@
         <a class="nav-link" data-toggle="tab" href="#profile">User Details</a>
     </li>
 </ul>
-
         <div id="myTabContent" class="tab-content">
             <div id="home" class="tab-pane fade show active">
 
@@ -177,7 +176,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <button type="submit" name="button" value="Save" onclick="validate()" title="Click to Add the Following Employee Details" class="btn btn-success float-right">Save</button>
-                    @Html.ActionLink("Cancel", "SearchEmployee", new { @class = "btn btn-warning" ,@title="Click to go back to Search Employee screen" })
+                    @Html.ActionLink("Cancel", "SearchEmployee", null ,new { @class = "btn btn-warning" ,@title="Click to go back to Search Employee screen" })
                 </div>
             </div>
         </div>
@@ -413,7 +412,7 @@
             formData.append("Title_ID",Title_ID.value );
             formData.append("Emp_Type_ID", Emp_Type_ID.value);
             formData.append("Role", array);
-
+            formData.append("Emp_Gender", Gender.value);
             // add the data to model
             //var data = {
 
@@ -445,7 +444,7 @@
                 success: function (d) {
                     $("#loader").hide();
                     isvalid = true;
-                    
+                     location.href = '@Url.Action("SearchEmployee","Employees")';
                 },
                 error: function (error) {
                     $("#loader").hide();
@@ -455,7 +454,7 @@
             });
 
             if (isvalid) {
-                location.href = '@Url.Action("SearchEmployee","Employees")';
+               
             }
         } else {
             alert("all is not valid");

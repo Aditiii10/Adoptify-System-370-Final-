@@ -1,15 +1,11 @@
-﻿@model Google.Authenticator.SetupCode
-@{
+﻿<div class="login">
 
-
-}
-<div class="login">
-
-    <h1>Authorize Login</h1>
+    <h1>Authorize First Time Login</h1>
     @using (Html.BeginForm("Verify2FA", "Admin"))
     {
+        <h2>@ViewBag.err</h2>
         <div class="form-group">
-            <label for="Code">Authorize Login</label>
+            <label for="Code">Enter Code</label>
             @Html.TextBox("token", "", new { @class = "form-control textbox" })
         </div>
         <input type="submit" value="Authorize" class="btn btn-primary btn-block btn-large" />

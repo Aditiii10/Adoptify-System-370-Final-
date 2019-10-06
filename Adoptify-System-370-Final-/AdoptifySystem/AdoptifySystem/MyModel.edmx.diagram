@@ -26,8 +26,6 @@
         <EntityTypeShape EntityType="Wollies_ShelterModel.Donation_Type" Width="1.5" PointX="13" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Donor" Width="1.5" PointX="10.75" PointY="35.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Emp_Kennel" Width="1.5" PointX="15.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee" Width="1.5" PointX="10.5" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee_Status" Width="1.5" PointX="8.25" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Employee_Type" Width="1.5" PointX="8.25" PointY="13.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Event_" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Wollies_ShelterModel.Event_Schedule" Width="1.5" PointX="12.75" PointY="19.5" IsExpanded="true" />
@@ -104,15 +102,7 @@
         <AssociationConnector Association="Wollies_ShelterModel.fkdonl" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkdonl2" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkdonor" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkempk" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkempk1" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkech" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkemp" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkemp1" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkemp2" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkho" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fktime" ManuallyRouted="false" />
-        <AssociationConnector Association="Wollies_ShelterModel.fkuser" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkevnt" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkfosc1" ManuallyRouted="false" />
         <AssociationConnector Association="Wollies_ShelterModel.fkmedcard1" ManuallyRouted="false" />
@@ -132,6 +122,16 @@
         <EntityTypeShape EntityType="Wollies_ShelterModel.SubsystemRole" Width="1.5" PointX="15" PointY="28.75" />
         <AssociationConnector Association="Wollies_ShelterModel.fksubrol1" />
         <AssociationConnector Association="Wollies_ShelterModel.fksubrol" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.Employee" Width="1.5" PointX="10.5" PointY="10.25" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkempk" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkech" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkemp" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkemp1" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkho" />
+        <AssociationConnector Association="Wollies_ShelterModel.fktime" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkuser" />
+        <EntityTypeShape EntityType="Wollies_ShelterModel.FosterCareDuration" Width="1.5" PointX="15.375" PointY="0.875" />
+        <AssociationConnector Association="Wollies_ShelterModel.fkfosc2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
