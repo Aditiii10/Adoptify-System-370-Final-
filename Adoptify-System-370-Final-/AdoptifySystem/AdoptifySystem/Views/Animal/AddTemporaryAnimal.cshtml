@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label><b>Animal Type</b></label><br />
                 <div class="col-md-10">
-                    <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select" style="width:30%;" onchange="LoadProduct(this)">
+                    <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select" style="width:30%;" onchange="LoadProduct(this)" title="Select Animal Type">
                         @if (Model.animalTypes != null)
                         {
                             <option value="0">-- Select Animal Type--</option>
@@ -61,7 +61,7 @@
 
                         <div class="container">
                             <label class="col-md-10"><b>Animal Breed</b></label>
-                            <select class=" breed custom-select" id="breed1" name="breed">
+                            <select class=" breed custom-select" id="breed1" name="breed" title="Select Breed">
                                 <option>--Select--</option>
                             </select>
                         </div>
@@ -203,10 +203,9 @@
             </div>
         </div>
     </div>
-    <br />
     <div class="form-group">
-        <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right col-md-6">Save</button>
-        @Html.ActionLink("Cancel", "SearchAnimal", "Animal", null, new { @class = "btn btn-warning glyphicon glyphicon-circle-arrow-left float-left col-md-6" })
+        <button type="submit" name="button" value="Save" onclick="Save()" title="Click to Add the Following Animal Details" class="btn btn-success float-right col-md-6">Save and Add to Kennel</button>
+        @Html.ActionLink("Cancel", "SearchAnimal", null, new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
     </div>
 </div>
 
@@ -458,6 +457,8 @@
         if (b == 0) {
             alert("Pick a Breed");
             isvalid = false;
+        } else {
+            alert(breed1.value);
         }
 
         if (isvalid)
@@ -483,7 +484,7 @@
             formData.append("Animal_Gender", $('input[name="Animal_Gender"]:checked').val());
             formData.append("Animal_Type_ID",Animal_Type_ID.value );
             formData.append("Cross_Breed", $('input[name="Cross_Breed"]:checked').val());
-            formData.append("breed",array);
+            formData.append("breeds",array);
             formData.append("Animal_Entry_Date", Animal_Entry_Date.value);
             formData.append("Animal_Location", Animal_Location.value);
 
@@ -508,7 +509,7 @@
                     $("#loader").hide();
                     isvalid = true;
                     alert("Yes");
-
+                    window.location.href = '@Url.Action("Create","Animal_Kennel_History")';
                 },
                 error: function (error) {
                     $("#loader").hide();
@@ -518,9 +519,9 @@
                 }
             });
 
-            if (isvalid) {
-                location.href = '@Url.Action("SearchAnimal","Animal")';
-            }
+            //if (isvalid) {
+
+            //}
         } else {
             alert("all is not valid");
         }

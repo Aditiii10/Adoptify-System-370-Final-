@@ -30,7 +30,7 @@
         <div class="form-group">
             <label class="col-md-10"><b>Select Animal Type</b></label>
             <div class="col-md-10">
-                <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select">
+                <select name="Animal_Type_ID" id="Animal_Type_ID" style="width:25%;" class="custom-select" title="Select Animal Type">
                     @if (Model.animalTypes != null)
                     {
                         <option> --Select-- </option>
@@ -52,8 +52,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right">Save</button>
+                @Html.ActionLink("Cancel", "SearchBreedType", new { @class = "btn btn-warning", @title = "Click to go back to Search Breed screen" })
+                <button type="submit" name="button" value="Save" title="Click to Add the Following Breed Type Details" onclick="Save()" class="btn btn-success float-right">Save</button>
             </div>
         </div>
     </div>

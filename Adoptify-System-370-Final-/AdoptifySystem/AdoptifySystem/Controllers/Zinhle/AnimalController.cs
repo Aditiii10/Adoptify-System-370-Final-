@@ -21,18 +21,25 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             //List<Animal_Breed> breeds = new List<Animal_Breed>();
 
-
-            int id = Convert.ToInt32(categoryID);
-            var sbreeds = db.Animal_Breed.Where(a => a.Animal_Type_ID == id).OrderBy(a => a.Animal_Breed_Name).ToList();
-            var breeds = db.Animal_Breed.Select(x => new
+            try
             {
-                Animal_Breed_ID = x.Animal_Breed_ID,
-                Animal_Breed_Name = x.Animal_Breed_Name,
-                Animal_Type_ID = x.Animal_Type_ID,
-            }).ToList();
-            breeds = breeds.Where(z => z.Animal_Type_ID == id).ToList();
-            ViewBag.breed = breeds;
-            return Json(breeds, JsonRequestBehavior.AllowGet);
+                int id = Convert.ToInt32(categoryID);
+                var sbreeds = db.Animal_Breed.Where(a => a.Animal_Type_ID == id).OrderBy(a => a.Animal_Breed_Name).ToList();
+                var breeds = db.Animal_Breed.Select(x => new
+                {
+                    Animal_Breed_ID = x.Animal_Breed_ID,
+                    Animal_Breed_Name = x.Animal_Breed_Name,
+                    Animal_Type_ID = x.Animal_Type_ID,
+                }).ToList();
+                breeds = breeds.Where(z => z.Animal_Type_ID == id).ToList();
+                ViewBag.breed = breeds;
+                return Json(breeds, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
+
         }
         public ActionResult AddTemporaryAnimal()
         {
@@ -44,13 +51,13 @@ namespace AdoptifySystem.Controllers.Zinhle
             catch (Exception e)
             {
                 TempData["EditMessage"] = e.Message;
-                return RedirectToAction("SearchAnimal");
+                throw new Exception("Something Went Wrong!");
 
             }
 
         }
 
-        public ContentResult test(string Cross_Breed, Animal animal, string breeds, Microchip micro, HttpPostedFileBase animalPicture, FormCollection form)
+        public ContentResult test(string Cross_Breed, Animal animal, string[] breeds, Microchip micro, HttpPostedFileBase animalPicture, FormCollection form)
         {
             try
             {
@@ -67,6 +74,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     animal.Animal_Image_Type = animalPicture.ContentType;
                     animal.Animal_Image = bytes;
 
+
                 }
 
                 if (animal != null)
@@ -75,7 +83,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     if (status == null)
                     {
                         TempData["EditMessage"] = "there are no status available.";
-                        return Content("AddTemporaryAnimal");
+                        throw new Exception("Something Went Wrong!");
                     }
                     animal.Animal_Status_ID = status.Animal_Status_ID;
                     db.Animals.Add(animal);
@@ -84,12 +92,14 @@ namespace AdoptifySystem.Controllers.Zinhle
                 if (Cross_Breed == "True")
                 {
                     // Split authors separated by a comma followed by space  
-                    string[] breed = breeds.Split(',');
+                    string[] breed = breeds[0].Split(',');
                     foreach (var item in breed)
                     {
                         CrossBreed cross = new CrossBreed();
                         cross.Animal_ID = animal.Animal_ID;
                         cross.Animal_Breed_ID = Convert.ToInt32(item);
+                        db.CrossBreeds.Add(cross);
+                        db.SaveChanges();
                     }
                 }
                 else
@@ -97,6 +107,9 @@ namespace AdoptifySystem.Controllers.Zinhle
                     CrossBreed cross = new CrossBreed();
                     cross.Animal_ID = animal.Animal_ID;
                     cross.Animal_Breed_ID = Convert.ToInt32(breeds);
+                    db.CrossBreeds.Add(cross);
+                    db.SaveChanges();
+
                 }
                 if (micro.Animal_Microchip_Code != null || micro.Implanters_PIN_Number != null || micro.Owner_Name != null || micro.Owner_Address != null || micro.Owner_Contact_Number != null)
                 {
@@ -111,9 +124,8 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
+                TempData["EditMessage"] = e.Message;
                 throw new Exception("Something Went Wrong!");
-                //TempData["EditMessage"] = e.Message;
-                //return Content("SearchAnimal");
 
             }
         }
@@ -186,9 +198,8 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
+                TempData["EditMessage"] = e.Message;
                 throw new Exception("Something Went Wrong!");
-                // TempData["EditMessage"] = e.Message;
-                // return RedirectToAction("AddTemporaryAnimal", "Animal");
             }
 
 
@@ -200,6 +211,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
             if (!(search == ""))
             {
+                db.Database.CommandTimeout = 300;
                 var animallist = db.Animals.Where(z => z.Animal_Name.Equals(search)).ToList();
                 if (animallist == null)
                 {
@@ -241,9 +253,8 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                throw new Exception("Something Went Wrong!");
-                // TempData["EditMessage"] = e.Message;
-                //return View("SearchAnimal");
+                TempData["EditMessage"] = e.Message;
+                return View("SearchAnimal");
             }
             return View(innovation);
         }
@@ -306,7 +317,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                //ViewBag.err = e.Message;
+                ViewBag.err = e.Message;
                 throw new Exception("Something Went Wrong!");
             }
 
@@ -362,9 +373,8 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                //TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
-                throw new Exception("Something Went Wrong!");
-                //return Content("");
+                TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
+                return Content("");
             }
 
         }
@@ -401,9 +411,8 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                throw new Exception("Something Went Wrong!");
-                //TempData["EditMessage"] = e.Message;
-                //return Content("");
+                TempData["EditMessage"] = e.Message;
+                return Content("");
             }
 
             return Content("");
@@ -425,15 +434,38 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                throw new Exception("Something Went Wrong!");
-                //TempData["EditMessage"] = "there was a network error: " + e.Message;
-                //return View();
+                TempData["EditMessage"] = "there was a network error: " + e.Message;
+                return View();
             }
         }
         [HttpPost]
         public ActionResult SearchAnimalType(string search)
         {
-            return View();
+            try
+            {
+                if (!(search == ""))
+                {
+                    db.Database.CommandTimeout = 300;
+                    var animaltype = db.Animal_Type.Where(z => z.Animal_Type_Name.StartsWith(search)).ToList();
+                    if (animaltype == null)
+                    {
+                        return RedirectToAction("SearchAnimalType");
+                    }
+                    List<Animal_Type> animals = new List<Animal_Type>();
+                    animals = animaltype;
+
+                    return View("SearchAnimalType", animals);
+
+                }
+                TempData["SuccessMessage"] = "Enter Valid Details";
+                return RedirectToAction("SearchAnimalType");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something Wrong");
+            }
+
+
         }
         public ActionResult AddBreedType()
         {
@@ -444,9 +476,8 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                throw new Exception("Something Went Wrong!");
-                //TempData["EditMessage"] = e.Message + "";
-                //throw;
+                TempData["EditMessage"] = e.Message + "";
+                throw;
             }
         }
         [HttpPost]
@@ -575,7 +606,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 {
                     //you cant delete becasue its referenced to another table
                     ViewBag.err = "You can not delete this";
-                    return RedirectToAction("SearchDonationType");
+                    return RedirectToAction("SearchBreedType");
                 }
                 else
                 {
@@ -585,6 +616,59 @@ namespace AdoptifySystem.Controllers.Zinhle
                 }
             }
             return RedirectToAction("SearchBreedType");
+
+        }
+
+        public ActionResult DeleteAnimal(int? id)
+        {
+
+            try
+            {
+                if (id != 0)
+                {
+                    Animal animal = db.Animals.Find(id);
+                    int status = Convert.ToInt32(animal.Animal_Status_ID);
+
+                    //kennel
+                    //adoption
+                    //status - Adoption
+                    if (status == 3 || status == 5)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return RedirectToAction("SearchAnimal");
+                    }
+                    else
+                    {
+                        if (animal.Microchips.Count != 0)
+                        {
+                            foreach (var item in animal.Microchips)
+                            {
+                                db.Microchips.Remove(item);
+                                db.SaveChanges();
+                            }
+
+                        }
+                        if (animal.CrossBreeds.Count != 0)
+                        {
+                            foreach (var item in animal.CrossBreeds)
+                            {
+                                db.CrossBreeds.Remove(item);
+                                db.SaveChanges();
+                            }
+                        }
+                        db.Animals.Remove(animal);
+                        db.SaveChanges();
+                        return RedirectToAction("SearchAnimal");
+                    }
+                }
+                return RedirectToAction("SearchAnimal");
+            }
+            catch (Exception e)
+            {
+                TempData["Success"] = e.Message;
+                return RedirectToAction("SearchAnimal");
+            }
 
         }
         public ActionResult DeleteAnimalType(int? id)
@@ -611,27 +695,75 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
 
-        /*public ActionResult ClaimAnimal()
-         {
-             try
-             {
-                 innovation.animals = db.Animals.Select( x=> new Animal { Animal_Name = x.Animal_Name}).ToList();
-                 return View(innovation);
-             }
-             catch (Exception e)
-             {
-                 ViewBag.err = e.Message;
-                 return RedirectToAction("Index", "Employees");
-             }
-         }
-         [HttpPost]
-         public ActionResult ClaimAnimal()
-         {
-             Animal animal = new Animal();
-             Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Temporary").FirstOrDefault();
-             animal.Animal_Status_ID = status.Animal_Status_ID;
-             db.Animals.Add(animal);
-             db.SaveChanges();
-         }*/
+        public ActionResult ClaimAnimal()
+        {
+            try
+            {
+                db.Database.CommandTimeout = 300;
+                innovation.animals = db.Animals.Where(z => z.Animal_Status_ID == 1 || z.Animal_Status_ID == 4).ToList();
+                return View(innovation);
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = e.Message;
+                return RedirectToAction("SearchAnimal");
+
+            }
+
+        }
+
+        public ActionResult RemoveClaimAnimal(int id)
+        {
+            try
+            {
+                if (id != 0)
+                {
+                    Animal animal = db.Animals.Find(id);
+                    int status = Convert.ToInt32(animal.Animal_Status_ID);
+
+                    //kennel
+                    //adoption
+                    //status - Adoption
+                    if (status == 3 || status == 5)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return RedirectToAction("SearchAnimal");
+                    }
+                    else
+                    {
+                        if (animal.Microchips.Count != 0)
+                        {
+                            foreach (var item in animal.Microchips)
+                            {
+                                db.Microchips.Remove(item);
+                                db.SaveChanges();
+                            }
+
+                        }
+                        if (animal.CrossBreeds.Count != 0)
+                        {
+                            foreach (var item in animal.CrossBreeds)
+                            {
+                                db.CrossBreeds.Remove(item);
+                                db.SaveChanges();
+                            }
+                        }
+                        db.Animals.Remove(animal);
+                        db.SaveChanges();
+                        return RedirectToAction("SearchAnimal");
+                    }
+                }
+                return RedirectToAction("SearchAnimal");
+            }
+            catch (Exception e)
+            {
+                TempData["Success"] = e.Message;
+                return RedirectToAction("SearchAnimal");
+            }
+
+
+            //return RedirectToAction("ClaimAnimal");
+        }
     }
 }

@@ -2,10 +2,81 @@
 @{
     ViewBag.Title = "ClaimAnimal";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}]
-
+}
+<div class="" style="text-align:center;padding-left:120px">
+    <div class="col-sm-12 table-primary">
+        <h1>Claim Animal</h1>
+    </div>
+</div>
 @using (Html.BeginForm())
 {
-  
+    <div class="row">
+        <div class="column">
+            <select name="id" class="custom-select" title="Select Desired Animal">
+                @foreach (var item in Model.animals)
+                {
+
+                    <option data-toggle="modal" data-target="#@item.Animal_Type_ID" value="@item.Animal_ID">@item.Animal_Name</option>
+                }
+            </select>
+        </div>
+        <div class="column">
+            @foreach (var item in Model.animals)
+            {
+                <div class=" modal fade" id="@item.Animal_Type_ID" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">@item.Animal_Name</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.Animal_Name</h5>
+                                    @if (item.CrossBreeds.Count > 0)
+                                    {
+                                        foreach (var breed in item.CrossBreeds)
+                                        {
+                                            <h6 class="card-subtitle text-muted">@breed.Animal_Breed.Animal_Type.Animal_Type_Name</h6>
+                                            <h6 class="card-subtitle text-muted">@item.Animal_Breed.Animal_Breed_Name</h6>
+                                            <h6 class="card-subtitle text-muted">@item.Animal_Status.Animal_Status_Name</h6>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <h6 class="card-subtitle text-muted">@item.Animal_Status.Animal_Status_Name</h6>
+                                    }
+
+                                </div>
+                                @if (item.Animal_Image != null)
+                                {
+                                    <img style="height: 200px; width: 100%; display: block;" src="data:image/jpg;base64,@Convert.ToBase64String(item.Animal_Image)" alt="Card image">
+                                }
+                                else
+                                {
+                                    <img style="height: 200px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image">
+                                }
+
+                                <p></p>
+                            </div>
+                            <div class="modal-footer">
+                                @Html.ActionLink("Claim Animal", "RemoveClaimAnimal", new { id = item.Animal_ID }, new { @style = "color: white", @class = "btn btn-success", @title = "Click to go Claim Animal" })
+                                <button type="button" class="btn btn-secondary" title="Click to Cancel" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+    <div>
+        @Html.ActionLink("Cancel", "SearchAnimal", null, new { @style = "color: # fff" }, new { @class = "btn btn-primary" })
+    </div>
+
+
+
 
 }

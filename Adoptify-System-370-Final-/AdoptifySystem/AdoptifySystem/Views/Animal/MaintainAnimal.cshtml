@@ -6,10 +6,10 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#home">Animal Details</a>
+        <a class="nav-link active" title="Click to View Animal Details" data-toggle="tab" href="#home">Animal Details</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile">Microchip</a>
+        <a class="nav-link" title="Click to View Microchip Details" data-toggle="tab" href="#profile">Microchip</a>
     </li>
 </ul>
 
@@ -23,13 +23,13 @@
             <div class="text-center">
                 <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" id="preview" class="avatar img-circle img-thumbnail" alt="avatar" style="width:192px;height:192px;">
                 <h6>Upload an animal photo...</h6>
-                <input type="file" id="animalPicture" name="animalPicture" class="text-center center-block file-upload">
+                <input type="file" id="animalPicture" name="animalPicture" title="Click to add image" class="text-center center-block file-upload">
             </div>
 
             <div class="form-group">
                 <label><b>Animal Type</b></label><br />
                 <div class="col-md-10">
-                    <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select" style="width:30%;" onchange="LoadProduct(this)">
+                    <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select" style="width:30%;" onchange="LoadProduct(this)" title="Select Animal Type">
                         @if (Model.animalTypes != null)
                         {
                             <option value="0">-- Select Animal Type--</option>
@@ -86,7 +86,7 @@
 
                         <div class="container">
                             <label class="col-md-10"><b>Animal Breed</b></label>
-                            <select class=" breed custom-select" id="breed1" name="breed">
+                            <select class=" breed custom-select" id="breed1" name="breed" title="Select Breed">
                                 @if (Model.breedTypes != null)
                                 {
                                     var crossbreed = 0;
@@ -125,7 +125,7 @@
                     <div class="column" id="second_breed" style="width:50%; display:none;">
                         <div class="container">
                             <label class="col-md-10"><b>Second Breed</b></label>
-                            <select name="breed" id="breed2" class=" breed custom-select">
+                            <select name="breed" id="breed2" class=" breed custom-select" title="Select Breed">
                                 @if (Model.breedTypes != null)
                                 {
                                     var crossbreed = 0;
@@ -342,44 +342,85 @@
         </div>
     </div>
     <div class="tab-pane fade" id="profile">
-        <div class="column">
-            <div>
-                <div class="col-sm-10 table-primary"><h2>Animal Medical</h2></div>
-            </div>
-            <div class="col-xs-6">
-                <label><b>Animal Microchip Code</b></label><br />
-                <input type="text" class="form-control" id="Animal_Microchip_Code" value="@Model.micro.Animal_Microchip_Code" name="Animal_Microchip_Code" placeholder="Animal  Microchip Code">
-            </div>
+        @if (Model.micro != null)
+        {
+            <div class="column">
+                <div>
+                    <div class="col-sm-10 table-primary"><h2>Animal Medical</h2></div>
+                </div>
+                <div class="col-xs-6">
+                    <label><b>Animal Microchip Code</b></label><br />
+                    <input type="text" class="form-control" id="Animal_Microchip_Code" value="@Model.micro.Animal_Microchip_Code" name="Animal_Microchip_Code" placeholder="Animal  Microchip Code">
+                </div>
 
-            <div class="col-xs-6">
-                <label><b>Implanteers Pin Number</b></label><br />
-                <input type="text" class="form-control" id="Implanters_PIN_Number" value="@Model.micro.Implanters_PIN_Number" name="Implanters_PIN_Number" placeholder="Implanteers Pin Number">
-            </div>
+                <div class="col-xs-6">
+                    <label><b>Implanteers Pin Number</b></label><br />
+                    <input type="text" class="form-control" id="Implanters_PIN_Number" value="@Model.micro.Implanters_PIN_Number" name="Implanters_PIN_Number" placeholder="Implanteers Pin Number">
+                </div>
 
-            <div class="col-xs-6">
-                <label><b>Owner Name</b></label><br />
-                <input type="text" class="form-control" id="Owner_Name" value="@Model.micro.Owner_Name" name="Owner_Name" placeholder="Enter Owner Name">
-            </div>
+                <div class="col-xs-6">
+                    <label><b>Owner Name</b></label><br />
+                    <input type="text" class="form-control" id="Owner_Name" value="@Model.micro.Owner_Name" name="Owner_Name" placeholder="Enter Owner Name">
+                </div>
 
-            <div class="col-xs-6">
-                <label><b>Owner Contact Number</b></label><br />
-                <input type="number" id="Owner_Contact_Number" value="@Model.micro.Owner_Contact_Number" name="Owner_Contact_Number" class="form-control" maxlength="10" placeholder="Owner Contact Number">
-            </div>
+                <div class="col-xs-6">
+                    <label><b>Owner Contact Number</b></label><br />
+                    <input type="number" id="Owner_Contact_Number" value="@Model.micro.Owner_Contact_Number" name="Owner_Contact_Number" class="form-control" maxlength="10" placeholder="Owner Contact Number">
+                </div>
 
-            <div class="col-xs-6">
-                <label><b>Date Of Implant</b></label><br />
-                <input type="date" value="@Model.micro.Date_of_Implant.Value.ToString("yyyy-MM-dd")" name="Date_of_Implant" id="Date_of_Implant" class="form-control" placeholder="MM/DD/YY">
-            </div>
+                <div class="col-xs-6">
+                    <label><b>Date Of Implant</b></label><br />
+                    <input type="date" value="@Model.micro.Date_of_Implant.Value.ToString("yyyy-MM-dd")" name="Date_of_Implant" id="Date_of_Implant" class="form-control" placeholder="MM/DD/YY">
+                </div>
 
-            <div class="col-xs-6">
-                <label><b>Owner Address</b></label><br />
-                <input type="text" name="Owner_Address" value="@Model.micro.Owner_Address" id="Owner_Address" class="form-control" placeholder="Enter Owner Address">
+                <div class="col-xs-6">
+                    <label><b>Owner Address</b></label><br />
+                    <input type="text" name="Owner_Address" value="@Model.micro.Owner_Address" id="Owner_Address" class="form-control" placeholder="Enter Owner Address">
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="column">
+                <div>
+                    <div class="col-sm-10 table-primary"><h2>Animal Medical</h2></div>
+                </div>
+                <div class="col-xs-6">
+                    <label><b>Animal Microchip Code</b></label><br />
+                    <input type="text" class="form-control" id="Animal_Microchip_Code" name="Animal_Microchip_Code" placeholder="Animal  Microchip Code">
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Implanteers Pin Number</b></label><br />
+                    <input type="text" class="form-control" id="Implanters_PIN_Number" name="Implanters_PIN_Number" placeholder="Implanteers Pin Number">
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Owner Name</b></label><br />
+                    <input type="text" class="form-control" id="Owner_Name" name="Owner_Name" placeholder="Enter Owner Name">
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Owner Contact Number</b></label><br />
+                    <input type="number" id="Owner_Contact_Number" name="Owner_Contact_Number" class="form-control" maxlength="10" placeholder="Owner Contact Number">
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Date Of Implant</b></label><br />
+                    <input type="date" name="Date_of_Implant" id="Date_of_Implant" class="form-control" placeholder="MM/DD/YY">
+                </div>
+
+                <div class="col-xs-6">
+                    <label><b>Owner Address</b></label><br />
+                    <input type="text" name="Owner_Address" id="Owner_Address" class="form-control" placeholder="Enter Owner Address">
+                </div>
+            </div>
+        }
+
     </div>
     <div class="form-group">
-        <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right col-md-6">Save</button>
-        <button type="button" name="button" value="Cancel" class="btn btn-warning col-md-6">Cancel</button>
+        <button type="submit" name="button" value="Save" onclick="Save()" title="Click to Update the Following Animal Details" class="btn btn-success float-right col-md-6">Save</button>
+        @Html.ActionLink("Cancel", "SearchAnimal", new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
     </div>
 </div>
 
