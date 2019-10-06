@@ -4,96 +4,103 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Adopter Relative Details</h2>
-
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Relative_Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Relative_Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Relative_Surname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Relative_Surname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Relative_Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Relative_Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Relative_Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Relative_Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Relative_PostalAddress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Relative_PostalAddress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Relative_Home_Tel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Relative_Home_Tel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Relative_Work_Tel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Relative_Work_Tel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Relative_Cell)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Relative_Cell)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Relationship)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Relationship)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Adopter.Adopter_Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Adopter.Adopter_Name)
-        </dd>
-
-    </dl>
-</div>
-<p>
+<div id="main">
     <br />
-    @Html.ActionLink("Update", "Edit", "Adopter_Relative", new { id = Model.Relative_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Adopter Relative Details" })
-    @Html.ActionLink("Back to List", "Index", "Adopter_Relative", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
-    <br /> 
-</p>
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Adopter Relative Details</h1>
+        </div>
+    </div>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Relative_Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Relative_Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Relative_Surname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Relative_Surname)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Relative_Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Relative_Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Relative_Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Relative_Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Relative_PostalAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Relative_PostalAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Relative_Home_Tel)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Relative_Home_Tel)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Relative_Work_Tel)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Relative_Work_Tel)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Relative_Cell)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Relative_Cell)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Relationship)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Relationship)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Adopter.Adopter_Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Adopter.Adopter_Name)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        <br />
+        @Html.ActionLink("Update", "Edit", "Adopter_Relative", new { id = Model.Relative_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Adopter Relative Details" })
+        @Html.ActionLink("Back to List", "Index", "Adopter_Relative", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
+        <br />
+    </p>
+    </div>
