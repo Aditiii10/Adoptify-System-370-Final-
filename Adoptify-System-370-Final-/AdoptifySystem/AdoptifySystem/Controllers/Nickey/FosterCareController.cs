@@ -7,7 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using AdoptifySystem;
+using AdoptifySystem.Models;
 using AdoptifySystem.Models.nickeymodel;
 
 namespace AdoptifySystem.Controllers
@@ -21,9 +21,18 @@ namespace AdoptifySystem.Controllers
         // GET: FosterCare
         public ActionResult AddFosterCareParent()
         {
-            List<Foster_Care_Parent> mylist = new List<Foster_Care_Parent>();
-            mylist = db.Foster_Care_Parent.ToList();
-            return View(mylist);
+            try
+            {
+                List<Foster_Care_Parent> mylist = new List<Foster_Care_Parent>();
+                mylist = db.Foster_Care_Parent.ToList();
+                return View(mylist);
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+
         }
         [HttpPost]
         public ActionResult AddFosterCareParent(Foster_Care_Parent foster_Care_Parent, string button)
@@ -71,7 +80,7 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     ViewBag.errorMessage = "There was an Error with network please try again: " + e.Message;
-                    return View();
+                    throw new Exception("Something Went Wrong!");
                 }
 
             }
@@ -124,7 +133,7 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
-                    return RedirectToAction("MaintainFosterCareParent", "Stock");
+                    throw new Exception("Something Went Wrong!");
                 }
             }
             else if (button == "Cancel")
@@ -140,7 +149,7 @@ namespace AdoptifySystem.Controllers
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    throw new Exception("Something Went Wrong!");
                 }
                 Foster_Care_Parent foster_Care_Parent = db.Foster_Care_Parent.Find(id);
                 if (foster_Care_Parent == null)
@@ -153,7 +162,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                throw;
+                throw new Exception("Something Went Wrong!");
             }
 
         }
@@ -166,45 +175,53 @@ namespace AdoptifySystem.Controllers
                 foster_Care_Parents = db.Foster_Care_Parent.ToList();
                 if (foster_Care_Parents.Count == 0)
                 {
-
+                    throw new Exception("Something Went Wrong!");
                 }
                 return View(foster_Care_Parents);
             }
             catch (Exception e)
             {
                 ViewBag.errormessage = "there was a network error: " + e.Message;
-                return View();
+                throw new Exception("Something Went Wrong!");
             }
         }
         [HttpPost]
         public ActionResult SearchFosterCareParent(string search)
         {
-            if (search != null)
+            try
             {
-
-                List<Foster_Care_Parent> foster = new List<Foster_Care_Parent>();
-                try
+                if (search != null)
                 {
-                    //foster = db.searchParent(search).ToList();
-                    //foster = db.Foster_Care_Parent.Where(z => z.Foster_Parent_Email.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
-                    if (foster.Count == 0)
+
+                    List<Foster_Care_Parent> foster = new List<Foster_Care_Parent>();
+                    try
                     {
-                        ViewBag.err = "No results found";
+                        //foster = db.searchParent(search).ToList();
+                        //foster = db.Foster_Care_Parent.Where(z => z.Foster_Parent_Email.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
+                        if (foster.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View(foster);
+                        }
                         return View(foster);
                     }
-                    return View(foster);
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    ViewBag.err = "there was a network error: " + e.Message;
-                    return View();
-                }
-            }
-            else
-            {
 
+                }
+                return View();
             }
-            return View();
+            catch (Exception)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
+
         }
         public ActionResult AddtoFosterCare()
         {
@@ -218,47 +235,64 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                return RedirectToAction("Index", "home");
+                throw new Exception("Something Went Wrong!");
             }
 
         }
         public ActionResult search_parent(string inid)
         {
-            if (inid == "")
+            try
             {
-                ViewBag.parenterr = "Please search a animal";
+                if (inid == "")
+                {
+                    ViewBag.parenterr = "Please search a animal";
+                    return View("AddtoFosterCare", flex);
+                }
+                int id = Convert.ToInt32(inid);
+                id = id + 1;
+                flex.parent = flex.fostercareparent.Where(a => a.Foster_Parent_ID == id).FirstOrDefault();
+
+                if (flex.parent == null)
+                {
+                    ViewBag.parenterr = "Please search a animal";
+                    return View("AddtoFosterCare", flex);
+                }
+
                 return View("AddtoFosterCare", flex);
             }
-            int id = Convert.ToInt32(inid);
-            id = id + 1;
-            flex.parent = flex.fostercareparent.Where(a => a.Foster_Parent_ID == id).FirstOrDefault();
-
-            if (flex.parent == null)
+            catch (Exception)
             {
-                ViewBag.parenterr = "Please search a animal";
-                return View("AddtoFosterCare", flex);
+
+                throw new Exception("Something Went Wrong!");
             }
 
-            return View("AddtoFosterCare", flex);
 
         }
         public ActionResult search_animal(string inid)
         {
-            if (inid == "")
+            try
             {
-                ViewBag.animalerr = "Please search a animal";
+                if (inid == "")
+                {
+                    ViewBag.animalerr = "Please search a animal";
+                    return View("AddtoFosterCare", flex);
+                }
+                int id = Convert.ToInt32(inid);
+                flex.animal = flex.animallist.ElementAt(id);
+
+                if (flex.animal == null)
+                {
+                    ViewBag.animalerr = "Please search a animal";
+                    return View("AddtoFosterCare", flex);
+                }
+
                 return View("AddtoFosterCare", flex);
             }
-            int id = Convert.ToInt32(inid);
-            flex.animal = flex.animallist.ElementAt(id);
-
-            if (flex.animal == null)
+            catch (Exception)
             {
-                ViewBag.animalerr = "Please search a animal";
-                return View("AddtoFosterCare", flex);
+                throw new Exception("Something Went Wrong!");
             }
 
-            return View("AddtoFosterCare", flex);
 
         }
         public ActionResult add(Foster_Care infoster)
@@ -304,29 +338,36 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 var em = e.Message;
-                return RedirectToAction("AddtoFosterCare");
+                throw new Exception("Something Went Wrong!");
             }
             return View("AddtoFosterCare", flex);
 
         }
         public ActionResult removefromlist(int? animalid)
         {
-
-            if (animalid != null)
+            try
             {
-                Foster_Care test = flex.Fostercarelist.Where(n => n.Animal_ID == animalid).FirstOrDefault();
-                if (test == null)
+                if (animalid != null)
+                {
+                    Foster_Care test = flex.Fostercarelist.Where(n => n.Animal_ID == animalid).FirstOrDefault();
+                    if (test == null)
+                    {
+                        return RedirectToAction("AddtoFosterCare", flex);
+                    }
+                    flex.animallist.Add(test.Animal);
+                    flex.Fostercarelist.Remove(test);
+                    return View("AddtoFosterCare", flex);
+                }
+                else
                 {
                     return RedirectToAction("AddtoFosterCare", flex);
                 }
-                flex.animallist.Add(test.Animal);
-                flex.Fostercarelist.Remove(test);
-                return View("AddtoFosterCare", flex);
             }
-            else
+            catch (Exception)
             {
-                return RedirectToAction("AddtoFosterCare", flex);
+                throw new Exception("Something Went Wrong!");
             }
+
 
 
         }
@@ -359,8 +400,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.err = "complete all the details: " + e.Message;
-                return View("AddtoFosterCare", flex);
-                throw;
+                throw new Exception("Something Went Wrong!");
             }
         }
         public ActionResult RemovefromFosterCare()
@@ -368,7 +408,7 @@ namespace AdoptifySystem.Controllers
             try
             {
                 List<Foster_Care> list = new List<Foster_Care>();
-                list = db.Foster_Care.Where(z => z.Animal.Animal_Status.Animal_Status_Name == "Foster Care").ToList();
+                list = db.Foster_Care.ToList();
                 if (list == null)
                 {
                     ViewBag.err = "There are no Animals in Foster Care";
@@ -381,7 +421,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                throw;
+                throw new Exception("Something Went Wrong!");
             }
 
         }
@@ -399,7 +439,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                return View("RemovefromFosterCare", flex);
+                throw new Exception("Something Went Wrong!");
             }
 
         }
@@ -434,38 +474,54 @@ namespace AdoptifySystem.Controllers
             catch (Exception e)
             {
                 ViewBag.err = e.Message;
-                return View("RemovefromFosterCare", flex);
+                throw new Exception("Something Went Wrong!");
             }
 
         }
 
         public ActionResult saveremovefostercare()
         {
+            try
+            {
+                flex.Fostercarelist = null;
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
 
-            flex.Fostercarelist = null;
-            return RedirectToAction("Index", "Home");
+                throw new Exception("Something Went Wrong!");
+            }
+
         }
         public ActionResult DeleteParent(int? id)
         {
-
-            if (id != null)
+            try
             {
-                Foster_Care_Parent parent = db.Foster_Care_Parent.Find(id);
-                int count = parent.Foster_Care.Count();
-                if (count != 0)
+                if (id != null)
                 {
-                    //you cant delete becasue its referenced to another table
-                    ViewBag.err = "You can not delete this";
-                    return View("SearchFosterCareParent");
+                    Foster_Care_Parent parent = db.Foster_Care_Parent.Find(id);
+                    int count = parent.Foster_Care.Count();
+                    if (count != 0)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        ViewBag.err = "You can not delete this";
+                        return View("SearchFosterCareParent");
+                    }
+                    else
+                    {
+                        db.Foster_Care_Parent.Remove(parent);
+                        db.SaveChanges();
+                        return View("SearchFosterCareParent");
+                    }
                 }
-                else
-                {
-                    db.Foster_Care_Parent.Remove(parent);
-                    db.SaveChanges();
-                    return View("SearchFosterCareParent");
-                }
+                return View("SearchFosterCareParent");
             }
-            return View("SearchFosterCareParent");
+            catch (Exception)
+            {
+
+                throw new Exception("Something Went Wrong!");
+            }
+
         }
     }
 }
