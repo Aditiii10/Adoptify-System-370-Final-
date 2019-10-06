@@ -5,35 +5,50 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="main">
-    <div class="" style="text-align:center;padding-left:120px">
-        <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1 style="color:white">Adoption Information for HomeCheck Report</h1>
+    <div id="main">
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Adoption Information for HomeCheck Report</h1>
+            </div>
         </div>
-    </div>
 
-    <hr />
-    <p>
-        @using (Html.BeginForm("Index", "Adoptions", FormMethod.Get))
+        <hr />
+        @*<p>
+            @using (Html.BeginForm("Index", "Adoptions", FormMethod.Get))
             {
-            <b>Search by:</b>@Html.RadioButton("Searchby", "Animal_Name", true) <text>Animal Name</text>
-            @Html.RadioButton("Searchby", "Adoptor_Name")<text> Adoptor Name</text><br />
+                <b>Search by:</b>@Html.RadioButton("Searchby", "Animal_Name", true) <text>Animal Name</text>
+                @Html.RadioButton("Searchby", "Adoptor_Name")<text> Adoptor Name</text><br />
                 @Html.TextBox("search")<input type="submit" value="Search" ? />
-        }
-    </p>
+            }
+        </p>*@
+        @using (Html.BeginForm("HomeCheckReportIndex", "Adoptions", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                </div>
+            </div>
 
-    <table class="table-bordered table">
-        <tr class="table-primary">
-            <th>
-                Adoption Date
-            </th>
-            <th>
-                Adopter Details
-            </th>
-            <th>
-                Animal Details
-            </th>
-            @*<th>
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        }
+        <br />
+        <table class="table-bordered table">
+            <tr class="table-primary">
+                <th>
+                    Adoption Date
+                </th>
+                <th>
+                    Adopter Details
+                </th>
+                <th>
+                    Animal Details
+                </th>
+                @*<th>
                     Adoption Form
                 </th>
                 <th>
@@ -43,49 +58,49 @@
                 <th>
                     Payment Description
                 </th>*@
-            <th>
-                Adoption Status
-            </th>
-            <th>
-                Action
-            </th>
-        </tr>
+                <th>
+                    Adoption Status
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
 
-        @foreach (var item in Model)
+            @foreach (var item in Model)
             {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adoption_Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adopter.Adopter_CellNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Age) years old
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Adoption_Form)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Collection_Date)
-        </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adoption_Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adopter.Adopter_CellNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Age) years old
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Adoption_Form)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Collection_Date)
+                    </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Payment.Payment_Description)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
-        </td>
-        <td>
-            @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
-            @Html.ActionLink("Homecheck Report", "HomeCheckReport", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning glyphicon glyphicon-calendar" , @Title = "Click to go to HomeCheck Report Screen"  })
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Payment.Payment_Description)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
+                    </td>
+                    <td>
+                        @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
+                        @Html.ActionLink("Homecheck Report", "HomeCheckReport", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning glyphicon glyphicon-calendar", @Title = "Click to go to HomeCheck Report Screen" })
 
-        </td>
-    </tr>
-        }
+                    </td>
+                </tr>
+            }
 
 
-    </table>
-    @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back to Adoption Home"  })
-    @Html.ActionLink("Refresh", "HomeCheckReportIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page"  })
-</div>
+        </table>
+        @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back to Adoption Home" })
+        @Html.ActionLink("Refresh", "HomeCheckReportIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
+    </div>

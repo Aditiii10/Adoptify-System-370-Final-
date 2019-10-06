@@ -61,7 +61,7 @@ namespace AdoptifySystem.Controllers
                 if (SaveFile(model))
                 {
                     files.SaveAs(path);
-                    TempData["AlertMessage"] = "Successfully Uploaded Your Documents";
+                    TempData["AlertMessage"] = "Successfully Uploaded Adpoters Documents";
                     return RedirectToAction("FileView", "AdopterFile");
                 }
                 else

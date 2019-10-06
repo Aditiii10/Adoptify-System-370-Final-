@@ -31,6 +31,7 @@ namespace AdoptifySystem
         public virtual DbSet<Adopter_Contract> Adopter_Contract { get; set; }
         public virtual DbSet<Adopter_Relative> Adopter_Relative { get; set; }
         public virtual DbSet<Adopter_Status> Adopter_Status { get; set; }
+        public virtual DbSet<AdopterFile> AdopterFiles { get; set; }
         public virtual DbSet<Adoption> Adoptions { get; set; }
         public virtual DbSet<Adoption_Status> Adoption_Status { get; set; }
         public virtual DbSet<AdoptionPayment> AdoptionPayments { get; set; }
@@ -49,7 +50,6 @@ namespace AdoptifySystem
         public virtual DbSet<Donor> Donors { get; set; }
         public virtual DbSet<Emp_Kennel> Emp_Kennel { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<Employee_Status> Employee_Status { get; set; }
         public virtual DbSet<Employee_Type> Employee_Type { get; set; }
         public virtual DbSet<Event_> Event_ { get; set; }
         public virtual DbSet<Event_Schedule> Event_Schedule { get; set; }
@@ -69,10 +69,13 @@ namespace AdoptifySystem
         public virtual DbSet<Role_> Role_ { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Stock_Type> Stock_Type { get; set; }
+        public virtual DbSet<Subsystem> Subsystems { get; set; }
+        public virtual DbSet<SubsystemRole> SubsystemRoles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
         public virtual DbSet<tblFileDetail> tblFileDetails { get; set; }
         public virtual DbSet<tblFileDetail1> tblFileDetails1 { get; set; }
+        public virtual DbSet<Timer> Timers { get; set; }
         public virtual DbSet<TimeSheet> TimeSheets { get; set; }
         public virtual DbSet<Title> Titles { get; set; }
         public virtual DbSet<Unit_Type> Unit_Type { get; set; }
@@ -86,9 +89,6 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
         public virtual DbSet<Wolly> Wollies { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
-        public virtual DbSet<Timer> Timers { get; set; }
-        public virtual DbSet<Subsystem> Subsystems { get; set; }
-        public virtual DbSet<SubsystemRole> SubsystemRoles { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {
@@ -133,6 +133,58 @@ namespace AdoptifySystem
                 new ObjectParameter("Name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Emp_SearchEmpType_Result>("Emp_SearchEmpType", nameParameter);
+        }
+    
+        public virtual int Kennel_Delete(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Kennel_Delete", idParameter);
+        }
+    
+        public virtual int Kennel_insert(string name, Nullable<int> number, Nullable<int> capacity)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Kennel_insert", nameParameter, numberParameter, capacityParameter);
+        }
+    
+        public virtual int Kennel_Update(Nullable<int> iD, string name, Nullable<int> number, Nullable<int> capacity)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Kennel_Update", iDParameter, nameParameter, numberParameter, capacityParameter);
+        }
+    
+        public virtual ObjectResult<Kennel_View_Result> Kennel_View()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel_View_Result>("Kennel_View");
         }
     
         public virtual ObjectResult<Parent_SearchParent_Result> Parent_SearchParent(string name)

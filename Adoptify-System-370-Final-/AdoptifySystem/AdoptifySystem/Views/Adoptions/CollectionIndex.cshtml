@@ -6,92 +6,108 @@
 }
 
 
-<div id="main">
-    <div class="" style="text-align:center;padding-left:120px">
-        <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1 style="color:white">Adoption Information for Collecting Animal</h1>
+    <div id="main">
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Adoption Information for Collecting Animal</h1>
+            </div>
         </div>
-    </div>
 
-    <hr />
-    <p>
-        @using (Html.BeginForm("Index", "Adoptions", FormMethod.Get))
-            {
-            <b>Search by:</b>@Html.RadioButton("Searchby", "Animal_Name", true) <text>Animal Name</text>
-            @Html.RadioButton("Searchby", "Adoptor_Name")<text> Adoptor Name</text><br />
-                @Html.TextBox("search")<input type="submit" value="Search" ? />
+        <hr />
+        @*<p>
+            @using (Html.BeginForm("Index", "Adoptions", FormMethod.Get))
+                {
+                <b>Search by:</b>@Html.RadioButton("Searchby", "Animal_Name", true) <text>Animal Name</text>
+                @Html.RadioButton("Searchby", "Adoptor_Name")<text> Adoptor Name</text><br />
+                    @Html.TextBox("search")<input type="submit" value="Search" ? />
+            }
+        </p>*@
+        @using (Html.BeginForm("CollectionIndex", "Adoptions", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                </div>
+            </div>
         }
-    </p>
+        <br />
 
-    <table class="table-bordered table">
-        <tr class="table-primary">
-            <th>
-                Adoption Date
-            </th>
-            <th>
-                Adopter Details
-            </th>
-            <th>
-                Animal Details
-            </th>
-            @*<th>
+        <table class="table-bordered table">
+            <tr class="table-primary">
+                <th>
+                    Adoption Date
+                </th>
+                <th>
+                    Adopter Details
+                </th>
+                <th>
+                    Animal Details
+                </th>
+                @*<th>
                     Adoption Form
                 </th>
                 <th>
                     Collection Date
                 </th>
-            *@
-            @*<th>
-                Payment Type
-            </th>*@
-            <th>
-                Adoption Status
-            </th>
-            <th>
-                Action
-            </th>
-        </tr>
+                *@
+                @*<th>
+                    Payment Type
+                </th>*@
+                <th>
+                    Adoption Status
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
 
 
-        @foreach (var item in Model)
+            @foreach (var item in Model)
             {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adoption_Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adopter.Adopter_CellNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Age) years old
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Adoption_Form)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Collection_Date)
-        </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adoption_Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adopter.Adopter_CellNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Animal.Animal_Age) years old
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Adoption_Form)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Collection_Date)
+                    </td>
 
-        *@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.AdoptionPayment.Payment_Type_ID)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
-        </td>
-        <td>
-            @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
-            @Html.ActionLink("Collect Animal", "CollectAnimal", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning" , @Title = "Click to go Collect Animal Screen" })
+                    *@
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.AdoptionPayment.Payment_Type_ID)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adoption_Status.Adopt_Status_Name)
+                    </td>
+                    <td>
+                        @* @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-default glyphicon glyphicon-refresh" })*@
+                        @Html.ActionLink("Collect Animal", "CollectAnimal", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-warning", @Title = "Click to go Collect Animal Screen" })
 
-        </td>
-    </tr>
-        }
+                    </td>
+                </tr>
+            }
 
 
-    </table>
-    @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back" })
-    @Html.ActionLink("Refresh", "CollectionIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
-</div>
+        </table>
+        @Html.ActionLink("Cancel", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back" })
+        @Html.ActionLink("Refresh", "CollectionIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
+    </div>
 
 
 

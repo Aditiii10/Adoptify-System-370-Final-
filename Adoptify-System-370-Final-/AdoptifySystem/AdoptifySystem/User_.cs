@@ -25,6 +25,7 @@ namespace AdoptifySystem
         public string Username { get; set; }
         public string Password { get; set; }
         public int Emp_ID { get; set; }
+        public Nullable<bool> FirstTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Audit_Log> Audit_Log { get; set; }

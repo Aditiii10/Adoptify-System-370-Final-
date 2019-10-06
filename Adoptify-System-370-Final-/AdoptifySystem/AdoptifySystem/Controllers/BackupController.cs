@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using AdoptifySystem;
 using System.Data.SqlClient;
 using System.IO;
+using System.Web.Configuration;
+using Microsoft.SqlServer.Management.Smo;
 
 namespace AdoptifySystem.Controllers
 {
@@ -21,7 +23,7 @@ namespace AdoptifySystem.Controllers
 
 
 
-        private SqlConnection conn;
+        private SqlConnection connection;
         string connectionString = "Data Source=wollies.database.windows.net;Initial Catalog =Wollies_Shelter; integrated security=true; persist security info=True;user id=user;password=Wollies123;Trusted_Connection=false;Encrypt=True";
 
 
@@ -38,29 +40,54 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                conn = new SqlConnection(connectionString);
-                conn.Open();
-
-                string str = "USE Wollies_Shelter;";
-                string str1 = "BACKUP DATABASE Wollies_Shelter TO DISK = 'C:\\Users\\Divin\\Desktop\\Wollies_Shelter.Bak' WITH FORMAT,MEDIANAME = 'Z_SQLServerBackups',NAME = 'Full Backup of Wollies_Shelter';";
-                SqlCommand cmd1 = new SqlCommand(str, conn);
-                SqlCommand cmd2 = new SqlCommand(str1, conn);
-                cmd1.ExecuteNonQuery();
-                cmd2.ExecuteNonQuery();
-                conn.Close();
-                //conn.Dispose();
+                connection = new SqlConnection(connectionString);
+                connection.Open();
+                var Query = "BACKUP DATABASE Wollies_Shelter TO DISK = 'C:\\backups\\ '";
+                SqlCommand cmd = new SqlCommand(Query, connection);
+                cmd.ExecuteNonQuery();
                 message = "Successful Backup";
-
             }
             catch (Exception ex)
             {
                 message = Convert.ToString(ex);
             }
-
-            ViewBag.Message = message;
+            finally
+            {
+                connection.Close();
+            }
 
             return View();
         }
+
+
+        //[HttpPost]
+        //public ActionResult Backup(string message)
+        //{
+        //    try
+        //    {
+        //        conn = new SqlConnection(connectionString);
+        //        conn.Open();
+
+        //        string str = "USE Wollies_Shelter;";
+        //        string str1 = "BACKUP DATABASE Wollies_Shelter TO DISK = 'C:\\Users\\Divin\\Desktop\\Wollies_Shelter.Bak' WITH FORMAT,MEDIANAME = 'Z_SQLServerBackups',NAME = 'Full Backup of Wollies_Shelter';";
+        //        SqlCommand cmd1 = new SqlCommand(str, conn);
+        //        SqlCommand cmd2 = new SqlCommand(str1, conn);
+        //        cmd1.ExecuteNonQuery();
+        //        cmd2.ExecuteNonQuery();
+        //        conn.Close();
+        //        //conn.Dispose();
+        //        message = "Successful Backup";
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        message = Convert.ToString(ex);
+        //    }
+
+        //    ViewBag.Message = message;
+
+        //    return View();
+        //}
 
 
 

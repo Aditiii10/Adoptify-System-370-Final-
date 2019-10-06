@@ -18,50 +18,50 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>Veterinarian</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Vet_ID)
+<div class="form-horizontal">
+    <h4>Veterinarian</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Vet_ID)
 
-            <div>
-                <label title="Enter Vet Name">Name:</label><br />
+    <div>
+        <label title="Enter Vet Name">Name:</label><br />
 
-                @Html.EditorFor(model => model.Vet_Name, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Name" } })
-                @Html.ValidationMessageFor(model => model.Vet_Name, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Vet_Name, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Name", maxlength = "150" } })
+        @Html.ValidationMessageFor(model => model.Vet_Name, "", new { @class = "text-danger" })
 
-            </div>
+    </div>
 
-            <div>
-                <label title="Enter Vet Email">Email:</label> <br />
+    <div>
+        <label title="Enter Vet Email">Email:</label> <br />
 
-                @Html.EditorFor(model => model.Vet_Emial, new { htmlAttributes = new { @class = "form-control", @type = "email", required = "required", placeholder = "Enter Vet Name" } })
-                @Html.ValidationMessageFor(model => model.Vet_Emial, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Vet_Emial, new { htmlAttributes = new { @class = "form-control", @type = "email", required = "required", placeholder = "Enter Vet Name", maxlength = "254" } })
+        @Html.ValidationMessageFor(model => model.Vet_Emial, "", new { @class = "text-danger" })
 
-            </div>
+    </div>
 
-            <div>
-                <lable title="Enter Vet Tel">Tel:</lable><br />
-                @Html.EditorFor(model => model.Vet_Tel, new { htmlAttributes = new { @class = "form-control", @type = "tel", required = "required", placeholder = "Enter Vet Email" } })
-                @Html.ValidationMessageFor(model => model.Vet_Tel, "", new { @class = "text-danger" })
+    <div>
+        <lable title="Enter Vet Tel">Tel:</lable><br />
+        @Html.EditorFor(model => model.Vet_Tel, new { htmlAttributes = new { @class = "form-control", @type = "tel", required = "required", placeholder = "Enter Vet Tel", maxlength = "15" } })
+        @Html.ValidationMessageFor(model => model.Vet_Tel, "", new { @class = "text-danger" })
 
-            </div>
+    </div>
 
-            <div>
-                <lable title="Enter Vet Address">Address:</lable><br />
+    <div>
+        <lable title="Enter Vet Address">Address:</lable><br />
 
-                @Html.EditorFor(model => model.Vet_Address, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Address" } })
-                @Html.ValidationMessageFor(model => model.Vet_Address, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Vet_Address, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Address", maxlength = "300" } })
+        @Html.ValidationMessageFor(model => model.Vet_Address, "", new { @class = "text-danger" })
 
-            </div><br />
+    </div><br />
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    @Html.ActionLink("Back to List", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
-                    <input type="submit" value="Save" class="btn btn-success glyphicon glyphicon-floppy-disk" style="float:right" title="Click to Save Updated Vet Details" />
-                </div>
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Back to List", "Index", "Veterinarians", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
+            <input type="submit" value="Save" class="btn btn-success glyphicon glyphicon-floppy-disk" style="float:right" title="Click to Save Updated Vet Details" />
         </div>
+    </div>
+</div>
     }
     <h2 style="color:red">@ViewBag.Message</h2><br />
 

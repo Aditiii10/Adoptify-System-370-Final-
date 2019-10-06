@@ -9,12 +9,12 @@
     <Property Name="Adopter_Surname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Adopter_Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Title_ID" Type="Int32" />
-    <Property Name="Adopter_Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Adopter_PostalAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Adopter_HomeNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Adopter_WorkNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Adopter_CellNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Adopter_CarRegistartion_Number" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_PostalAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_HomeNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_WorkNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_CellNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Adopter_CarRegistartion_Number" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Adopter_Employer" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Adopter_Status_ID" Type="Int32" />
     <Property Name="Amount_of_Family_Memebers" Type="Int32" />
@@ -76,6 +76,14 @@
     <Property Name="Adopter_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Adopter_Status_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Adopters" Relationship="Self.fkado1" FromRole="Adopter_Status" ToRole="Adopter" />
+  </EntityType>
+  <EntityType Name="AdopterFile">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Adoption">
     <Key>
@@ -219,8 +227,8 @@
     </Key>
     <Property Name="Auditlog_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Auditlog_DateTime" Type="DateTime" Precision="3" />
-    <Property Name="Transaction_Type" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="Critical_Date" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Transaction_Type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Critical_Date" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="UserID" Type="Int32" />
     <NavigationProperty Name="User_" Relationship="Self.fkaudlog" FromRole="Audit_Log" ToRole="User_" />
   </EntityType>
@@ -321,7 +329,7 @@
     <Property Name="Emp_Date_Employed" Type="DateTime" Precision="0" />
     <Property Name="Title_ID" Type="Int32" />
     <Property Name="Emp_Type_ID" Type="Int32" />
-    <Property Name="Employee_Status_ID" Type="Int32" />
+    <Property Name="Employee_Status" Type="Boolean" />
     <Property Name="Emp_Contract_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Emp_Contract_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="BarcodeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -329,18 +337,9 @@
     <NavigationProperty Name="Event_Schedule" Relationship="Self.fkech" FromRole="Employee" ToRole="Event_Schedule" />
     <NavigationProperty Name="Title" Relationship="Self.fkemp" FromRole="Employee" ToRole="Title" />
     <NavigationProperty Name="Employee_Type" Relationship="Self.fkemp1" FromRole="Employee" ToRole="Employee_Type" />
-    <NavigationProperty Name="Employee_Status" Relationship="Self.fkemp2" FromRole="Employee" ToRole="Employee_Status" />
     <NavigationProperty Name="HomeChecks" Relationship="Self.fkho" FromRole="Employee" ToRole="HomeCheck" />
     <NavigationProperty Name="TimeSheets" Relationship="Self.fktime" FromRole="Employee" ToRole="TimeSheet" />
     <NavigationProperty Name="User_" Relationship="Self.fkuser" FromRole="Employee" ToRole="User_" />
-  </EntityType>
-  <EntityType Name="Employee_Status">
-    <Key>
-      <PropertyRef Name="Employee_Status_ID" />
-    </Key>
-    <Property Name="Employee_Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Employee_Status_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Employees" Relationship="Self.fkemp2" FromRole="Employee_Status" ToRole="Employee" />
   </EntityType>
   <EntityType Name="Employee_Type">
     <Key>
@@ -540,8 +539,8 @@
     </Key>
     <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Role_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SubsystemRoles" Relationship="Self.fksubrol1" FromRole="Role_" ToRole="SubsystemRole" />
     <NavigationProperty Name="UserRoles" Relationship="Self.fkuserol1" FromRole="Role_" ToRole="UserRole" />
-    <NavigationProperty Name="SubsystemRoles" Relationship="Wollies_ShelterModel.fksubrol1" FromRole="Role_" ToRole="SubsystemRole" />
   </EntityType>
   <EntityType Name="Stock">
     <Key>
@@ -568,6 +567,24 @@
     <Property Name="Stock_Type_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Stock_Type_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Stocks" Relationship="Self.fkstock" FromRole="Stock_Type" ToRole="Stock" />
+  </EntityType>
+  <EntityType Name="Subsystem">
+    <Key>
+      <PropertyRef Name="Subsystem_Id" />
+    </Key>
+    <Property Name="Subsystem_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subsystem_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SubsystemRoles" Relationship="Self.fksubrol" FromRole="Subsystem" ToRole="SubsystemRole" />
+  </EntityType>
+  <EntityType Name="SubsystemRole">
+    <Key>
+      <PropertyRef Name="SubsystemRole_Id" />
+    </Key>
+    <Property Name="SubsystemRole_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subsystem_Id" Type="Int32" />
+    <Property Name="Role_ID" Type="Int32" />
+    <NavigationProperty Name="Role_" Relationship="Self.fksubrol1" FromRole="SubsystemRole" ToRole="Role_" />
+    <NavigationProperty Name="Subsystem" Relationship="Self.fksubrol" FromRole="SubsystemRole" ToRole="Subsystem" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -607,6 +624,15 @@
     <Property Name="FILENAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="FILEURL" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="Timer">
+    <Key>
+      <PropertyRef Name="Timer_Id" />
+    </Key>
+    <Property Name="Timer_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Hours" Type="Int32" />
+    <Property Name="Minutes" Type="Int32" />
+    <Property Name="Seconds" Type="Int32" />
+  </EntityType>
   <EntityType Name="TimeSheet">
     <Key>
       <PropertyRef Name="TimeSheet_ID" />
@@ -644,6 +670,7 @@
     <Property Name="Username" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Emp_ID" Type="Int32" Nullable="false" />
+    <Property Name="FirstTime" Type="Boolean" />
     <NavigationProperty Name="Audit_Log" Relationship="Self.fkaudlog" FromRole="User_" ToRole="Audit_Log" />
     <NavigationProperty Name="Employee" Relationship="Self.fkuser" FromRole="User_" ToRole="Employee" />
     <NavigationProperty Name="UserRoles" Relationship="Self.fkuserol" FromRole="User_" ToRole="UserRole" />
@@ -1288,18 +1315,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fkemp2">
-    <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="0..1" />
-    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee_Status">
-        <PropertyRef Name="Employee_Status_ID" />
-      </Principal>
-      <Dependent Role="Employee">
-        <PropertyRef Name="Employee_Status_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fkho">
     <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
     <End Role="HomeCheck" Type="Self.HomeCheck" Multiplicity="*" />
@@ -1396,6 +1411,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fksubrol1">
+    <End Role="Role_" Type="Self.Role_" Multiplicity="0..1" />
+    <End Role="SubsystemRole" Type="Self.SubsystemRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role_">
+        <PropertyRef Name="Role_ID" />
+      </Principal>
+      <Dependent Role="SubsystemRole">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkuserol1">
     <End Role="Role_" Type="Self.Role_" Multiplicity="0..1" />
     <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
@@ -1429,6 +1456,18 @@
       </Principal>
       <Dependent Role="Stock">
         <PropertyRef Name="Unit_Type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fksubrol">
+    <End Role="Subsystem" Type="Self.Subsystem" Multiplicity="0..1" />
+    <End Role="SubsystemRole" Type="Self.SubsystemRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subsystem">
+        <PropertyRef Name="Subsystem_Id" />
+      </Principal>
+      <Dependent Role="SubsystemRole">
+        <PropertyRef Name="Subsystem_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1509,6 +1548,7 @@
     <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" />
     <EntitySet Name="Adopter_Relative" EntityType="Self.Adopter_Relative" />
     <EntitySet Name="Adopter_Status" EntityType="Self.Adopter_Status" />
+    <EntitySet Name="AdopterFiles" EntityType="Self.AdopterFile" />
     <EntitySet Name="Adoptions" EntityType="Self.Adoption" />
     <EntitySet Name="Adoption_Status" EntityType="Self.Adoption_Status" />
     <EntitySet Name="AdoptionPayments" EntityType="Self.AdoptionPayment" />
@@ -1527,7 +1567,6 @@
     <EntitySet Name="Donors" EntityType="Self.Donor" />
     <EntitySet Name="Emp_Kennel" EntityType="Self.Emp_Kennel" />
     <EntitySet Name="Employees" EntityType="Self.Employee" />
-    <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" />
     <EntitySet Name="Employee_Type" EntityType="Self.Employee_Type" />
     <EntitySet Name="Event_" EntityType="Self.Event_" />
     <EntitySet Name="Event_Schedule" EntityType="Self.Event_Schedule" />
@@ -1547,10 +1586,13 @@
     <EntitySet Name="Role_" EntityType="Self.Role_" />
     <EntitySet Name="Stocks" EntityType="Self.Stock" />
     <EntitySet Name="Stock_Type" EntityType="Self.Stock_Type" />
+    <EntitySet Name="Subsystems" EntityType="Self.Subsystem" />
+    <EntitySet Name="SubsystemRoles" EntityType="Self.SubsystemRole" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Tables" EntityType="Self.Table" />
     <EntitySet Name="tblFileDetails" EntityType="Self.tblFileDetail" />
     <EntitySet Name="tblFileDetails1" EntityType="Self.tblFileDetail1" />
+    <EntitySet Name="Timers" EntityType="Self.Timer" />
     <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
     <EntitySet Name="Titles" EntityType="Self.Title" />
     <EntitySet Name="Unit_Type" EntityType="Self.Unit_Type" />
@@ -1740,10 +1782,6 @@
       <End Role="Employee_Type" EntitySet="Employee_Type" />
       <End Role="Employee" EntitySet="Employees" />
     </AssociationSet>
-    <AssociationSet Name="fkemp2" Association="Self.fkemp2">
-      <End Role="Employee_Status" EntitySet="Employee_Status" />
-      <End Role="Employee" EntitySet="Employees" />
-    </AssociationSet>
     <AssociationSet Name="fkho" Association="Self.fkho">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="HomeCheck" EntitySet="HomeChecks" />
@@ -1776,6 +1814,10 @@
       <End Role="Payment_Type" EntitySet="Payment_Type" />
       <End Role="Payment" EntitySet="Payments" />
     </AssociationSet>
+    <AssociationSet Name="fksubrol1" Association="Self.fksubrol1">
+      <End Role="Role_" EntitySet="Role_" />
+      <End Role="SubsystemRole" EntitySet="SubsystemRoles" />
+    </AssociationSet>
     <AssociationSet Name="fkuserol1" Association="Self.fkuserol1">
       <End Role="Role_" EntitySet="Role_" />
       <End Role="UserRole" EntitySet="UserRoles" />
@@ -1787,6 +1829,10 @@
     <AssociationSet Name="fkstock2" Association="Self.fkstock2">
       <End Role="Unit_Type" EntitySet="Unit_Type" />
       <End Role="Stock" EntitySet="Stocks" />
+    </AssociationSet>
+    <AssociationSet Name="fksubrol" Association="Self.fksubrol">
+      <End Role="Subsystem" EntitySet="Subsystems" />
+      <End Role="SubsystemRole" EntitySet="SubsystemRoles" />
     </AssociationSet>
     <AssociationSet Name="fkvol" Association="Self.fkvol">
       <End Role="Title" EntitySet="Titles" />
@@ -1827,6 +1873,21 @@
     <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="Kennel_Delete">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Kennel_insert">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="capacity" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Kennel_Update">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Number" Mode="In" Type="Int32" />
+      <Parameter Name="capacity" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Kennel_View" ReturnType="Collection(Wollies_ShelterModel.Kennel_View_Result)" />
     <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
@@ -1869,17 +1930,6 @@
     <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
       <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
-    <EntitySet Name="Timers" EntityType="Wollies_ShelterModel.Timer" />
-    <EntitySet Name="Subsystems" EntityType="Wollies_ShelterModel.Subsystem" />
-    <EntitySet Name="SubsystemRoles" EntityType="Wollies_ShelterModel.SubsystemRole" />
-    <AssociationSet Name="fksubrol1" Association="Wollies_ShelterModel.fksubrol1">
-      <End Role="Role_" EntitySet="Role_" />
-      <End Role="SubsystemRole" EntitySet="SubsystemRoles" />
-    </AssociationSet>
-    <AssociationSet Name="fksubrol" Association="Wollies_ShelterModel.fksubrol">
-      <End Role="Subsystem" EntitySet="Subsystems" />
-      <End Role="SubsystemRole" EntitySet="SubsystemRoles" />
-    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="AnimalType_SearchAnimalType_Result">
     <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -1908,6 +1958,12 @@
     <Property Type="Int32" Name="Emp_Type_ID" Nullable="false" />
     <Property Type="String" Name="Emp_Type_Name" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="Emp_Type_Description" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Kennel_View_Result">
+    <Property Type="Int32" Name="Kennel_ID" Nullable="false" />
+    <Property Type="String" Name="Kennel_Name" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="Kennel_Number" Nullable="true" />
+    <Property Type="Int32" Name="Kennel_Capacity" Nullable="true" />
   </ComplexType>
   <ComplexType Name="Parent_SearchParent_Result">
     <Property Type="Int32" Name="Foster_Parent_ID" Nullable="false" />
@@ -1961,55 +2017,4 @@
     <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
     <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
   </ComplexType>
-  <EntityType Name="Timer">
-    <Key>
-      <PropertyRef Name="Timer_Id" />
-    </Key>
-    <Property Name="Timer_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Hours" Type="Int32" />
-    <Property Name="Minutes" Type="Int32" />
-    <Property Name="Seconds" Type="Int32" />
-  </EntityType>
-  <EntityType Name="Subsystem">
-    <Key>
-      <PropertyRef Name="Subsystem_Id" />
-    </Key>
-    <Property Name="Subsystem_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Subsystem_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="SubsystemRoles" Relationship="Wollies_ShelterModel.fksubrol" FromRole="Subsystem" ToRole="SubsystemRole" />
-  </EntityType>
-  <EntityType Name="SubsystemRole">
-    <Key>
-      <PropertyRef Name="SubsystemRole_Id" />
-    </Key>
-    <Property Name="SubsystemRole_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Subsystem_Id" Type="Int32" />
-    <Property Name="Role_ID" Type="Int32" />
-    <NavigationProperty Name="Role_" Relationship="Wollies_ShelterModel.fksubrol1" FromRole="SubsystemRole" ToRole="Role_" />
-    <NavigationProperty Name="Subsystem" Relationship="Wollies_ShelterModel.fksubrol" FromRole="SubsystemRole" ToRole="Subsystem" />
-  </EntityType>
-  <Association Name="fksubrol1">
-    <End Type="Wollies_ShelterModel.Role_" Role="Role_" Multiplicity="0..1" />
-    <End Type="Wollies_ShelterModel.SubsystemRole" Role="SubsystemRole" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Role_">
-        <PropertyRef Name="Role_ID" />
-      </Principal>
-      <Dependent Role="SubsystemRole">
-        <PropertyRef Name="Role_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fksubrol">
-    <End Type="Wollies_ShelterModel.Subsystem" Role="Subsystem" Multiplicity="0..1" />
-    <End Type="Wollies_ShelterModel.SubsystemRole" Role="SubsystemRole" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Subsystem">
-        <PropertyRef Name="Subsystem_Id" />
-      </Principal>
-      <Dependent Role="SubsystemRole">
-        <PropertyRef Name="Subsystem_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

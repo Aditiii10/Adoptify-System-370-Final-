@@ -275,6 +275,9 @@
     <Compile Include="Adopter.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AdopterFile.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Adopter_Contract.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -392,9 +395,6 @@
     <Compile Include="Employee.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Employee_Status.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Employee_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -432,6 +432,9 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Kennel.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Kennel_View_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Mecidal_Card.cs">
@@ -899,7 +902,6 @@
     <Content Include="Views\Adoptions\Delete.cshtml" />
     <Content Include="Views\Adoptions\Index.cshtml" />
     <Content Include="Views\Adoptions\Finalise.cshtml" />
-    <Content Include="Views\Adoptions\ReturninAnimal.cshtml" />
     <Content Include="Views\Adoptions\HomeCheckschedule.cshtml" />
     <Content Include="Views\View.cshtml" />
     <Content Include="Views\Adoptions\HomeCheckReport.cshtml" />

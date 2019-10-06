@@ -17,18 +17,34 @@
         </div>
         <br />*@
         <div class="newButton">
-            @Html.ActionLink("Adoption Tutorial Video", "VideoView", "Videoplayer", null, new { @class = "btn btn-danger glyphicon glyphicon-plus", @style="float:right", @Title = "Click to Go watch Adoption Tutorial Video"  })
+            @Html.ActionLink("Adoption Tutorial Video", "VideoView", "Videoplayer", null, new { @class = "btn btn-danger glyphicon glyphicon-plus", @style = "float:right", @Title = "Click to Go watch Adoption Tutorial Video" })
             @Html.ActionLink("Create New", "Create", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-plus", @Title = "Click to Add New Adoption" })
         </div>
-        <p>
+        @*<p>
             @using (Html.BeginForm("Index", "Adoptions", FormMethod.Get))
             {
                 <b>Search by:</b>@Html.RadioButton("Searchby", "Animal_Name", true) <text>Animal Name</text>
                 @Html.RadioButton("Searchby", "Adoptor_Name")<text> Adoptor Name</text><br />
+                @Html.RadioButton("Searchby", "Adoption_Status")<text> Adoption Status</text><br />
                 @Html.TextBox("search")<input type="submit" value="Search" ? />
             }
-        </p>
+        </p>*@
+        @using (Html.BeginForm("AdoptionPayemenHistory", "Adoptions", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        }
+        <br />
         <table class="table-bordered table">
             <tr class="table-primary">
                 <th>
@@ -88,17 +104,17 @@
 
                         </td>
                         <td>
-                            @if (item.Adopt_Status_ID == 1 @*|| item.Adopt_Status_ID == 2 || item.Adopt_Status_ID == 3 || item.Adopt_Status_ID == 4 || item.Adopt_Status_ID == 5*@)
+                            @if (item.Adopt_Status_ID == 1@*|| item.Adopt_Status_ID == 2 || item.Adopt_Status_ID == 3 || item.Adopt_Status_ID == 4 || item.Adopt_Status_ID == 5*@)
+{
+    @Html.ActionLink("Delete", "Delete", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash", @Title = "Click to Delete/Cancel Adoption" })
+}
+                            @if (item.Adopt_Status_ID == 1)
                             {
-                                @Html.ActionLink("Delete", "Delete", "Adoptions", new { id = item.Adoption_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash", @Title = "Click to Delete/Cancel Adoption" })
+                                @Html.ActionLink("Upload Doctuments", "FileView", "Adoptionfile", null, new { @class = "btn btn-primary glyphicon glyphicon-trash", @Title = "Click to Upload Adoption Doctuments" })
                             }
                             @if (item.Adopt_Status_ID == 1)
                             {
-                                @Html.ActionLink("Upload Doctuments", "FileView", "Adoptionfile", null, new { @class = "btn btn-primary glyphicon glyphicon-trash", @Title = "Click to Upload Adoption Doctuments"  })
-                            }
-                            @if (item.Adopt_Status_ID == 1)
-                            {
-                                @Html.ActionLink("Go to Schedule HomeCheck Page", "HomeCheckIndex", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-trash", @Title = "Click to go Schedule HomeCheck"  })
+                                @Html.ActionLink("Go to Schedule HomeCheck Page", "HomeCheckIndex", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-trash", @Title = "Click to go Schedule HomeCheck" })
                             }
 
                             @if (item.Adopt_Status_ID == 2)
@@ -134,7 +150,7 @@
 
         </table>
         @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign", @Title = "Click to go Back to Home" })
-        @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page"  })
+        @Html.ActionLink("Refresh", "Index", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh", @Title = "Click to Refresh this page" })
     </div>
 
 @section scripts{

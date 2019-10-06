@@ -164,7 +164,7 @@ namespace AdoptifySystem.Controllers
         public ActionResult Checkin()
         {
             List<Employee> emp = new List<Employee>();
-            emp = db.Employees.Where(z => z.Employee_Status.Employee_Status_Name == "Checked-Out").ToList();
+            emp = db.Employees.Where(z => z.Employee_Status == true).ToList();
             flex.employeelist = emp;
             flex.employee = null;
             return View(flex);
@@ -187,7 +187,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.err = "Employee is not found";
                 return View();
             }
-            empold.Employee_Status_ID = 1;
+            //empold.Employee_Status_ID = 1;
             db.Entry(emp).CurrentValues.SetValues(empold);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
@@ -228,7 +228,7 @@ namespace AdoptifySystem.Controllers
         public ActionResult Checkout()
         {
             List<Employee> emp = new List<Employee>();
-            emp = db.Employees.Where(z => z.Employee_Status.Employee_Status_Name == "Checked-In").ToList();
+            emp = db.Employees.Where(z => z.Employee_Status == false).ToList();
             flex.employeelist = emp;
             flex.employee = null;
             return View(flex);
@@ -277,7 +277,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.err = "Employee is not found";
                 return View();
             }
-            empold.Employee_Status_ID = 2;
+           // empold.Employee_Status_ID = 2;
             db.Entry(emp).CurrentValues.SetValues(empold);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");

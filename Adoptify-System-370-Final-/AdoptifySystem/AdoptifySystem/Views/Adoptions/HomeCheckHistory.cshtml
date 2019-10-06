@@ -5,80 +5,90 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="main">
-    <div class="" style="text-align:center;padding-left:120px">
-        <div class="col-sm-10" style='background-color: #2ba6cb'>
-            <h1 style="color:white">Home Check History</h1>
-        </div>
-    </div>
-    <h1>@ViewBag.errormessage</h1>
-
-    @using (Html.BeginForm("HomeCheckHistory", "Adoptions", FormMethod.Post))
-    {
-        <div class="row">
-            <div class="col-md-5">
-                <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
-                @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+    <div id="main">
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Home Check History</h1>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <button type="submit" value="Search" class="btn btn-primary">Search</button>
-            </div>
-        </div>
-    }
-    <br />
-    <table class="table table-bordered">
-        <tr class="table-primary">
-            <th>
-                HomeCheck Date
-            </th>
-            <th>
-                Adopter's Details
-            </th>
-            <th>
-                Animal Details
-            </th>
-            <th>
-                Empployee's Details
-            </th>
-        </tr>
-
-        @if (Model == null)
-        {
-            <tr>
-                <td colspan="8">
-                    No results found
-                </td>
-            </tr>
-        }
-        else
-        {
-            foreach (HomeCheck item in Model)
+        <h1>@ViewBag.errormessage</h1>
+        <hr />
+        @*<p>
+            @using (Html.BeginForm("SearchAdoption", "Adoptions", FormMethod.Get))
             {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.HomeCheck_Datetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_CellNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Age) years old
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employee.Emp_Name) @Html.DisplayFor(modelItem => item.Employee.Emp_Surname)
-        </td>
-
-    </tr>
+                <b>Search by:</b>@Html.RadioButton("Searchby", "Animal_Name", true) <text>Animal Name</text>
+                @Html.RadioButton("Searchby", "Adoptor_Name")<text> Adoptor Name</text><br />
+                @Html.RadioButton("Searchby", "Emp_Name")<text> Employee Name</text><br />
+                @Html.TextBox("search")<input type="submit" value="Search" ? />
             }
-        }
+        </p>*@
 
-    </table>
-    @Html.ActionLink("Back to Adoption Home", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
-    @Html.ActionLink("Refresh", "HomeCheckHistory", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
-</div>
+        @using (Html.BeginForm("HomeCheckHistory", "Adoptions", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        }
+        <br />
+        <table class="table table-bordered">
+            <tr class="table-primary">
+                <th>
+                    HomeCheck Date
+                </th>
+                <th>
+                    Adopter's Details
+                </th>
+                <th>
+                    Animal Details
+                </th>
+                <th>
+                    Empployee's Details
+                </th>
+            </tr>
+
+            @if (Model == null)
+            {
+                <tr>
+                    <td colspan="8">
+                        No results found
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (HomeCheck item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HomeCheck_Datetime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_CellNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Name) , @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Type.Animal_Type_Name), @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Breed.Animal_Breed_Name), @Html.DisplayFor(modelItem => item.Adoption.Animal.Animal_Age) years old
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Employee.Emp_Name) @Html.DisplayFor(modelItem => item.Employee.Emp_Surname)
+                        </td>
+
+                    </tr>
+                }
+            }
+
+        </table>
+        @Html.ActionLink("Back to Adoption Home", "Index", "Adoptions", null, new { @class = "btn btn-warning glyphicon glyphicon-remove-sign" })
+        @Html.ActionLink("Refresh", "HomeCheckHistory", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-refresh" })
+    </div>
 
 @section scripts{
     <script>

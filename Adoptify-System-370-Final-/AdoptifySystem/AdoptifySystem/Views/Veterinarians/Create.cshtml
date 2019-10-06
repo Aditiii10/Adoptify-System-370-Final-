@@ -46,7 +46,7 @@
             <div>
                 <label title="Enter Vet Name">Name:</label><br />
 
-                @Html.EditorFor(model => model.Vet_Name, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Name" } })
+                @Html.EditorFor(model => model.Vet_Name, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Name", maxlength="150" } })
                 @Html.ValidationMessageFor(model => model.Vet_Name, "", new { @class = "text-danger" })
 
             </div>
@@ -54,14 +54,14 @@
             <div>
                 <label title="Enter Vet Email">Email:</label> <br />
 
-                @Html.EditorFor(model => model.Vet_Emial, new { htmlAttributes = new { @class = "form-control", @type = "email", required = "required", placeholder = "Enter Vet Name" } })
+                @Html.EditorFor(model => model.Vet_Emial, new { htmlAttributes = new { @class = "form-control", @type = "email", required = "required", placeholder = "Enter Vet Name", maxlength="254" } })
                 @Html.ValidationMessageFor(model => model.Vet_Emial, "", new { @class = "text-danger" })
 
             </div>
 
             <div>
                 <lable title="Enter Vet Tel">Tel:</lable><br />
-                @Html.EditorFor(model => model.Vet_Tel, new { htmlAttributes = new { @class = "form-control", @type = "tel", required = "required", placeholder = "Enter Vet Tel" } })
+                @Html.EditorFor(model => model.Vet_Tel, new { htmlAttributes = new { @class = "form-control", @type = "tel", required = "required", placeholder = "Enter Vet Tel", maxlength="15" } })
                 @Html.ValidationMessageFor(model => model.Vet_Tel, "", new { @class = "text-danger" })
 
             </div>
@@ -69,7 +69,7 @@
             <div>
                 <lable title="Enter Vet Address">Address:</lable><br />
 
-                @Html.EditorFor(model => model.Vet_Address, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Address" } })
+                @Html.EditorFor(model => model.Vet_Address, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Enter Vet Address" , maxlength="300"} })
                 @Html.ValidationMessageFor(model => model.Vet_Address, "", new { @class = "text-danger" })
 
             </div><br />

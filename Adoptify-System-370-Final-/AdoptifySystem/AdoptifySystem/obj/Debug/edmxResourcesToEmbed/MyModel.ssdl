@@ -9,12 +9,12 @@
     <Property Name="Adopter_Surname" Type="nvarchar" MaxLength="200" />
     <Property Name="Adopter_Email" Type="nvarchar" MaxLength="200" />
     <Property Name="Title_ID" Type="int" />
-    <Property Name="Adopter_Address" Type="nvarchar" MaxLength="200" />
-    <Property Name="Adopter_PostalAddress" Type="nvarchar" MaxLength="200" />
-    <Property Name="Adopter_HomeNumber" Type="nvarchar" MaxLength="200" />
-    <Property Name="Adopter_WorkNumber" Type="nvarchar" MaxLength="200" />
-    <Property Name="Adopter_CellNumber" Type="nvarchar" MaxLength="200" />
-    <Property Name="Adopter_CarRegistartion_Number" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adopter_Address" Type="nvarchar" MaxLength="500" />
+    <Property Name="Adopter_PostalAddress" Type="nvarchar" MaxLength="500" />
+    <Property Name="Adopter_HomeNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="Adopter_WorkNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="Adopter_CellNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="Adopter_CarRegistartion_Number" Type="nvarchar" MaxLength="10" />
     <Property Name="Adopter_Employer" Type="nvarchar" MaxLength="200" />
     <Property Name="Adopter_Status_ID" Type="int" />
     <Property Name="Amount_of_Family_Memebers" Type="int" />
@@ -67,6 +67,14 @@
     </Key>
     <Property Name="Adopter_Status_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Adopter_Status_Name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="AdopterFile">
+    <Key>
+      <PropertyRef Name="SQLID" />
+    </Key>
+    <Property Name="SQLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FILENAME" Type="nvarchar" MaxLength="500" />
+    <Property Name="FILEURL" Type="nvarchar" MaxLength="1500" />
   </EntityType>
   <EntityType Name="Adoption">
     <Key>
@@ -174,8 +182,8 @@
     </Key>
     <Property Name="Auditlog_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Auditlog_DateTime" Type="datetime" />
-    <Property Name="Transaction_Type" Type="varchar" MaxLength="1" />
-    <Property Name="Critical_Date" Type="varchar" MaxLength="1" />
+    <Property Name="Transaction_Type" Type="varchar" MaxLength="200" />
+    <Property Name="Critical_Date" Type="varchar" MaxLength="200" />
     <Property Name="UserID" Type="int" />
   </EntityType>
   <EntityType Name="CrossBreed">
@@ -260,17 +268,10 @@
     <Property Name="Emp_Date_Employed" Type="date" />
     <Property Name="Title_ID" Type="int" />
     <Property Name="Emp_Type_ID" Type="int" />
-    <Property Name="Employee_Status_ID" Type="int" />
+    <Property Name="Employee_Status" Type="bit" />
     <Property Name="Emp_Contract_Name" Type="nvarchar(max)" />
     <Property Name="Emp_Contract_Type" Type="nvarchar(max)" />
     <Property Name="BarcodeImageUrl" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="Employee_Status">
-    <Key>
-      <PropertyRef Name="Employee_Status_ID" />
-    </Key>
-    <Property Name="Employee_Status_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Employee_Status_Name" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Employee_Type">
     <Key>
@@ -560,6 +561,7 @@
     <Property Name="Username" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="Password" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="Emp_ID" Type="int" Nullable="false" />
+    <Property Name="FirstTime" Type="bit" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>
@@ -1045,18 +1047,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fkemp2">
-    <End Role="Employee_Status" Type="Self.Employee_Status" Multiplicity="0..1" />
-    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee_Status">
-        <PropertyRef Name="Employee_Status_ID" />
-      </Principal>
-      <Dependent Role="Employee">
-        <PropertyRef Name="Employee_Status_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fkempk">
     <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
     <End Role="Emp_Kennel" Type="Self.Emp_Kennel" Multiplicity="*" />
@@ -1445,6 +1435,21 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="Kennel_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Kennel_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Number" Type="int" Mode="In" />
+    <Parameter Name="capacity" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Kennel_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Number" Type="int" Mode="In" />
+    <Parameter Name="capacity" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Kennel_View" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="Parent_SearchParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
   </Function>
@@ -1492,6 +1497,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="Adopter_Contract" EntityType="Self.Adopter_Contract" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adopter_Relative" EntityType="Self.Adopter_Relative" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adopter_Status" EntityType="Self.Adopter_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdopterFile" EntityType="Self.AdopterFile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adoption" EntityType="Self.Adoption" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Adoption_Status" EntityType="Self.Adoption_Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AdoptionPayment" EntityType="Self.AdoptionPayment" Schema="dbo" store:Type="Tables" />
@@ -1510,7 +1516,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     <EntitySet Name="Donor" EntityType="Self.Donor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Emp_Kennel" EntityType="Self.Emp_Kennel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Employee_Status" EntityType="Self.Employee_Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee_Type" EntityType="Self.Employee_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Event_" EntityType="Self.Event_" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Event_Schedule" EntityType="Self.Event_Schedule" Schema="dbo" store:Type="Tables" />
@@ -1685,10 +1690,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
     </AssociationSet>
     <AssociationSet Name="fkemp1" Association="Self.fkemp1">
       <End Role="Employee_Type" EntitySet="Employee_Type" />
-      <End Role="Employee" EntitySet="Employee" />
-    </AssociationSet>
-    <AssociationSet Name="fkemp2" Association="Self.fkemp2">
-      <End Role="Employee_Status" EntitySet="Employee_Status" />
       <End Role="Employee" EntitySet="Employee" />
     </AssociationSet>
     <AssociationSet Name="fkempk" Association="Self.fkempk">

@@ -13,8 +13,16 @@
             <h1 style='color:white'>HomeCheck Report History</h1>
         </div>
     </div>
-
-    @using (Html.BeginForm("HomeCheckReportHistory", "Adoptions", FormMethod.Post))
+    <hr />
+    @*<p>
+        @using (Html.BeginForm("SearchAdoption", "Adoptions", FormMethod.Get))
+        {
+            <b>Search by:</b>@Html.RadioButton("Searchby", "Animal_Name", true) <text>Animal Name</text>
+            @Html.RadioButton("Searchby", "Adoptor_Name")<text> Adoptor Name</text><br />
+            @Html.TextBox("search")<input type="submit" value="Search" ? />
+        }
+    </p>*@
+    @using (Html.BeginForm("SearchAdoption", "Adoptions", FormMethod.Post))
     {
         <div class="row">
             <div class="col-md-5">
