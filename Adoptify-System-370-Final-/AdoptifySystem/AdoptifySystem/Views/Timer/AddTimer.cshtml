@@ -1,0 +1,129 @@
+﻿@model AdoptifySystem.Timer
+@{
+    ViewBag.Title = "AddTimer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="main">
+    <div class="form-horizontal">
+        <div>
+            <div class="col-sm-12 table-primary"><h1>Add Timer</h1></div>
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="input-group mb-3">
+            <input type="number" id="hours" class="form-control" maxlength="2" style="text-align:center; width:50px;" placeholder="--" aria-label="Amount (to the nearest dollar)" />
+            <div class="input-group-append">
+                <span class="input-group-text">hours</span>
+            </div>
+            <input type="number" id="minutes" class="form-control" max="2" style="text-align:center;width:50px;" placeholder="--" aria-label="Amount (to the nearest dollar" />
+            <div class="input-group-append">
+                <span class="input-group-text">minutes</span>
+            </div>
+            <input type="number" id="seconds" class="form-control" max="2" style="text-align:center;width:50px;" placeholder="--" aria-label="Amount (to the nearest dollar" />
+            <div class="input-group-append">
+                <span class="input-group-text">seconds</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
+                <button type="submit" name="button" value="Save" onclick="Save()" class="btn btn-success float-right">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+         $(function () {
+            var successMessage = '@TempData["EditMessage"]'
+            if (successMessage != '')
+                alertify.warning(successMessage);
+         });
+        $(function () {
+            var successMessage = '@TempData["DeleteMessage"]'
+            if (successMessage != '')
+                alertify.error(successMessage);
+        });
+function Save() {
+                var hours = document.getElementById("hours");
+                var minutes = document.getElementById("minutes");
+                var seconds = document.getElementById("seconds");
+                var isvalid = true;
+    if (hours.value == "" || hours.value.length > 2 || hours.value > 12) {
+                    //first remove
+                    hours.classList.remove("is-valid");
+                    //then add the class you want
+                    hours.classList.add("is-invalid");
+                    alert(hours.value);
+                    isvalid = false;
+                } else {
+                    //first remove
+                    hours.classList.remove("is-invalid");
+                    //then add the class you want
+                    hours.classList.add("is-valid");
+    }
+               if (minutes.value == "" || minutes.value.length > 2 || minutes.value > 59) {
+                    //first remove
+                    minutes.classList.remove("is-valid");
+                    //then add the class you want
+                    minutes.classList.add("is-invalid");
+                    //alert(minutes.value);
+                    minutes = false;
+                } else {
+                    //first remove
+                    minutes.classList.remove("is-invalid");
+                    //then add the class you want
+                    minutes.classList.add("is-valid");
+    }
+               if (seconds.value == "" || seconds.value.length > 2 || seconds.value > 12) {
+                    //first remove
+                    seconds.classList.remove("is-valid");
+                    //then add the class you want
+                    seconds.classList.add("is-invalid");
+                    //alert(hours.value);
+                    isvalid = false;
+                } else {
+                    //first remove
+                    seconds.classList.remove("is-invalid");
+                    //then add the class you want
+                    seconds.classList.add("is-valid");
+    }
+    alert(hours.value + ":" + minutes.value + ":" + seconds.value);
+                if (isvalid) {
+                    var formData = new FormData();
+                    formData.append("Hours", hours.value);
+                    formData.append("Minutes", minutes.value);
+                    formData.append("Seconds", seconds.value);
+                    $("#loader").show();
+                $.ajax(
+                    {
+                    type: "POST",
+                    data: formData,
+                    url: "/Timer/MaintainTimer",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    success: function (d) {
+                        $("#loader").hide();
+                        isvalid = true;
+                        location.href = '@Url.Action("SearchBreedType","Animal")';
+                    },
+                    error: function (error) {
+                        $("#loader").hide();
+                        isvalid = false;
+                        alert("There was an internal error try again later" + error);
+                }
+            });
+                }
+            }
+    </script>
+}

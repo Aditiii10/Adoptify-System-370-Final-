@@ -916,6 +916,7 @@
     <Content Include="Views\FosterCarePeriods\AddFosterCareDates.cshtml" />
     <Content Include="Views\FosterCarePeriods\MaintainFosterCareDates.cshtml" />
     <Content Include="Views\Audit_Log\Index.cshtml" />
+    <Content Include="Views\Timer\AddTimer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesAdopter\" />
@@ -923,7 +924,6 @@
     <Folder Include="UploadedFilesMedCard\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\Error\" />
-    <Folder Include="Views\Timer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
