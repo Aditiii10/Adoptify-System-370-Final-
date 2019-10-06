@@ -13,7 +13,7 @@
     </div>
 
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit", "Adopters", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
@@ -376,7 +376,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.HomeCheck_Suburb, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.HomeCheck_Suburb, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;"})
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.HomeCheck_Suburb, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.HomeCheck_Suburb, "", new { @class = "text-danger" })
@@ -528,27 +528,16 @@
                         </div>
                     </div>
 
-                    <script>
-                        function Save() {
-                            var Property_Securely_Closed = document.getElementById("Property_Securely_Closed");
-                            var Properyty_Include_Pool = document.getElementById("Properyty_Include_Pool")
-                            var Pool_Secured = document.getElementById("Pool_Secured")
-                            var Animal_Shelter_Available = document.getElementById("Animal_Shelter_Available")
-                            var Sick_Animal = document.getElementById("Sick_Animal")
-                            var Given_Animal_Away = document.getElementById("Given_Animal_Away")
-                            var Adopted_Before = document.getElementById("Adopted_Before")
-                            var Complex_or_Flat = document.getElementById("Complex_or_Flat")
-                            var Animal_Allowed = document.getElementById("Animal_Allowed")
-                            var Animal_Vaccines_Updated = document.getElementById("Animal_Vaccines_Updated")
-                        }
+                    
 
-                    </script>
+                   
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <br />
                             @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
-                            @Html.ActionLink("Update", "Index", "Adopters", new { id = Model.Adopter_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Adopter" })
+                            @*@Html.ActionLink("Update", "Index", "Adopters", new { id = Model.Adopter_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Adopter" })*@
+                            <input type="submit" value="Update" class="btn btn-success" style="float:right" title="Click to Save Adopter" />                            
                             <br />
                         </div>
                     </div>
@@ -561,12 +550,11 @@
 </div>
 
 
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWS2RFX5WP2nl4kXOGpCZwjHsYFEQp5iA&=false&libraries=places">
-    </script>
+</script>
     <script type="text/javascript">
 
         google.maps.event.addDomListener(window, 'load', function () {
