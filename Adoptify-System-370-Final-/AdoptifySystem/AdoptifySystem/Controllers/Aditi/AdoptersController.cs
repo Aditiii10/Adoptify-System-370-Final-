@@ -16,16 +16,68 @@ namespace AdoptifySystem.Controllers.Aditi
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public IEnumerable<SelectListItem> Titles { get; set; }
 
-        
+
         //public static Flexible myclass = new Flexible();
-        
+
 
         //public ActionResult OnGet()
         //{
-       
+
         //    return Page();
         //}
         // GET: Adopters
+
+        public ActionResult SearchAdopter()
+        {
+            ViewBag.errormessage = "";
+            List<Adopter> Adopters = new List<Adopter>();
+            try
+            {
+                Adopters = db.Adopters.ToList();
+                if (Adopters.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(Adopters);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+        [HttpGet]
+        public ActionResult SearchAdopter(string search)
+        {
+            if (search != null)
+            {
+
+                List<Adopter> Adopt = new List<Adopter>();
+                try
+                {
+
+                    Adopt = db.Adopters.Where(z => z.Adopter_Name.StartsWith(search) || z.Adopter_Surname.StartsWith(search) || z.Adopter_Email.StartsWith(search) || z.Adopter_CellNumber.StartsWith(search)).ToList();
+                    if (Adopt.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("Index", Adopt);
+                    }
+                    return View("Index", Adopt);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    throw new Exception("Something Went Wrong!");
+                }
+            }
+            else
+            {
+
+            }
+
+            return View();
+
+        }
 
         public AdoptersController()
         {

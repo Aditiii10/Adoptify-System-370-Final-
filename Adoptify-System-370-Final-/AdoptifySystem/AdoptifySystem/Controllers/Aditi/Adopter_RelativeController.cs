@@ -16,6 +16,58 @@ namespace AdoptifySystem.Controllers.Aditi
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
         // GET: Adopter_Relative
+
+        public ActionResult SearchAdopterRelative()
+        {
+            ViewBag.errormessage = "";
+            List<Adopter_Relative> AdopterRelative = new List<Adopter_Relative>();
+            try
+            {
+                AdopterRelative = db.Adopter_Relative.ToList();
+                if (AdopterRelative.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(AdopterRelative);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+        [HttpGet]
+        public ActionResult SearchAdopterRelative(string search)
+        {
+            if (search != null)
+            {
+
+                List<Adopter_Relative> AdoptRelative = new List<Adopter_Relative>();
+                try
+                {
+
+                    AdoptRelative = db.Adopter_Relative.Where(z => z.Relative_Name.StartsWith(search) || z.Relative_Surname.StartsWith(search) || z.Relative_Email.StartsWith(search) || z.Relative_Cell.StartsWith(search)).ToList(); 
+                    if (AdoptRelative.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("Index", AdoptRelative);
+                    }
+                    return View("Index", AdoptRelative);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    throw new Exception("Something Went Wrong!");
+                }
+            }
+            else
+            {
+
+            }
+
+            return View();
+
+        }
         public ActionResult Index()
         {
             var adopter_Relative = db.Adopter_Relative.Include(a => a.Adopter);

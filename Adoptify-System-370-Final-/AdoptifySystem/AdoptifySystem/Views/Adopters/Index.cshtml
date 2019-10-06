@@ -12,12 +12,12 @@
             </div>
         </div>
 
-        @using (Html.BeginForm("Index", "Adopters", FormMethod.Post))
+        @using (Html.BeginForm("SearchAdopter", "Adopters", FormMethod.Get))
         {
             <div class="row">
                 <div class="col-md-5">
                     <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
-                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @style = "form-control" })
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
                 </div>
             </div>
 

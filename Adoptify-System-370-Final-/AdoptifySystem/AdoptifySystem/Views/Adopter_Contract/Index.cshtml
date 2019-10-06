@@ -12,12 +12,12 @@
             </div>
         </div>
 
-        @using (Html.BeginForm("Index", "Adopter_Contract", FormMethod.Post))
+        @using (Html.BeginForm("SearchAdopterContract", "Adopter_Contract", FormMethod.Get))
         {
             <div class="row">
                 <div class="col-md-5">
                     <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
-                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @style = "form-control" })
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
                 </div>
             </div>
 
@@ -33,9 +33,7 @@
             @Html.ActionLink("Add New", "Create", "Adopter_Contract", new { @class = "btn btn-success", @Title = "Click to Add Adopter Contract" })
             @using (Html.BeginForm("Index", "Adopter_Contract", FormMethod.Get))
             {
-                <b>Search Criteria:  </b>
-                <br />
-                @Html.TextBox("search")<input type="submit" value="Search" ? class="btn btn-primary" title="Click to Search" />
+               
             }
         </p>
         <table class="table-bordered table">
@@ -75,4 +73,4 @@
                 <br />
             </div>
         </div>
-        </div>
+    </div>
