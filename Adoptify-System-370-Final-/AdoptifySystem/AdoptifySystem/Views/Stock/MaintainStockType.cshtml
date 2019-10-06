@@ -6,33 +6,30 @@
 <br />
 <div class=" border-primary card">
     <h2 class="table-primary">Maintain Stock Type</h2>
-    @using (Html.BeginForm())
-    {
-        <div class="form-horizontal">
-            <input hidden name="Stock_Type_ID" value="@Model.Stock_Type_ID" />
-            <hr />
-            <div class="form-group">
-                <label>Stock Type Name</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" id="StockTypename" value="@Model.Stock_Type_Name" name="Stock_Type_Name" placeholder="Stock Type Name">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Stock Type Description</label>
-                <div class="col-md-10">
-                    <textarea type="text" class="form-control" id="StockTypeDescription" value="@Model.Stock_Type_Description" name="Stock_Type_Description" placeholder="Stock Type Description">@Model.Stock_Type_Description</textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
-                </div>
+    <div class="form-horizontal">
+        <input hidden name="Stock_Type_ID" id="Stock_Type_ID" value="@Model.Stock_Type_ID" />
+        <hr />
+        <div class="form-group">
+            <label>Stock Type Name</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="Stock_Type_Name" value="@Model.Stock_Type_Name" name="Stock_Type_Name" placeholder="Stock Type Name">
             </div>
         </div>
-    }
+
+        <div class="form-group">
+            <label>Stock Type Description</label>
+            <div class="col-md-10">
+                <textarea type="text" class="form-control" id="Stock_Type_Description" value="@Model.Stock_Type_Description" name="Stock_Type_Description" placeholder="Stock Type Description">@Model.Stock_Type_Description</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Cancel", "SearchStockType", new { @class = "btn btn-warning", @title = "Click to go back to Search Stock Type screen" })
+                <button type="submit" name="button" value="Save" onclick="Save()" title="Click to update the Following Stock Type Details" class=" btn btn-success float-right">Save</button>
+            </div>
+        </div>
+    </div>
 </div>
 @section scripts{
     <script>
@@ -46,5 +43,64 @@
             if (exception != '')
                 alertify.error(exception);
          });
+ function Save() {
+    var Stock_Type_ID = document.getElementById("Stock_Type_ID");
+                var Stock_Type_Name = document.getElementById("Stock_Type_Name");
+                var Stock_Type_Description = document.getElementById("Stock_Type_Description");
+                var isvalid = true;
+                if (Stock_Type_Name.value == "") {
+                    //first remove
+                    Stock_Type_Name.classList.remove("is-valid");
+                    //then add the class you want
+                    Stock_Type_Name.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Stock_Type_Name.classList.remove("is-invalid");
+                    //then add the class you want
+                    Stock_Type_Name.classList.add("is-valid");
+                }
+                if (Stock_Type_Description.value == "") {
+                    //first remove
+                    Stock_Type_Description.classList.remove("is-valid");
+                    //then add the class you want
+                    Stock_Type_Description.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Stock_Type_Description.classList.remove("is-invalid");
+                    //then add the class you want
+                    Stock_Type_Description.classList.add("is-valid");
+                }
+                if (isvalid) {
+                    var formData = new FormData();
+                    formData.append("Stock_Type_ID", Stock_Type_ID.value );
+                    formData.append("Stock_Type_Name", Stock_Type_Name.value );
+                    formData.append("Stock_Type_Description", Stock_Type_Description.value);
+                    $("#loader").show();
+                $.ajax(
+                    {
+                    type: "POST",
+                    data: formData,
+                    url: "/Stock/MaintainStockType",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    success: function (d) {
+                        $("#loader").hide();
+                        isvalid = true;
+                    },
+                    error: function (error) {
+                        $("#loader").hide();
+                        isvalid = false;
+                        alert("There was an internal error try again later" + error);
+                }
+            });
+                    if (isvalid)
+                    {
+                        location.href = '@Url.Action("SearchStockType","Stock")';
+                    }
+                }
+            }
     </script>
 }
