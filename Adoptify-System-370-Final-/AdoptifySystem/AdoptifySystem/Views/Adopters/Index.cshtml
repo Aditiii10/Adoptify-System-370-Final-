@@ -12,16 +12,7 @@
             </div>
         </div>
 
-        <p>
-            @Html.ActionLink("Add New", "Create", "Adopters", new { @class = "btn btn-success", @Title = "Click to Add Adopter" })
-            @using (Html.BeginForm("Index", "Adopters", FormMethod.Get))
-
-            {
-                
-            }
-        </p>
-
-        @using (Html.BeginForm("SearchAdopter", "Adopters", FormMethod.Post))
+        @using (Html.BeginForm("Index", "Adopters", FormMethod.Post))
         {
             <div class="row">
                 <div class="col-md-5">
@@ -37,6 +28,17 @@
             </div>
             <br />
         }
+
+        <p>
+            @Html.ActionLink("Add New", "Create", "Adopters", new { @class = "btn btn-success", @Title = "Click to Add Adopter" })
+            @using (Html.BeginForm("Index", "Adopters", FormMethod.Get))
+
+            {
+
+            }
+        </p>
+
+
 
         <table class="table-bordered table">
             <tr class="table-primary">

@@ -16,11 +16,72 @@ namespace AdoptifySystem.Controllers.Aditi
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
         // GET: Volunteers
-        public ActionResult Index()
+
+        public ActionResult SearchVolunteer()
         {
+            ViewBag.errormessage = "";
+            List<Volunteer> Volunteers = new List<Volunteer>();
+            try
+            {
+                Volunteers = db.Volunteers.ToList();
+                if (Volunteers.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(Volunteers);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+        [HttpPost]
+        public ActionResult SearchVolunteer(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<Volunteer> Vol = new List<Volunteer>();
+                    try
+                    {
+                        if (Vol.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View(Vol);
+                        }
+                        return View(Vol);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "Sorry! There was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+                return View();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
+
+        }
+
+
+
+        public ActionResult Index()
+        { 
             var volunteers = db.Volunteers.Include(v => v.Title);
             return View(volunteers.ToList());
         }
+
+
 
         // GET: Volunteers/Details/5
         public ActionResult Details(int? id)
@@ -116,9 +177,20 @@ namespace AdoptifySystem.Controllers.Aditi
         public ActionResult DeleteConfirmed(int id)
         {
             Volunteer volunteer = db.Volunteers.Find(id);
-            db.Volunteers.Remove(volunteer);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            int count = volunteer.Volunteer_Hours.Count();
+            if (count != 0)
+            {
+                TempData["DeleteErrorMessage"] = "You can not delete this item as it is been used else where!";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                db.Volunteers.Remove(volunteer);
+                db.SaveChanges();
+                TempData["DeleteMessage"] = "Deleted Volunteer Successfully";
+                return RedirectToAction("Index");
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

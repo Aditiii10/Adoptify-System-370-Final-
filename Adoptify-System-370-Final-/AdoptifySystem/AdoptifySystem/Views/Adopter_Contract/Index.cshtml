@@ -4,51 +4,75 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Adopter Contract List</h2>
-
-<p>
-    @Html.ActionLink("Add New", "Create", "Adopter_Contract", new { @class = "btn btn-success", @Title = "Click to Add Adopter Contract" })
-    @using (Html.BeginForm("Index", "Adopter_Contract", FormMethod.Get))
-    {
-        <b>Search Criteria:  </b>
+    <div id="main">
         <br />
-        @Html.TextBox("search")<input type="submit" value="Search" ? class="btn btn-primary" title="Click to Search" />
-    }
-</p>
-<table class="table-bordered table">
-    <tr class="table-primary">
-        <th>
-            @Html.DisplayNameFor(model => model.Electronic_Contract)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Adopter.Adopter_Name)
-        </th>
-        <th></th>
-    </tr>
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Adopter Contract List</h1>
+            </div>
+        </div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Electronic_Contract)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
-            </td>
-            <td>
-                @Html.ActionLink("Update", "Edit", "Adopter_Contract", new { id = item.Contract_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter Contract" })
-                @Html.ActionLink("More Info", "Details", "Adopter_Contract", new { id = item.Contract_ID }, new { @class = "btn btn-primary", @Title = "Click to View More Info" })
-                @Html.ActionLink("Delete", "Delete", "Adopter_Contract", new { id = item.Contract_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Adopter Contract" })
-            </td>
-        </tr>
-    }
+        @using (Html.BeginForm("Index", "Adopter_Contract", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @style = "form-control" })
+                </div>
+            </div>
 
-</table>
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" value="Search" title="Click to Search Adopter Contract" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+            <br />
+        }
 
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-12">
-        <br />
-        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page" })
-        <br />
-    </div>
-</div>
+        <p>
+            @Html.ActionLink("Add New", "Create", "Adopter_Contract", new { @class = "btn btn-success", @Title = "Click to Add Adopter Contract" })
+            @using (Html.BeginForm("Index", "Adopter_Contract", FormMethod.Get))
+            {
+                <b>Search Criteria:  </b>
+                <br />
+                @Html.TextBox("search")<input type="submit" value="Search" ? class="btn btn-primary" title="Click to Search" />
+            }
+        </p>
+        <table class="table-bordered table">
+            <tr class="table-primary">
+                <th>
+                    @Html.DisplayNameFor(model => model.Electronic_Contract)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Adopter.Adopter_Name)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Electronic_Contract)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Update", "Edit", "Adopter_Contract", new { id = item.Contract_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter Contract" })
+                        @Html.ActionLink("More Info", "Details", "Adopter_Contract", new { id = item.Contract_ID }, new { @class = "btn btn-primary", @Title = "Click to View More Info" })
+                        @Html.ActionLink("Delete", "Delete", "Adopter_Contract", new { id = item.Contract_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Adopter Contract" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <br />
+                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page" })
+                <br />
+            </div>
+        </div>
+        </div>

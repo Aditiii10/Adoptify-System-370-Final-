@@ -5,135 +5,166 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Volunteer's List</h2>
+    <div id="main">
+        <br />
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Volunteer List</h1>
+            </div>
+        </div>
 
-<p>
-    @Html.ActionLink("Add New", "Create", "Volunteer", new { @class = "btn btn-success", @Title = "Click to Add Volunteer" })
-    @using (Html.BeginForm("Index", "Volunteer", FormMethod.Get))
-    {
-        <b>Search Criteria:  </b>
-        <br/>
-        @Html.TextBox("search")<input type="submit" value="Search" ? class="btn btn-primary" title="Click to Search"/>
-    }
-</p>
-<table class="table-bordered table">
-    <tr class="table-primary">
-        <th>
-            @Html.DisplayNameFor(model => model.Vol_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vol_Surname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vol_Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vol_ContactNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vol_Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vol_Emergency_ContactName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vol_Emergency_ContactNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title.Title_Description)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vol_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vol_Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vol_Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vol_ContactNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vol_Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vol_Emergency_ContactName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vol_Emergency_ContactNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title.Title_Description)
-            </td>
-            <td>
-                @Html.ActionLink("Update", "Edit", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-success", @Title = "Click to Update Volunteer" })
-                @Html.ActionLink("More Info", "Details", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-primary", @Title = "Click to View Volunteer Details" })
-                @Html.ActionLink("Delete", "Delete", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Volunteer" })
-                <button class="btn btn-info" data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Vol_ID)" title="Click to View Volunteer Details">More info</button>
-            </td>
-        </tr>
+        @foreach (var item in Model)
+        {
 
-        <div class="modal fade" id="@Html.DisplayFor(modelItem => item.Vol_ID)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header table-primary">
-                        <h5 class="modal-title" id="exampleModalLongTitle" style="text-align:center">@Html.DisplayFor(modelItem => item.Vol_Name)</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <span class="value">Volunteer Name:</span>
-                        @Html.DisplayFor(modelItem => item.Vol_Name) <br />
-                        <span class="value">Volunteer Surname:</span>
-                        @Html.DisplayFor(modelItem => item.Vol_Surname) <br />
-                        <span class="value">Volunteer Email</span>
-                        @Html.DisplayFor(modelItem => item.Vol_Email) <br />
-                        <span class="value">Volunteer Contact Number</span>
-                        @Html.DisplayFor(modelItem => item.Vol_ContactNumber)<br />
-                    </div>
-                    <div class="modal-footer">
-                        <div style="position:center">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            @Html.ActionLink("Update", "Edit", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-success", @Title = "Click to Update Volunteer" })
-                            @Html.ActionLink("Delete", "Delete", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Volunteer" })
+            <div class="modal fade" id="#@item.Vol_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header table-primary">
+                            <h5 class="modal-title" id="exampleModalLongTitle" style="text-align:center">@item.Vol_ID</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="value">Volunteer Name:</span>
+                            @Html.DisplayFor(modelItem => item.Vol_Name) <br />
+                            <span class="value">Volunteer Surname:</span>
+                            @Html.DisplayFor(modelItem => item.Vol_Surname) <br />
+                            <span class="value">Volunteer Email</span>
+                            @Html.DisplayFor(modelItem => item.Vol_Email) <br />
+                            <span class="value">Volunteer Contact Number</span>
+                            @Html.DisplayFor(modelItem => item.Vol_ContactNumber)<br />
+                        </div>
+                        <div class="modal-footer">
+                            <div style="position:center">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                @Html.ActionLink("Update", "Edit", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-success", @Title = "Click to Update Volunteer" })
+                                @Html.ActionLink("Delete", "Delete", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Volunteer" })
+                            </div>
                         </div>
                     </div>
-                 </div>
-             </div>
-         </div>
+                </div>
+            </div>
+        }
+
+
+        @using (Html.BeginForm("Index", "Volunteer", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" value="Search" title="Click to Search Volunteer" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+            <br />
+        }
+
+        <p>
+            @Html.ActionLink("Add New", "Create", "Volunteer", new { @class = "btn btn-success", @Title = "Click to Add Volunteer" })
+            @using (Html.BeginForm("Index", "Volunteer", FormMethod.Get))
+            {
+                
+            }
+        </p>
+        <table class="table-bordered table">
+            <tr class="table-primary">
+                <th>
+                    @Html.DisplayNameFor(model => model.Vol_Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vol_Surname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vol_Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vol_ContactNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vol_Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vol_Emergency_ContactName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vol_Emergency_ContactNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title.Title_Description)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vol_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vol_Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vol_Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vol_ContactNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vol_Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vol_Emergency_ContactName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vol_Emergency_ContactNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title.Title_Description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Update", "Edit", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-success", @Title = "Click to Update Volunteer" })
+                        @*@Html.ActionLink("More Info", "Details", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-primary", @Title = "Click to View Volunteer Details" })*@
+                        @Html.ActionLink("Delete", "Delete", "Volunteers", new { id = item.Vol_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Volunteer" })
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#@item.Vol_ID" title="Click to View Volunteer Details">More info</button>
+                    </td>
+                </tr>
 
 
 
 
 
 
-    }
-
-</table>
 
 
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-12">
-        <br />
-        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page" })
-        <br />
-    </div>
+            }
+
+        </table>
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <br />
+                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page" })
+                <br />
+            </div>
+        </div>
 </div>
 
 
 
 
-
-@section scripts{
- <script>
+        @section scripts{
+            <script>
     $(function () {
         var successMessage = '@TempData["SuccessMessage"]'
         if (successMessage != '')
@@ -158,5 +189,5 @@
                 alertify.warning(successMessage);
          });
 
-  </script>
-}
+            </script>
+        }
