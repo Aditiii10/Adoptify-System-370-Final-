@@ -8,7 +8,7 @@
         <h1>Donation List</h1>
     </div>
     <h1>@ViewBag.err</h1>
-    @Html.ActionLink("Create New", "AddDonation", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Create New", "AddDonation", null, new { @style = "color: # fff" }, new { @class = "btn btn-success", @title = "Click to Add Donation" })
 
     @using (Html.BeginForm("SearchDonation", "Donations", FormMethod.Post))
     {
@@ -21,7 +21,7 @@
 
         <div class="row">
             <div class="col-md-4">
-                <button type="submit" value="Search" class="btn btn-primary">Search</button>
+                <button type="submit" value="Search" title="Click to Search Donation" class="btn btn-primary">Search</button>
             </div>
         </div>
     }
@@ -44,7 +44,7 @@
 
 
         @if (Model == null)
-            {
+        {
             <tr>
                 <td colspan="8">
                     No results found
@@ -66,65 +66,65 @@
                         @Html.DisplayFor(modelItem => item.Donation_Date)
                     </td>
                     <td>
-                        @Html.ActionLink("View", "ViewDonation", new { id = item.Donation_ID }, new { @class = "btn btn-success" }) |
+                        @Html.ActionLink("View", "ViewDonation", new { id = item.Donation_ID }, new { @class = "btn btn-success", @title = "Click to Display Details" })
 
-                        <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Donation_ID">More info </button> |
+                        <button class="btn btn-info" title="Select to Display Details" data-toggle="modal" data-target="#@item.Donation_ID">More info </button>
                         @* @Html.ActionLink("Delete", "Delete", new { id = item.Donation_ID }, new { @class = "btn btn-danger" }) |*@
                     </td>
                 </tr>
-                    <div class="modal fade" id="@item.Donation_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header table-primary">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">@item.Donor.Donor_Name @item.Donor.Donor_Surname</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
+                <div class="modal fade" id="@item.Donation_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header table-primary">
+                                <h5 class="modal-title" id="exampleModalLongTitle">@item.Donor.Donor_Name @item.Donor.Donor_Surname</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
 
-                                    <span class="value">Date Donated</span>
-                                    @Html.DisplayFor(modelItem => item.Donation_Date) <br />
-                                    <span class="value">Items Donated:</span>
-                                    @Html.DisplayFor(modelItem => item.Donation_Line.Count) <br />
-                                    <span class="value">Cash:</span>
-                                    @{
-                                        int cash = 0;
-                                        int count = 0;
-                                        foreach (var d in item.Donation_Line)
+                                <span class="value">Date Donated</span>
+                                @Html.DisplayFor(modelItem => item.Donation_Date) <br />
+                                <span class="value">Items Donated:</span>
+                                @Html.DisplayFor(modelItem => item.Donation_Line.Count) <br />
+                                <span class="value">Cash:</span>
+                                @{
+                                    int cash = 0;
+                                    int count = 0;
+                                    foreach (var d in item.Donation_Line)
+                                    {
+                                        if (d.Stock_ID == null)
                                         {
-                                            if (d.Stock_ID == null)
-                                            {
 
-                                                cash += Convert.ToInt32(d.Donation_Quantity);
-                                            }
-                                            else
-                                            {
-                                                count++;
-                                            }
+                                            cash += Convert.ToInt32(d.Donation_Quantity);
                                         }
-                                        ViewBag.cash = cash;
-                                        ViewBag.count = count;
+                                        else
+                                        {
+                                            count++;
+                                        }
                                     }
-                                    R @ViewBag.cash<br />
-                                    <span class="value">Stock Donated:</span>
-                                    @ViewBag.count <br />
-                                    <span class="value">Donor Name:</span>
-                                    @Html.DisplayFor(modelItem => item.Donor.Donor_Name) <br />
+                                    ViewBag.cash = cash;
+                                    ViewBag.count = count;
+                                }
+                                R @ViewBag.cash<br />
+                                <span class="value">Stock Donated:</span>
+                                @ViewBag.count <br />
+                                <span class="value">Donor Name:</span>
+                                @Html.DisplayFor(modelItem => item.Donor.Donor_Name) <br />
 
 
-                                </div>
-                                <div class="modal-footer">
+                            </div>
+                            <div class="modal-footer">
 
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Maintain", "MaintainDonation", new { id = item.Donation_ID }, new { @style = "color: white", @class = "btn btn-warning" })
-                                </div>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                @Html.ActionLink("View", "ViewDonation", new { id = item.Donation_ID }, new { @class = "btn btn-success", @title = "Click to Display Details" })
                             </div>
                         </div>
                     </div>
+                </div>
 
-                                            }
-                                        }
+            }
+        }
 
     </table>
 

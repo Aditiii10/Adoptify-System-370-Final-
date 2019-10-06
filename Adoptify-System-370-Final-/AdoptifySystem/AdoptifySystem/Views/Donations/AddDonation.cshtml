@@ -24,25 +24,25 @@
     <h1 class="center-align">@ViewBag.Title</h1>
 </div>
 <br>
-@using (Html.BeginForm("search_donor", "Donations", FormMethod.Post))
-{
+<div id="content">
     <div class="row">
         <div class="column">
             @if (Model.adddonationlist == null)
             {
-                <select id="donor" onclick="sync(this)">
-
+                <select id="donor" onclick="sync(this)" title="Select Donor">
+                    <option>---Select Donor---</option>
                     @if (Model.donor != null)
                     {
+
                         foreach (var item in Model.DonorList)
                         {
                             if (item.Donor_Name == Model.donor.Donor_Name && item.Donor_Surname == Model.donor.Donor_Surname)
                             {
-                                <option selected>@item.Donor_Name @item.Donor_Surname</option>
+                                <option value="@item.Donor_ID" selected>@item.Donor_Name @item.Donor_Surname</option>
                             }
                             else
                             {
-                                <option>@item.Donor_Name @item.Donor_Surname</option>
+                                <option value="@item.Donor_ID">@item.Donor_Name @item.Donor_Surname</option>
                             }
 
                         }
@@ -61,49 +61,59 @@
                     }
 
                 </select>
-                <input type="text" id="pa" name="inid" hidden />
-                <button id="btnSave" class="btn btn-lg btn-primary">Search</button>
+                <input type="text" id="pa" name="inid" />
+                <button id="btnSave" class="btn btn-lg btn-primary" title="Search Donor" onclick="LoadDonor()">Search</button>
             }
-            else {
+            else
+            {
 
             }
 
         </div>
         <div class="column">
-            @if (Model.donor != null)
-            {
+            <h3 class="table-primary">Current Donor:</h3>
+            <div id="DonorDetails">
+                @if (Model.donor != null)
+                {
+                    <label id="Donor_Name">Donor Name: @Model.donor.Donor_Name </label>
+                    <br />
+                    <label id="Donor_Surname">Donor Surname: @Model.donor.Donor_Surname</label>
+                }
+                else
+                {
 
-                <h3 class="table-primary">Current Donor:</h3>
-                <label>Donor Name: @Model.donor.Donor_Name</label>
-                <br />
-                <label>Donor Surname:@Model.donor.Donor_Surname</label>
-            }
+
+                    <label id="Donor_Name">Donor Name: </label>
+                    <br />
+                    <label id="Donor_Surname">Donor Surname:</label>
+                }
+            </div>
         </div>
     </div>
-}
-<div>
-    <br />
-    <div class="row" style="width:100%;">
-        <div class="column">
-            <div class="form-header table-primary">
-                <h1 class="center-align">Enter Stock Details</h1>
-            </div>
-            @using (Html.BeginForm("search_stock", "Donations", FormMethod.Post))
-            {
+    <div>
+        <br />
+        <div class="row" style="width:100%;">
+            <div class="column">
+                <div class="form-header table-primary">
+                    <h1 class="center-align">Enter Stock Details</h1>
+                </div>
                 <div id="AddtheStock">
                     <label>Enter Stock:</label><br />
-                    <select id="stock" onclick="block()">
+                    <select id="stock" onclick="block()" title="Select Stock Type">
+                        <option>--Select Stock---</option>
                         @if (Model.stock != null)
                         {
+
                             foreach (var item in Model.Stocklist)
                             {
-                                if (item.Stock_Name == Model.stock.Stock_Name && item.Stock_Type_ID == Model.stock.Stock_Type_ID)
+                                if (item.Stock_Type.Stock_Type_Name == Model.stock.Stock_Type.Stock_Type_Name && item.Stock_Type_ID == Model.stock.Stock_Type_ID)
                                 {
-                                    <option selected>@item.Stock_Name</option>
+                                    <option selected class="is-invalid">@item.Stock_Type.Stock_Type_Name - @item.Stock_Description </option>
+
                                 }
                                 else
                                 {
-                                    <option>@item.Stock_Name </option>
+                                    <option>@item.Stock_Type.Stock_Type_Name - @item.Stock_Description </option>
                                 }
 
                             }
@@ -114,112 +124,111 @@
 
                             foreach (var item in Model.Stocklist)
                             {
-                                <option class="form-control">@item.Stock_Name</option>
+                                <option class="form-control">@item.Stock_Type.Stock_Type_Name - @item.Stock_Description </option>
                             }
 
 
                         }
                     </select>
                     <input type="text" id="as" name="inid" hidden />
-                    <button id="btnSave" class="btn btn-lg btn-primary">Search</button>
+                    <button id="btnSave" class="btn btn-lg btn-primary" title="Select to Search Stock Details" onclick="LoadStock()">Search</button>
                 </div>
-            }
-            @using (Html.BeginForm("add_stock", "Donations", FormMethod.Post))
-            {
-                <div class="form-group">
-                    <div class="width">
-                        <label>Enter Quantity</label><br />
-                        <input class="form-control" type="text" name="Donation_Quantity" placeholder="Enter Quantity">
+                @using (Html.BeginForm("add_stock", "Donations", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <div class="width">
+                            <label>Enter Quantity</label><br />
+                            <input class="form-control" type="text" name="Donation_Quantity" placeholder="Enter Quantity">
+                        </div>
                     </div>
-                </div>
-                <div class="col" style="text-align: center; width: 50%; float:left;">
-                    <button name="button" value="Add Stock" class="btn btn-info">Add Stock</button>
-                </div>
-            }
-        </div>
-        <div class="column">
-            <div class="form-header table-primary">
-                <h1 class="center-align">Money</h1>
-            </div>
-            @using (Html.BeginForm("add_money", "Donations", FormMethod.Post))
-            {
-
-                <div class="form-group">
-                    <div>
-                        <label>Enter Amount</label><br />
-                        <input class="form-control" type="text" name="Donation_Quantity" placeholder="Enter Quantity">
+                    <div class="col" style="text-align: center; width: 50%; float:left;">
+                        <button name="button" value="Add Stock" class="btn btn-info" title="Click to Add to Donation">Add Stock</button>
                     </div>
-                </div>
-                <div style="text-align: center; width: 50%; float:right;">
-                    <button id="addmoney" name="button" value="Add Money" class="btn btn-info">Add Money</button>
-                </div>
-
-            }
-        </div>
-    </div>
-    <br>
-    <div>
-        <div class="table">
-            <div class="form-header table-primary">
-                <h1 class="center-align">Current Donations</h1>
+                }
             </div>
-            @if (Model.adddonationlist != null)
-            {
-                int count = 0;
-                <table class="table table-bordered">
-                    <thead class="table-primary">
-                        <tr>
-                            <td>Donor Name</td>
-                            <td>Donation Type</td>
-                            <td>Donation Quantity</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.adddonationlist)
-                        {
+            <div class="column">
+                <div class="form-header table-primary">
+                    <h1 class="center-align">Money</h1>
+                </div>
+                @using (Html.BeginForm("add_money", "Donations", FormMethod.Post))
+                {
+
+                    <div class="form-group">
+                        <div>
+                            <label>Enter Amount</label><br />
+                            <input class="form-control" type="text" name="Donation_Quantity" placeholder="Enter Quantity">
+                        </div>
+                    </div>
+                    <div style="text-align: center; width: 50%; float:right;">
+                        <button id="addmoney" name="button" value="Add Money" class="btn btn-info" title="Click to Add to Donation">Add Money</button>
+                    </div>
+
+                }
+            </div>
+        </div>
+        <br>
+        <div>
+            <div class="table">
+                <div class="form-header table-primary">
+                    <h1 class="center-align">Current Donations</h1>
+                </div>
+                @if (Model.adddonationlist != null)
+                {
+                    int count = 0;
+                    <table class="table table-bordered">
+                        <thead class="table-primary">
                             <tr>
-                                <td>@Model.donor.Donor_Name</td>
-                                @if (item.Donation_Type.Donation_Type_Name == "Stock")
-                                {
-                                    <td>@item.Stock.Stock_Name</td>
-                                }
-                                else
-                                {
-                                    <td>@item.Donation_Type.Donation_Type_Name</td>
-                                }
-                                <td>@item.Donation_Quantity</td>
-                                <td>@Html.ActionLink("Delete", "removefromlist", new { donationline = count }, new { @class = "btn btn-danger" })</td>
+                                <td>Donor Name</td>
+                                <td>Donation Type</td>
+                                <td>Donation Quantity</td>
+                                <td></td>
                             </tr>
-                            count++;
-                        }
-                    </tbody>
-                </table>
-            }
-            else
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.adddonationlist)
+                            {
+                                <tr>
+                                    <td>@Model.donor.Donor_Name</td>
+                                    @if (item.Donation_Type.Donation_Type_Name == "Stock")
+                                    {
+                                        <td>@item.Stock.Stock_Type.Stock_Type_Name</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.Donation_Type.Donation_Type_Name</td>
+                                    }
+                                    <td>@item.Donation_Quantity</td>
+                                    <td>@Html.ActionLink("Delete", "removefromlist", new { donationline = count }, new { @class = "btn btn-danger", @title = "Click to Remove from Donation" })</td>
+                                </tr>
+                                count++;
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <table class="table table-bordered">
+                        <thead class="thead-light"></thead>
+                        <tbody>
+                            <tr>No Results</tr>
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            @using (Html.BeginForm("save", "Donations", FormMethod.Post))
             {
-                <table class="table table-bordered">
-                    <thead class="thead-light"></thead>
-                    <tbody>
-                        <tr>No Results</tr>
-                    </tbody>
-                </table>
+                <div class="col-xs-12">
+                    <br>
+                    <button name="button" value="Save" class="btn btn-lg btn-success pull-right" title="Click to store Donations" type="submit">Save</button>
+                    <button name="button" value="Cancel" class="btn btn-lg btn-primary pull-left" title="Click to go Search Donations" type="submit">Cancel</button>
+                </div>
             }
         </div>
-    </div>
-    <div class="form-group">
-        @using (Html.BeginForm("save", "Donations", FormMethod.Post))
-        {
-            <div class="col-xs-12">
-                <br>
-                <button name="button" value="Save" class="btn btn-lg btn-success pull-right" type="submit">Save</button>
-                <button name="button" value="Cancel" class="btn btn-lg btn-primary pull-left" type="submit">Cancel</button>
-            </div>
-        }
-    </div>
 
+    </div>
 </div>
-
 <script type="text/javascript">
 
     function myFunction() {
@@ -397,4 +406,57 @@
         selected: true
     });
 
+    function LoadDonor() {
+
+        if ($(pa).val() == 0) {
+            alert("Select a Donor");
+        } else {
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "/Donations/search_donor",
+                    data: { 'inid': $(pa).val() },
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        console.log(data);
+                        //render products to appropriate dropdown
+                        var s = '<label id="Donor_Name">Donor Name: ' + data.Donor_Name + '</label>';
+                        s += '<br /> <label id="Donor_Surname">Donor Surname: ' + data.Donor_Surname + '</label>';
+                        $("#DonorDetails").html(s);
+                        var text = document.getElementById("__searchit1");
+                        text.classList.add("is-valid");
+                    },
+                    error: function (error) {
+                        alert("There was an internal error");
+                    }
+                })
+        }
+    }
+    function LoadStock() {
+        if ($(as).val() == 0) {
+            alert("Select a Stock");
+        } else {
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "/Donations/search_stock",
+                    data: { 'inid': $(as).val() },
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        console.log(data);
+                        //render products to appropriate dropdown
+                        var text = document.getElementById("__searchit2");
+                        text.classList.add("is-valid");
+                    },
+                    error: function (error) {
+                        alert("There was an internal error");
+
+                        text.classList.add("is-valid");
+                    }
+                })
+        }
+
+    }
 </script>

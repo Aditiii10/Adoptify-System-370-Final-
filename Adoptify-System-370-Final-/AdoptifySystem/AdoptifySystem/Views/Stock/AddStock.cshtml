@@ -14,7 +14,7 @@
         <label></label>
         if (Model.Stock_Types != null)
         {
-            <select name="Stock_Type_ID" id="exampleList" class="custom-select" style="width:25%;">
+            <select name="Stock_Type_ID" id="exampleList" class="custom-select" style="width:25%;" title="Select Stock Type">
 
                 @foreach (var item in Model.Stock_Types)
                 {
@@ -30,7 +30,7 @@
                 <h2>Food Packaging Type:</h2><br />
                 <div id="RadioFood_Packaging_Type" class="form-group">
                     @foreach (var item in Model.packaging_Types)
-                {
+                    {
                         <div class="custom-control custom-radio">
                             <input type="radio" id="customRadio @item.Packaging_Type_ID" name="Packaging_Type_ID" value="@item.Packaging_Type_ID" class="custom-control-input">
                             <label class="custom-control-label" for="customRadio @item.Packaging_Type_ID">@item.Packaging_Type_Name</label>
@@ -42,7 +42,7 @@
                 <h2>Unit Type:</h2>
                 <div id="RadioUnit_Type" class="form-group">
                     @foreach (var item in Model.unit_Types)
-                {
+                    {
                         <div class="custom-control custom-radio">
                             <input type="radio" id="exampleRadios @item.Unit_Type_ID" name="Unit_Type_ID" value="@item.Unit_Type_ID" class="custom-control-input">
                             <label class="custom-control-label" for="exampleRadios @item.Unit_Type_ID"> @item.Unit_Type_Name</label>
@@ -72,8 +72,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Save</button>
+                @Html.ActionLink("Cancel", "SearchStock", new { @class = "btn btn-warning", @title = "Click to go back to Search Stock screen" })
+                <button type="submit" name="button" value="Save" title="Click to Add the Following Stock Details" class=" btn btn-success float-right">Save</button>
             </div>
         </div>
     }

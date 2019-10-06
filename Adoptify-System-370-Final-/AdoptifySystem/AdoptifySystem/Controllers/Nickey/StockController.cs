@@ -31,7 +31,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception)
             {
 
-                return RedirectToAction("Index", "Home");
+                throw new Exception("Something Went Wrong!");
             }
 
 
@@ -61,7 +61,7 @@ namespace AdoptifySystem.Controllers
             {
 
                 ViewBag.err = e.Message;
-                return RedirectToAction("AddStock");
+                throw new Exception("Something Went Wrong!");
             }
             return View("Index", "Home");
         }
@@ -74,14 +74,14 @@ namespace AdoptifySystem.Controllers
                 stock = db.Stocks.ToList();
                 if (stock.Count == 0)
                 {
-
+                    throw new Exception("Something Went Wrong!");
                 }
                 return View(stock);
             }
             catch (Exception e)
             {
                 ViewBag.errormessage = "there was a network error: " + e.Message;
-                return View();
+                throw new Exception("Something Went Wrong!");
             }
         }
         [HttpPost]
@@ -105,7 +105,7 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     ViewBag.err = "there was a network error: " + e.Message;
-                    return View();
+                    throw new Exception("Something Went Wrong!");
                 }
             }
             else
@@ -144,41 +144,38 @@ namespace AdoptifySystem.Controllers
             }
             catch (Exception)
             {
-
-                throw;
+                throw new Exception("Something Went Wrong!");
             }
         }
         [HttpPost]
-        public ActionResult MaintainStock(Stock stock2, string button)
+        public ActionResult MaintainStock(Stock stock2)
         {
-            if (button == "Save")
+            try
             {
-                try
+                Stock stock1 = db.Stocks.Find(stock2.Stock_ID);
+                if (stock1 == null)
                 {
-                    Stock stock1 = db.Stocks.Find(stock2.Stock_ID);
-                    if (stock1 == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    else
-                    {
-                        stock2.Stock_Quantity = stock1.Stock_Quantity;
-                        db.Entry(stock1).CurrentValues.SetValues(stock2);
-                        db.SaveChanges();
-                    }
+                    return Content("");
                 }
-                catch (Exception e)
+                else
                 {
-                    ViewBag.err = e.Message;
-                    return RedirectToAction("MaintainStock", "Stock");
+                    stock1.Stock_Quantity = stock2.Stock_Quantity;
+                    stock1.Packaging_Type_ID = stock2.Packaging_Type_ID;
+                    stock1.Stock_Type_ID = stock2.Stock_Type_ID;
+                    stock1.Unit_Type_ID = stock2.Unit_Type_ID;
+                    stock1.Unit_number = stock2.Unit_number;
+                    stock1.Stock_Description = stock2.Stock_Description;
+                    db.Entry(stock1).CurrentValues.SetValues(stock2);
+                    db.SaveChanges();
                 }
             }
-            else if (button == "Cancel")
+            catch (Exception e)
             {
+                ViewBag.err = e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+            return Content("");
 
-                return RedirectToAction("SearchStock", "Stock");
-            }
-            return RedirectToAction("SearchStock", "Stock");
         }
 
         public ActionResult CaptureStockTake(int? id)
@@ -211,8 +208,7 @@ namespace AdoptifySystem.Controllers
             }
             catch (Exception)
             {
-
-                throw;
+                throw new Exception("Something Went Wrong!");
             }
         }
         [HttpPost]
@@ -248,7 +244,7 @@ namespace AdoptifySystem.Controllers
             catch (Exception)
             {
 
-                throw;
+                throw new Exception("Something Went Wrong!");
             }
         }
         public ActionResult AddStockType()
@@ -256,60 +252,50 @@ namespace AdoptifySystem.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddStockType(Stock_Type stock_type, string button)
+        public ContentResult AddStockType(Stock_Type stock_type)
         {
-
-            if (button == "Save")
+            try
             {
-                try
+
+                List<Stock_Type> stock_types = new List<Stock_Type>();
+                stock_types = db.Stock_Type.ToList();
+                if (stock_types.Count != 0)
                 {
-
-                    List<Stock_Type> stock_types = new List<Stock_Type>();
-                    stock_types = db.Stock_Type.ToList();
-                    if (stock_types.Count != 0)
+                    int count = 0;
+                    foreach (var item in stock_types)
                     {
-                        int count = 0;
-                        foreach (var item in stock_types)
+                        if (item.Stock_Type_Name == stock_type.Stock_Type_Name && item.Stock_Type_Description == stock_type.Stock_Type_Description)
                         {
-                            if (item.Stock_Type_Name == stock_type.Stock_Type_Name && item.Stock_Type_Description == stock_type.Stock_Type_Description)
-                            {
-                                count++;
-                                TempData["error"] = "There is a duplicate Stock Type Already";
-                                return View();
-                            }
+                            count++;
+                            TempData["error"] = "There is a duplicate Stock Type Already";
+                            return Content("");
+                        }
 
-                        }
-                        if (count == 0)
-                        {
-                            db.Stock_Type.Add(stock_type);
-                            db.SaveChanges();
-                        }
                     }
-                    else
+                    if (count == 0)
                     {
-
                         db.Stock_Type.Add(stock_type);
                         db.SaveChanges();
-
-
                     }
-
                 }
-                catch (Exception e)
+                else
                 {
-                    TempData["exception"] = "There was an Error with network please try again: " + e.Message;
-                    return View();
+
+                    db.Stock_Type.Add(stock_type);
+                    db.SaveChanges();
+
+
                 }
+                //Session["Userid"] = stock_type.Stock_Type_ID;
 
             }
-            else if (button == "Cancel")
+            catch (Exception e)
             {
-
-                TempData["success"] = "The process has been cancelled succesfully";
-                return RedirectToAction("SearchStockType", "Stock");
+                TempData["exception"] = "There was an Error with network please try again: " + e.Message;
+                throw new Exception("Something Went Wrong!");
             }
-            TempData["success"] = "The Stock Type has been added Succesfully";
-            return RedirectToAction("SearchStockType", "Stock");
+
+            return Content("");
         }
         public ActionResult ReceiveStock(int? id)
         {
@@ -317,7 +303,7 @@ namespace AdoptifySystem.Controllers
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    throw new Exception("Something Went Wrong!");
                 }
                 List<Stock_Type> Stock_Types = new List<Stock_Type>();
                 List<Packaging_Type> Packaging_Type = new List<Packaging_Type>();
@@ -333,7 +319,7 @@ namespace AdoptifySystem.Controllers
                 Stock stock_ = db.Stocks.Find(id);
                 if (stock_ == null)
                 {
-                    return HttpNotFound();
+                    throw new Exception("Something Went Wrong!");
                 }
                 flex.stock = stock_;
                 return View(flex);
@@ -341,8 +327,7 @@ namespace AdoptifySystem.Controllers
             }
             catch (Exception)
             {
-
-                throw;
+                throw new Exception("Something Went Wrong!");
             }
 
         }
@@ -357,7 +342,7 @@ namespace AdoptifySystem.Controllers
                     Stock newstock = db.Stocks.Find(stock.Stock_ID);
                     if (oldstock == null)
                     {
-                        return HttpNotFound();
+                        throw new Exception("Something Went Wrong!");
                     }
                     else
                     {
@@ -379,10 +364,9 @@ namespace AdoptifySystem.Controllers
             catch (Exception)
             {
 
-                throw;
+                throw new Exception("Something Went Wrong!");
             }
         }
-        [HttpGet]
         public ActionResult SearchStockType()
         {
             ViewBag.errormessage = "";
@@ -392,14 +376,14 @@ namespace AdoptifySystem.Controllers
                 stock_Types = db.Stock_Type.ToList();
                 if (stock_Types.Count == 0)
                 {
-
+                    throw new Exception("Something Went Wrong!");
                 }
                 return View(stock_Types);
             }
             catch (Exception e)
             {
                 ViewBag.errormessage = "there was a network error: " + e.Message;
-                return View();
+                throw new Exception("Something Went Wrong!");
             }
 
         }
@@ -425,88 +409,97 @@ namespace AdoptifySystem.Controllers
                 catch (Exception e)
                 {
                     TempData["exception"] = "there was a network error: " + e.Message;
-                    return View();
+                    throw new Exception("Something Went Wrong!");
                 }
             }
             return View();
         }
         public ActionResult MaintainStockType(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                Stock_Type stock_Type = db.Stock_Type.Find(id);
+                if (stock_Type == null)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(stock_Type);
             }
-            Stock_Type stock_Type = db.Stock_Type.Find(id);
-            if (stock_Type == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
-            return View(stock_Type);
+
         }
         [HttpPost]
-        public ActionResult MaintainStockType(Stock_Type stock_Type, string button)
+        public ContentResult MaintainStockType(Stock_Type stock_Type)
         {
-            if (button == "Save")
+            try
             {
-                try
+
+                Stock_Type Stock_Type = db.Stock_Type.Find(stock_Type.Stock_Type_ID);
+                if (Stock_Type == null)
                 {
-
-                    Stock_Type Stock_Type = db.Stock_Type.Find(stock_Type.Stock_Type_ID);
-                    if (Stock_Type == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    else
-                    {
-
-                        db.Entry(Stock_Type).CurrentValues.SetValues(stock_Type);
-                        db.SaveChanges();
-
-                    }
-                }
-                catch (Exception e)
-                {
-                    TempData["exception"] = e.Message;
-                    return RedirectToAction("MaintainStockType", "Stock");
-                }
-            }
-            else if (button == "Cancel")
-            {
-                TempData["success"] = "The Maintain process has been cancelled succesfully";
-                return RedirectToAction("SearchStockType", "Stock");
-            }
-            TempData["success"] = "The Stock Type has been maintained succesfully";
-            return RedirectToAction("SearchStockType", "Stock");
-        }
-
-        public ActionResult Deletestock(Stock id)
-        {
-
-            if (id != null)
-            {
-                int count = id.Donation_Line.Count();
-                if (count == 0)
-                {
-                    //you cant delete becasue its referenced to another table
-                    return View("SearchUserRole");
+                    return Content("");
                 }
                 else
                 {
-                    db.Stocks.Remove(id);
+
+                    Stock_Type.Stock_Type_Name = stock_Type.Stock_Type_Name;
+                    Stock_Type.Stock_Type_Description = stock_Type.Stock_Type_Description;
                     db.SaveChanges();
-                    return View("Index", "Home");
+
                 }
             }
-            //need to send message that cant send message back
-            return View("SearchUserRole");
+            catch (Exception e)
+            {
+                TempData["exception"] = e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+            return Content("");
+        }
+
+        public ActionResult Deletestock(int id)
+        {
+            try
+            {
+                if (id != 0)
+                {
+                    Stock stoc = db.Stocks.Find(id);
+                    int count = stoc.Donation_Line.Count();
+                    if (count == 0)
+                    {
+                        //you cant delete becasue its referenced to another table
+                        return View("SearchStock");
+                    }
+                    else
+                    {
+                        db.Stocks.Remove(stoc);
+                        db.SaveChanges();
+                        return View("Index", "Home");
+                    }
+                }
+                //need to send message that cant send message back
+                return View("SearchStock");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something Went Wrong!");
+            }
+
 
         }
-        public ActionResult Deletestocktype(Stock_Type id)
+        public ActionResult Deletestocktype(int id)
         {
 
-            if (id != null)
+            if (id != 0)
             {
-                int count = id.Stocks.Count();
+                Stock_Type stocky = db.Stock_Type.Find(id);
+                int count = stocky.Stocks.Count();
                 if (count == 0)
                 {
                     //you cant delete becasue its referenced to another table
@@ -514,7 +507,7 @@ namespace AdoptifySystem.Controllers
                 }
                 else
                 {
-                    db.Stock_Type.Remove(id);
+                    db.Stock_Type.Remove(stocky);
                     db.SaveChanges();
                     return View("Index", "Home");
                 }

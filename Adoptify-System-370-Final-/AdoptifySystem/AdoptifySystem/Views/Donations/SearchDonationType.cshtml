@@ -6,7 +6,7 @@
     <div class="" style="text-align:center;padding-left:120px">
         <h1>Donation Type List</h1>
     </div>
-    <h1>@ViewBag.err</h1>
+    <h1>@ViewBag.test</h1>
     @Html.ActionLink("Create New", "AddDonationType", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
 
     @using (Html.BeginForm("SearchDonationType", "Donations", FormMethod.Post))
@@ -43,7 +43,7 @@
 
 
         @if (Model == null)
-            {
+        {
             <tr>
                 <td colspan="8">
                     No results found
@@ -65,37 +65,37 @@
                         @Html.DisplayFor(modelItem => item.Donation_Type_Description)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-warning" }) |
+                        @Html.ActionLink("Edit", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-warning", @title = "Click to Maintian Donation Type" }) |
 
-                        <button class="btn moreinfo" data-toggle="modal" data-target="#@item.Donation_Type_ID">More info </button> |
-                        @Html.ActionLink("Delete", "DeleteDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-danger" }) |
+                        <button class="btn btn-info" data-toggle="modal" title="Select to Display Details" data-target="#@item.Donation_Type_ID">More info </button> |
+                        @Html.ActionLink("Delete", "DeleteDonationType", new { id = item.Donation_Type_ID }, new { @class = "btn btn-danger", @title = "Click to Delete Donation Type" }) |
                     </td>
                 </tr>
-                    <div class="modal fade" id="@item.Donation_Type_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header table-primary">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">@item.Donation_Type_Name</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <span class="value">ID:</span>
-                                    @Html.DisplayFor(modelItem => item.Donation_Type_ID) <br />
-                                    <span class="value">Description:</span>
-                                    @Html.DisplayFor(modelItem => item.Donation_Type_Description) <br />
-                                    <span class="value">Linked to Donations:</span>
-                                    @Html.DisplayFor(modelItem => item.Donation_Line.Count) <br />
-                                </div>
-                                <div class="modal-footer">
+                <div class="modal fade" id="@item.Donation_Type_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header table-primary">
+                                <h5 class="modal-title" id="exampleModalLongTitle">@item.Donation_Type_Name</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">ID:</span>
+                                @Html.DisplayFor(modelItem => item.Donation_Type_ID) <br />
+                                <span class="value">Description:</span>
+                                @Html.DisplayFor(modelItem => item.Donation_Type_Description) <br />
+                                <span class="value">Linked to Donations:</span>
+                                @Html.DisplayFor(modelItem => item.Donation_Line.Count) <br />
+                            </div>
+                            <div class="modal-footer">
 
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Maintain", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" })
-                                </div>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                @Html.ActionLink("Maintain", "MaintainDonationType", new { id = item.Donation_Type_ID }, new { @style = "color: white", @class = "btn btn-warning", @title = "Click to Maintian Donation Type" })
                             </div>
                         </div>
                     </div>
+                </div>
 
             }
         }
