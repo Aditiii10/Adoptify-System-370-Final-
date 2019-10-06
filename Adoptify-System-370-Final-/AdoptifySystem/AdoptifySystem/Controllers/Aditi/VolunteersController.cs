@@ -36,40 +36,36 @@ namespace AdoptifySystem.Controllers.Aditi
                 throw new Exception("Something Went Wrong!");
             }
         }
-        [HttpPost]
+        [HttpGet]
         public ActionResult SearchVolunteer(string search)
         {
-            try
+            if (search != null)
             {
-                if (search != null)
-                {
 
-                    List<Volunteer> Vol = new List<Volunteer>();
-                    try
-                    {
-                        if (Vol.Count == 0)
-                        {
-                            ViewBag.err = "No results found";
-                            return View(Vol);
-                        }
-                        return View(Vol);
-                    }
-                    catch (Exception e)
-                    {
-                        ViewBag.err = "Sorry! There was a network error: " + e.Message;
-                        throw new Exception("Something Went Wrong!");
-                    }
-                }
-                else
+                List<Volunteer> Vol = new List<Volunteer>();
+                try
                 {
-
+                    
+                    Vol = db.Volunteers.Where(z => z.Vol_Name.StartsWith(search) || z.Vol_Surname.StartsWith(search) || z.Vol_Email.StartsWith(search)).ToList();
+                    if (Vol.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("Index", Vol);
+                    }
+                    return View("Index", Vol);
                 }
-                return View();
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    throw new Exception("Something Went Wrong!");
+                }
             }
-            catch (Exception)
+            else
             {
-                throw new Exception("Something Went Wrong!");
+
             }
+
+            return View();
 
         }
 
