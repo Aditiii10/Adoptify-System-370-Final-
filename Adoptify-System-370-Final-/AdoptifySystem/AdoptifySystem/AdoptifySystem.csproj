@@ -878,9 +878,6 @@
     <Content Include="Views\Employees\AddEmployeeType.cshtml" />
     <Content Include="Views\Employees\BarCodeGenerated.cshtml" />
     <Content Include="Views\Employees\Delete.cshtml" />
-    <Content Include="Views\Employees\Details.cshtml" />
-    <Content Include="Views\Employees\Edit.cshtml" />
-    <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Employees\MaintainEmployees.cshtml" />
     <Content Include="Views\Employees\MaintainEmployeeType.cshtml" />
     <Content Include="Views\Employees\SearchEmployee.cshtml" />

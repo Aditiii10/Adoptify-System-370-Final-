@@ -95,9 +95,9 @@
             </div>
         }
     </div>
-    </div>
-    @section scripts{
-        <script>
+</div>
+@section scripts{
+    <script>
         $(function () {
             var successMessage = '@TempData["SuccessMessage"]'
             if (successMessage != '')
@@ -113,6 +113,5 @@
             if (successMessage != '')
                 alertify.error(successMessage);
         });
-
-        </script>
-    }
+    </script>
+}

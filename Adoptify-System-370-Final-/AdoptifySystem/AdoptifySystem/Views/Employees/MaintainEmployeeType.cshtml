@@ -26,8 +26,8 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                <button type="submit" name="button" value="Save" onclick="Save()" class=" btn btn-success float-right">Save</button>
+                @Html.ActionLink("Cancel", "SearchEmployeeType", new { @class = "btn btn-warning", @title = "Click to go back to Search Employee Type screen" })
+                <button type="submit" name="button" value="Save" onclick="Save()" title="Click to update the Following Employee Type Details" class=" btn btn-success float-right">Save</button>
             </div>
         </div>
     </div>
