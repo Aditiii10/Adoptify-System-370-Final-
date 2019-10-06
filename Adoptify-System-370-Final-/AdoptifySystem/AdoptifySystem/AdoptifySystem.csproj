@@ -914,6 +914,7 @@
     <Content Include="Views\Kennel\MaintainKennel.cshtml" />
     <Content Include="Views\Kennel\DeleteKennel.cshtml" />
     <Content Include="Views\FosterCarePeriods\AddFosterCareDates.cshtml" />
+    <Content Include="Views\FosterCarePeriods\MaintainFosterCareDates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesAdopter\" />
