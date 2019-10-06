@@ -16,6 +16,59 @@ namespace AdoptifySystem.Views.Titles
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
         // GET: Titles
+        public ActionResult SearchTitle()
+        {
+            ViewBag.errormessage = "";
+            List<Title> Titles = new List<Title>();
+            try
+            {
+                Titles = db.Titles.ToList();
+                if (Titles.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(Titles);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+        [HttpGet]
+        public ActionResult SearchTitle(string search)
+        {
+            if (search != null)
+            {
+
+                List<Title> title = new List<Title>();
+                try
+                {
+
+                    title = db.Titles.Where(z => z.Title_Description.StartsWith(search)).ToList();
+                    if (title.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("Index", title);
+                    }
+                    return View("Index", title);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    throw new Exception("Something Went Wrong!");
+                }
+            }
+            else
+            {
+
+            }
+
+            return View();
+
+        }
+
+
         public ActionResult Index()
         {
             return View(db.Titles.ToList());

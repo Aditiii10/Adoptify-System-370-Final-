@@ -16,6 +16,60 @@ namespace AdoptifySystem.Controllers.Aditi
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
         // GET: Volunteer_Work_Type
+        public ActionResult SearchVolunteerWorkType()
+        {
+            ViewBag.errormessage = "";
+            List<Volunteer_Work_Type> VolunteerWorkType = new List<Volunteer_Work_Type>();
+            try
+            {
+                VolunteerWorkType = db.Volunteer_Work_Type.ToList();
+                if (VolunteerWorkType.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(VolunteerWorkType);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+        [HttpGet]
+        public ActionResult SearchVolunteerWorkType(string search)
+        {
+            if (search != null)
+            {
+
+                List<Volunteer_Work_Type> Vol_WT = new List<Volunteer_Work_Type>();
+                try
+                {
+
+                    Vol_WT = db.Volunteer_Work_Type.Where(z => z.Vol_WorkType_Name.StartsWith(search)).ToList();
+                    if (Vol_WT.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("Index", Vol_WT);
+                    }
+                    return View("Index", Vol_WT);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    throw new Exception("Something Went Wrong!");
+                }
+            }
+            else
+            {
+
+            }
+
+            return View();
+
+        }
+
+
+
         public ActionResult Index()
         {
             return View(db.Volunteer_Work_Type.ToList());
