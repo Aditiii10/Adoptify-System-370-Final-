@@ -915,13 +915,13 @@
     <Content Include="Views\Kennel\DeleteKennel.cshtml" />
     <Content Include="Views\FosterCarePeriods\AddFosterCareDates.cshtml" />
     <Content Include="Views\FosterCarePeriods\MaintainFosterCareDates.cshtml" />
+    <Content Include="Views\Audit_Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesAdopter\" />
     <Folder Include="UploadedFilesHCReport\" />
     <Folder Include="UploadedFilesMedCard\" />
     <Folder Include="UploadedFiles\" />
-    <Folder Include="Views\Audit_Log\" />
     <Folder Include="Views\Error\" />
     <Folder Include="Views\Timer\" />
   </ItemGroup>
