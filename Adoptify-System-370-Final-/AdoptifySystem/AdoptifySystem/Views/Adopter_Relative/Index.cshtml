@@ -45,83 +45,116 @@
         });
         <script/>*@
 
-        <table class="table-bordered table">
-            <tr class="table-primary">
-                <th>
-                    @Html.DisplayNameFor(model => model.Relative_Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Relative_Surname)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Relative_Email)
-                </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.Relative_Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Relative_PostalAddress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Relative_Home_Tel)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Relative_Work_Tel)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.Relative_Cell)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Relationship)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Adopter.Adopter_Name)
-                </th>
-                <th></th>
+    <table class="table-bordered table">
+        <tr class="table-primary">
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_Email)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Relative_Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_PostalAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_Home_Tel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_Work_Tel)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Relative_Cell)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relationship)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adopter.Adopter_Name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_Email)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Relative_Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_PostalAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_Home_Tel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_Work_Tel)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relative_Cell)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relationship)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Update", "Edit", "Adopter_Relative", new { id = item.Relative_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter Relative" })
+                    @Html.ActionLink("Delete", "Delete", "Adopter_Relative", new { id = item.Relative_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Adopter Relative" })
+                    <button class="btn btn-info" title="Select to Display Details" data-toggle="modal" data-target="#@item.Relative_ID">More info </button>
+                </td>
             </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Relative_Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Relative_Surname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Relative_Email)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Relative_Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Relative_PostalAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Relative_Home_Tel)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Relative_Work_Tel)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Relative_Cell)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Relationship)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Update", "Edit", "Adopter_Relative", new { id = item.Relative_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter Relative" })
-                        @Html.ActionLink("More Info", "Details", "Adopter_Relative", new { id = item.Relative_ID }, new { @class = "btn btn-primary", @Title = "Click to View More Info" })
-                        @Html.ActionLink("Delete", "Delete", "Adopter_Relative", new { id = item.Relative_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Adopter Relative" })
-                    </td>
-                </tr>
-            }
 
-        </table>
+            <div class="modal fade" id="@item.Relative_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header table-primary">
+                            <h5 class="modal-title" id="exampleModalLongTitle">@item.Adopter.Adopter_Name</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="value">Name:</span>
+                            @Html.DisplayFor(modelItem => item.Relative_Name) <br />
+                            <span class="value">Surname:</span>
+                            @Html.DisplayFor(modelItem => item.Relative_Surname) <br />
+                            <span class="value">Email:</span>
+                            @Html.DisplayFor(modelItem => item.Relative_Email) <br />
+                            <span class="value">Contact Number:</span>
+                            @Html.DisplayFor(modelItem => item.Relative_Cell) <br />
+                            <span class="value">Address:</span>
+                            @Html.DisplayFor(modelItem => item.Relationship) <br />                            
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            @Html.ActionLink("Update", "Edit", new { id = item.Relative_ID }, new { @style = "color: white", @class = "btn btn-success", @title = "Click to Update Adopter" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </table>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-12">
