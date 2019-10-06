@@ -11,7 +11,9 @@ namespace AdoptifySystem
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;  //needed for Display annotation
+    using System.ComponentModel;  //DisplayName annotation
+
     public partial class Volunteer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,17 +21,49 @@ namespace AdoptifySystem
         {
             this.Volunteer_Hours = new HashSet<Volunteer_Hours>();
         }
-    
+
+        [Display(Name = "Volunteer")]
         public int Vol_ID { get; set; }
+
+
+        [Display(Name = "Volunteer Name")]
+        [Required]
         public string Vol_Name { get; set; }
+
+
+        [Display(Name = "Volunteer Surname")]
+        [Required]
         public string Vol_Surname { get; set; }
+
+
+        [Display(Name = "Volunteer Email")]
+        [Required]
+        [EmailAddress]
         public string Vol_Email { get; set; }
+
+
+        [Display(Name = "Volunteer Contact Number")]
+        [Required]
         public string Vol_ContactNumber { get; set; }
+
+
+        [Display(Name = "Volunteer Address")]
+        [Required]
         public string Vol_Address { get; set; }
+
+
+        [Display(Name = "Volunteer Emergency Contact Name")]
+        [Required]
         public string Vol_Emergency_ContactName { get; set; }
+
+
+        [Display(Name = "Volunteer Emergency Contact Number")]
+        [Required]
         public string Vol_Emergency_ContactNumber { get; set; }
+
+        [Display(Name = "Volunteer Title")]
         public Nullable<int> Title_ID { get; set; }
-    
+
         public virtual Title Title { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Volunteer_Hours> Volunteer_Hours { get; set; }

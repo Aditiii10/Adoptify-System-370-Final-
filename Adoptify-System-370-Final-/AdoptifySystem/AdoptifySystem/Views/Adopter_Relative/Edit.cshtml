@@ -1,0 +1,121 @@
+﻿@model AdoptifySystem.Models.Adopter_Relative
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div id="main">
+    <br />
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Update Adopter Relative</h1>
+        </div>
+    </div>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Relative_ID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Adopter_ID, "Adopter", htmlAttributes: new { @class = "control-label col-md-2", @Title = "Select Adopter Name" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Adopter_ID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Adopter_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Relative_Name, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Relative Name" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Relative_Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Relative_Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Relative_Surname, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Relative Surname" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Relative_Surname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Relative_Surname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Relative_Email, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Relative Email" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Relative_Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Relative_Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Relative_Address, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Relative Address" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Relative_Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Relative_Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Relative_PostalAddress, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Relative Postal Address" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Relative_PostalAddress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Relative_PostalAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Relative_Home_Tel, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Relative Home Number" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Relative_Home_Tel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Relative_Home_Tel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Relative_Work_Tel, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Relative Work Number" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Relative_Work_Tel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Relative_Work_Tel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Relative_Cell, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Relative Cell Number" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Relative_Cell, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Relative_Cell, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Relationship, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Update Relative Relationship to Adopter" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Relationship, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Relationship, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <br />
+                    @Html.ActionLink("Back to List", "Index", "Adopter_Relative", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
+                    <input type="submit" value="Update" class="btn btn-success" style="float:right" title="Click to Update Adopter Relative Details" />
+                    <br />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

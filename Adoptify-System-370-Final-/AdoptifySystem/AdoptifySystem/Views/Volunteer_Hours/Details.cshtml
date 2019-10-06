@@ -4,55 +4,63 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div id="main">
+    <br />
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Volunteer Hours Details</h1>
+        </div>
+    </div>
 
-<div>
-    <h4>Volunteer_Hours</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Vol_workDate)
-        </dt>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Vol_workDate)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Vol_workDate)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Vol_workDate)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Vol_Start_Time)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Vol_Start_Time)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Vol_Start_Time)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Vol_Start_Time)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Vol_End_Time)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Vol_End_Time)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Vol_End_Time)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Vol_End_Time)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Volunteer.Vol_Name)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Volunteer.Vol_Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Volunteer.Vol_Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Volunteer.Vol_Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Volunteer_Work_Type.Vol_WorkType_Name)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Volunteer_Work_Type.Vol_WorkType_Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Volunteer_Work_Type.Vol_WorkType_Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Volunteer_Work_Type.Vol_WorkType_Name)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    <p>
+        <br />
+        @Html.ActionLink("Update", "Edit", "Volunteer_Hours", new { id = Model.Vol_Hours_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Volunteer Hours" })
+        @Html.ActionLink("Back to List", "Index", "Volunteer_Hours", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
+        <br />
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Vol_Hours_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

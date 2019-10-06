@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
+using AdoptifySystem.Models;
 
 namespace AdoptifySystem.Controllers.Aditi
 {
@@ -15,6 +16,62 @@ namespace AdoptifySystem.Controllers.Aditi
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
         // GET: Volunteer_Hours
+
+
+        public ActionResult SearchVolunteerHours()
+        {
+            ViewBag.errormessage = "";
+            List<Volunteer_Hours> VolunteerHours = new List<Volunteer_Hours>();
+            try
+            {
+                VolunteerHours = db.Volunteer_Hours.ToList();
+                if (VolunteerHours.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(VolunteerHours);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+        [HttpGet]
+        public ActionResult SearchVolunteerHours(string search)
+        {
+            if (search != null)
+            {
+
+                List<Volunteer_Hours> VolHours = new List<Volunteer_Hours>();
+                try
+                {
+
+                    VolHours = db.Volunteer_Hours.Where(z => z.Volunteer.Vol_Name.StartsWith(search) || z.Volunteer_Work_Type.Vol_WorkType_Name.StartsWith(search)).ToList();
+                    if (VolHours.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("Index", VolHours);
+                    }
+                    return View("Index", VolHours);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    throw new Exception("Something Went Wrong!");
+                }
+            }
+            else
+            {
+
+            }
+
+            return View();
+
+        }
+
+
+
         public ActionResult Index()
         {
             var volunteer_Hours = db.Volunteer_Hours.Include(v => v.Volunteer).Include(v => v.Volunteer_Work_Type);
@@ -26,12 +83,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer_Hours volunteer_Hours = db.Volunteer_Hours.Find(id);
             if (volunteer_Hours == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer_Hours);
         }
@@ -68,12 +125,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer_Hours volunteer_Hours = db.Volunteer_Hours.Find(id);
             if (volunteer_Hours == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             ViewBag.Vol_ID = new SelectList(db.Volunteers, "Vol_ID", "Vol_Name", volunteer_Hours.Vol_ID);
             ViewBag.Vol_WorkType_ID = new SelectList(db.Volunteer_Work_Type, "Vol_WorkType_ID", "Vol_WorkType_Name", volunteer_Hours.Vol_WorkType_ID);
@@ -103,12 +160,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer_Hours volunteer_Hours = db.Volunteer_Hours.Find(id);
             if (volunteer_Hours == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer_Hours);
         }

@@ -4,69 +4,74 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Volunteer_Hours</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Vol_Hours_ID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vol_workDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vol_workDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vol_workDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vol_Start_Time, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vol_Start_Time, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vol_Start_Time, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vol_End_Time, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vol_End_Time, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Vol_End_Time, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vol_ID, "Vol_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Vol_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Vol_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vol_WorkType_ID, "Vol_WorkType_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Vol_WorkType_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Vol_WorkType_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+<div id="main">
+    <br />
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Update Volunteer Hours</h1>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Vol_Hours_ID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Vol_workDate, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Volunteer Work Date" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Vol_workDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Vol_workDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Vol_Start_Time, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Volunteer Start Time" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Vol_Start_Time, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Vol_Start_Time, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Vol_End_Time, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Volunteer End Time" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Vol_End_Time, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Vol_End_Time, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Vol_ID, "Volunteer", htmlAttributes: new { @class = "control-label col-md-2", @Title = "Select Volunteer" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Vol_ID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Vol_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Vol_WorkType_ID, "Volunteer Work Type", htmlAttributes: new { @class = "control-label col-md-2", @Title = "Select Volunteer Work Type" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Vol_WorkType_ID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Vol_WorkType_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <br />
+                    @Html.ActionLink("Back to List", "Index", "Volunteer_Work_Type", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
+                    <input type="submit" value="Update" class="btn btn-success" style="float:right" title="Click to Update Volunteer Hours" />
+                    <br />
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @section Scripts {

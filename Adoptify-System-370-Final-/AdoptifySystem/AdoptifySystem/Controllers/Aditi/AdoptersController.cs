@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
+using AdoptifySystem.Models;
 
 namespace AdoptifySystem.Controllers.Aditi
 {
@@ -15,16 +16,68 @@ namespace AdoptifySystem.Controllers.Aditi
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public IEnumerable<SelectListItem> Titles { get; set; }
 
-        
+
         //public static Flexible myclass = new Flexible();
-        
+
 
         //public ActionResult OnGet()
         //{
-       
+
         //    return Page();
         //}
         // GET: Adopters
+
+        public ActionResult SearchAdopter()
+        {
+            ViewBag.errormessage = "";
+            List<Adopter> Adopters = new List<Adopter>();
+            try
+            {
+                Adopters = db.Adopters.ToList();
+                if (Adopters.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(Adopters);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+        [HttpGet]
+        public ActionResult SearchAdopter(string search)
+        {
+            if (search != null)
+            {
+
+                List<Adopter> Adopt = new List<Adopter>();
+                try
+                {
+
+                    Adopt = db.Adopters.Where(z => z.Adopter_Name.StartsWith(search) || z.Adopter_Surname.StartsWith(search) || z.Adopter_Email.StartsWith(search) || z.Adopter_CellNumber.StartsWith(search)).ToList();
+                    if (Adopt.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("Index", Adopt);
+                    }
+                    return View("Index", Adopt);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    throw new Exception("Something Went Wrong!");
+                }
+            }
+            else
+            {
+
+            }
+
+            return View();
+
+        }
 
         public AdoptersController()
         {
@@ -34,11 +87,13 @@ namespace AdoptifySystem.Controllers.Aditi
                 Value = t.Title_ID.ToString()
             });
             ViewData["Titles"] = Titles;
+
+
         }
 
         public ActionResult Index()
         {
-           var adopters = db.Adopters.Include(a => a.Title).Include(a => a.Adopter_Status);
+            var adopters = db.Adopters.Include(a => a.Title).Include(a => a.Adopter_Status);
             return View(adopters.ToList());
         }
 
@@ -47,12 +102,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Adopter adopter = db.Adopters.Find(id);
             if (adopter == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(adopter);
 
@@ -76,9 +131,16 @@ namespace AdoptifySystem.Controllers.Aditi
 
             try
             {
-              if (ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     db.Adopters.Add(adopter);
+                    //Animal a = new Animal();
+                    //a.Animal_Gender = "test";
+                    //a.Animal_Status = adopter.Adopter_Employer.ToString();
+
+                    //db.Animals.Add(a);
+
+
                     db.SaveChanges();
 
                     return RedirectToAction("Index");
@@ -92,7 +154,7 @@ namespace AdoptifySystem.Controllers.Aditi
                 ViewBag.err = e.Message;
                 throw;
             }
-            
+
         }
 
         // GET: Adopters/Edit/5
@@ -100,12 +162,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Adopter adopter = db.Adopters.Find(id);
             if (adopter == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             ViewBag.Title_ID = new SelectList(db.Titles, "Title_ID", "Title_Description", adopter.Title_ID);
             ViewBag.Adopter_Status_ID = new SelectList(db.Adopter_Status, "Adopter_Status_ID", "Adopter_Status_Name", adopter.Adopter_Status_ID);
@@ -142,12 +204,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Adopter adopter = db.Adopters.Find(id);
             if (adopter == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(adopter);
         }
@@ -188,7 +250,6 @@ namespace AdoptifySystem.Controllers.Aditi
                 myclass.ARelative = adopter;
                 return View(myclass);
             }
-
         }*/
 
         public ActionResult Search(string searchBy, string search)

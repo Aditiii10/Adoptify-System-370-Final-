@@ -17,9 +17,8 @@ namespace AdoptifySystem
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Adopter()
         {
-            this.Adopter_Contract = new HashSet<Adopter_Contract>();
+           
             this.Adoptions = new HashSet<Adoption>();
-            this.Adopter_Relative = new HashSet<Adopter_Relative>();
             this.Foster_Care_Parent = new HashSet<Foster_Care_Parent>();
         }
     
@@ -59,12 +58,10 @@ namespace AdoptifySystem
         public virtual Title Title { get; set; }
         public virtual Adopter_Status Adopter_Status { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Adopter_Contract> Adopter_Contract { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    
         public virtual ICollection<Adoption> Adoptions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Adopter_Relative> Adopter_Relative { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
         public virtual ICollection<Foster_Care_Parent> Foster_Care_Parent { get; set; }
     }
 }

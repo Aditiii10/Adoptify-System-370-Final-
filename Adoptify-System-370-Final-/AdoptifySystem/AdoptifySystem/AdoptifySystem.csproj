@@ -578,6 +578,7 @@
     <Compile Include="Vet_SearchVet_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Views\Titles\TitlesController.cs" />
     <Compile Include="Views\Videoplayer\VideoplayerController.cs" />
     <Compile Include="Volunteer.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
@@ -917,6 +918,16 @@
     <Content Include="Views\FosterCarePeriods\MaintainFosterCareDates.cshtml" />
     <Content Include="Views\Audit_Log\Index.cshtml" />
     <Content Include="Views\Timer\AddTimer.cshtml" />
+    <Content Include="Views\Adopter_Relative\Index.cshtml" />
+    <Content Include="Views\Adopter_Relative\Details.cshtml" />
+    <Content Include="Views\Adopter_Relative\Create.cshtml" />
+    <Content Include="Views\Adopter_Relative\Edit.cshtml" />
+    <Content Include="Views\Adopter_Relative\Delete.cshtml" />
+    <Content Include="Views\Titles\Index.cshtml" />
+    <Content Include="Views\Titles\Details.cshtml" />
+    <Content Include="Views\Titles\Create.cshtml" />
+    <Content Include="Views\Titles\Edit.cshtml" />
+    <Content Include="Views\Titles\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesAdopter\" />

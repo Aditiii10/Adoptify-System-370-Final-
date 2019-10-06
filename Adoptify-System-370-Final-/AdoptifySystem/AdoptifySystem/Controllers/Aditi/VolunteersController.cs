@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
+using AdoptifySystem.Models;
 
 namespace AdoptifySystem.Controllers.Aditi
 {
@@ -15,23 +16,80 @@ namespace AdoptifySystem.Controllers.Aditi
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
         // GET: Volunteers
+
+        public ActionResult SearchVolunteer()
+        {
+            ViewBag.errormessage = "";
+            List<Volunteer> Volunteers = new List<Volunteer>();
+            try
+            {
+                Volunteers = db.Volunteers.ToList();
+                if (Volunteers.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(Volunteers);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+        [HttpGet]
+        public ActionResult SearchVolunteer(string search)
+        {
+            if (search != null)
+            {
+
+                List<Volunteer> Vol = new List<Volunteer>();
+                try
+                {
+
+                    Vol = db.Volunteers.Where(z => z.Vol_Name.StartsWith(search) || z.Vol_Surname.StartsWith(search) || z.Vol_Email.StartsWith(search)).ToList();
+                    if (Vol.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("Index", Vol);
+                    }
+                    return View("Index", Vol);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    throw new Exception("Something Went Wrong!");
+                }
+            }
+            else
+            {
+
+            }
+
+            return View();
+
+        }
+
+
+
         public ActionResult Index()
         {
             var volunteers = db.Volunteers.Include(v => v.Title);
             return View(volunteers.ToList());
         }
 
+
+
         // GET: Volunteers/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer volunteer = db.Volunteers.Find(id);
             if (volunteer == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer);
         }
@@ -66,12 +124,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer volunteer = db.Volunteers.Find(id);
             if (volunteer == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             ViewBag.Title_ID = new SelectList(db.Titles, "Title_ID", "Title_Description", volunteer.Title_ID);
             return View(volunteer);
@@ -99,12 +157,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Volunteer volunteer = db.Volunteers.Find(id);
             if (volunteer == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(volunteer);
         }
@@ -115,9 +173,20 @@ namespace AdoptifySystem.Controllers.Aditi
         public ActionResult DeleteConfirmed(int id)
         {
             Volunteer volunteer = db.Volunteers.Find(id);
-            db.Volunteers.Remove(volunteer);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            int count = volunteer.Volunteer_Hours.Count();
+            if (count != 0)
+            {
+                TempData["DeleteErrorMessage"] = "You can not delete this item as it is been used else where!";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                db.Volunteers.Remove(volunteer);
+                db.SaveChanges();
+                TempData["DeleteMessage"] = "Deleted Volunteer Successfully";
+                return RedirectToAction("Index");
+            }
+
         }
 
         protected override void Dispose(bool disposing)
