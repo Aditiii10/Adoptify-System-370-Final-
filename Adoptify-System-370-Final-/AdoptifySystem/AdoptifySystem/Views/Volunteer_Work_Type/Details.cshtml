@@ -4,32 +4,39 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Volunteer Work Type Details</h2>
+    <div id="main">
+        <br />
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Volunteer Work Type Details</h1>
+            </div>
+        </div>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Vol_WorkType_Name)
-        </dt>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Vol_WorkType_Name)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Vol_WorkType_Name)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Vol_WorkType_Name)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Vol_WorkType_Description)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Vol_WorkType_Description)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Vol_WorkType_Description)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Vol_WorkType_Description)
+                </dd>
 
-    </dl>
-</div>
-<p>
-    <br/>
-    @Html.ActionLink("Update", "Edit", "Volunteer_Work_Type", new { id = Model.Vol_WorkType_ID }, new { @class = "btn btn-success", style="float:right", @Title = "Click to Update Volunteer Work Type" })
-    @Html.ActionLink("Back to List", "Index", "Volunteer_Work_Type", new { @class = "btn btn-dark", style = "float:right", @Title = "Click to go Back" })
-    <br />
-</p>
+            </dl>
+        </div>
+        <p>
+            <br />
+            @Html.ActionLink("Update", "Edit", "Volunteer_Work_Type", new { id = Model.Vol_WorkType_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Volunteer Work Type" })
+            @Html.ActionLink("Back to List", "Index", "Volunteer_Work_Type", new { @class = "btn btn-dark", style = "float:right", @Title = "Click to go Back" })
+            <br />
+        </p>
+        </div>

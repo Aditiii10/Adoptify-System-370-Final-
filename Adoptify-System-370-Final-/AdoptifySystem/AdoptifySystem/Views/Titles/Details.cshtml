@@ -4,24 +4,31 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Title Information</h2>
+    <div id="main">
+        <br />
+        <div class="" style="text-align:center;padding-left:120px">
+            <div class="col-sm-10" style='background-color: #2ba6cb'>
+                <h1 style="color:white">Title List</h1>
+            </div>
+        </div>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title_Description)
-        </dt>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Title_Description)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title_Description)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Title_Description)
+                </dd>
 
-    </dl>
-</div>
-<p>
-    <br/>
-    @Html.ActionLink("Back to List", "Index", "Titles", new { @class = "btn btn-dark", style = "float:right", @Title = "Click to go Back" })
-    @Html.ActionLink("Update", "Edit", new { id = Model.Title_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Title" })
-    <br/>
-</p>
+            </dl>
+        </div>
+        <p>
+            <br />
+            @Html.ActionLink("Back to List", "Index", "Titles", new { @class = "btn btn-dark", style = "float:right", @Title = "Click to go Back" })
+            @Html.ActionLink("Update", "Edit", new { id = Model.Title_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Title" })
+            <br />
+        </p>
+        </div>
