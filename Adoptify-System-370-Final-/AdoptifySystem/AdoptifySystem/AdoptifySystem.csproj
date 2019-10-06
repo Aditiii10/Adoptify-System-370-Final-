@@ -368,9 +368,12 @@
     <Compile Include="Controllers\Mecidal_CardController.cs" />
     <Compile Include="Controllers\MedCardFileController.cs" />
     <Compile Include="Controllers\Nickey\AdminController.cs" />
+    <Compile Include="Controllers\Nickey\Audit_LogController.cs" />
     <Compile Include="Controllers\Nickey\DonationsController.cs" />
     <Compile Include="Controllers\Nickey\FosterCareController.cs" />
+    <Compile Include="Controllers\Nickey\FosterCarePeriodsController.cs" />
     <Compile Include="Controllers\Nickey\StockController.cs" />
+    <Compile Include="Controllers\Nickey\TimerController.cs" />
     <Compile Include="Controllers\SMSMessageController.cs" />
     <Compile Include="Controllers\VetAppointmentController.cs" />
     <Compile Include="Controllers\VeterinariansController.cs" />
@@ -859,11 +862,6 @@
     <Content Include="Views\AnimalsDetailsReport\Animal.cshtml" />
     <Content Include="Views\ReportScreen\Index.cshtml" />
     <Content Include="Views\VetAppointReport\Index.cshtml" />
-    <Content Include="Views\Kennels\Create.cshtml" />
-    <Content Include="Views\Kennels\Delete.cshtml" />
-    <Content Include="Views\Kennels\Details.cshtml" />
-    <Content Include="Views\Kennels\Edit.cshtml" />
-    <Content Include="Views\Kennels\Index.cshtml" />
     <Content Include="Views\Animal\AddAnimalType.cshtml" />
     <Content Include="Views\Animal\AddBreedType.cshtml" />
     <Content Include="Views\Animal\AddTemporaryAnimal.cshtml" />
@@ -911,13 +909,20 @@
     <Content Include="Views\Adoptions\Index2.cshtml" />
     <Content Include="Views\AdopterFile\FileView.cshtml" />
     <Content Include="Views\Donations\ViewDonor.cshtml" />
+    <Content Include="Views\Kennel\AddKennel.cshtml" />
+    <Content Include="Views\Kennel\SearchKennel.cshtml" />
+    <Content Include="Views\Kennel\MaintainKennel.cshtml" />
+    <Content Include="Views\Kennel\DeleteKennel.cshtml" />
+    <Content Include="Views\FosterCarePeriods\AddFosterCareDates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesAdopter\" />
     <Folder Include="UploadedFilesHCReport\" />
     <Folder Include="UploadedFilesMedCard\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\Audit_Log\" />
     <Folder Include="Views\Error\" />
+    <Folder Include="Views\Timer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

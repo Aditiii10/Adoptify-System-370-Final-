@@ -3788,6 +3788,20 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="FosterCareDuration" EntitySet="FosterCareDurations" />
             <End Role="Foster_Care" EntitySet="Foster_Care" />
           </AssociationSet>
+          <FunctionImport Name="AddKennel">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+            <Parameter Name="capacity" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteKennel">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateKennel">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+            <Parameter Name="capacity" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -4770,6 +4784,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_insert" />
+          <FunctionImportMapping FunctionImportName="DeleteKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Delete" />
+          <FunctionImportMapping FunctionImportName="UpdateKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Update" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

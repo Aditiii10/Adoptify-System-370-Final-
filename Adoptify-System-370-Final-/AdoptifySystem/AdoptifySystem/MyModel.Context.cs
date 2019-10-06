@@ -326,5 +326,52 @@ namespace AdoptifySystem
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vet_SearchVet_Result>("Vet_SearchVet", nameParameter);
         }
+    
+        public virtual int AddKennel(string name, Nullable<int> number, Nullable<int> capacity)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddKennel", nameParameter, numberParameter, capacityParameter);
+        }
+    
+        public virtual int DeleteKennel(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteKennel", idParameter);
+        }
+    
+        public virtual int UpdateKennel(Nullable<int> iD, string name, Nullable<int> number, Nullable<int> capacity)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateKennel", iDParameter, nameParameter, numberParameter, capacityParameter);
+        }
     }
 }
