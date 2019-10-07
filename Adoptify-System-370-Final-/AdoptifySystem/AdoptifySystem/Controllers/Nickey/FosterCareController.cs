@@ -430,7 +430,7 @@ namespace AdoptifySystem.Controllers
             {
                 if (search != "")
                 {
-                    flex.Fostercarelist = flex.Fostercarelist.Where(z => z.Foster_Care_Parent.Foster_Parent_Name.Equals(search)).ToList();
+                    flex.Fostercarelist = flex.Fostercarelist.Where(z => z.Foster_Care_Parent.Foster_Parent_Name.StartsWith(search)|| z.Foster_Care_Parent.Foster_Parent_Surname.StartsWith(search)).ToList();
                     return View("RemovefromFosterCare", flex);
                 }
                 return RedirectToAction("RemovefromFosterCare",flex);

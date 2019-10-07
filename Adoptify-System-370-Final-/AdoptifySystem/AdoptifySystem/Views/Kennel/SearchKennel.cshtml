@@ -57,11 +57,11 @@
                         @Html.DisplayFor(modelItem => item.Kennel_Capacity)
                     </td>
                     <td>
-                        @{
+                        @*@{
                             ViewBag.Capacity = item.Capacityleft();
 
                         }
-                        @ViewBag.Capacity
+                        @ViewBag.Capacity*@
                     </td>
                     <td>
                         @Html.ActionLink("Maintain", "MaintainKennel", new { id = item.Kennel_ID }, new { @class = "btn btn-warning", @title = "Click to go back to Maintain Kennel" })

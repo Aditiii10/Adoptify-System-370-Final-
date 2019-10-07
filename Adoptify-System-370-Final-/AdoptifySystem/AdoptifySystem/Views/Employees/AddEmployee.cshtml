@@ -22,6 +22,9 @@
         }
     </style>
 </head>
+@using (Html.BeginForm("AddEmployeein", "Employees"))
+{
+
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#home">Employee Details</a>
@@ -46,7 +49,7 @@
                 <div class="form-group">
                     <label><b>Employee Type</b></label>
                     <div class="col-md-5" style="width:25%;">
-                        <select id="Emp_Type_ID" class="custom-select" name="EmployeeType" title="Select Employee Type">
+                        <select id="Emp_Type_ID" class="custom-select" name="Emp_Type_ID" title="Select Employee Type" required>
                             @if (Model.empTypes != null)
                             {
                                 <option>---Select---</option>
@@ -65,7 +68,7 @@
                 <div class="form-group">
                     <label><b>Title</b> </label>
                     <div class="col-md-5" style="width:25%;">
-                        <select id="Title_ID" class="custom-select" name="Title" title="Select Title">
+                        <select id="Title_ID" class="custom-select" name="Title_ID" title="Select Title" required>
                             @if (Model.Titles != null)
                             {
                                 <option>---Select---</option>
@@ -94,37 +97,37 @@
                 <div class="form-group">
                     <label><b>Employee Name </b></label>
                     <div class="col-md-10">
-                        <input id="Emp_Name" name="Emp_Name" class="form-control" type="text" placeholder="Enter Name" />
+                        <input id="Emp_Name" name="Emp_Name" class="form-control" type="text" placeholder="Enter Name" required />
                     </div>
                 </div>
                 <div class="form-group">
                     <label><b>Employee Surname</b> </label>
                     <div class="col-md-10">
-                        <input id="Emp_Surname" name="Emp_Surname" class="form-control" type="text" placeholder="Enter Surname" />
+                        <input id="Emp_Surname" name="Emp_Surname" class="form-control" type="text" placeholder="Enter Surname" required />
                     </div>
                 </div>
                 <div class="form-group">
                     <label><b>Employee Contact Number</b> </label>
                     <div class="col-md-10">
-                        <input name="Emp_ContactNumber" id="Emp_ContactNumber" class="form-control" type="text" placeholder="Enter Contact Details" />
+                        <input name="Emp_ContactNumber" id="Emp_ContactNumber" class="form-control" type="text" placeholder="Enter Contact Details" required />
                     </div>
                 </div>
                 <div class="form-group">
                     <label><b>Employee ID Number </b> </label>
                     <div class="col-md-10">
-                        <input name="Emp_IDNumber" id="Emp_IDNumber" class="form-control" type="text" placeholder="Enter ID/Passport Number" />
+                        <input name="Emp_IDNumber" id="Emp_IDNumber" class="form-control" type="text" placeholder="Enter ID/Passport Number" required />
                     </div>
                 </div>
                 <div class="form-group">
                     <label><b>Employee Email</b></label>
                     <div class="col-md-10">
-                        <input name="Emp_Email" id="Emp_Email" class="form-control" type="email" placeholder="Enter Email Address" />
+                        <input name="Emp_Email" id="Emp_Email" class="form-control" type="email" placeholder="Enter Email Address" required/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label><b>Employee Date_Employe</b></label>
                     <div class="col-md-10">
-                        <input id="Emp_Date_Employed" name="Emp_Date_Employed" class="form-control" type="date" placeholder="MM/DD/YY" />
+                        <input id="Emp_Date_Employed" name="Emp_Date_Employed" class="form-control" type="date" placeholder="MM/DD/YY" required />
                     </div>
                 </div>
                 <div class="form-group">
@@ -179,7 +182,7 @@
                     @Html.ActionLink("Cancel", "SearchEmployee", null ,new { @class = "btn btn-warning" ,@title="Click to go back to Search Employee screen" })
                 </div>
             </div>
-        </div>
+        </div>}
 <script>
        $(document).ready(function () {
         var dateNewFormat, onlyDate, today = new Date();
@@ -207,7 +210,7 @@
     function cancel() {
         location.href = '@Url.Action("SearchEmployee","Employees")';
     }
-    function validate() {
+    @*function validate() {
         var Title_ID = document.getElementById("Title_ID");
         var Emp_Type_ID = document.getElementById("Emp_Type_ID");
         var Emp_Name = document.getElementById("Emp_Name");
@@ -444,7 +447,7 @@
                 success: function (d) {
                     $("#loader").hide();
                     isvalid = true;
-                     location.href = '@Url.Action("SearchEmployee","Employees")';
+                     location.href = '@Url.Action("BarCodeGenerated","Employees")';
                 },
                 error: function (error) {
                     $("#loader").hide();
@@ -460,7 +463,7 @@
             alert("all is not valid");
         }
 
-    }
+    }*@
     var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png", ".pdf"];
     function ValidateSingleInput(oInput) {
         if (oInput.type == "file") {

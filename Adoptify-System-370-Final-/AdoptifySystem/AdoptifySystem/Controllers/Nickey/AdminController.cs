@@ -168,7 +168,8 @@ namespace AdoptifySystem.Controllers
                         //Send email for reset password
                         string resetCode = Membership.GeneratePassword(12, 1);
                         SendVerificationLinkEmail(account.Emp_Email, resetCode, "ResetPassword");
-                        user.Password = resetCode;
+                        var hashed = Crypto.Hash(resetCode, "MD5");
+                        user.Password = hashed;
                         //This line I have added here to avoid confirm password not match issue , as we had added a confirm password property 
                         //in our model class in part 1
                         dc.Configuration.ValidateOnSaveEnabled = false;

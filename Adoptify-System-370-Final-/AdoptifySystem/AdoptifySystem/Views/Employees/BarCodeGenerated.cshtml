@@ -7,7 +7,7 @@
     <h1>Please Scan Barcode:</h1>
     @using (Html.BeginForm("Index", "Home"))
     {
-        <img src="@ViewBag.Qr" />
+        <img src="@Model.Employee.BarcodeImageUrl" />
         <div>@ViewBag.Message</div>
         <input type="submit" value="Done" class="btn btn-primary btn-block btn-large" />
     }

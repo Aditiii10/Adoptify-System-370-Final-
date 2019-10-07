@@ -39,8 +39,6 @@ namespace AdoptifySystem.Controllers.Zinhle
                 }
                 else
                 {
-                    
-                   
                         db.FosterCareDurations.Add(time);
                         db.SaveChanges();
                     

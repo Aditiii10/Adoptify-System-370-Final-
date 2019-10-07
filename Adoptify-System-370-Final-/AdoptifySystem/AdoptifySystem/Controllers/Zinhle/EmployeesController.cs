@@ -48,30 +48,31 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
         [HttpPost]
-        public ContentResult AddEmployeein(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract, FormCollection form)
+        public ActionResult AddEmployeein(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract)
         {
             try
             {
                 db.Database.CommandTimeout = 150;
                 Employee saveEmp = new Employee();
-                HttpFileCollectionBase files = Request.Files;
-                HttpPostedFileBase file = files[0];
                 saveEmp = emp;
+                if (emp == null|| emp.Emp_Name == " "|| emp.Emp_Gender == " " || emp.Emp_Surname == " " || emp.Title_ID == 0 || emp.Emp_Type_ID == 0) {
+                    return RedirectToAction("AddEmployee");
+                }
                 //this is where we convert the contract to add to the database
-                //byte[] bytes;
+                byte[] bytes;
                 if (Contract != null)
                 {
-                    //using (BinaryReader br = new BinaryReader(Contract.InputStream))
-                    //{
+                    using (BinaryReader br = new BinaryReader(Contract.InputStream))
+                    {
 
-                    //    bytes = br.ReadBytes(Contract.ContentLength);
-                    //}
-                    //saveEmp.Emp_Contract_Name = Path.GetFileName(Contract.FileName);
-                    //saveEmp.Emp_Contract_Type = Contract.ContentType;
-                    //saveEmp.Emp_Contract = bytes;
-                    file.SaveAs(HttpContext.Server.MapPath("~/Images/EmployeeContracts/")
-                                                  + Contract.FileName);
-                     emp.Emp_Contract_Name= Contract.FileName;
+                        bytes = br.ReadBytes(Contract.ContentLength);
+                    }
+                    saveEmp.Emp_Contract_Name = Path.GetFileName(Contract.FileName);
+                    saveEmp.Emp_Contract_Type = Contract.ContentType;
+                    saveEmp.Emp_Contract = bytes;
+                    //file.SaveAs(HttpContext.Server.MapPath("~/Images/EmployeeContracts/")
+                    //                              + Contract.FileName);
+                    // emp.Emp_Contract_Name= Contract.FileName;
 
 
                 }
@@ -87,7 +88,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 if (user == null || Role == null)
                 {
                     TempData["SuccessMessage"] = "Succesfully added the employee";
-                    return Content("Succesfully added the employee");
+                    return RedirectToAction("SearchEmployee");
                 }
                 user.Emp_ID = saveEmp.Emp_ID;
                 TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
@@ -122,7 +123,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                 TempData["SuccessMessage"] = "Succesfully added the User";
                 //return View("BarCodeGenerated", user);
-                return Content("Succesfully added the User");
+                return View("BarCodeGenerated", user);
 
             }
 
