@@ -234,37 +234,9 @@ namespace AdoptifySystem.Controllers.Aditi
             base.Dispose(disposing);
         }
 
-        /*public ActionResult AdopterRelative(int? id)
-        {
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                //stpre in flexible class
-                Adopter adopter = db.Adopters.Find(id);
-                if (adopter == null)
-                {
-                    return HttpNotFound();
-                }
-                myclass.ARelative = adopter;
-                return View(myclass);
-            }
+        
 
-        }*/
-
-        public ActionResult Search(string searchBy, string search)
-        {
-            if (searchBy == "Adopter_Name")
-            {
-                return View(db.Adopters.Where(c => c.Adopter_Name.Contains(search) || search == null).ToList());
-            }
-            else
-            {
-                return View(db.Adopters.Where(c => c.Adopter_Surname.Contains(search) || search == null).ToList());
-            }
-
-        }
+        
 
     }
 }

@@ -175,10 +175,22 @@ namespace AdoptifySystem.Controllers.Aditi
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+
             Volunteer_Hours volunteer_Hours = db.Volunteer_Hours.Find(id);
-            db.Volunteer_Hours.Remove(volunteer_Hours);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            int count = volunteer_Hours.Volunteer.Volunteer_Hours.Count();
+            if (count != 0)
+            {
+                TempData["DeleteErrorMessage"] = "You can not delete this item as it is been used else where!";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                db.Volunteers.Remove(volunteer_Hours.Volunteer);
+                db.SaveChanges();
+                TempData["DeleteMessage"] = "Deleted Volunteer Successfully";
+                return RedirectToAction("Index");
+            }
+          
         }
 
         protected override void Dispose(bool disposing)

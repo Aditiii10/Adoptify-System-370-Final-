@@ -169,10 +169,22 @@ namespace AdoptifySystem.Controllers.Aditi
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+
             Adopter_Relative adopter_Relative = db.Adopter_Relative.Find(id);
-            db.Adopter_Relative.Remove(adopter_Relative);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            int count = adopter_Relative.Adopter.Adopter_Relative.Count();
+            if (count != 0)
+            {
+                TempData["DeleteErrorMessage"] = "You can not delete this item as it is been used else where!";
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                db.Adopters.Remove(adopter_Relative.Adopter);
+                db.SaveChanges();
+                TempData["DeleteMessage"] = "Deleted Adopter Relative Successfully";
+                return RedirectToAction("Index");
+            }            
         }
 
         protected override void Dispose(bool disposing)
