@@ -115,7 +115,7 @@ function Save() {
                     success: function (d) {
                         $("#loader").hide();
                         isvalid = true;
-                        location.href = '@Url.Action("SearchBreedType","Animal")';
+                        location.href = '@Url.Action("Index","Home")';
                     },
                     error: function (error) {
                         $("#loader").hide();

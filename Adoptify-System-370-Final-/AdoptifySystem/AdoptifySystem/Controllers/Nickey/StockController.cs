@@ -14,6 +14,7 @@ namespace AdoptifySystem.Controllers
         // GET: Stock
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public static Flexible flex = new Flexible();
+        static int sub = 4;
         public ActionResult AddStock()
         {
             List<Stock_Type> Stock_Types = new List<Stock_Type>();
@@ -21,12 +22,23 @@ namespace AdoptifySystem.Controllers
             List<Unit_Type> unit_Types = new List<Unit_Type>();
             try
             {
-                Stock_Types = db.Stock_Type.ToList();
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    Stock_Types = db.Stock_Type.ToList();
                 Packaging_Type = db.Packaging_Type.ToList();
                 unit_Types = db.Unit_Type.ToList();
                 flex.Stock_Types = Stock_Types;
                 flex.packaging_Types = Packaging_Type;
                 flex.unit_Types = unit_Types;
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception)
             {
@@ -72,12 +84,23 @@ namespace AdoptifySystem.Controllers
             try
             {
                 stock = db.Stocks.ToList();
-                if (stock.Count == 0)
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    if (stock.Count == 0)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
                 return View(stock);
             }
+                else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
             catch (Exception e)
             {
                 ViewBag.errormessage = "there was a network error: " + e.Message;
@@ -118,7 +141,13 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (id == null)
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -140,7 +169,11 @@ namespace AdoptifySystem.Controllers
                 }
                 flex.stock = stock_;
                 return View(flex);
-
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception)
             {
@@ -182,7 +215,13 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (id == null)
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -204,8 +243,12 @@ namespace AdoptifySystem.Controllers
                 }
                 flex.stock = stock_;
                 return View(flex);
-
             }
+                else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
             catch (Exception)
             {
                 throw new Exception("Something Went Wrong!");
@@ -301,7 +344,13 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (id == null)
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    if (id == null)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
@@ -323,7 +372,11 @@ namespace AdoptifySystem.Controllers
                 }
                 flex.stock = stock_;
                 return View(flex);
-
+                      }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception)
             {
@@ -371,15 +424,27 @@ namespace AdoptifySystem.Controllers
         {
             ViewBag.errormessage = "";
             List<Stock_Type> stock_Types = new List<Stock_Type>();
+
             try
             {
-                stock_Types = db.Stock_Type.ToList();
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    stock_Types = db.Stock_Type.ToList();
                 if (stock_Types.Count == 0)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
                 return View(stock_Types);
             }
+                else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
             catch (Exception e)
             {
                 ViewBag.errormessage = "there was a network error: " + e.Message;
@@ -418,7 +483,13 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (id == null)
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    if (id == null)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
@@ -428,6 +499,11 @@ namespace AdoptifySystem.Controllers
                     throw new Exception("Something Went Wrong!");
                 }
                 return View(stock_Type);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception)
             {
@@ -467,7 +543,13 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (id != 0)
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    if (id != 0)
                 {
                     Stock stoc = db.Stocks.Find(id);
                     int count = stoc.Donation_Line.Count();
@@ -485,6 +567,11 @@ namespace AdoptifySystem.Controllers
                 }
                 //need to send message that cant send message back
                 return View("SearchStock");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception)
             {
@@ -495,8 +582,13 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult Deletestocktype(int id)
         {
-
-            if (id != 0)
+            if (Convert.ToInt32(Session["ID"]) == 0)
+            {
+                 return RedirectToAction("Login","Admin");
+            }
+            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+            {
+                if (id != 0)
             {
                 Stock_Type stocky = db.Stock_Type.Find(id);
                 int count = stocky.Stocks.Count();
@@ -515,8 +607,13 @@ namespace AdoptifySystem.Controllers
             //need to send message that cant send message back
 
             return View("Searchstocktype");
-
         }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+    }
+
+}
 
     }
 }

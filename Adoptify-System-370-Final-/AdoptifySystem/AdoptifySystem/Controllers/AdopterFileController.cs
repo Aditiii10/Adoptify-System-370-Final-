@@ -9,13 +9,15 @@ using System.Data.SqlClient;
 using System.Data;
 using AdoptifySystem;
 using AdoptifySystem.Models;
+using AdoptifySystem.Models.nickeymodel;
 
 namespace AdoptifySystem.Controllers
 {
     public class AdopterFileController : Controller
     {
         string conString = "Data Source=wollies.database.windows.net;Initial Catalog =Wollies_Shelter; integrated security=true; persist security info=True;user id=user;password=Wollies123;Trusted_Connection=false;Encrypt=True";
-
+        public static Flexible flex = new Flexible();
+        static int sub = 14;
         public ActionResult FileView(AdopterFileUpload model)
         {
             List<AdopterFileUpload> list = new List<AdopterFileUpload>();

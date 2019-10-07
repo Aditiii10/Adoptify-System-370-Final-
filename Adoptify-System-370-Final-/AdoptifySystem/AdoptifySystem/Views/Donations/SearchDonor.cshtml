@@ -86,7 +86,7 @@
 
                         <button class="btn btn-info" title="Select to Display Details" data-toggle="modal" data-target="#@item.Donor_ID">More info </button>
                         @Html.ActionLink("Delete", "DeleteDonor", new { id = item.Donor_ID }, new { @class = "btn btn-danger", @title = "Click to Delete Donor" })
-                        @Html.ActionLink("View Donor", "ViewDonor", new { id = item.Donor_ID }, new { @class = "btn btn-danger", @title = "Click to View Donor" })
+                        @Html.ActionLink("View Donor", "ViewDonor", new { id = item.Donor_ID }, new { @class = "btn btn-primary", @title = "Click to View Donor" })
                     </td>
                 </tr>
                 <div class="modal fade" id="@item.Donor_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

@@ -7,6 +7,7 @@ using System.Data.Entity;
 using AdoptifySystem;
 using System.Web.Script.Services;
 using System.Web.Services;
+using AdoptifySystem.Models.nickeymodel;
 
 
 
@@ -17,10 +18,13 @@ namespace AdoptifySystem.Controllers
     {
         private Wollies_ShelterEntities dc = new Wollies_ShelterEntities();
         // GET: Home
-        [AllowAnonymous]
+        public static Flexible flex = new Flexible();
+        static int sub = 16;
+       
         public ActionResult Index()
         {
-            Wollies_ShelterEntities dc = new Wollies_ShelterEntities();
+            
+                Wollies_ShelterEntities dc = new Wollies_ShelterEntities();
             try { 
             var AnimalsDogs = dc.Animals.Where(x => x.Animal_Type.Animal_Type_ID == 1 && x.Animal_Status.Animal_Status_ID == 2).Count();
             ViewBag.AnimalsDogs = AnimalsDogs;
@@ -39,6 +43,7 @@ namespace AdoptifySystem.Controllers
             {
                 throw new Exception("Something Went Wrong!");
             }
+            
             return View();
         }
         

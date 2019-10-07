@@ -1,14 +1,19 @@
-﻿@model AdoptifySystem.Adopter
+﻿@model AdoptifySystem.Models.Adopter
 
 @{
     ViewBag.Title = "Delete";
 }
-<div id="main">
-    <h2>Delete</h2>
 
-    <h3>Are you sure you want to delete this?</h3>
-   
-        <h4>Adopter</h4>
+<div id="main">
+    <br />
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Delete Adopter</h1>
+        </div>
+    </div>
+
+    <h3>Are you sure you want to delete this Adopter?</h3>
+    <div>
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -120,7 +125,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Property_Securely_Closed)
+                @Html.RadioButtonFor(model => model.Property_Securely_Closed, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Property_Securely_Closed, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -128,7 +136,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Properyty_Include_Pool)
+                @Html.RadioButtonFor(model => model.Properyty_Include_Pool, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Properyty_Include_Pool, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -136,7 +147,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Pool_Secured)
+                @Html.RadioButtonFor(model => model.Pool_Secured, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Pool_Secured, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -144,7 +158,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Animal_Shelter_Available)
+                @Html.RadioButtonFor(model => model.Animal_Shelter_Available, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Animal_Shelter_Available, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -152,7 +169,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Sick_Animal)
+                @Html.RadioButtonFor(model => model.Sick_Animal, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Sick_Animal, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -176,7 +196,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Given_Animal_Away)
+                @Html.RadioButtonFor(model => model.Given_Animal_Away, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Given_Animal_Away, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -200,7 +223,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Adopted_Before)
+                @Html.RadioButtonFor(model => model.Adopted_Before, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Adopted_Before, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -208,7 +234,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Complex_or_Flat)
+                @Html.RadioButtonFor(model => model.Complex_or_Flat, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Complex_or_Flat, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -216,7 +245,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Animal_Allowed)
+                @Html.RadioButtonFor(model => model.Animal_Allowed, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Animal_Allowed, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -232,7 +264,10 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Animal_Vaccines_Updated)
+                @Html.RadioButtonFor(model => model.Animal_Vaccines_Updated, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Animal_Vaccines_Updated, "false", new { disabled = "disabled" })
+                <label>No</label>
             </dd>
 
             <dt>
@@ -243,13 +278,13 @@
                 @Html.DisplayFor(model => model.Title.Title_Description)
             </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Adopter_Status.Adopter_Status_Name)
-            </dt>
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Adopter_Status.Adopter_Status_Name)
+                </dt>*@
 
-            <dd>
-                @Html.DisplayFor(model => model.Adopter_Status.Adopter_Status_Name)
-            </dd>
+            @*<dd>
+                    @Html.DisplayFor(model => model.Adopter_Status.Adopter_Status_Name)
+                </dd>*@
 
         </dl>
 
@@ -258,8 +293,10 @@
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
+                @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
+                <input type="submit" value="Delete" class="btn btn-danger" style="float:right" , title="Click to go Delete Adopter" />
+                <br />
             </div>
         }
-  </div>
+    </div>
+</div>

@@ -7,13 +7,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
+using AdoptifySystem.Models.nickeymodel;
 
 namespace AdoptifySystem.Controllers
 {
     public class VeterinariansController : Controller
     {
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
-
+        public static Flexible flex = new Flexible();
+        static int sub = 9;
         // GET: Veterinarians
         public ActionResult Index(string searchBy, string search)
         {
@@ -129,16 +131,35 @@ namespace AdoptifySystem.Controllers
         // GET: Veterinarians/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                throw new Exception("Something Went Wrong!");
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    if (id == null)
+                    {
+                        throw new Exception("Something Went Wrong!");
+                    }
+                    Veterinarian veterinarian = db.Veterinarians.Find(id);
+                    if (veterinarian == null)
+                    {
+                        throw new Exception("Something Went Wrong!");
+                    }
+                    return View(veterinarian);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            Veterinarian veterinarian = db.Veterinarians.Find(id);
-            if (veterinarian == null)
+            catch (Exception)
             {
-                throw new Exception("Something Went Wrong!");
+
+                throw;
             }
-            return View(veterinarian);
         }
 
         // POST: Veterinarians/Delete/5

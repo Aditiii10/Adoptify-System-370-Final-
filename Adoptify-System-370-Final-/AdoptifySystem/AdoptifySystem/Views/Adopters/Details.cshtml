@@ -1,13 +1,18 @@
-﻿@model AdoptifySystem.Adopter
+﻿@model AdoptifySystem.Models.Adopter
 
 @{
     ViewBag.Title = "Details";
 }
+
 <div id="main">
-    <h2>Details</h2>
+    <br />
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Adopter Details</h1>
+        </div>
+    </div>
 
     <div>
-        <h4>Adopter</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -253,7 +258,9 @@
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Adopter_ID }) |
-        @Html.ActionLink("Back to List", "Index")
+        <br />
+        @Html.ActionLink("Update", "Edit", "Adopters", new { id = Model.Adopter_ID }, new { @class = "btn btn-success", style = "float:right", @Title = "Click to Update Adopter Details" })
+        @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
+        <br />
     </p>
-    </div>
+</div>

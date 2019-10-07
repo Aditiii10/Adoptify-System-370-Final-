@@ -48,30 +48,30 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
         [HttpPost]
-        public ContentResult AddEmployeein(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract, FormCollection form)
+        public ActionResult AddEmployeein(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract, FormCollection form)
         {
             try
             {
                 db.Database.CommandTimeout = 150;
                 Employee saveEmp = new Employee();
-                HttpFileCollectionBase files = Request.Files;
-                HttpPostedFileBase file = files[0];
+                //HttpFileCollectionBase files = Request.Files;
+                //HttpPostedFileBase file = files[0];
                 saveEmp = emp;
                 //this is where we convert the contract to add to the database
-                //byte[] bytes;
+                byte[] bytes;
                 if (Contract != null)
                 {
-                    //using (BinaryReader br = new BinaryReader(Contract.InputStream))
-                    //{
+                    using (BinaryReader br = new BinaryReader(Contract.InputStream))
+                    {
 
-                    //    bytes = br.ReadBytes(Contract.ContentLength);
-                    //}
-                    //saveEmp.Emp_Contract_Name = Path.GetFileName(Contract.FileName);
-                    //saveEmp.Emp_Contract_Type = Contract.ContentType;
-                    //saveEmp.Emp_Contract = bytes;
-                    file.SaveAs(HttpContext.Server.MapPath("~/Images/EmployeeContracts/")
-                                                  + Contract.FileName);
-                    emp.Emp_Contract_Name = Contract.FileName;
+                        bytes = br.ReadBytes(Contract.ContentLength);
+                    }
+                    saveEmp.Emp_Contract_Name = Path.GetFileName(Contract.FileName);
+                    saveEmp.Emp_Contract_Type = Contract.ContentType;
+                    saveEmp.Emp_Contract = bytes;
+                    //file.SaveAs(HttpContext.Server.MapPath("~/Images/EmployeeContracts/")
+                    //                              + Contract.FileName);
+                    //emp.Emp_Contract_Name = Contract.FileName;
 
 
                 }

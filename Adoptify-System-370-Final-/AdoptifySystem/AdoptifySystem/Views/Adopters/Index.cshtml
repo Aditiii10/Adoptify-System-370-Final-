@@ -1,23 +1,47 @@
-﻿@model IEnumerable<AdoptifySystem.Adopter>
+﻿@model IEnumerable<AdoptifySystem.Models.Adopter>
 
 @{
     ViewBag.Title = "Index";
 }
+
 <div id="main">
-    <h2>Adopter</h2>
+    <br />
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Adopters List</h1>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("SearchAdopter", "Adopters", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="col-md-5">
+                <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" value="Search" title="Click to Search Adopter" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+        <br />
+    }
 
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Add New", "Create", "Adopters", new { @class = "btn btn-success", @Title = "Click to Add Adopter" })
         @using (Html.BeginForm("Index", "Adopters", FormMethod.Get))
+
         {
-            <b>Search by:</b>@Html.RadioButton("Searchby", "Adopter_Name", true) <text>Adopter Name</text>
-            @Html.RadioButton("Searchby", "Adopter_Surname")<text>Adopter Surname</text><br />
-            @Html.TextBox("search")<input type="submit" value="Search" ? />
+
         }
     </p>
 
-    <table class="table">
-        <tr>
+
+
+    <table class="table-bordered table">
+        <tr class="table-primary">
             <th>
                 @Html.DisplayNameFor(model => model.Adopter_Name)
             </th>
@@ -211,12 +235,57 @@
                         @Html.DisplayFor(modelItem => item.Adopter_Status.Adopter_Status_Name)
                     </td>*@
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Adopter_ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Adopter_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Adopter_ID })
+                    @Html.ActionLink("Update", "Edit", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter" })
+                    @Html.ActionLink("Delete", "Delete", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Adopter" })
+                    <button class="btn btn-info" title="Select to Display Details" data-toggle="modal" data-target="#@item.Adopter_ID">More info </button>
                 </td>
             </tr>
+
+
+            <div class="modal fade" id="@item.Adopter_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header table-primary">
+                            <h5 class="modal-title" id="exampleModalLongTitle">@item.Adopter_Name</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="value">Name:</span>
+                            @Html.DisplayFor(modelItem => item.Adopter_Name) <br />
+                            <span class="value">Surname:</span>
+                            @Html.DisplayFor(modelItem => item.Adopter_Surname) <br />
+                            <span class="value">Email:</span>
+                            @Html.DisplayFor(modelItem => item.Adopter_Email) <br />
+                            <span class="value">Contact Number:</span>
+                            @Html.DisplayFor(modelItem => item.Adopter_HomeNumber) <br />
+                            <span class="value">Address:</span>
+                            @Html.DisplayFor(modelItem => item.Adopter_WorkNumber) <br />
+                            <span class="value">Emergency Contact Name:</span>
+                            @Html.DisplayFor(modelItem => item.Adopter_CellNumber) <br />
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            @Html.ActionLink("Update", "Edit", new { id = item.Adopter_ID }, new { @style = "color: white", @class = "btn btn-success", @title = "Click to Update Adopter" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         }
 
+
+
     </table>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-12">
+        <br />
+        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", style = "float:right", @Title = "Click to go to Home Page" })
+        <br />
     </div>
+</div>

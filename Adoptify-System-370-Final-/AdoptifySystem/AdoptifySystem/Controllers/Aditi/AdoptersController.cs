@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
 using AdoptifySystem.Models;
+using AdoptifySystem.Models.nickeymodel;
 
 namespace AdoptifySystem.Controllers.Aditi
 {
@@ -15,7 +16,8 @@ namespace AdoptifySystem.Controllers.Aditi
     {
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public IEnumerable<SelectListItem> Titles { get; set; }
-
+        public static Flexible flex = new Flexible();
+        static int sub = 14;
 
         //public static Flexible myclass = new Flexible();
 
@@ -29,16 +31,28 @@ namespace AdoptifySystem.Controllers.Aditi
 
         public ActionResult SearchAdopter()
         {
+
             ViewBag.errormessage = "";
             List<Adopter> Adopters = new List<Adopter>();
             try
             {
-                Adopters = db.Adopters.ToList();
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    Adopters = db.Adopters.ToList();
                 if (Adopters.Count == 0)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
                 return View(Adopters);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception e)
             {
@@ -160,7 +174,13 @@ namespace AdoptifySystem.Controllers.Aditi
         // GET: Adopters/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Convert.ToInt32(Session["ID"]) == 0)
+            {
+                 return RedirectToAction("Login","Admin");
+            }
+            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+            {
+                if (id == null)
             {
                 throw new Exception("Something Went Wrong!");
             }
@@ -172,6 +192,11 @@ namespace AdoptifySystem.Controllers.Aditi
             ViewBag.Title_ID = new SelectList(db.Titles, "Title_ID", "Title_Description", adopter.Title_ID);
             ViewBag.Adopter_Status_ID = new SelectList(db.Adopter_Status, "Adopter_Status_ID", "Adopter_Status_Name", adopter.Adopter_Status_ID);
             return View(adopter);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: Adopters/Edit/5
@@ -202,7 +227,13 @@ namespace AdoptifySystem.Controllers.Aditi
         // GET: Adopters/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Convert.ToInt32(Session["ID"]) == 0)
+            {
+                 return RedirectToAction("Login","Admin");
+            }
+            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+            {
+                if (id == null)
             {
                 throw new Exception("Something Went Wrong!");
             }
@@ -212,18 +243,36 @@ namespace AdoptifySystem.Controllers.Aditi
                 throw new Exception("Something Went Wrong!");
             }
             return View(adopter);
+            }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
         }
 
         // POST: Adopters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
-            Adopter adopter = db.Adopters.Find(id);
-            db.Adopters.Remove(adopter);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            if (id != null)
+            {
+                Adopter adopter = db.Adopters.Find(id);
+                int count = adopter.Adoptions.Count();
+                if (count != 0)
+                {
+                    TempData["DeleteErrorMessage"] = "You can not delete this Adopter as it is been used else where!!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    db.Adopters.Remove(adopter);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+                return RedirectToAction("Index");
+            }
 
         protected override void Dispose(bool disposing)
         {
@@ -254,13 +303,24 @@ namespace AdoptifySystem.Controllers.Aditi
 
         public ActionResult Search(string searchBy, string search)
         {
-            if (searchBy == "Adopter_Name")
+            if (Convert.ToInt32(Session["ID"]) == 0)
+            {
+                 return RedirectToAction("Login","Admin");
+            }
+            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+            {
+                if (searchBy == "Adopter_Name")
             {
                 return View(db.Adopters.Where(c => c.Adopter_Name.Contains(search) || search == null).ToList());
             }
             else
             {
                 return View(db.Adopters.Where(c => c.Adopter_Surname.Contains(search) || search == null).ToList());
+            }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
 
         }

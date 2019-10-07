@@ -353,6 +353,7 @@
     <Compile Include="Controllers\Animal_TreatmentController.cs" />
     <Compile Include="Controllers\BackupController.cs" />
     <Compile Include="Controllers\Cassie\AnimalsDetailsReportController.cs" />
+    <Compile Include="Controllers\Cassie\Animal_Kennel_HistoryController.cs" />
     <Compile Include="Controllers\Cassie\Customer_EventController.cs" />
     <Compile Include="Controllers\Cassie\Event_Controller.cs" />
     <Compile Include="Controllers\Cassie\Event_TypeController.cs" />
@@ -794,7 +795,6 @@
     <Content Include="Views\Animal_Treatment\Index.cshtml" />
     <Content Include="Views\Admin\AddUserRole.cshtml" />
     <Content Include="Views\Admin\Authorize.cshtml" />
-    <Content Include="Views\Admin\ChangePassword.cshtml" />
     <Content Include="Views\Admin\Checkin.cshtml" />
     <Content Include="Views\Admin\Checkout.cshtml" />
     <Content Include="Views\Admin\MaintainUserRole.cshtml" />
@@ -928,6 +928,8 @@
     <Content Include="Views\Titles\Create.cshtml" />
     <Content Include="Views\Titles\Edit.cshtml" />
     <Content Include="Views\Titles\Delete.cshtml" />
+    <Content Include="Views\Admin\ChangePassword.cshtml" />
+    <Content Include="Views\Animal_Kennel_History\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesAdopter\" />

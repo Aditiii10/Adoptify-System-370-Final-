@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using AdoptifySystem.Models.nickeymodel;
 
 namespace AdoptifySystem.Controllers.Zinhle
 {
     public class TimerController : Controller
     {
+        public static Flexible flex = new Flexible();
+        static int sub = 13;
         // GET: Timer
         public ActionResult Index(User_ login)
         {
@@ -21,7 +24,13 @@ namespace AdoptifySystem.Controllers.Zinhle
 
             try
             {
-                Timer time = new Timer();
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    Timer time = new Timer();
                 using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
                     time = db.Timers.FirstOrDefault();
@@ -31,6 +40,11 @@ namespace AdoptifySystem.Controllers.Zinhle
                     return View();
                 }
                 return View(time);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception)
             {
@@ -46,7 +60,13 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
-                Timer time = new Timer();
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                     return RedirectToAction("Login","Admin");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
+                {
+                    Timer time = new Timer();
                 using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
                     time = db.Timers.FirstOrDefault();
@@ -70,6 +90,11 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                 }
                 return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception)
             {
@@ -84,7 +109,8 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
-                using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
+               
+                    using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
                     var time = db.Timers.Select(z => new
                     {
@@ -95,6 +121,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                     return Json(time, JsonRequestBehavior.AllowGet);
                 }
+               
             }
             catch (Exception e)
             {
