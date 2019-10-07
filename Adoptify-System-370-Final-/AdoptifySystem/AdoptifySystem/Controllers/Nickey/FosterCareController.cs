@@ -26,20 +26,11 @@ namespace AdoptifySystem.Controllers
             try
             {
 
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+               
                     List<Foster_Care_Parent> mylist = new List<Foster_Care_Parent>();
                 mylist = db.Foster_Care_Parent.ToList();
                 return View(mylist);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
             }
             catch (Exception)
             {
@@ -161,12 +152,7 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+           
                     if (id == null)
                 {
                     throw new Exception("Something Went Wrong!");
@@ -177,11 +163,7 @@ namespace AdoptifySystem.Controllers
                     return HttpNotFound();
                 }
                 return View(foster_Care_Parent);
-            }
-                else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            
         }
             catch (Exception e)
             {
@@ -197,23 +179,14 @@ namespace AdoptifySystem.Controllers
             List<Foster_Care_Parent> foster_Care_Parents = new List<Foster_Care_Parent>();
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+               
                     foster_Care_Parents = db.Foster_Care_Parent.ToList();
                 if (foster_Care_Parents.Count == 0)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
                 return View(foster_Care_Parents);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
 
             }
             catch (Exception e)
@@ -265,21 +238,12 @@ namespace AdoptifySystem.Controllers
             try
             {
 
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+             
                     flex.Fostercarelist = null;
                 flex.fostercareparent = db.Foster_Care_Parent.ToList();
                 flex.animallist = db.Animals.Where(z => z.Animal_Status.Animal_Status_Name == "Available").ToList();
                 return View(flex);
-            }
-                else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+         
         }
             catch (Exception e)
             {
@@ -460,12 +424,7 @@ namespace AdoptifySystem.Controllers
                 List<Foster_Care> list = new List<Foster_Care>();
                 list = db.Foster_Care.ToList();
 
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+             
                     if (list == null)
                 {
                     ViewBag.err = "There are no Animals in Foster Care";
@@ -473,11 +432,7 @@ namespace AdoptifySystem.Controllers
                 }
                 flex.Fostercarelist = list;
                 return View(flex);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
             }
             catch (Exception e)
             {
@@ -564,22 +519,13 @@ namespace AdoptifySystem.Controllers
 
                     Foster_Care_Parent parent = db.Foster_Care_Parent.Find(id);
                     int count = parent.Foster_Care.Count();
-                    if (Convert.ToInt32(Session["ID"]) == 0)
-                    {
-                         return RedirectToAction("Login","Admin");
-                    }
-                    if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                    {
+                  
                         if (count != 0)
                     {
                         //you cant delete becasue its referenced to another table
                         ViewBag.err = "You can not delete this";
                         return View("SearchFosterCareParent");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                   
                 }
                     else
                     {

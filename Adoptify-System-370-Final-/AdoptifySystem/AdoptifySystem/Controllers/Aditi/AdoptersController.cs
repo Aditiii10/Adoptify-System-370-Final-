@@ -174,12 +174,7 @@ namespace AdoptifySystem.Controllers.Aditi
         // GET: Adopters/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Convert.ToInt32(Session["ID"]) == 0)
-            {
-                 return RedirectToAction("Login","Admin");
-            }
-            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-            {
+            
                 if (id == null)
             {
                 throw new Exception("Something Went Wrong!");
@@ -192,11 +187,7 @@ namespace AdoptifySystem.Controllers.Aditi
             ViewBag.Title_ID = new SelectList(db.Titles, "Title_ID", "Title_Description", adopter.Title_ID);
             ViewBag.Adopter_Status_ID = new SelectList(db.Adopter_Status, "Adopter_Status_ID", "Adopter_Status_Name", adopter.Adopter_Status_ID);
             return View(adopter);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            
         }
 
         // POST: Adopters/Edit/5
@@ -227,12 +218,7 @@ namespace AdoptifySystem.Controllers.Aditi
         // GET: Adopters/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Convert.ToInt32(Session["ID"]) == 0)
-            {
-                 return RedirectToAction("Login","Admin");
-            }
-            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-            {
+           
                 if (id == null)
             {
                 throw new Exception("Something Went Wrong!");
@@ -243,11 +229,8 @@ namespace AdoptifySystem.Controllers.Aditi
                 throw new Exception("Something Went Wrong!");
             }
             return View(adopter);
-            }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+            
+              
         }
 
         // POST: Adopters/Delete/5
@@ -303,12 +286,7 @@ namespace AdoptifySystem.Controllers.Aditi
 
         public ActionResult Search(string searchBy, string search)
         {
-            if (Convert.ToInt32(Session["ID"]) == 0)
-            {
-                 return RedirectToAction("Login","Admin");
-            }
-            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-            {
+            
                 if (searchBy == "Adopter_Name")
             {
                 return View(db.Adopters.Where(c => c.Adopter_Name.Contains(search) || search == null).ToList());
@@ -318,12 +296,8 @@ namespace AdoptifySystem.Controllers.Aditi
                 return View(db.Adopters.Where(c => c.Adopter_Surname.Contains(search) || search == null).ToList());
             }
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+           
 
         }
 
-    }
-}
+   }

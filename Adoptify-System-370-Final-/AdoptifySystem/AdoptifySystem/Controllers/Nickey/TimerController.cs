@@ -24,12 +24,8 @@ namespace AdoptifySystem.Controllers.Zinhle
 
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+              
                     Timer time = new Timer();
                 using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
@@ -40,11 +36,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     return View();
                 }
                 return View(time);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+               
             }
             catch (Exception)
             {
@@ -60,12 +52,8 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+              
                     Timer time = new Timer();
                 using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
@@ -90,11 +78,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                 }
                 return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
             }
             catch (Exception)
             {

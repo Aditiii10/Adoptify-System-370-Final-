@@ -27,18 +27,10 @@ namespace AdoptifySystem.Controllers.Zinhle
 
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+                
                     return View();
-            }
-                else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+           
         }
             catch (Exception e)
             {
@@ -80,23 +72,15 @@ namespace AdoptifySystem.Controllers.Zinhle
             try
             {
                 FosterCareDuration fd = db.FosterCareDurations.Where(z => z.FosterCareDuration_Id == id).FirstOrDefault();
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+              
                     if (fd == null)
                 {
                     return RedirectToAction("SearchFosterCareDates");
                 }
 
                 return View(fd);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+               
 
             }
             catch (Exception e)
@@ -154,23 +138,15 @@ namespace AdoptifySystem.Controllers.Zinhle
             {
                 List<FosterCareDuration> Dates = new List<FosterCareDuration>();
 
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+               
                     using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
                     Dates = db.FosterCareDurations.ToList();
 
                 }
                 return View(Dates);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
             }
             catch (Exception e)
             {

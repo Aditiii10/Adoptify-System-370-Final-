@@ -29,18 +29,9 @@ namespace AdoptifySystem.Controllers
             List<Title> titles = new List<Title>();
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
                     titles = db.Titles.ToList();
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
             }
             catch (Exception)
             {
@@ -97,12 +88,6 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
                     if (id == null)
                 {
                     throw new Exception("Something Went Wrong!");
@@ -116,11 +101,7 @@ namespace AdoptifySystem.Controllers
                 flex.donor = donor;
 
                 return View(flex);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+             
             }
             catch (Exception)
             {
@@ -161,23 +142,14 @@ namespace AdoptifySystem.Controllers
 
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+               
                     flex.donor = null;
                 flex.donation = null;
                 flex.stock = null;
                 flex.adddonationlist = null;
                 flex.DonorList = db.Donors.ToList();
                 flex.Stocklist = db.Stocks.ToList();
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+            
             }
             catch (Exception e)
             {
@@ -542,23 +514,14 @@ namespace AdoptifySystem.Controllers
             List<Donor> donors = new List<Donor>();
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+             
                     donors = db.Donors.ToList();
                 if (donors.Count == 0)
                 {
 
                 }
                 return View(donors);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
             }
             catch (Exception e)
             {
@@ -577,7 +540,7 @@ namespace AdoptifySystem.Controllers
                 List<Donor> donor = new List<Donor>();
                 try
                 {
-                    //donor = db.searchDonor(search).ToList();
+                    donor = db.searchDonor(search).ToList();
                     //donor = db.Donors.Where(z => z.Donor_Name.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
                     if (donor.Count == 0)
                     {
@@ -604,18 +567,9 @@ namespace AdoptifySystem.Controllers
             List<Donation> donantion = new List<Donation>();
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+             
                     donantion = db.Donations.ToList();
-            }
-                else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+        
         }
             catch (Exception e)
             {
@@ -635,7 +589,7 @@ namespace AdoptifySystem.Controllers
                 List<Donation> donantion = new List<Donation>();
                 try
                 {
-                    //donation_types = db.SearchDon(search).ToList();
+                    //donantion = db.SearchDon(search).ToList();
                     donantion = db.Donations.Where(z => z.Donor.Donor_Name.StartsWith(search) || z.Donor.Donor_Surname.StartsWith(search) || z.Donor.Donor_Email.StartsWith(search)).ToList();
                     if (donantion.Count == 0)
                     {
@@ -660,18 +614,9 @@ namespace AdoptifySystem.Controllers
 
         public ActionResult AddDonationType()
         {
-            if (Convert.ToInt32(Session["ID"]) == 0)
-            {
-                 return RedirectToAction("Login","Admin");
-            }
-            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-            {
+           
                 return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+           
         }
         [HttpPost]
         public ActionResult AddDonationType(Donation_Type donation_Type)
@@ -731,12 +676,7 @@ namespace AdoptifySystem.Controllers
             List<Donation_Type> donation_Types = new List<Donation_Type>();
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+               
                     donation_Types = db.Donation_Type.ToList();
                 if (donation_Types.Count == 0)
                 {
@@ -744,11 +684,7 @@ namespace AdoptifySystem.Controllers
                 }
 
                 return View(donation_Types);
-            }
-                else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+          
         }
             catch (Exception e)
             {
@@ -766,7 +702,7 @@ namespace AdoptifySystem.Controllers
                 List<Donation_Type> donation_types = new List<Donation_Type>();
                 try
                 {
-                    //donation_types = db.SearchDon(search).ToList();
+                    donation_types = db.SearchDon(search).ToList();
                     //donation_types = db.Donation_Type.Where(z => z.Donation_Type_Name.StartsWith(search)|| z.Donation_Type_Description.StartsWith(search) ).ToList();
                     if (donation_types.Count == 0)
                     {
@@ -791,12 +727,6 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
                     if (id == null)
                 {
                     throw new Exception("Something Went Wrong!");
@@ -807,11 +737,7 @@ namespace AdoptifySystem.Controllers
                     throw new Exception("Something Went Wrong!");
                 }
                 return View(donation_Type);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
             }
             catch (Exception)
             {
@@ -848,12 +774,7 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+               
                     if (id != null)
                 {
                     Donor donor = db.Donors.Find(id);
@@ -872,11 +793,7 @@ namespace AdoptifySystem.Controllers
                     }
                 }
                 return RedirectToAction("SearchDonor");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+               
             }
             catch (Exception)
             {
@@ -889,12 +806,6 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
                     if (id != null)
                 {
                     Donation_Type donation_type = db.Donation_Type.Find(id);
@@ -913,11 +824,7 @@ namespace AdoptifySystem.Controllers
                     }
                 }
                 return RedirectToAction("SearchDonationType");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
             }
             catch (Exception)
             {
@@ -978,12 +885,7 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+              
                     if (xmlfile.ContentType.Equals("application/xml") || xmlfile.ContentType.Equals("text/xml"))
                 {
                     var xmlPath = Server.MapPath("~/FileUpload" + xmlfile.FileName);
@@ -1034,11 +936,7 @@ namespace AdoptifySystem.Controllers
 
                 }
                 return RedirectToAction("SearchDonor");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
             }
             catch (Exception)
             {
@@ -1115,12 +1013,7 @@ namespace AdoptifySystem.Controllers
 
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+               
                     if (id == null)
                 {
                     throw new Exception("Something Went Wrong!");
@@ -1134,11 +1027,7 @@ namespace AdoptifySystem.Controllers
                 flex.donor = donor;
 
                 return View(flex);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+            
             }
             catch (Exception)
             {

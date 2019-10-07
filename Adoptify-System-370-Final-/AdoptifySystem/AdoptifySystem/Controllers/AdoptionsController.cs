@@ -43,18 +43,10 @@ namespace AdoptifySystem.Controllers
             try
             {
 
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+              
                     return View(db.Adoptions.ToList());
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
 
             }
             catch (Exception ex)
@@ -78,12 +70,8 @@ namespace AdoptifySystem.Controllers
             try
             {
 
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+              
                     foreach (var item in adoptions)
                 {
                     if ( item.Adopt_Status_ID == 1 || item.Adopt_Status_ID == 2|| item.Adopt_Status_ID == 3|| item.Adopt_Status_ID == 4|| item.Adopt_Status_ID == 5 || item.Adopt_Status_ID == 6)
@@ -91,11 +79,7 @@ namespace AdoptifySystem.Controllers
                         statusID.Add(item);
                     }
                 }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
             }
             catch (Exception ex)
             {
@@ -149,12 +133,8 @@ namespace AdoptifySystem.Controllers
                 Id = Convert.ToInt32(id);
                 Adoption adoption = db.Adoptions.Find(id);//Display the animal details object
 
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+             
 
                     if (adoption != null)
                 {
@@ -170,11 +150,7 @@ namespace AdoptifySystem.Controllers
                 {
                     return new System.Web.Mvc.HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
             }
             catch (Exception ex)
             {
@@ -195,12 +171,8 @@ namespace AdoptifySystem.Controllers
             DateTime dd = new DateTime();
             Adoption adoption = db.Adoptions.Find(Id);
 
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+                
                     if (NDate != "")
                 {
                     String year = NDate.Substring(0, 4);
@@ -237,11 +209,7 @@ namespace AdoptifySystem.Controllers
                 TempData["HomeCheckMessage"] = "HomeCheck Successfully Booked";
                 ViewBag.Emp_ID = new SelectList(db.Employees, "Emp_ID", "Emp_Name", homeCheck.Emp_ID);
                     //return View("HomeCheckSchedule");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
             }
             catch (Exception ex)
             {
@@ -258,12 +226,8 @@ namespace AdoptifySystem.Controllers
         public ActionResult HomeCheckReport(int? id)
         {
            try {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+                
                     if (id != 0)
                {
                     Adoption adoption = db.Adoptions.Find(id);
@@ -271,11 +235,7 @@ namespace AdoptifySystem.Controllers
                    ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email + ", Address:" + " " + adoption.Adopter.Adopter_Address;
                   ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
               }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+               
             }
             catch (Exception ex)
             {
@@ -395,18 +355,9 @@ namespace AdoptifySystem.Controllers
         {
             try { 
             adoption = db.Adoptions.Find(id);//Display the animal details object
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
-                    if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+                
+             
                     if (adoption != null)
             {
                 ViewBag.ID = id;
@@ -415,16 +366,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.Price = adoption.Animal.Animal_Type.Price;
 
             }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
             }
             catch (Exception ex)
             {
@@ -530,34 +472,16 @@ namespace AdoptifySystem.Controllers
         public ActionResult CollectAnimal(int? id)
         {
             try {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
-                    if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+            
+              
                     Adoption adoption = db.Adoptions.Find(id);
             
             ViewBag.ID = id;
             ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
                 ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old";
             Id = Convert.ToInt32(id);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+               
             }
             catch (Exception ex)
             {
@@ -628,12 +552,8 @@ namespace AdoptifySystem.Controllers
         {
             try {//id = Id;
             Adoption adoption = db.Adoptions.Find(id);
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+              
                     if (adoption != null)
             {
                 ViewBag.ID = id;
@@ -646,11 +566,7 @@ namespace AdoptifySystem.Controllers
                 db.SaveChanges();
                 //TempData["FinaliseMessage"] = "CONGRATULATION!!" + " " + adoption.Animal.Animal_Name + " " + "Successfully Adopted by" + " " + adoption.Adopter.Adopter_Name;
                 }
-            }
-                else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+          
         }
             catch (Exception ex)
             {
@@ -713,12 +629,8 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+             
                     Adoption adoption = db.Adoptions.Find(id);
                 Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
             aaa.Adopt_Status_ID = 8;
@@ -736,11 +648,7 @@ namespace AdoptifySystem.Controllers
                 body: "SADLY!"+ " " + adoption.Adopter.Title.Title_Description + " " + adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname +""+  "the Animal" + " " + adoption.Animal.Animal_Name + " " + "Was unfortunaley returned to Wollies Animal Shelter by you! In doing so Your Adoption HAS been TERMINATED!");
 
             TempData["ReturnMessage"] = "SADDLY!!" + " " + adoption.Animal.Animal_Name + " " + "WAS RETURNED BY ADOPTER:" + " " + adoption.Adopter.Adopter_Name;
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+            
             }
             catch (Exception ex)
             {
@@ -759,27 +667,20 @@ namespace AdoptifySystem.Controllers
 
             var statusID = new List<Adoption>();
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
-            try {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+            try
+            {
 
-                    foreach (var item in adoptions)
-            {
-                if (item.Adopt_Status_ID == 7)
+
+
+                foreach (var item in adoptions)
                 {
-                    statusID.Add(item);
+                    if (item.Adopt_Status_ID == 7)
+                    {
+                        statusID.Add(item);
+                    }
                 }
             }
-            }
-                else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
+
             catch (Exception ex)
             {
                 throw new Exception("Something Went Wrong!");
@@ -799,12 +700,8 @@ namespace AdoptifySystem.Controllers
             
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
             try {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+            
 
                     foreach (var item in adoptions)
             {
@@ -814,11 +711,7 @@ namespace AdoptifySystem.Controllers
                 }
             }
                 return View(statusID);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
             }
             catch (Exception ex)
             {
@@ -849,12 +742,8 @@ namespace AdoptifySystem.Controllers
             var statusID = new List<Adoption>();
             var adoptions = db.AdoptionPayments.Include(a => a.Adoption.Adopter).Include(a => a.Adoption.Animal).Include(a => a.Adoption.AdoptionPayments).ToList();
             try {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+             
                     foreach (var item in adoptions)
             {
                 if (item.Adoption.Adopt_Status_ID == 5)
@@ -862,11 +751,7 @@ namespace AdoptifySystem.Controllers
                     //statusID.Add(item);
                 }
             }
-            }
-                else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+          
         }
             catch (Exception ex)
             {
@@ -882,30 +767,18 @@ namespace AdoptifySystem.Controllers
 
         public ActionResult HomeCheckHistory()
         {
-            if (Convert.ToInt32(Session["ID"]) == 0)
-            {
-                return RedirectToAction("Login", "Admin");
-            }
-            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-            {
+            
+            
                 var statusID = new List<Adoption>();
             var adoptions = db.HomeChecks.Include(a => a.Adoption).Include(a => a.Adoption.Animal).Include(a => a.Adoption.Adopter).ToList();
             return View(db.HomeChecks.ToList());
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+           
         }
 
         public ActionResult HomeCheckReportHistory()
         {
-            if (Convert.ToInt32(Session["ID"]) == 0)
-            {
-                return RedirectToAction("Login", "Admin");
-            }
-            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-            {
+            
+            
                 try {
 
             }
@@ -920,11 +793,7 @@ namespace AdoptifySystem.Controllers
             }
 
             return View(db.HomeCheckReports.ToList());
-        }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-    }
+     
 }
 
         public ActionResult AdoptionPaymentIndex()
@@ -934,12 +803,8 @@ namespace AdoptifySystem.Controllers
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
 
             try {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+             
                     foreach (var item in adoptions)
                     {
                         if (item.Adopt_Status_ID == 3)
@@ -947,11 +812,7 @@ namespace AdoptifySystem.Controllers
                             statusID.Add(item);
                         }
                     }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+            
                 }
             catch (Exception ex)
             {
@@ -970,12 +831,8 @@ namespace AdoptifySystem.Controllers
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).Include(a => a.AdoptionPayment).ToList();
 
             try {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+             
                     foreach (var item in adoptions)
                     {
                         if (item.Adopt_Status_ID == 5 || item.Adopt_Status_ID == 6)
@@ -983,11 +840,7 @@ namespace AdoptifySystem.Controllers
                             statusID.Add(item);
                         }
                     }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
                 }
             catch (Exception ex)
             {
@@ -1006,12 +859,8 @@ namespace AdoptifySystem.Controllers
             var adoptions = db.Adoptions.Include(a => a.Adopter).Include(a => a.Animal).ToList();
 
             try {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+
                     foreach (var item in adoptions)
             {
                 if (item.Adopt_Status_ID == 2)
@@ -1019,11 +868,7 @@ namespace AdoptifySystem.Controllers
                     statusID.Add(item);
                 }
             }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+               
             }
             catch (Exception ex)
             {
@@ -1048,12 +893,8 @@ namespace AdoptifySystem.Controllers
 
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+              
                     //db.Database.CommandTimeout = 300; 
                     var statusID = new List<Animal>();
                     adoptionsA = db.Animals.ToList();
@@ -1072,11 +913,7 @@ namespace AdoptifySystem.Controllers
                     ViewBag.Animal_ID = new SelectList(statusID, "Animal_ID", "Animal_Name", "Animal_Type");
                     ViewBag.Payment_ID = new SelectList(db.Payments, "Payment_ID", "Payment_Description");
                     ViewBag.Adopt_Status_ID = new SelectList(db.Adoption_Status, "Adopt_Status_ID", "Adopt_Status_Name");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+               
             }
             catch (Exception ex)
             {
@@ -1103,12 +940,8 @@ namespace AdoptifySystem.Controllers
             {
                 var statusID = new List<Animal>();
                 adoptionsA = db.Animals.ToList();
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                    return RedirectToAction("Login", "Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+               
 
                     if (ModelState.IsValid)
                 {
@@ -1154,11 +987,7 @@ namespace AdoptifySystem.Controllers
                 //ViewBag.Payment_ID = new SelectList(db.Payments, "Payment_ID", "Payment_Description", adoption.Payment_ID);
                 ViewBag.Adopt_Status_ID = new SelectList(db.Adoption_Status, "Adopt_Status_ID", "Adopt_Status_Name", adoption.Adopt_Status_ID);
                 return View(adoption);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+             
             }
             catch
             {
@@ -1190,12 +1019,8 @@ namespace AdoptifySystem.Controllers
             //    //return View("Error");
             //}
             //return View(adoption);
-            if (Convert.ToInt32(Session["ID"]) == 0)
-            {
-                return RedirectToAction("Login", "Admin");
-            }
-            if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-            {
+            
+          
                 if (id == null)
             {
                 throw new Exception("Something Went Wrong!");
@@ -1206,11 +1031,7 @@ namespace AdoptifySystem.Controllers
                 throw new Exception("Something Went Wrong!");
             }
             return View(adoption);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+          
 
 
         }

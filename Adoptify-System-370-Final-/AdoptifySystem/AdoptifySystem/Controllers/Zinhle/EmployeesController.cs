@@ -58,6 +58,10 @@ namespace AdoptifySystem.Controllers.Zinhle
                 //HttpPostedFileBase file = files[0];
                 saveEmp = emp;
                 //this is where we convert the contract to add to the database
+                if (emp == null || emp.Emp_Name == " " || emp.Emp_Gender == " " || emp.Emp_Surname == " " || emp.Title_ID == 0 || emp.Emp_Type_ID == 0)
+                {
+                    return RedirectToAction("AddEmployee");
+                }
                 byte[] bytes;
                 if (Contract != null)
                 {
@@ -75,19 +79,20 @@ namespace AdoptifySystem.Controllers.Zinhle
 
 
                 }
-
+                emp.Emp_Gender = Gender;
 
                 db.Employees.Add(saveEmp);
                 db.SaveChanges();
                 //Now we have to store the user
                 //first look for the employee that we just added
+                
                 Employee old = db.Employees.Where(z => z.Title_ID == saveEmp.Title_ID && z.Emp_Type_ID == saveEmp.Emp_Type_ID && z.Emp_Name == saveEmp.Emp_Name && z.Emp_Email == saveEmp.Emp_Email && z.Emp_Surname == saveEmp.Emp_Surname && z.Emp_IDNumber == saveEmp.Emp_IDNumber).FirstOrDefault();
                 //then we add the employee id to the user that we created at the top
 
                 if (user == null || Role == null)
                 {
                     TempData["SuccessMessage"] = "Succesfully added the employee";
-                    return Content("Succesfully added the employee");
+                    return RedirectToAction("SearchEmployee");
                 }
                 user.Emp_ID = saveEmp.Emp_ID;
                 TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
@@ -122,7 +127,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                 TempData["SuccessMessage"] = "Succesfully added the User";
                 //return View("BarCodeGenerated", user);
-                return Content("Succesfully added the User");
+                return View("BarCodeGenerated", user);
 
             }
 

@@ -194,23 +194,14 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
                     List<Employee> emp = new List<Employee>();
                     emp = db.Employees.Where(z => z.Employee_Status == true).ToList();
                     flex.employeelist = emp;
                     flex.employee = null;
                     ViewBag.Time = DateTime.Now;
                     return View(flex);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+               
             }
             catch (Exception)
             {
@@ -417,23 +408,14 @@ namespace AdoptifySystem.Controllers
 
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+
                     flex.subsystemslist = db.Subsystems.ToList();
                 if (flex.subsystemslist == null)
                 {
                     return RedirectToAction("Search");
                 }
                 return View(flex);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
             }
             catch (Exception)
             {
@@ -519,23 +501,14 @@ namespace AdoptifySystem.Controllers
             try
             {
 
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+              
                     roles = db.Role_.ToList();
                 if (roles.Count == 0)
                 {
 
                 }
                 return View(roles);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+             
             }
             catch (Exception e)
             {
@@ -552,23 +525,13 @@ namespace AdoptifySystem.Controllers
             List<Role_> roles = new List<Role_>();
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
                     roles = db.Role_.ToList();
                 if (roles.Count == 0)
                 {
 
                 }
                 return View(roles);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
             }
             catch (Exception e)
             {
@@ -583,12 +546,6 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
 
                     if (id == null)
                 {
@@ -603,11 +560,7 @@ namespace AdoptifySystem.Controllers
                 flex.role = role;
                 flex.subsystemslist = subsystems;
                 return View(flex);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+             
             }
             catch (Exception)
             {

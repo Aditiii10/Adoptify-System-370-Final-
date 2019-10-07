@@ -133,12 +133,8 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
-                {
-                     return RedirectToAction("Login","Admin");
-                }
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
+                
+               
                     if (id == null)
                     {
                         throw new Exception("Something Went Wrong!");
@@ -149,11 +145,7 @@ namespace AdoptifySystem.Controllers
                         throw new Exception("Something Went Wrong!");
                     }
                     return View(veterinarian);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+              
             }
             catch (Exception)
             {

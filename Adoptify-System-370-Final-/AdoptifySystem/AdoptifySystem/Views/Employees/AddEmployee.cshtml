@@ -22,164 +22,169 @@
         }
     </style>
 </head>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#home">Employee Details</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile">User Details</a>
-    </li>
-</ul>
-<div id="myTabContent" class="tab-content">
-    <div id="home" class="tab-pane fade show active">
+@using (Html.BeginForm("AddEmployeein", "Employees", FormMethod.Post))
+{
 
-        <div>
-            <h1 align="center">Add Employee</h1>
-        </div>
-        @Html.AntiForgeryToken()
-        <div>
-            <div class="col-sm-12 table-primary"><h2>Employee Details</h2></div>
-        </div>
-        <br />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <label><b>Employee Type</b></label>
-            <div class="col-md-5" style="width:25%;">
-                <select id="Emp_Type_ID" class="custom-select" name="EmployeeType" title="Select Employee Type">
-                    @if (Model.empTypes != null)
-                    {
-                        <option>---Select---</option>
-                        foreach (var item in Model.empTypes)
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">Employee Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#profile">User Details</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div id="home" class="tab-pane fade show active">
+
+            <div>
+                <h1 align="center">Add Employee</h1>
+            </div>
+            @Html.AntiForgeryToken()
+            <div>
+                <div class="col-sm-12 table-primary"><h2>Employee Details</h2></div>
+            </div>
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <label><b>Employee Type</b></label>
+                <div class="col-md-5" style="width:25%;">
+                    <select id="Emp_Type_ID" class="custom-select" name="Emp_Type_ID" title="Select Employee Type">
+                        @if (Model.empTypes != null)
                         {
-                            <option value="@item.Emp_Type_ID">@item.Emp_Type_Name</option>
+                            <option>---Select---</option>
+                            foreach (var item in Model.empTypes)
+                            {
+                                <option value="@item.Emp_Type_ID">@item.Emp_Type_Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option></option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label><b>Title</b> </label>
+                <div class="col-md-5" style="width:25%;">
+                    <select id="Title_ID" class="custom-select" name="Title_ID" title="Select Title">
+                        @if (Model.Titles != null)
+                        {
+                            <option>---Select---</option>
+                            foreach (var item in Model.Titles)
+                            {
+                                <option value="@item.Title_ID">@item.Title_Description</option>
+                            }
+
+                        }
+
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="col-md-10"><b>Gender</b> </label><br />
+                <div class="custom-control custom-radio">
+                    <input type="radio" name="Gender" value="Male" id="Male" class="custom-control-input">
+                    <label class="custom-control-label" for="Male"><b>Male</b></label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" name="Gender" value="Female" id="Female" class="custom-control-input">
+                    <label class="custom-control-label" for="Female"><b>Female</b></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label><b>Employee Name </b></label>
+                <div class="col-md-10">
+                    <input id="Emp_Name" name="Emp_Name" class="form-control" type="text" placeholder="Enter Name" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label><b>Employee Surname</b> </label>
+                <div class="col-md-10">
+                    <input id="Emp_Surname" name="Emp_Surname" class="form-control" type="text" placeholder="Enter Surname" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label><b>Employee Contact Number</b> </label>
+                <div class="col-md-10">
+                    <input name="Emp_ContactNumber" id="Emp_ContactNumber" class="form-control" type="text" placeholder="Enter Contact Details" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label><b>Employee ID Number </b> </label>
+                <div class="col-md-10">
+                    <input name="Emp_IDNumber" id="Emp_IDNumber" class="form-control" type="text" placeholder="Enter ID/Passport Number" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label><b>Employee Email</b></label>
+                <div class="col-md-10">
+                    <input name="Emp_Email" id="Emp_Email" class="form-control" type="email" placeholder="Enter Email Address" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label><b>Employee Date_Employe</b></label>
+                <div class="col-md-10">
+                    <input id="Emp_Date_Employed" name="Emp_Date_Employed" class="form-control" type="date" placeholder="MM/DD/YY" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label><b>Employee Contract</b></label>
+                <div class="col-md-10">
+                    <input type="file" name="Contract" id="FileName" onchange="ValidateSingleInput(this);" />
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="profile">
+            <div class="form-group">
+                <label><b>Employee Username</b></label>
+                <div class="col-md-10">
+                    <input id="Username" name="Username" class="form-control" type="text" placeholder="Enter Username" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label><b>Employee Password</b></label>
+                <div class="col-md-10">
+                    <input id="Password" name="Password" type="password" class="form-control" placeholder="Enter Password" maxlength="8" />
+                </div>
+            </div>
+            <div class="column">
+                <div>
+                    <div class="col-sm-12 table-primary"><h1>Assign User Role </h1></div>
+                </div>
+                <label><b>Please Select Level Of Accessiblity:</b></label>
+                <div>
+
+                    @if (Model.Roles != null)
+                    {
+
+
+                        foreach (var item in Model.Roles)
+                        {
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Role @item.Role_ID" name="Role" value="@item.Role_ID">
+                                <label class="custom-control-label" for="Role @item.Role_ID">@item.Role_Name</label>
+                                <br>
+                            </div>
                         }
                     }
-                    else
-                    {
-                        <option></option>
-                    }
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label><b>Title</b> </label>
-            <div class="col-md-5" style="width:25%;">
-                <select id="Title_ID" class="custom-select" name="Title" title="Select Title">
-                    @if (Model.Titles != null)
-                    {
-                        <option>---Select---</option>
-                        foreach (var item in Model.Titles)
-                        {
-                            <option value="@item.Title_ID">@item.Title_Description</option>
-                        }
 
-                    }
+                </div>
 
-                </select>
             </div>
-        </div>
-        <br />
-        <div class="form-group">
-            <label class="col-md-10"><b>Gender</b> </label><br />
-            <div class="custom-control custom-radio">
-                <input type="radio" name="Gender" value="Male" id="Male" class="custom-control-input">
-                <label class="custom-control-label" for="Male"><b>Male</b></label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" name="Gender" value="Female" id="Female" class="custom-control-input">
-                <label class="custom-control-label" for="Female"><b>Female</b></label>
-            </div>
+
         </div>
         <div class="form-group">
-            <label><b>Employee Name </b></label>
-            <div class="col-md-10">
-                <input id="Emp_Name" name="Emp_Name" class="form-control" type="text" placeholder="Enter Name" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label><b>Employee Surname</b> </label>
-            <div class="col-md-10">
-                <input id="Emp_Surname" name="Emp_Surname" class="form-control" type="text" placeholder="Enter Surname" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label><b>Employee Contact Number</b> </label>
-            <div class="col-md-10">
-                <input name="Emp_ContactNumber" id="Emp_ContactNumber" class="form-control" type="text" placeholder="Enter Contact Details" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label><b>Employee ID Number </b> </label>
-            <div class="col-md-10">
-                <input name="Emp_IDNumber" id="Emp_IDNumber" class="form-control" type="text" placeholder="Enter ID/Passport Number" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label><b>Employee Email</b></label>
-            <div class="col-md-10">
-                <input name="Emp_Email" id="Emp_Email" class="form-control" type="email" placeholder="Enter Email Address" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label><b>Employee Date_Employe</b></label>
-            <div class="col-md-10">
-                <input id="Emp_Date_Employed" name="Emp_Date_Employed" class="form-control" type="date" placeholder="MM/DD/YY" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label><b>Employee Contract</b></label>
-            <div class="col-md-10">
-                <input type="file" name="Contract" id="FileName" onchange="ValidateSingleInput(this);" />
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" name="button" value="Save" title="Click to Add the Following Employee Details" class="btn btn-success float-right">Save</button>
+                @Html.ActionLink("Cancel", "SearchEmployee", null, new { @class = "btn btn-warning", @title = "Click to go back to Search Employee screen" })
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="profile">
-        <div class="form-group">
-            <label><b>Employee Username</b></label>
-            <div class="col-md-10">
-                <input id="Username" name="Username" class="form-control" type="text" placeholder="Enter Username" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label><b>Employee Password</b></label>
-            <div class="col-md-10">
-                <input id="Password" name="Password" type="password" class="form-control" placeholder="Enter Password" maxlength="8" />
-            </div>
-        </div>
-        <div class="column">
-            <div>
-                <div class="col-sm-12 table-primary"><h1>Assign User Role </h1></div>
-            </div>
-            <label><b>Please Select Level Of Accessiblity:</b></label>
-            <div>
-
-                @if (Model.Roles != null)
-                {
-
-
-                    foreach (var item in Model.Roles)
-                    {
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Role @item.Role_ID" name="Role" value="@item.Role_ID">
-                            <label class="custom-control-label" for="Role @item.Role_ID">@item.Role_Name</label>
-                            <br>
-                        </div>
-                    }
-                }
-
-            </div>
-
-        </div>
-
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" name="button" value="Save" onclick="validate()" title="Click to Add the Following Employee Details" class="btn btn-success float-right">Save</button>
-            @Html.ActionLink("Cancel", "SearchEmployee", null, new { @class = "btn btn-warning", @title = "Click to go back to Search Employee screen" })
-        </div>
-    </div>
-</div>
+}
 <script>
        $(document).ready(function () {
         var dateNewFormat, onlyDate, today = new Date();
@@ -453,7 +458,7 @@
                 }
             });
 
-           
+
         } else {
             alert("all is not valid");
         }
