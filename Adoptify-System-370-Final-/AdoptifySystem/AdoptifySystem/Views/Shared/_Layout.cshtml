@@ -308,6 +308,8 @@
                             @Html.ActionLink("Reset Password", "ResetPassword", "Admin", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("Send Custom Email", "Index", "Email", null, new { @class = "dropdown-item" })
                             @Html.ActionLink("Send Custom SMS", "SendMessage", "SMSMessage", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("View Audit Log", "Index", "Audit_Log", null, new { @class = "dropdown-item" })
+
                         </div>
                     </li>
                     <li class="nav-item dropdown show">
@@ -427,7 +429,7 @@
                     <li class="nav-item dropdown show">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Reporting</a>
                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-                            @Html.ActionLink("Report Screen", "Index", "ReportScreen", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Report Screen", "Index", "Reports", null, new { @class = "dropdown-item" })
 
                         </div>
                     </li>

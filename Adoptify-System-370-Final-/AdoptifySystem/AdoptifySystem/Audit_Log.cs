@@ -15,7 +15,7 @@ namespace AdoptifySystem
     public partial class Audit_Log
     {
         public int Auditlog_ID { get; set; }
-        public Nullable<System.DateTime> Auditlog_DateTime { get; set; }
+        public DateTime Auditlog_DateTime { get; set; }
         public string Transaction_Type { get; set; }
         public string Critical_Date { get; set; }
         public Nullable<int> UserID { get; set; }

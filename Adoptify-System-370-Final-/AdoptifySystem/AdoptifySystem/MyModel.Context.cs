@@ -409,5 +409,59 @@ namespace AdoptifySystem
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donor>("searchDonor", mergeOption, nameParameter);
         }
+    
+        public virtual ObjectResult<Stock> searchstock(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock>("searchstock", nameParameter);
+        }
+    
+        public virtual ObjectResult<Stock> searchstock(string name, MergeOption mergeOption)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock>("searchstock", mergeOption, nameParameter);
+        }
+    
+        public virtual ObjectResult<Stock_Type> searchstocktype(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_Type>("searchstocktype", nameParameter);
+        }
+    
+        public virtual ObjectResult<Stock_Type> searchstocktype(string name, MergeOption mergeOption)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_Type>("searchstocktype", mergeOption, nameParameter);
+        }
+    
+        public virtual ObjectResult<Foster_Care_Parent> searchParent(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Foster_Care_Parent>("searchParent", nameParameter);
+        }
+    
+        public virtual ObjectResult<Foster_Care_Parent> searchParent(string name, MergeOption mergeOption)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Foster_Care_Parent>("searchParent", mergeOption, nameParameter);
+        }
     }
 }

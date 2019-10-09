@@ -18,8 +18,8 @@ namespace AdoptifySystem
         public string Customer_Event_Name { get; set; }
         public string Customer_Event_Surname { get; set; }
         public string Customer_Event_Email { get; set; }
-        public Nullable<int> Number_of_tickects { get; set; }
-        public Nullable<System.DateTime> TicketFee_Date { get; set; }
+        public int Number_of_tickects { get; set; }
+        public DateTime TicketFee_Date { get; set; }
         public Nullable<decimal> TicketFee_Total { get; set; }
         public Nullable<int> Event_ID { get; set; }
         public Nullable<int> Payment_ID { get; set; }

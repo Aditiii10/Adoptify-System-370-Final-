@@ -17,8 +17,18 @@ namespace AdoptifySystem.Controllers.Zinhle
         // GET: Audit_Log
         public ActionResult Index()
         {
-            var audit_Log = db.Audit_Log.Include(a => a.User_);
-            return View(audit_Log.ToList());
+            try
+            {
+                List<Audit_Log> audit_Log = db.Audit_Log.Include(a => a.User_).ToList();
+                return View(audit_Log);
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something wrong");
+            }
+            
+            
         }
 
         // GET: Audit_Log/Details/5
@@ -119,88 +129,28 @@ namespace AdoptifySystem.Controllers.Zinhle
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        public ActionResult Search(string search, string[] option)
+        [HttpGet]
+        public ActionResult Search(string ssearch, string Transaction)
         {
             List<Audit_Log> list = new List<Audit_Log>();
 
-            foreach (var item in option)
+            switch (Transaction)
             {
-                List<Audit_Log> templist = new List<Audit_Log>();
-                switch (item)
-                {
-                    case "Transaction Type":
+                case "Transaction Type":
+                    list = db.Audit_Log.Where(z => z.Transaction_Type.StartsWith(ssearch)).ToList();
 
-                        templist = db.Audit_Log.Where(z => z.Transaction_Type.StartsWith(search)).ToList();
-                        if (list.Count > 0)
-                        {
-                            int count = 0;
-                            foreach (var audit in templist)
-                            {
-                                foreach (var cur in list)
-                                {
+                    break;
+                case "User":
+                    list = db.Audit_Log.Where(z => z.User_.Employee.Emp_Name.StartsWith(ssearch)).ToList();
+                    break;
+                case "Date":
+                    list = db.Audit_Log.Where(z => z.Critical_Date.StartsWith(ssearch)).ToList();
 
-                                    if (audit.Auditlog_ID == cur.Auditlog_ID)
-                                    {
-                                        count++;
-                                    }
-                                }
-                                if (count == 0)
-                                {
-                                    list.Add(audit);
-                                }
-                            }
-                        }
-
-
-                        break;
-                    case "User":
-                        list = db.Audit_Log.Where(z => z.User_.Employee.Emp_Name.StartsWith(search)).ToList();
-                        if (list.Count > 0)
-                        {
-                            int count = 0;
-                            foreach (var audit in templist)
-                            {
-                                foreach (var cur in list)
-                                {
-
-                                    if (audit.Auditlog_ID == cur.Auditlog_ID)
-                                    {
-                                        count++;
-                                    }
-                                }
-                                if (count == 0)
-                                {
-                                    list.Add(audit);
-                                }
-                            }
-                        }
-                        break;
-                    case "Date":
-                        list = db.Audit_Log.Where(z => z.Critical_Date.StartsWith(search)).ToList();
-                        if (list.Count > 0)
-                        {
-                            int count = 0;
-                            foreach (var audit in templist)
-                            {
-                                foreach (var cur in list)
-                                {
-
-                                    if (audit.Auditlog_ID == cur.Auditlog_ID)
-                                    {
-                                        count++;
-                                    }
-                                }
-                                if (count == 0)
-                                {
-                                    list.Add(audit);
-                                }
-                            }
-                        }
-                        break;
-                }
+                    break;
             }
+
             return View("Index", list);
+
         }
         protected override void Dispose(bool disposing)
         {

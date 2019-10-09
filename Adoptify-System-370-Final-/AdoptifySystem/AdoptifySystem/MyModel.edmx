@@ -3808,6 +3808,15 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <FunctionImport Name="searchDonor" EntitySet="Donors" ReturnType="Collection(Wollies_ShelterModel.Donor)">
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="searchstock" EntitySet="Stocks" ReturnType="Collection(Wollies_ShelterModel.Stock)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="searchstocktype" EntitySet="Stock_Type" ReturnType="Collection(Wollies_ShelterModel.Stock_Type)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="searchParent" EntitySet="Foster_Care_Parent" ReturnType="Collection(Wollies_ShelterModel.Foster_Care_Parent)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -4795,6 +4804,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <FunctionImportMapping FunctionImportName="UpdateKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Update" />
           <FunctionImportMapping FunctionImportName="SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon" />
           <FunctionImportMapping FunctionImportName="searchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor" />
+          <FunctionImportMapping FunctionImportName="searchstock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock" />
+          <FunctionImportMapping FunctionImportName="searchstocktype" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType" />
+          <FunctionImportMapping FunctionImportName="searchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

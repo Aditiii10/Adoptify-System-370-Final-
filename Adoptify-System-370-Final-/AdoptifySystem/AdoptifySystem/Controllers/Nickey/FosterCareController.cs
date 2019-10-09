@@ -206,7 +206,7 @@ namespace AdoptifySystem.Controllers
                     List<Foster_Care_Parent> foster = new List<Foster_Care_Parent>();
                     try
                     {
-                        //foster = db.searchParent(search).ToList();
+                        foster = db.searchParent(search).ToList();
                         //foster = db.Foster_Care_Parent.Where(z => z.Foster_Parent_Email.StartsWith(search) || z.Donor_Surname.StartsWith(search) || z.Donor_Email.StartsWith(search)).ToList();
                         if (foster.Count == 0)
                         {

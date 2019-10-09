@@ -352,15 +352,12 @@
     <Compile Include="Controllers\AdoptionsController.cs" />
     <Compile Include="Controllers\Animal_TreatmentController.cs" />
     <Compile Include="Controllers\BackupController.cs" />
-    <Compile Include="Controllers\Cassie\AnimalsDetailsReportController.cs" />
     <Compile Include="Controllers\Cassie\Animal_Kennel_HistoryController.cs" />
     <Compile Include="Controllers\Cassie\Customer_EventController.cs" />
     <Compile Include="Controllers\Cassie\Event_Controller.cs" />
     <Compile Include="Controllers\Cassie\Event_TypeController.cs" />
     <Compile Include="Controllers\Cassie\KennelsController.cs" />
-    <Compile Include="Controllers\Cassie\ReportController.cs" />
-    <Compile Include="Controllers\Cassie\ReportScreenController.cs" />
-    <Compile Include="Controllers\Cassie\VetAppointReportController.cs" />
+    <Compile Include="Controllers\Cassie\ReportsController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HCReportFileController.cs" />
@@ -579,6 +576,13 @@
     <Compile Include="Vet_SearchVet_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AnimalVM.cs" />
+    <Compile Include="ViewModel\AuditTrailVM.cs" />
+    <Compile Include="ViewModel\ComServeVM.cs" />
+    <Compile Include="ViewModel\EventCus.cs" />
+    <Compile Include="ViewModel\EventSaleVM.cs" />
+    <Compile Include="ViewModel\TimesheetVM.cs" />
+    <Compile Include="ViewModel\VetAppVM.cs" />
     <Compile Include="Views\Titles\TitlesController.cs" />
     <Compile Include="Views\Videoplayer\VideoplayerController.cs" />
     <Compile Include="Volunteer.cs">
@@ -859,10 +863,6 @@
     <Content Include="Views\Event_Type\Details.cshtml" />
     <Content Include="Views\Event_Type\Edit.cshtml" />
     <Content Include="Views\Event_Type\Index.cshtml" />
-    <Content Include="Views\Report\EmployeeTimesheet.cshtml" />
-    <Content Include="Views\AnimalsDetailsReport\Animal.cshtml" />
-    <Content Include="Views\ReportScreen\Index.cshtml" />
-    <Content Include="Views\VetAppointReport\Index.cshtml" />
     <Content Include="Views\Animal\AddAnimalType.cshtml" />
     <Content Include="Views\Animal\AddBreedType.cshtml" />
     <Content Include="Views\Animal\AddTemporaryAnimal.cshtml" />
@@ -930,6 +930,17 @@
     <Content Include="Views\Titles\Delete.cshtml" />
     <Content Include="Views\Admin\ChangePassword.cshtml" />
     <Content Include="Views\Animal_Kennel_History\Create.cshtml" />
+    <Content Include="Views\Reports\AnimalDetails.cshtml" />
+    <Content Include="Views\Reports\AuditTrail.cshtml" />
+    <Content Include="Views\Reports\AuditTrail1.cshtml" />
+    <Content Include="Views\Reports\ComServe.cshtml" />
+    <Content Include="Views\Reports\ComServe1.cshtml" />
+    <Content Include="Views\Reports\EmployeeTimesheet.cshtml" />
+    <Content Include="Views\Reports\EmployeeTimesheet1.cshtml" />
+    <Content Include="Views\Reports\EventSale1.cshtml" />
+    <Content Include="Views\Reports\VetAppointList.cshtml" />
+    <Content Include="Views\Reports\VetAppointList1.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesAdopter\" />

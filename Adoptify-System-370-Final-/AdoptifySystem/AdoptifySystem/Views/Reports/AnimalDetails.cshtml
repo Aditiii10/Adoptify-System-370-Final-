@@ -1,0 +1,103 @@
+﻿@model IEnumerable<AdoptifySystem.ViewModel.AnimalVM>
+@{
+    ViewBag.Title = "AnimalDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<!--This is the xmls <html> tag injection-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+</head>
+<body>
+    <!--Main Content-->
+  
+    <div id="PrintContent">
+        <!--Gave div id a name-->
+
+        <section class="section">
+            <h1 class="section-header">
+                Employee Timesheet Report
+            </h1>
+
+            <div class="section-body">
+                <div class="row" id="dvContainer">
+                    <div class="col-md-20">
+                        <div class="card">
+                            <table>
+                                <thead>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Entry Date</th>
+                                        <th scope="col">Animal Name</th>
+                                        <th scope="col">Gender </th>
+                                        <th scope="col">_Sterilization</th>
+                                        <th scope="col">Castration </th>
+                                        <th scope="col"> Status_Name</th>
+                                        <th scope="col"> Castration </th>
+                                        <th scope="col">Kennel Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Sheets != null)
+                                    {
+                                        foreach (var item in ViewBag.Sheets)
+                                        {
+                                    <tr>
+                                        <td>@item.Animal_Entry_Date</td>
+                                        <td>@item.Animal_Name</td>
+                                        <td>@item.Animal_Gender </td>
+                                        <td>@item.Animal_Sterilizatione</td>
+                                        <td>@item.Animal_Status_Name</td>
+                                        <td>@item.Animal_Castration </td>
+                                        <td>@item.Kennel_Namee/td>
+                                                                            
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <input type="button" id="btnPrint" name="btnPrint" class="btn-primary" value="print" onclick="printWebPart() ;">
+    <script>
+        function printWebPart() {
+            var CSSContent = '';
+            var sOption = "toolbar=yes,location=no,directories=yes,menubar=yes,scrollbars=yes,left=100,top=25";
+            //CSSContent = CSSContent + "<title>" + title + "</title>";
+            CSSContent = "<style type='text/css'>";
+            CSSContent = CSSContent + "";// put your css code here compress or direct link
+            CSSContent = CSSContent + "</style>";
+            var re1 = /class=Btn/gi;
+            var re2 = /class=print/gi;
+            var innerContent = $("#PrintContent").html();
+            var html = "<HTML>\n<HEAD>\n" +
+                "\n" + CSSContent +
+                "\n</HEAD>\n<BODY>" +
+                "\n<table border='1'><tr><td> " +
+                innerContent +
+                "\n</td></tr></table>" +
+                "\n</BODY>\n</HTML>";
+            var printWP = window.open('', '', sOption);
+            printWP.document.open();
+            printWP.document.write(html);
+            //  printWP.focus();
+
+            // printWP.document.close();
+            printWP.print();
+            //  printWP.close();
+        }
+
+    </script>
+</body>
+</html>

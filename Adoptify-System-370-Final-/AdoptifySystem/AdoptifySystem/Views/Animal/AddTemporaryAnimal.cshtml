@@ -159,8 +159,8 @@
                 </div>
 
                 <div class="col-xs-6">
-                    <label><b>Current Location</b></label><br />
-                    <input type="text" name="Animal_Location" id="Animal_Location" class="form-control" placeholder="Enter Current Location">
+                    <label><b>Location Found</b></label><br />
+                    <input type="text" name="Animal_Location" value="" id="Animal_Location" class="form-control" placeholder="Enter Location Found">
                 </div>
 
 
@@ -201,11 +201,13 @@
                 <label><b>Owner Address</b></label><br />
                 <input type="text" name="Owner_Address" id="Owner_Address" class="form-control" placeholder="Enter Owner Address">
             </div>
+            <div class="form-group">
+                <button type="submit" name="button" value="Save" onclick="Save()" title="Click to Add the Following Animal Details" class="btn btn-success float-right col-md-2">Save and Add to Kennel</button>
+            </div>
         </div>
     </div>
     <div class="form-group">
-        <button type="submit" name="button" value="Save" onclick="Save()" title="Click to Add the Following Animal Details" class="btn btn-success float-right col-md-6">Save and Add to Kennel</button>
-        @Html.ActionLink("Cancel", "SearchAnimal", null, new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
+        @Html.ActionLink("Cancel", "SearchAnimal","Animal", new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
     </div>
 </div>
 
@@ -457,9 +459,10 @@
         if (b == 0) {
             alert("Pick a Breed");
             isvalid = false;
-        } else {
-            alert(breed1.value);
         }
+        //else {
+        //    alert(breed1.value);
+        //}
 
         if (isvalid)
         {

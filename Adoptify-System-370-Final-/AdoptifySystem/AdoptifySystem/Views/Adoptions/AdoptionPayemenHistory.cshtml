@@ -34,6 +34,9 @@
                 Adoption ID
             </th>
             <th>
+                Payment Date
+            </th>
+            <th>
                 Adopter Details
             </th>
             <th>
@@ -63,6 +66,9 @@
 
         <td>
             @Html.DisplayFor(modelItem => item.Adoption.Adoption_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adoption.Adoption_Date)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adoption.Adopter.Adopter_CellNumber)

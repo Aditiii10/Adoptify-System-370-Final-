@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AdoptifySystem.Audit_Log>
+﻿@model List<AdoptifySystem.Audit_Log>
 
 @{
     ViewBag.Title = "Index";
@@ -11,103 +11,102 @@
     @Html.ActionLink("Create New", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
     @*@Html.ActionLink("Create New", "Create")*@
 </p>
+@using (Html.BeginForm("Search", "AuditLog"))
+{
 
-<div class="form-group">
-    <label>Search Criteria:</label><br />
-    <div id="contain">
-        <select name="Search" class="custom-select-sm">
-            <option>Select Option </option>
-            <option value="User">User</option>
-            <option value="Date">Date</option>
-            <option value="Transaction Type">Transaction Type</option>
-        </select>
+
+    <div class="form-group">
+        <label>Search Criteria:</label><br />
+        <div id="contain">
+            <select name="Transaction" class="custom-select-sm">
+                <option value="User">User</option>
+                <option value="Date">Date</option>
+                <option value="Transaction Type">Transaction Type</option>
+            </select>
+        </div>
+        <input type="text" class="form-control" name="ssearch" id="clone" />
+        <br />
+        <input type="button" name="othercolor" id="othercolor" style='display:none;' />
+
     </div>
-    <input type="button" id="clone" />
+}
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" value="Search" class="btn btn-primary">Search</button>
+        </div>
+    </div>
     <br />
-    <input type="text" name="othercolor" id="othercolor" style='display:none;' />
 
-</div>
+    <table class="table table-bordered">
+        <tr class="table-primary">
 
-<div class="row">
-    <div class="col-md-4">
-        <button type="submit" value="Search" class="btn btn-primary">Search</button>
-    </div>
-</div>
-<br />
+            <th>
+                Date
+            </th>
+            <th>
+                Transaction Type
 
-<table class="table table-bordered">
-    <tr class="table-primary">
+            </th>
+            <th>
+                Critical Date
 
-        <th>
-            Date
-        </th>
-        <th>
-            Transaction Type
+            </th>
 
-        </th>
-        <th>
-            Critical Date
+            <th>
+                User
+            </th>
 
-        </th>
+            <th>
+                Action Result
+            </th>
+        </tr>
 
-        <th>
-            User
-        </th>
+        @*@if (Model == null)
+            {
+                <tr>
+                    <td colspan="8">
+                        No results found
+                    </td>
+                </tr>
+            }
+            else
+            {*@
 
-        <th>
-            Action Result
-        </th>
-    </tr>
-
-    @*@if (Model == null)
+        @foreach (var item in Model)
         {
             <tr>
-                <td colspan="8">
-                    No results found
+                <td>
+                    @Html.DisplayFor(modelItem => item.Auditlog_DateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Transaction_Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Critical_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_.Username)
                 </td>
             </tr>
         }
-        else
-        {*@
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Auditlog_DateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Transaction_Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Critical_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User_.Username)
-            </td>
-
-            <td>
-
-                @Html.ActionLink("Details", "Details", new { id = item.Auditlog_ID }, new { @class = "btn btn-success" })
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Auditlog_ID }, new { @class = "btn btn-warning" }) |*@
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.Auditlog_ID }, new { @class = "btn btn-danger" })*@
-            </td>
-        </tr>
-    }
 
 
 
 
-</table>
+    </table>
+
+}
 <script>
-$("#clone").bind("click", function () {
-            //Clone the DropDownList
-            var ddl = $("#Search").clone()
+    $("#clone").bind("click", function () {
+        //Clone the DropDownList
+        var ddl = $("#Search").clone()
 
-            //Append to the DIV.
-            $("#contain").append(ddl);
+        //Append to the DIV.
+        $("#contain").append(ddl);
 
-        });
+    });
 </script>
 
 

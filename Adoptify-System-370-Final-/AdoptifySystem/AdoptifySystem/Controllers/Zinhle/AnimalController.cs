@@ -406,6 +406,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 else
                 {
                     searchaniaml.Animal_Type_Name = animal_Type.Animal_Type_Name;
+                    searchaniaml.Price = animal_Type.Price;
                     db.SaveChanges();
                 }
             }

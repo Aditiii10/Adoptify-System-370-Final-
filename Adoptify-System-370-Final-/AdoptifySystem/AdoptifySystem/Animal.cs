@@ -33,11 +33,11 @@ namespace AdoptifySystem
         public Nullable<int> Animal_Breed_ID { get; set; }
         public string Animal_Description { get; set; }
         public string Animal_Gender { get; set; }
-        public Nullable<int> Animal_Age { get; set; }
-        public Nullable<bool> Animal_Sterilization { get; set; }
-        public Nullable<bool> Animal_Castration { get; set; }
+        public int Animal_Age { get; set; }
+        public bool Animal_Sterilization { get; set; }
+        public bool Animal_Castration { get; set; }
         public string Animal_Size { get; set; }
-        public Nullable<System.DateTime> Animal_Entry_Date { get; set; }
+        public DateTime Animal_Entry_Date { get; set; }
         public string Animal_Coat { get; set; }
         public Nullable<int> Animal_Status_ID { get; set; }
         public string Animal_Image_Name { get; set; }

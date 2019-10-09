@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="main-content">
+    <section class="section">
+        <h1 class="section-header">
+            Reporting
+        </h1>
+
+        <div class="section-body">
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <div class="card">
+
+
+                        <!--Table-->
+                        <div class="card-header">
+                            <div class="float-right">
+                                <form>
+                                    <div class="float-right">
+                                        <div class="input-group">
+                                            <div class="input-group-btn">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+
+
+                        @Html.ActionLink("Employee Timesheet Report", "EmployeeTimesheet1", "Reports", routeValues: null, htmlAttributes: new { @class = "btn btn-sm btn-info", @role = "button" })
+                        <br /><hr />
+                        @Html.ActionLink("Vet Appointment Report", "VetAppointList1", "Reports", routeValues: null, htmlAttributes: new { @class = "btn btn-sm btn-info", @role = "button" })
+                        <br /><hr />
+                        @Html.ActionLink("Community Service Report", "ComServe1", "Reports", routeValues: null, htmlAttributes: new { @class = "btn btn-sm btn-info", @role = "button" })
+                        <br /><hr />
+                        @Html.ActionLink("Audit Trail Report", "AuditTrail1", "Reports", routeValues: null, htmlAttributes: new { @class = "btn btn-sm btn-info", @role = "button" })
+                        <br /><hr />
+                        @Html.ActionLink("Event Sale Report", "EventSale1", "Reports", routeValues: null, htmlAttributes: new { @class = "btn btn-sm btn-info", @role = "button" })
+                        <br /><hr />
+                        @Html.ActionLink("Animal Details Report", "AnimalDetails", "Reports", routeValues: null, htmlAttributes: new { @class = "btn btn-sm btn-info", @role = "button" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+

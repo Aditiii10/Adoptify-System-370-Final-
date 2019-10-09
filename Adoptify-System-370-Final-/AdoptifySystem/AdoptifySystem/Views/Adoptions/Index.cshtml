@@ -20,15 +20,13 @@
             @Html.ActionLink("Adoption Tutorial Video", "VideoView", "Videoplayer", null, new { @class = "btn btn-danger glyphicon glyphicon-plus", @style = "float:right", @Title = "Click to Go watch Adoption Tutorial Video" })
             @Html.ActionLink("Create New", "Create", "Adoptions", null, new { @class = "btn btn-success glyphicon glyphicon-plus", @Title = "Click to Add New Adoption" })
         </div>
-        @*<p>
-            @using (Html.BeginForm("Index", "Adoptions", FormMethod.Get))
+        
+            @using (Html.BeginForm("SearchAdoption", "Adoptions", FormMethod.Get))
             {
-                <b>Search by:</b>@Html.RadioButton("Searchby", "Animal_Name", true) <text>Animal Name</text>
-                @Html.RadioButton("Searchby", "Adoptor_Name")<text> Adoptor Name</text><br />
-                @Html.RadioButton("Searchby", "Adoption_Status")<text> Adoption Status</text><br />
-                @Html.TextBox("search")<input type="submit" value="Search" ? />
+               <label>Search Adoption</label>
+               <input name="search" type="text" class="form-control"/>
+               <input type="button" class="btn btn-primary"/>
             }
-        </p>*@
         @using (Html.BeginForm("AdoptionPayemenHistory", "Adoptions", FormMethod.Post))
         {
             <div class="row">

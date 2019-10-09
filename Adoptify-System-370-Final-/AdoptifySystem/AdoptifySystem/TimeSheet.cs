@@ -15,8 +15,8 @@ namespace AdoptifySystem
     public partial class TimeSheet
     {
         public int TimeSheet_ID { get; set; }
-        public Nullable<System.DateTime> Check_in { get; set; }
-        public Nullable<System.DateTime> Check_out { get; set; }
+        public DateTime Check_in { get; set; }
+        public DateTime Check_out { get; set; }
         public Nullable<int> Emp_ID { get; set; }
     
         public virtual Employee Employee { get; set; }
