@@ -39,7 +39,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             {
                 throw new Exception("Something Went Wrong!");
             }
-            
+
         }
         public ActionResult AddTemporaryAnimal()
         {
@@ -57,7 +57,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
 
-        public ContentResult test(string Cross_Breed, Animal animal, string[] breeds, Microchip micro, HttpPostedFileBase animalPicture,FormCollection form)
+        public ContentResult test(string Cross_Breed, Animal animal, string[] breeds, Microchip micro, HttpPostedFileBase animalPicture, FormCollection form)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     animal.Animal_Image_Name = Path.GetFileName(animalPicture.FileName);
                     animal.Animal_Image_Type = animalPicture.ContentType;
                     animal.Animal_Image = bytes;
-                    
+
 
                 }
 
@@ -93,7 +93,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 {
                     // Split authors separated by a comma followed by space  
                     string[] breed = breeds[0].Split(',');
-                        foreach (var item in breed)
+                    foreach (var item in breed)
                     {
                         CrossBreed cross = new CrossBreed();
                         cross.Animal_ID = animal.Animal_ID;
@@ -102,7 +102,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                         db.SaveChanges();
                     }
                 }
-                else {
+                else
+                {
                     CrossBreed cross = new CrossBreed();
                     cross.Animal_ID = animal.Animal_ID;
                     cross.Animal_Breed_ID = Convert.ToInt32(breeds);
@@ -112,9 +113,9 @@ namespace AdoptifySystem.Controllers.Zinhle
                 }
                 if (micro.Animal_Microchip_Code != null || micro.Implanters_PIN_Number != null || micro.Owner_Name != null || micro.Owner_Address != null || micro.Owner_Contact_Number != null)
                 {
-                    
+
                     micro.Animal_ID = animal.Animal_ID;
-                    
+
                     db.Microchips.Add(micro);
                     db.SaveChanges();
                 }
@@ -147,7 +148,7 @@ namespace AdoptifySystem.Controllers.Zinhle
         //            animal.Animal_Image = bytes;
 
         //        }
-                
+
         //        if (animal !=null)
         //        {
         //            Animal_Status status = db.Animal_Status.Where(zz => zz.Animal_Status_Name == "Available").FirstOrDefault();
@@ -186,7 +187,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         //    }            
         //}
-        
+
         public ActionResult SearchAnimal()
         {
             List<Animal> animals = new List<Animal>();
@@ -207,19 +208,19 @@ namespace AdoptifySystem.Controllers.Zinhle
         [HttpPost]
         public ActionResult SearchAnimal(string search)
         {
-            
+
             if (!(search == ""))
             {
                 db.Database.CommandTimeout = 300;
-                var animallist = db.Animals.Where(z=>z.Animal_Name.Equals(search)).ToList();
+                var animallist = db.Animals.Where(z => z.Animal_Name.Equals(search)).ToList();
                 if (animallist == null)
                 {
                     return RedirectToAction("SearchAnimal");
                 }
                 List<Animal> animals = new List<Animal>();
                 animals = animallist;
-                
-                return View("SearchAnimal",animals);
+
+                return View("SearchAnimal", animals);
 
             }
             TempData["SuccessMessage"] = "Enter Valid Details";
@@ -238,12 +239,12 @@ namespace AdoptifySystem.Controllers.Zinhle
                     TempData["EditMessage"] = "Animal not Found";
                     return View("SearchAnimal");
                 }
-                var micro = db.Microchips.Where(z=>z.Animal_ID ==animals.Animal_ID).FirstOrDefault();
+                var micro = db.Microchips.Where(z => z.Animal_ID == animals.Animal_ID).FirstOrDefault();
                 if (micro != null)
                 {
                     innovation.micro = micro;
                 }
-                
+
                 innovation.animal = animals;
                 var emp = db.Animal_Type.ToList();
                 var breed = db.Animal_Breed.ToList();
@@ -262,42 +263,42 @@ namespace AdoptifySystem.Controllers.Zinhle
         public ContentResult MaintainAnimal(Animal animal, Microchip micro, HttpPostedFileBase animalPicture)
         {
             try
+            {
+                Animal searchanimal = db.Animals.Find(animal.Animal_ID);
+
+                searchanimal.Animal_Name = animal.Animal_Name;
+                searchanimal.Animal_Coat = animal.Animal_Coat;
+                searchanimal.Animal_Age = searchanimal.Animal_Age;
+                searchanimal.Animal_Description = animal.Animal_Description;
+                searchanimal.Animal_Sterilization = animal.Animal_Sterilization;
+                searchanimal.Animal_Castration = animal.Animal_Castration;
+                searchanimal.Animal_Size = animal.Animal_Size;
+                searchanimal.Animal_Gender = animal.Animal_Gender;
+                if (animalPicture != null)
                 {
-                    Animal searchanimal = db.Animals.Find(animal.Animal_ID);
-
-                    searchanimal.Animal_Name = animal.Animal_Name;
-                    searchanimal.Animal_Coat = animal.Animal_Coat;
-                    searchanimal.Animal_Age = searchanimal.Animal_Age;
-                    searchanimal.Animal_Description = animal.Animal_Description;
-                    searchanimal.Animal_Sterilization = animal.Animal_Sterilization;
-                    searchanimal.Animal_Castration = animal.Animal_Castration;
-                    searchanimal.Animal_Size = animal.Animal_Size;
-                    searchanimal.Animal_Gender = animal.Animal_Gender;
-                    if (animalPicture != null)
+                    //this is where we convert the contract to add to the database
+                    byte[] bytes;
+                    using (BinaryReader br = new BinaryReader(animalPicture.InputStream))
                     {
-                        //this is where we convert the contract to add to the database
-                        byte[] bytes;
-                        using (BinaryReader br = new BinaryReader(animalPicture.InputStream))
-                        {
 
-                            bytes = br.ReadBytes(animalPicture.ContentLength);
-                        }
-                        searchanimal.Animal_Image_Name = Path.GetFileName(animalPicture.FileName);
-                        searchanimal.Animal_Image_Type = animalPicture.ContentType;
-                        searchanimal.Animal_Image = bytes;
+                        bytes = br.ReadBytes(animalPicture.ContentLength);
                     }
+                    searchanimal.Animal_Image_Name = Path.GetFileName(animalPicture.FileName);
+                    searchanimal.Animal_Image_Type = animalPicture.ContentType;
+                    searchanimal.Animal_Image = bytes;
+                }
 
 
-                        
-                        db.SaveChanges();
+
+                db.SaveChanges();
                 if (micro != null)
+                {
+                    if (searchanimal.Microchips.Count != 0 || searchanimal.Microchips != null)
                     {
-                        if (searchanimal.Microchips.Count != 0 || searchanimal.Microchips != null)
-                        {
 
-                        }
-                        else
-                        {
+                    }
+                    else
+                    {
                         foreach (var item in searchanimal.Microchips)
                         {
                             item.Animal_Microchip_Code = micro.Animal_Microchip_Code;
@@ -308,19 +309,19 @@ namespace AdoptifySystem.Controllers.Zinhle
                             item.Date_of_Implant = micro.Date_of_Implant;
 
                         }
-                        }
-
                     }
-                db.SaveChanges();
-                    TempData["SuccessMessage"] = "Successfully";
+
                 }
-                catch (Exception e)
-                {
-                    ViewBag.err = e.Message;
+                db.SaveChanges();
+                TempData["SuccessMessage"] = "Successfully";
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = e.Message;
                 throw new Exception("Something Went Wrong!");
             }
-            
-            
+
+
             return Content("");
         }
 
@@ -330,49 +331,49 @@ namespace AdoptifySystem.Controllers.Zinhle
             return View();
         }
         [HttpPost]
-        public ContentResult AddAnimalType(string price,string Animal_type_Name)
+        public ContentResult AddAnimalType(string price, string Animal_type_Name)
         {
-                try
-                {
+            try
+            {
                 Animal_Type an = new Animal_Type();
                 List<Animal_Type> Animal_Type = new List<Animal_Type>();
-                    Animal_Type = db.Animal_Type.ToList();
-                    if (Animal_Type.Count != 0)
+                Animal_Type = db.Animal_Type.ToList();
+                if (Animal_Type.Count != 0)
+                {
+                    int count = 0;
+                    foreach (var item in Animal_Type)
                     {
-                        int count = 0;
-                        foreach (var item in Animal_Type)
+                        if (item.Animal_Type_Name == Animal_type_Name)
                         {
-                            if (item.Animal_Type_Name == Animal_type_Name)
-                            {
-                                count++;
-                                TempData["DeleteMessage"] = "There is a duplicate Animal Type already";
-                                return Content("");
-                            }
-
+                            count++;
+                            TempData["DeleteMessage"] = "There is a duplicate Animal Type already";
+                            return Content("");
                         }
-                        if (count == 0)
-                        {
-                        
+
+                    }
+                    if (count == 0)
+                    {
+
                         an.Animal_Type_Name = Animal_type_Name;
                         an.Price = Convert.ToInt32(price);
-                            db.Animal_Type.Add(an);
-                            db.SaveChanges();
-                            TempData["SuccessMessage"] = "Successfully Stored";
-                        }
-                    }
-                    else
-                    {
-
                         db.Animal_Type.Add(an);
                         db.SaveChanges();
-
                         TempData["SuccessMessage"] = "Successfully Stored";
                     }
+                }
+                else
+                {
+
+                    db.Animal_Type.Add(an);
+                    db.SaveChanges();
+
+                    TempData["SuccessMessage"] = "Successfully Stored";
+                }
                 return Content("");
             }
-                catch (Exception e)
-                {
-                    TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
+            catch (Exception e)
+            {
+                TempData["EditMessage"] = "There was an Error with network please try again: " + e.Message;
                 return Content("");
             }
 
@@ -394,25 +395,26 @@ namespace AdoptifySystem.Controllers.Zinhle
         [HttpPost]
         public ContentResult MainatainAnimalType(Animal_Type animal_Type)
         {
-           
-                try
+
+            try
+            {
+                Animal_Type searchaniaml = db.Animal_Type.Find(animal_Type.Animal_Type_ID);
+                if (searchaniaml == null)
                 {
-                    Animal_Type searchaniaml = db.Animal_Type.Find(animal_Type.Animal_Type_ID);
-                    if (searchaniaml == null)
-                    {
-                        return Content("");
-                    }
-                    else
-                    {
-                        searchaniaml.Animal_Type_Name = animal_Type.Animal_Type_Name;
-                        db.SaveChanges();
-                    }
-                }
-                catch (Exception e)
-                {
-                    TempData["EditMessage"] = e.Message;
                     return Content("");
                 }
+                else
+                {
+                    searchaniaml.Animal_Type_Name = animal_Type.Animal_Type_Name;
+                    searchaniaml.Price = animal_Type.Price;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["EditMessage"] = e.Message;
+                return Content("");
+            }
 
             return Content("");
 
@@ -420,12 +422,12 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         public ActionResult SearchAnimalType()
         {
-           
+
             List<Animal_Type> animal_Types = new List<Animal_Type>();
             try
             {
                 animal_Types = db.Animal_Type.ToList();
-                if(animal_Types.Count == 0)
+                if (animal_Types.Count == 0)
                 {
 
                 }
@@ -433,7 +435,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
             catch (Exception e)
             {
-                TempData["EditMessage"] = "there was a network error: "+ e.Message;
+                TempData["EditMessage"] = "there was a network error: " + e.Message;
                 return View();
             }
         }
@@ -463,8 +465,8 @@ namespace AdoptifySystem.Controllers.Zinhle
             {
                 throw new Exception("Something Wrong");
             }
-           
-            
+
+
         }
         public ActionResult AddBreedType()
         {
@@ -479,49 +481,49 @@ namespace AdoptifySystem.Controllers.Zinhle
                 throw;
             }
         }
-       [HttpPost]
+        [HttpPost]
         public ContentResult AddBreedType(Animal_Breed animal_breed)
         {
 
-                try
+            try
+            {
+
+                List<Animal_Breed> Animal_Breeds = new List<Animal_Breed>();
+                Animal_Breeds = db.Animal_Breed.ToList();
+                if (Animal_Breeds.Count != 0)
                 {
-
-                    List<Animal_Breed> Animal_Breeds = new List<Animal_Breed>();
-                    Animal_Breeds = db.Animal_Breed.ToList();
-                    if (Animal_Breeds.Count != 0)
+                    int count = 0;
+                    foreach (var item in Animal_Breeds)
                     {
-                        int count = 0;
-                        foreach (var item in Animal_Breeds)
+                        if (item.Animal_Breed_Name == animal_breed.Animal_Breed_Name)
                         {
-                            if (item.Animal_Breed_Name == animal_breed.Animal_Breed_Name)
-                            {
-                                count++;
-                                TempData["EditMessage"] = "There is a duplicate Animal Breed Already";
-                                return Content("");
-                            }
+                            count++;
+                            TempData["EditMessage"] = "There is a duplicate Animal Breed Already";
+                            return Content("");
+                        }
 
-                        }
-                        if (count == 0)
-                        {
-                            db.Animal_Breed.Add(animal_breed);
-                            db.SaveChanges();
-                        }
                     }
-                    else
+                    if (count == 0)
                     {
-
                         db.Animal_Breed.Add(animal_breed);
                         db.SaveChanges();
-
-
                     }
+                }
+                else
+                {
+
+                    db.Animal_Breed.Add(animal_breed);
+                    db.SaveChanges();
+
 
                 }
-                catch (Exception e)
-                {
-                    ViewBag.errorMessage = "There was an Error with network please try again: " + e.Message;
-                    return Content("");
-                }
+
+            }
+            catch (Exception e)
+            {
+                ViewBag.errorMessage = "There was an Error with network please try again: " + e.Message;
+                return Content("");
+            }
             return Content("");
         }
 
@@ -551,30 +553,30 @@ namespace AdoptifySystem.Controllers.Zinhle
         [HttpPost]
         public ContentResult MaintainBreedType(Animal_Breed animal_breed)
         {
-          
-                try
+
+            try
+            {
+                Animal_Breed searchbreed = db.Animal_Breed.Find(animal_breed.Animal_Breed_ID);
+                if (searchbreed == null)
                 {
-                    Animal_Breed searchbreed = db.Animal_Breed.Find(animal_breed.Animal_Breed_ID);
-                    if (searchbreed == null)
-                    {
-                        return Content("");
-                    }
-                    else
-                    {
+                    return Content("");
+                }
+                else
+                {
                     searchbreed.Animal_Breed_Name = animal_breed.Animal_Breed_Name;
                     searchbreed.Animal_Breed_Description = animal_breed.Animal_Breed_Description;
                     searchbreed.Animal_Type_ID = animal_breed.Animal_Type_ID;
                     db.SaveChanges();
-                    }
                 }
-                catch (Exception e)
-                {
-                    ViewBag.err = e.Message;
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = e.Message;
                 return Content("");
             }
             return Content("");
         }
-         
+
 
         public ActionResult SearchBreedType()
         {
@@ -695,24 +697,24 @@ namespace AdoptifySystem.Controllers.Zinhle
         }
 
         public ActionResult ClaimAnimal()
-         {
-             try
-             {
+        {
+            try
+            {
                 db.Database.CommandTimeout = 300;
-                 innovation.animals = db.Animals.Where(z=> z.Animal_Status_ID == 1 || z.Animal_Status_ID == 4).ToList();
-                 return View(innovation);
-             }
-             catch (Exception e)
-             {
-                 ViewBag.err = e.Message;
-                 return RedirectToAction("SearchAnimal");
+                innovation.animals = db.Animals.Where(z => z.Animal_Status_ID == 1 || z.Animal_Status_ID == 4).ToList();
+                return View(innovation);
+            }
+            catch (Exception e)
+            {
+                ViewBag.err = e.Message;
+                return RedirectToAction("SearchAnimal");
 
-             }
+            }
 
-         }
+        }
 
-         public ActionResult RemoveClaimAnimal(int id)
-         {
+        public ActionResult RemoveClaimAnimal(int id)
+        {
             try
             {
                 if (id != 0)
@@ -738,7 +740,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                                 db.Microchips.Remove(item);
                                 db.SaveChanges();
                             }
-                            
+
                         }
                         if (animal.CrossBreeds.Count != 0)
                         {
