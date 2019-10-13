@@ -11,6 +11,7 @@ using System.Net;
 using AdoptifySystem;
 using System.Security.Cryptography;
 using System.Web.Helpers;
+using System.Net.Mail;
 
 namespace AdoptifySystem.Controllers.Zinhle
 {
@@ -99,6 +100,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", user.Username, UserUniqueKey, 300, 300);
                 saveEmp.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
                 ViewBag.Qr = setupInfo.QrCodeSetupImageUrl;
+                SendVerificationLinkEmail(emp.Emp_Email, setupInfo.QrCodeSetupImageUrl, "Authorize Barcode");
                 db.Entry(old).CurrentValues.SetValues(saveEmp);
                 db.SaveChanges();
                 //var md5 = new MD5CryptoServiceProvider();
@@ -310,8 +312,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                     Session["UserUniqueKey"] = UserUniqueKey;
                     var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", user.Username, UserUniqueKey, 300, 300);
                     searchemployee_type.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
-
-                    db.SaveChanges();
+                    SendVerificationLinkEmail(emp.Emp_Email, setupInfo.QrCodeSetupImageUrl, "Authorize Barcode");
+                db.SaveChanges();
                 flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User");
                 if (searchemployee_type.User_.Count == 0)
                     {
@@ -577,6 +579,27 @@ namespace AdoptifySystem.Controllers.Zinhle
         public ActionResult BarCodeGenerated()
         {
             return View();
+        }
+        [NonAction]
+        public void SendVerificationLinkEmail(string emailID, string image, string emailFor = "VerifyAccount")
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("u17136319@tuks.co.za");
+                mail.To.Add(emailID);
+                mail.Subject = "Wollies Animal Shelter Barcode image First Time";
+                mail.Body = "<h1>Hello There!</h1><br><h3>Please Use this  Authorize for the Login:<br>" + "</h3><br /><img src =" + image + " />";
+                mail.IsBodyHtml = true;
+                //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential("u17136319@tuks.co.za", "Urahara123");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
+           
         }
     }
 }
