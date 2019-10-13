@@ -61,8 +61,6 @@
                             @Html.DisplayFor(modelItem => item.Role_Name)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "MaintainUserRole", new { id = item.Role_ID }, new { @class = "btn btn-warning" }) |
-
                             <input type="button" value="More info" class="btn moreinfo btn-info" data-toggle="modal" data-target="#@item.Role_ID">
                         </td>
                     </tr>
@@ -90,7 +88,7 @@
                                 <div class="modal-footer">
 
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Role_ID }, new { @class = "btn btn-danger" }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Role_ID }, new { @class = "btn btn-danger" }) 
                                     @Html.ActionLink("Maintain", "MaintainUserRole", new { id = item.Role_ID }, new { @style = "color: white", @class = "btn btn-warning" })
                                 </div>
                             </div>

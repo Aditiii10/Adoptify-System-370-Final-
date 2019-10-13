@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem.Models;
 using AdoptifySystem.Models.nickeymodel;
-using Flexible = AdoptifySystem.Models.nickeymodel.Innovation;
 using System.IO;
 using Google.Authenticator;
 using System.Net;
@@ -21,6 +20,7 @@ namespace AdoptifySystem.Controllers.Zinhle
         // GET: Donations
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         static Innovation innovation = new Innovation();
+        public static Flexible flex = new Flexible();
         private const string key = "qaz123!@@)(*";
 
         public ActionResult Index()
@@ -80,6 +80,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                 db.Employees.Add(saveEmp);
                 db.SaveChanges();
+                flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee");
                 //Now we have to store the user
                 //first look for the employee that we just added
                 Employee old = db.Employees.Where(z => z.Title_ID == saveEmp.Title_ID && z.Emp_Type_ID == saveEmp.Emp_Type_ID && z.Emp_Name == saveEmp.Emp_Name && z.Emp_Email == saveEmp.Emp_Email && z.Emp_Surname == saveEmp.Emp_Surname && z.Emp_IDNumber == saveEmp.Emp_IDNumber).FirstOrDefault();
@@ -108,6 +109,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 user.FirstTime = true;
                 db.User_.Add(user);
                 db.SaveChanges();
+                flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User");
                 //we store the User acces that is needed
 
                 foreach (var item in Role)
@@ -295,9 +297,10 @@ namespace AdoptifySystem.Controllers.Zinhle
                     searchemployee_type.Emp_Contract_Type = Contract.ContentType;
                     searchemployee_type.Emp_Contract = bytes;
                 }
-                        db.SaveChanges();                   
+                        db.SaveChanges();
+                flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee");
                 //now i have to update user 
-                    if (searchemployee_type.User_.Count == 0)
+                if (searchemployee_type.User_.Count == 0)
                     {
                         TempData["EditMessage"] = "Employee Succesfully Updated";
                         return View("SearchEmployee", innovation);
@@ -309,8 +312,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                     searchemployee_type.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
 
                     db.SaveChanges();
-
-                    if (searchemployee_type.User_.Count == 0)
+                flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User");
+                if (searchemployee_type.User_.Count == 0)
                     {
                         TempData["EditMessage"] = "Employee Succesfully Updated";
                         return View("AddEmployee", innovation);
@@ -372,12 +375,14 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         db.Employee_Type.Add(employee_type);
                         db.SaveChanges();
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee Type");
                     }
                 }
                 else
                 {
                     db.Employee_Type.Add(employee_type);
                     db.SaveChanges();
+                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee Type");
                 }
             }
             catch (Exception e)
@@ -421,9 +426,6 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         User_ user = emp.User_.FirstOrDefault();
                         audit = user.Audit_Log.Count();
-
-
-
                     }
                     if (timesheet != 0 || kennel != 0 ||/* homechecks != 0 ||*/ audit != 0)
                     {
@@ -448,10 +450,12 @@ namespace AdoptifySystem.Controllers.Zinhle
                             }
                             db.User_.Remove(user);
                             db.SaveChanges();
+                            flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee");
                         }
 
                         db.Employees.Remove(emp);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee");
                         return RedirectToAction("SearchEmployee");
                     }
                 }
@@ -504,7 +508,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                     searchemployee_type.Emp_Type_Name = employee_type.Emp_Type_Name;
                     searchemployee_type.Emp_Type_Description = employee_type.Emp_Type_Description;
                     db.SaveChanges();
-                    }
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee Type");
+                }
                 }
                 catch (Exception e)
                 {
@@ -555,6 +560,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         db.Employee_Type.Remove(employee_type);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee Type");
                         return RedirectToAction("SearchEmployeeType");
                     }
                 }

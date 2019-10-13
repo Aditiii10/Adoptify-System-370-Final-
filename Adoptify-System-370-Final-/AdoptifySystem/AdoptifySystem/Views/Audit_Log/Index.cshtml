@@ -6,33 +6,29 @@
 }
 
 <h2>Audit Log List</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" })
-    @*@Html.ActionLink("Create New", "Create")*@
-</p>
-
-<div class="form-group">
-    <label>Search Criteria:</label><br />
-<div id="contain">
-    <select name="Search" class="custom-select-sm">
-        <option>Select Option </option>
-        <option value="User">User</option>
-        <option value="Date">Date</option>
-        <option value="Transaction Type">Transaction Type</option>
-    </select>
+@using (Html.BeginForm("Search", "Audit_Log"))
+{
+    <div class="form-group">
+        <label>Search Criteria:</label><br />
+        <div id="contain">
+            <select name="option" onchange="change(this)" class="custom-select">
+                <option value="User">User</option>
+                <option value="Date">Date</option>
+                <option value="Transaction Type">Transaction Type</option>
+            </select>
+        </div>
+        <br />
+        <input type="text" id="clone" name="search" class="form-control" />
     </div>
-    <input type="button" id="clone" />
-    <br />
-    <input type="text" name="othercolor" id="othercolor" style='display:none;' />
 
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" value="Search" class="btn btn-primary">Search</button>
+            @Html.ActionLink("Reset", "Index", null , new { @class = "btn" })
+        </div>
     </div>
-</div>
+}
+
 <br />
 
 <table class="table table-bordered">
@@ -58,61 +54,48 @@
             Action Result
         </th>
     </tr>
-
-    @*@if (Model == null)
+    @foreach (var item in Model)
     {
         <tr>
-            <td colspan="8">
-                No results found
+            <td>
+                @Html.DisplayFor(modelItem => item.Auditlog_DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction_Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Critical_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User_.Username)
+            </td>
+
+            <td>
+                @*@Html.ActionLink("Details", "Details", new { id = item.Auditlog_ID }, new { @class = "btn btn-success" })*@
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Auditlog_ID }, new { @class = "btn btn-warning" }) |*@
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.Auditlog_ID }, new { @class = "btn btn-danger" })*@
             </td>
         </tr>
     }
-    else
-    {*@
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Auditlog_DateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Transaction_Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Critical_Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User_.Username)
-                </td>
 
-                <td>
-
-                    @Html.ActionLink("Details", "Details", new { id = item.Auditlog_ID }, new { @class = "btn btn-success" })
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Auditlog_ID }, new { @class = "btn btn-warning" }) |*@
-                    @*@Html.ActionLink("Delete", "Delete", new { id = item.Auditlog_ID }, new { @class = "btn btn-danger" })*@
-                </td>
-            </tr>
-        }
-
-    
 
 
 </table>
+
 <script>
-$("#clone").bind("click", function () { 
-            //Clone the DropDownList
-            var ddl = $("#Search").clone()
- 
-            //Append to the DIV.
-            $("#contain").append(ddl);
-            
-        });
+    function change(id) {
+
+        if (id.value == "Date") {
+            var e = document.getElementById("clone"); //Get the element
+            e.setAttribute("type", "date");
+        } else {
+             var e = document.getElementById("clone"); //Get the element
+            e.setAttribute("type", "text");
+        }
+    }
 </script>
 
 
 
 
-
-
-            

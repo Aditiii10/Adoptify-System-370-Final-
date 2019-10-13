@@ -63,14 +63,14 @@ namespace AdoptifySystem.Controllers
                     {
                         db.Donors.Add(donor);
                         db.SaveChanges();
-
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Donor");
                     }
                 }
                 else
                 {
                     db.Donors.Add(donor);
                     db.SaveChanges();
-
+                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Donor");
                 }
                 return Content("");
             }
@@ -124,7 +124,8 @@ namespace AdoptifySystem.Controllers
                     Donor.Donor_Email = donor.Donor_Email;
                     Donor.Title_ID = donor.Title_ID;
                     db.SaveChanges();
-                    }
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Donor");
+                }
                 }
                 catch (Exception)
                 {
@@ -474,6 +475,7 @@ namespace AdoptifySystem.Controllers
                             
 
                         }
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Donation");
                         flex.adddonationlist = null;
                         flex.donor = null;
                         flex.stock = null;
@@ -745,7 +747,8 @@ namespace AdoptifySystem.Controllers
                     donation_Type.Donation_Type_Name = Donationtype.Donation_Type_Name;
                     donation_Type.Donation_Type_Description = Donationtype.Donation_Type_Description;
                     db.SaveChanges();
-                    }
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Donation Type");
+                }
                 }
                 catch(Exception e)
                 {
@@ -772,6 +775,7 @@ namespace AdoptifySystem.Controllers
                     {
                         db.Donors.Remove(donor);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Donor");
                         return RedirectToAction("SearchDonor");
                     }
                 }
@@ -803,7 +807,9 @@ namespace AdoptifySystem.Controllers
                     {
                         db.Donation_Type.Remove(donation_type);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Donation Type");
                         return RedirectToAction("SearchDonationType");
+
                     }
                 }
                 return RedirectToAction("SearchDonationType");
@@ -844,6 +850,7 @@ namespace AdoptifySystem.Controllers
                         IWParagraph dunkin = section.AddParagraph();
                         //IWParagraph title = section.AddParagraph();
                         dunkin.AppendText("Dear " + item.Donor_Name);
+                        dunkin.AppendBreak(BreakType.LineBreak);
                         //Adds page break to the paragraph'
                         dunkin.AppendText("This will be paragraph that we enter details");
                         dunkin.AppendBreak(BreakType.PageBreak);
@@ -941,32 +948,12 @@ namespace AdoptifySystem.Controllers
                             new XElement("Donor_Email", don.Donor_Email),
                             new XElement("Title_ID", don.Title_ID),
                             new XElement("Donations", don.Donations)
-
                             ));
-                    // HttpContextBase context = HttpContextBase.Response;
                     Response.Write(xEle);
                     Response.ContentType = "application/xml";
                     Response.AppendHeader("Content-Disposition", "attachment; filename=DonorsList.xml");
                     Response.End();
                 }
-                //var data = db.Donors.Select(
-                //       donor => new MetadataDonor
-                //       {
-                //           Donor_ID = donor.Donor_ID,
-                //           Donor_Name = donor.Donor_Name,
-                //           Donor_Surname = donor.Donor_Surname,
-                //           Donor_Email = donor.Donor_Email,
-                //           //Title_ID = Convert.ToInt32(donor.Title_ID)
-
-                //       }).ToList();
-
-                //Response.ClearContent();
-                //Response.Buffer = true;
-                //Response.AddHeader("content-disposition", "attachment;filename = Donorslist.xml");
-                //Response.ContentType = "text/xml";
-                //var serializer = new
-                //System.Xml.Serialization.XmlSerializer(data.GetType());
-                //serializer.Serialize(Response.OutputStream, data);
                 return View("SearchDonor");
             }
             catch (Exception)

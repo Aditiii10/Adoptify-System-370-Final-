@@ -17,6 +17,8 @@ namespace AdoptifySystem.Controllers.Cassie
 
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public static Innovation inno = new Innovation();
+        public static Flexible flex = new Flexible();
+        
         // GET: Animal_Kennel_History
         public ActionResult Index()
         {
@@ -156,6 +158,7 @@ namespace AdoptifySystem.Controllers.Cassie
                     }
                     animal.Kennel_ID = inno.Kennel.Kennel_ID;
                     db.SaveChanges();
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal's Kennel Location");
                     inno.animal = null;
                     inno.Kennel = null;
 

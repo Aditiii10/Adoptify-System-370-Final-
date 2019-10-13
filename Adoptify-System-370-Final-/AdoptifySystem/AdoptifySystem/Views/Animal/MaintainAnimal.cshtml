@@ -311,12 +311,27 @@
                             <label class="custom-control-label" for="Large">Large</label>
                         </div>
                     }
+                    else
+                    {
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Size" value="Small" id="Small" class="custom-control-input">
+                            <label class="custom-control-label" for="Small">Small</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Size" value="Medium" id="Medium" class="custom-control-input">
+                            <label class="custom-control-label" for="Medium">Medium</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Size" value="Large" id="Large" class="custom-control-input">
+                            <label class="custom-control-label" for="Large">Large</label>
+                        </div>
+                    }
 
                 </div>
 
                 <div class="form-group">
                     <label><b>Entry Date Of Animal</b></label><br />
-                    <input type="date" value="@Model.animal.Animal_Entry_Date.ToString("yyyy-MM-dd")" name="Animal_Entry_Date" id="Animal_Entry_Date" class="form-control" placeholder="Enter Date of Entry" />
+                    <input type="date" value="@Model.animal.Animal_Entry_Date.Value.ToString("yyyy-MM-dd")" name="Animal_Entry_Date" id="Animal_Entry_Date" class="form-control" placeholder="Enter Date of Entry" />
                 </div>
 
 
@@ -448,7 +463,8 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.ActionLink("Delete", "SearchAnimal", new { id = Model.animal.Animal_ID }, new { @class = "btn btn-danger", @style = "width:100%", @title = "Click to go delete animal" })
+        @Html.ActionLink("Delete", "DeleteAnimal", new { id = Model.animal.Animal_ID }, new { @class = "btn btn-danger", @style = "width:100%", @title = "Click to go delete animal" })
+
     </div>
 </div>
 <script>

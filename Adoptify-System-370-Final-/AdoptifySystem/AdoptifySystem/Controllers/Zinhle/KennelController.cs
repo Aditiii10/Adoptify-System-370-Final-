@@ -27,7 +27,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             try
             {
                 db.AddKennel(kennel.Kennel_Name, kennel.Kennel_Number, kennel.Kennel_Capacity);
-                
+                flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Kennel");
                 RedirectToAction("SearchKennel");
             }
             catch (Exception e)
@@ -81,6 +81,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             try
             {
                 db.UpdateKennel(kennel.Kennel_ID,kennel.Kennel_Name, kennel.Kennel_Number, kennel.Kennel_Capacity);
+                flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Kennel");
                 return RedirectToAction("SearchKennel");
             }
             catch (Exception e)
@@ -110,6 +111,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                         //db.Kennels.Remove(kennel);
                         db.DeleteKennel(kennel.Kennel_ID);
                         db.SaveChanges();
+                        flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Kennel");
                         return RedirectToAction("SearchKennel");
                     }
                 }

@@ -120,18 +120,17 @@ namespace AdoptifySystem.Controllers.Zinhle
             return RedirectToAction("Index");
         }
 
-        public ActionResult Search(string search,string[] option)
+        public ActionResult Search(string search,string option)
         {
             List<Audit_Log> list = new List<Audit_Log>();
 
-            foreach (var item in option)
-            {
+            //foreach (var item in option)
+            //{
                 List<Audit_Log> templist = new List<Audit_Log>();
-                switch (item)
+                switch (option)
                 {
-                    case "Transaction Type":
-                       
-                            templist = db.Audit_Log.Where(z => z.Transaction_Type.StartsWith(search)).ToList();
+                    case "Transaction Type":       
+                            list = db.Audit_Log.Where(z => z.Transaction_Type.StartsWith(search)).ToList();
                         if (list.Count>0)
                         {
                             int count = 0;
@@ -177,7 +176,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                         }
                         break;
                     case "Date":
-                        list = db.Audit_Log.Where(z => z.Critical_Date.StartsWith(search)).ToList();
+                        list = db.Audit_Log.Where(z => z.Auditlog_DateTime.Value.ToString().StartsWith(search)).ToList();
                         if (list.Count > 0)
                         {
                             int count = 0;
@@ -197,9 +196,13 @@ namespace AdoptifySystem.Controllers.Zinhle
                                 }
                             }
                         }
+                        else
+                        {
+                            templist = list;
+                        }
                         break;
                 }
-            }
+            //}
             return View("Index",list);
         }
         protected override void Dispose(bool disposing)

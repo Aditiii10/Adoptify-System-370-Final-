@@ -49,6 +49,7 @@ namespace AdoptifySystem.Controllers
                     {
                         db.Stocks.Add(stock);
                         db.SaveChanges();
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
                     }
                     return RedirectToAction("AddStock");
                 }
@@ -120,7 +121,7 @@ namespace AdoptifySystem.Controllers
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("SearchStock", "Stock");
                 }
                 List<Stock_Type> Stock_Types = new List<Stock_Type>();
                 List<Packaging_Type> Packaging_Type = new List<Packaging_Type>();
@@ -167,14 +168,15 @@ namespace AdoptifySystem.Controllers
                     stock1.Stock_Description = stock2.Stock_Description;
                     db.Entry(stock1).CurrentValues.SetValues(stock2);
                         db.SaveChanges();
-                    }
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
+                }
                 }
                 catch (Exception e)
                 {
                     ViewBag.err = e.Message;
                 throw new Exception("Something Went Wrong!");
             }
-            return Content("");
+            return RedirectToAction("SearchStock", "Stock");
 
         }
 
@@ -233,6 +235,7 @@ namespace AdoptifySystem.Controllers
                     newstock.Stock_Quantity -= stock.Stock_Quantity;
                     db.Entry(oldstock).CurrentValues.SetValues(newstock);
                     db.SaveChanges();
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
                     return RedirectToAction("SearchStock", "Stock");
                 }
                 if (button == "Cancel")
@@ -276,16 +279,17 @@ namespace AdoptifySystem.Controllers
                         {
                             db.Stock_Type.Add(stock_type);
                             db.SaveChanges();
-                        }
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock Type");
+                    }
                     }
                     else
                     {
 
                         db.Stock_Type.Add(stock_type);
                         db.SaveChanges();
+                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock Type");
 
-
-                    }
+                }
                 //Session["Userid"] = stock_type.Stock_Type_ID;
 
                 }
@@ -352,6 +356,7 @@ namespace AdoptifySystem.Controllers
                         newstock.Stock_Quantity = new_stock;
                         db.Entry(oldstock).CurrentValues.SetValues(newstock);
                         db.SaveChanges();
+                        flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
                     }
                     return RedirectToAction("Index","Home");
                 }
@@ -452,8 +457,8 @@ namespace AdoptifySystem.Controllers
                     Stock_Type.Stock_Type_Name = stock_Type.Stock_Type_Name;
                     Stock_Type.Stock_Type_Description = stock_Type.Stock_Type_Description;
                    db.SaveChanges();
-                        
-                    }
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock Type");
+                }
                 }
                 catch (Exception e)
                 {
@@ -480,6 +485,7 @@ namespace AdoptifySystem.Controllers
                     {
                         db.Stocks.Remove(stoc);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
                         return View("Index", "Home");
                     }
                 }
@@ -509,6 +515,7 @@ namespace AdoptifySystem.Controllers
                 {
                     db.Stock_Type.Remove(stocky);
                     db.SaveChanges();
+                    flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock Type");
                     return View("Index", "Home");
                 }
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdoptifySystem.Models.nickeymodel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 {
     public class TimerController : Controller
     {
+        public static Flexible flex = new Flexible();
         // GET: Timer
         public ActionResult Index(User_ login)
         {
@@ -56,7 +58,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                         db.Timers.Add(timer);
                         db.SaveChanges();
-
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Timer");
 
                     }
                     else
@@ -65,7 +67,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                         time.Minutes = timer.Minutes;
                         time.Seconds = timer.Seconds;
                         db.SaveChanges();
-                        
+                        flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Timer");
                     }
                     
                 }

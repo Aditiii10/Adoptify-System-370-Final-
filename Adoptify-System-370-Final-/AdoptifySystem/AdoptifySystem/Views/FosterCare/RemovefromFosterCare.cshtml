@@ -3,7 +3,12 @@
     ViewBag.Title = "RemovefromFosterCare";
 
 }
-
+@if (!string.IsNullOrEmpty(ViewBag.err))
+{
+    <script type="text/javascript">
+        alert('@ViewBag.err');
+    </script>
+}
 <mat-toolbar class="form-header ">
     <h1 class="mat-headline center-align table-primary">Remove Animal from Foster</h1>
 </mat-toolbar>
@@ -53,7 +58,7 @@
                             </div>
                             <div class="modal-body">
                                 <span class="value">Foster Care Parent:</span>
-                                @item.Foster_Care_Parent.Foster_Parent_Name  @item.Foster_Care_Parent.Foster_Parent_Surname<br />   
+                                @item.Foster_Care_Parent.Foster_Parent_Name  @item.Foster_Care_Parent.Foster_Parent_Surname<br />
                                 <span class="value">Location:</span>
                                 @Html.DisplayFor(modelItem => item.Foster_Care_Parent.Foster_Parent_Address) <br />
                                 <span class="value">Animal Name:</span>
@@ -66,7 +71,7 @@
                             <div class="modal-footer">
 
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                @Html.ActionLink("Remove", "removefromfostercarelist", new { id = item.Foster_Care_ID }, new { @style = "color: white", @class = "btn btn-danger" ,@title="Click to remove" })
+                                @Html.ActionLink("Remove", "removefromfostercarelist", new { id = item.Foster_Care_ID }, new { @style = "color: white", @class = "btn btn-danger", @title = "Click to remove" })
                             </div>
                         </div>
                     </div>
@@ -74,7 +79,7 @@
             }
         </table>
 
-        @Html.ActionLink("Save", "saveremovefostercare", null, new { @class = "btn btn-success" ,@title="Click to Save" });
+        @Html.ActionLink("Save", "saveremovefostercare", null, new { @class = "btn btn-success", @title = "Click to Save" });
     }
     else
     {

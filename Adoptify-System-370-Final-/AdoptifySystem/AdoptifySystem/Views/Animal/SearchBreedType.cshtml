@@ -28,7 +28,7 @@
       }
         <br />
         <table class="table table-bordered">
-            <tr class="thead-light">
+            <tr class="table-primary">
 
                 <th>
                     Animal Breed Name
@@ -70,16 +70,14 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("MaintainBreedType", "MaintainBreedType", new { id = item.Animal_Breed_ID }, new { @class = "btn btn-warning" ,@title="Click to Maintian Breed"}) |
-
-                            <button class="btn btn-info" data-toggle="modal" title="Select to Display Details" data-target="#@item.Animal_Breed_ID">More info </button> |
-                            @Html.ActionLink("Delete", "DeleteBreedType", new { id = item.Animal_Breed_ID }, new { @class = "btn btn-danger" ,@title="Click to Delete Breed"}) |
+                            <button class="btn btn-info" data-toggle="modal" title="Select to Display Details" data-target="#@item.Animal_Breed_ID">More info </button>
+                            @Html.ActionLink("Delete", "DeleteBreedType", new { id = item.Animal_Breed_ID }, new { @class = "btn btn-danger" ,@title="Click to Delete Breed"})
                         </td>
                     </tr>
                     <div class="modal fade" id="@item.Animal_Breed_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header table-primary">
                                     <h5 class="modal-title" id="exampleModalLongTitle">@item.Animal_Breed_Name</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>

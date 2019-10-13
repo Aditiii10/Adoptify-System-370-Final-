@@ -450,6 +450,7 @@ namespace AdoptifySystem.Controllers
                         {
                             db.Role_.Add(role);
                             db.SaveChanges();
+                            flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User Role");
                         }
                     }
                     else
@@ -457,7 +458,7 @@ namespace AdoptifySystem.Controllers
 
                         db.Role_.Add(role);
                         db.SaveChanges();
-
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User Role");
 
                     }
                     if (Subsystem_Id.Length > 0)
@@ -593,7 +594,7 @@ namespace AdoptifySystem.Controllers
                             dbrole.Role_Name = role.Role_Name;
 
                             db.SaveChanges();
-                            
+                            flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User Role");
                         }
                     }
                     
