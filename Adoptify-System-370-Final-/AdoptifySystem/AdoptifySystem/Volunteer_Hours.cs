@@ -27,12 +27,12 @@ namespace AdoptifySystem.Models
 
         [Display(Name = "Volunteer Start Time")]
         [Required]
-        public Nullable<System.DateTime> Vol_Start_Time { get; set; }
+        public System.DateTime Vol_Start_Time { get; set; }
 
 
         [Display(Name = "Volunteer End Time")]
         [Required]
-        public Nullable<System.DateTime> Vol_End_Time { get; set; }
+        public System.DateTime Vol_End_Time { get; set; }
 
 
         [Display(Name = "Volunteer")]

@@ -16,6 +16,8 @@ namespace AdoptifySystem.Controllers.Aditi
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public IEnumerable<SelectListItem> Titles { get; set; }
 
+     
+
 
         //public static Flexible myclass = new Flexible();
 
@@ -98,7 +100,7 @@ namespace AdoptifySystem.Controllers.Aditi
         }
 
         // GET: Adopters/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult View(int? id)
         {
             if (id == null)
             {
@@ -133,15 +135,14 @@ namespace AdoptifySystem.Controllers.Aditi
             {
               if (ModelState.IsValid)
                 {
-                    db.Adopters.Add(adopter);
-                    //Animal a = new Animal();
-                    //a.Animal_Gender = "test";
-                    //a.Animal_Status = adopter.Adopter_Employer.ToString();
 
-                    //db.Animals.Add(a);
-
-
-                    db.SaveChanges();
+                    
+                    {
+                        db.Adopters.Add(adopter);
+                        db.SaveChanges();
+                        //flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Adopter");
+                    }                   
+                    
 
                     return RedirectToAction("Index");
                 }

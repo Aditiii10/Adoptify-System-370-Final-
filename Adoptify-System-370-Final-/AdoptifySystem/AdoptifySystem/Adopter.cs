@@ -25,6 +25,10 @@ namespace AdoptifySystem.Models
             this.Foster_Care_Parent = new HashSet<Foster_Care_Parent>();
         }
 
+
+        public Adopter adopter { get; set; }
+        public Adoption adoption { get; set; }
+
         [Display(Name = "Adopter")]
         [Required]
         public int Adopter_ID { get; set; }
@@ -93,7 +97,7 @@ namespace AdoptifySystem.Models
         public Nullable<int> No_of_Children { get; set; }
 
 
-        [Display(Name = "Age of Children")]
+        [Display(Name = "How Many Children Under the Age of 12")]
         [Required]
         public Nullable<int> Age_of_Children { get; set; }
 
@@ -162,7 +166,7 @@ namespace AdoptifySystem.Models
         public Nullable<bool> Animal_Allowed { get; set; }
 
 
-        [Display(Name = "Will the Animal be Caged")]
+        [Display(Name = "Animal Captivity: Caged or Free")]
         [Required]
         public string Animal_Captivity { get; set; }
 

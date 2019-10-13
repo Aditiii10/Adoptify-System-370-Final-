@@ -615,6 +615,7 @@
     <Content Include="Views\Adopter_Contract\Details.cshtml" />
     <Content Include="Views\Adopter_Contract\Edit.cshtml" />
     <Content Include="Views\Adopter_Contract\Index.cshtml" />
+    <Content Include="Views\Adopters\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
