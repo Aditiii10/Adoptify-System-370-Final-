@@ -144,13 +144,13 @@
                     </div>
 
                     @*<div class="form-group">
-            @Html.LabelFor(model => model.Adopter_Status_ID, "Adopter_Status_ID", htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
-            <div class="col-md-10">
-                @Html.DropDownList("Adopter_Status_ID", null, htmlAttributes: new { @class = "form-control" })
-                <br />
-                @Html.ValidationMessageFor(model => model.Adopter_Status_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                            @Html.LabelFor(model => model.Adopter_Status_ID, "Adopter_Status_ID", htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("Adopter_Status_ID", null, htmlAttributes: new { @class = "form-control" })
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Adopter_Status_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Amount_of_Family_Memebers, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Amount of Family Members" })
@@ -161,7 +161,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.No_of_Children, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Number of Children" })
@@ -190,7 +190,7 @@
             </div>
 
 
-            
+
 
 
             <div class="tab-pane fade show" id="profile">
@@ -297,12 +297,12 @@
                 <div class="form-group" id="Sick_Animal_Diagnosis" style="width:50%; display:none;">
                     <div class="col-md-10">
                         <label class="col-md-10">Sick Animal Diagnosis</label>
-                        @Html.EditorFor(model => model.Sick_Animal_Diagnosis, new { htmlAttributes = new { @class = "form-control", name="Sick_Animal", id="Sick_Animal_D", placeholder="Enter Sick Animal Diagnosis" } })
+                        @Html.EditorFor(model => model.Sick_Animal_Diagnosis, new { htmlAttributes = new { @class = "form-control", name = "Sick_Animal", id = "Sick_Animal_D", placeholder = "Enter Sick Animal Diagnosis" } })
 
                     </div>
                 </div>
 
-                
+
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Animal_Sleep_Location, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Animal's Sleep Location" })
@@ -456,7 +456,11 @@
         else document.getElementById('Sick_Animal_Diagnosis').style.display = 'none';
 
     }
-    </script>
+</script>
+
+
+
+
 
 
 
@@ -464,7 +468,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWS2RFX5WP2nl4kXOGpCZwjHsYFEQp5iA&=false&libraries=places">
-</script>
+    </script>
     <script type="text/javascript">
 
         google.maps.event.addDomListener(window, 'load', function () {

@@ -17,6 +17,8 @@ namespace AdoptifySystem.Controllers.Aditi
 
         // GET: Volunteers
 
+        //public Flexible flex = new Flexible();
+
         public ActionResult SearchVolunteer()
         {
             ViewBag.errormessage = "";
@@ -112,7 +114,9 @@ namespace AdoptifySystem.Controllers.Aditi
             {
                 db.Volunteers.Add(volunteer);
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Successfully Saved New Volunteer";
                 return RedirectToAction("Index");
+                //flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Volunteer");
             }
 
             ViewBag.Title_ID = new SelectList(db.Titles, "Title_ID", "Title_Description", volunteer.Title_ID);
@@ -146,7 +150,9 @@ namespace AdoptifySystem.Controllers.Aditi
             {
                 db.Entry(volunteer).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["EditMessage"] = "Updated Volunteer Details Successfully";
                 return RedirectToAction("Index");
+                //flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Volunteer");
             }
             ViewBag.Title_ID = new SelectList(db.Titles, "Title_ID", "Title_Description", volunteer.Title_ID);
             return View(volunteer);
@@ -175,6 +181,7 @@ namespace AdoptifySystem.Controllers.Aditi
             Volunteer volunteer = db.Volunteers.Find(id);           
             db.SaveChanges();
             TempData["DeleteMessage"] = "Deleted Volunteer Successfully";
+            //flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Volunteer");
             return RedirectToAction("Index");
            
             

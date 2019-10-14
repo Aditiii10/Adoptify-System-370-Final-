@@ -15,6 +15,7 @@ namespace AdoptifySystem.Controllers.Aditi
     {
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
+        //public Flexible flex = new Flexible();
         // GET: Adopter_Relative
 
         public ActionResult SearchAdopterRelative()
@@ -107,6 +108,7 @@ namespace AdoptifySystem.Controllers.Aditi
             {
                 db.Adopter_Relative.Add(adopter_Relative);
                 db.SaveChanges();
+                //flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Adopter_Relative");
                 return RedirectToAction("Index");
             }
 
@@ -143,6 +145,7 @@ namespace AdoptifySystem.Controllers.Aditi
                 db.SaveChanges();
 
                 //TempData["AdopterRelativeMessage"] = "Adopter Relative Successfully Created";
+                //flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Adopter_Relative");
                 return RedirectToAction("Index");
             }
             ViewBag.Adopter_ID = new SelectList(db.Adopters, "Adopter_ID", "Adopter_Name", adopter_Relative.Adopter_ID);
@@ -183,6 +186,7 @@ namespace AdoptifySystem.Controllers.Aditi
                 db.Adopters.Remove(adopter_Relative.Adopter);
                 db.SaveChanges();
                 TempData["DeleteMessage"] = "Deleted Adopter Relative Successfully";
+                //flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Adopter_Relative");
                 return RedirectToAction("Index");
             }            
         }

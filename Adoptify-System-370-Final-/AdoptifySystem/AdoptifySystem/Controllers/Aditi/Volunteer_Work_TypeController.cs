@@ -15,6 +15,8 @@ namespace AdoptifySystem.Controllers.Aditi
     {
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
+        //public Flexible flex = new Flexible();
+
         // GET: Volunteer_Work_Type
         public ActionResult SearchVolunteerWorkType()
         {
@@ -107,6 +109,7 @@ namespace AdoptifySystem.Controllers.Aditi
             {
                 db.Volunteer_Work_Type.Add(volunteer_Work_Type);
                 db.SaveChanges();
+                //flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Volunteer_Work_Type");
 
                 return RedirectToAction("Index");
             }
@@ -140,6 +143,7 @@ namespace AdoptifySystem.Controllers.Aditi
             {
                 db.Entry(volunteer_Work_Type).State = EntityState.Modified;
                 db.SaveChanges();
+                //flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Volunteer_Work_Type");
                 return RedirectToAction("Index");
             }
             return View(volunteer_Work_Type);
@@ -168,6 +172,7 @@ namespace AdoptifySystem.Controllers.Aditi
             Volunteer_Work_Type volunteer_Work_Type = db.Volunteer_Work_Type.Find(id);
             db.Volunteer_Work_Type.Remove(volunteer_Work_Type);
             db.SaveChanges();
+            //flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Volunteer_Work_Type");
             return RedirectToAction("Index");
         }
 

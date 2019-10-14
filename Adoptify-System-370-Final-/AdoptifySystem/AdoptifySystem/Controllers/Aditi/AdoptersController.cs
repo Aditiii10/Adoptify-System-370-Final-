@@ -8,26 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
 using AdoptifySystem.Models;
+using AdoptifySystem.Models.nickeymodel;
+
+
 
 namespace AdoptifySystem.Controllers.Aditi
 {
     public class AdoptersController : Controller
     {
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
+        
         public IEnumerable<SelectListItem> Titles { get; set; }
 
-     
-
-
-        //public static Flexible myclass = new Flexible();
-
-
-        //public ActionResult OnGet()
-        //{
-
-        //    return Page();
-        //}
-        // GET: Adopters
+        //public Flexible flex = new Flexible();
 
         public ActionResult SearchAdopter()
         {
@@ -140,6 +133,7 @@ namespace AdoptifySystem.Controllers.Aditi
                     {
                         db.Adopters.Add(adopter);
                         db.SaveChanges();
+                        TempData["SuccessMessage"] = "Successfully Saved New Adopter";
                         //flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Adopter");
                     }                   
                     
@@ -154,6 +148,8 @@ namespace AdoptifySystem.Controllers.Aditi
             {
                 ViewBag.err = e.Message;
                 throw;
+                db.Adopters.Add(adopter);
+                db.SaveChanges();
             }
             
         }
@@ -186,14 +182,14 @@ namespace AdoptifySystem.Controllers.Aditi
             {
                 db.Entry(adopter).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["EditMessage"] = "Updated Adopter Details Successfully";
 
-                Audit_Log audit = new Audit_Log();
-                audit.Auditlog_DateTime = DateTime.Now;
-
-                db.Audit_Log.Add(audit);
+                
                 db.SaveChanges();
+                
 
                 return RedirectToAction("Index");
+                //flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Adopter");
             }
             ViewBag.Title_ID = new SelectList(db.Titles, "Title_ID", "Title_Description", adopter.Title_ID);
             ViewBag.Adopter_Status_ID = new SelectList(db.Adopter_Status, "Adopter_Status_ID", "Adopter_Status_Name", adopter.Adopter_Status_ID);
@@ -218,13 +214,26 @@ namespace AdoptifySystem.Controllers.Aditi
         // POST: Adopters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Deleteconfirmed(int id)
         {
+
             Adopter adopter = db.Adopters.Find(id);
-            db.Adopters.Remove(adopter);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            int count = adopter.Adoptions.Count();
+            if (count != 0)
+            {
+                TempData["DeleteErrorMessage"] = "You can not delete this Adopter as it is been used else where";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                db.Adopters.Remove(adopter);
+                db.SaveChanges();
+                TempData["DeleteMessage"] = "Deleted Adopter Successfully";
+                //flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Adopter");
+                return RedirectToAction("Index");
+            }
         }
+           
 
         protected override void Dispose(bool disposing)
         {
