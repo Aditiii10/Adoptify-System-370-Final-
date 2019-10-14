@@ -1,0 +1,87 @@
+﻿@model AdoptifySystem.Adopter
+
+@{
+    ViewBag.Title = "View";
+
+}
+
+
+@using (Html.BeginForm("View", "Adopters", FormMethod.Get))
+{
+    <br />
+    <h2 class="table-primary">View Adoptions</h2>
+
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#Details">Adopter Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Adoptions">Adoption History</a>
+        </li>
+    </ul>
+
+
+    <div id="myTabContent" class="tab-content">
+        <div class="box-body">
+            <div class="col-sm-6">
+                <h2 style="color:#00b1b1;">@Model.Title.Title_Description @Model.Adopter_Name @Model.Adopter_Surname</h2>
+            </div>
+            <div class="clearfix"></div>
+            <hr style="margin:5px 0 5px 0;">
+        </div>
+
+        <div id="Details" class="panel panel-default tab-pane fade show active">
+            <div class="panel-body">
+                <div class="box box-info">
+                    <div class="col-sm-6 col-xs-7 tital ">First Name:</div><div class="col-sm-7 col-xs-6 ">@Model.Adopter_Name</div>
+                    <div class="clearfix"></div>
+                    <br />
+                    <div class="bot-border"></div>
+                    <div class="col-sm-6 col-xs-7 tital ">Surname:</div><div class="col-sm-7"> @Model.Adopter_Surname </div>
+                    <div class="clearfix"></div>
+                    <br />
+                    <div class="bot-border"></div>
+                    <div class="col-sm-6 col-xs-7 tital ">Email:</div><div class="col-sm-7"> @Model.Adopter_Email </div>
+                    <div class="clearfix"></div>
+                    <br />
+                    <div class="bot-border"></div>
+
+                    @if (Model.Adoptions.Count > 0)
+                    {
+                        <div class="col-sm-6 col-xs-7 tital ">Total Adoptions Made:</div><div class="col-sm-7"> @Model.Adoptions.Count</div>
+                    }
+                    else
+                    {
+                        <br />
+                        <div class="col-sm-6 col-xs-7 tital ">No Adoptions Made</div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="Adoptions">
+            @if (Model.Adoptions.Count > 0)
+            {
+                foreach (var adopter in Model.Adoptions)
+                {
+                    <h4>Date of Adoption: @adopter.Adoption_Date </h4>
+                    <table class="table-bordered">
+                        <tr class="table-primary">
+                            <td>Adoption Status</td>
+                            <td>Adoption Animal</td>
+                        </tr>
+                        <tr class="table">
+                            <td>@adopter.Adoption_Status.Adopt_Status_Name </td>
+                            <td>@adopter.Animal.Animal_Name</td>
+                        </tr>
+                    </table>
+                    <br />
+                }
+            }
+            else
+            {
+                <p>No Adoptions Made</p>
+            }
+        </div>
+    </div>
+}

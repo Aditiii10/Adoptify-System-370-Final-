@@ -354,10 +354,10 @@
     <Compile Include="Controllers\BackupController.cs" />
     <Compile Include="Controllers\Cassie\Animal_Kennel_HistoryController.cs" />
     <Compile Include="Controllers\Cassie\Customer_EventController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\Cassie\Event_Controller.cs" />
     <Compile Include="Controllers\Cassie\Event_TypeController.cs" />
     <Compile Include="Controllers\Cassie\KennelsController.cs" />
-    <Compile Include="Controllers\Cassie\ReportsController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HCReportFileController.cs" />
@@ -372,6 +372,7 @@
     <Compile Include="Controllers\Nickey\FosterCarePeriodsController.cs" />
     <Compile Include="Controllers\Nickey\StockController.cs" />
     <Compile Include="Controllers\Nickey\TimerController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SMSMessageController.cs" />
     <Compile Include="Controllers\VetAppointmentController.cs" />
     <Compile Include="Controllers\VeterinariansController.cs" />
@@ -476,6 +477,14 @@
     <Compile Include="Models\nickeymodel\Innovation.cs" />
     <Compile Include="Models\patients.cs" />
     <Compile Include="Models\VetAppointReport.cs" />
+    <Compile Include="Models\ViewModel\AnimalVM.cs" />
+    <Compile Include="Models\ViewModel\AuditTrailVM.cs" />
+    <Compile Include="Models\ViewModel\ComServeVM.cs" />
+    <Compile Include="Models\ViewModel\EventCus.cs" />
+    <Compile Include="Models\ViewModel\Events.cs" />
+    <Compile Include="Models\ViewModel\EventSaleVM.cs" />
+    <Compile Include="Models\ViewModel\TimesheetVM.cs" />
+    <Compile Include="Models\ViewModel\VetAppVM.cs" />
     <Compile Include="MyModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -576,13 +585,6 @@
     <Compile Include="Vet_SearchVet_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\AnimalVM.cs" />
-    <Compile Include="ViewModel\AuditTrailVM.cs" />
-    <Compile Include="ViewModel\ComServeVM.cs" />
-    <Compile Include="ViewModel\EventCus.cs" />
-    <Compile Include="ViewModel\EventSaleVM.cs" />
-    <Compile Include="ViewModel\TimesheetVM.cs" />
-    <Compile Include="ViewModel\VetAppVM.cs" />
     <Compile Include="Views\Titles\TitlesController.cs" />
     <Compile Include="Views\Videoplayer\VideoplayerController.cs" />
     <Compile Include="Volunteer.cs">
@@ -806,7 +808,6 @@
     <Content Include="Views\Admin\SearchUserRole.cshtml" />
     <Content Include="Views\Adopters\Create.cshtml" />
     <Content Include="Views\Adopters\Delete.cshtml" />
-    <Content Include="Views\Adopters\Details.cshtml" />
     <Content Include="Views\Adopters\Edit.cshtml" />
     <Content Include="Views\Adopters\Index.cshtml" />
     <Content Include="Views\Donations\AddDonation.cshtml" />
@@ -853,16 +854,6 @@
     <Content Include="Views\VetAppointment\Delete.cshtml" />
     <Content Include="Views\VetAppointment\Edit.cshtml" />
     <Content Include="Views\VetAppointment\Index.cshtml" />
-    <Content Include="Views\Event_\Create.cshtml" />
-    <Content Include="Views\Event_\Delete.cshtml" />
-    <Content Include="Views\Event_\Details.cshtml" />
-    <Content Include="Views\Event_\Edit.cshtml" />
-    <Content Include="Views\Event_\Index.cshtml" />
-    <Content Include="Views\Event_Type\Create.cshtml" />
-    <Content Include="Views\Event_Type\Delete.cshtml" />
-    <Content Include="Views\Event_Type\Details.cshtml" />
-    <Content Include="Views\Event_Type\Edit.cshtml" />
-    <Content Include="Views\Event_Type\Index.cshtml" />
     <Content Include="Views\Animal\AddAnimalType.cshtml" />
     <Content Include="Views\Animal\AddBreedType.cshtml" />
     <Content Include="Views\Animal\AddTemporaryAnimal.cshtml" />
@@ -930,17 +921,25 @@
     <Content Include="Views\Titles\Delete.cshtml" />
     <Content Include="Views\Admin\ChangePassword.cshtml" />
     <Content Include="Views\Animal_Kennel_History\Create.cshtml" />
+    <Content Include="Views\Event_Type\Create.cshtml" />
+    <Content Include="Views\Event_Type\Delete.cshtml" />
+    <Content Include="Views\Event_Type\Details.cshtml" />
+    <Content Include="Views\Event_Type\Edit.cshtml" />
+    <Content Include="Views\Event_Type\Index.cshtml" />
+    <Content Include="Views\Event_\Create.cshtml" />
+    <Content Include="Views\Event_\Delete.cshtml" />
+    <Content Include="Views\Event_\Details.cshtml" />
+    <Content Include="Views\Event_\Edit.cshtml" />
+    <Content Include="Views\Event_\Index.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Reports\AnimalDetails.cshtml" />
-    <Content Include="Views\Reports\AuditTrail.cshtml" />
-    <Content Include="Views\Reports\AuditTrail1.cshtml" />
     <Content Include="Views\Reports\ComServe.cshtml" />
-    <Content Include="Views\Reports\ComServe1.cshtml" />
     <Content Include="Views\Reports\EmployeeTimesheet.cshtml" />
-    <Content Include="Views\Reports\EmployeeTimesheet1.cshtml" />
-    <Content Include="Views\Reports\EventSale1.cshtml" />
-    <Content Include="Views\Reports\VetAppointList.cshtml" />
-    <Content Include="Views\Reports\VetAppointList1.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\VetAppointList.cshtml" />
+    <Content Include="Views\Reports\AuditTrail.cshtml" />
+    <Content Include="Views\Adopters\View.cshtml" />
+    <Content Include="Views\VetAppointment\SearchVetApp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFilesAdopter\" />

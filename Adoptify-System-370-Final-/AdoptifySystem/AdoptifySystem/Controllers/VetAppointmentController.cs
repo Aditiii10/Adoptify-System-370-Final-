@@ -21,6 +21,68 @@ namespace AdoptifySystem.Controllers
             return View(vet_Appointment_Master.ToList());
         }
 
+        public ActionResult SearchVetApp()
+        {
+            ViewBag.errormessage = "";
+            List<Vet_Appointment_Master> vetApp = new List<Vet_Appointment_Master>();
+            try
+            {
+                vetApp = db.Vet_Appointment_Master.ToList();
+                if (vetApp.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(vetApp);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult SearchVetApp(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<Vet_Appointment_Master> Adopt = new List<Vet_Appointment_Master>();
+                    try
+                    {
+
+                        Adopt = db.Vet_Appointment_Master.Where(z => z.Veterinarian.Vet_Address.StartsWith(search) || z.Veterinarian.Vet_Name.StartsWith(search) || z.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("SearchVetApp", Adopt);
+                        }
+                        return View("SearchVetApp", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+
+
         // GET: VetAppointment/Details/5
         public ActionResult Details(int? id)
         {

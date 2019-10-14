@@ -1,17 +1,16 @@
-﻿using System;
+﻿using AdoptifySystem.Models.nickeymodel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using AdoptifySystem.Models.nickeymodel;
 
 namespace AdoptifySystem.Controllers.Zinhle
 {
     public class TimerController : Controller
     {
         public static Flexible flex = new Flexible();
-        static int sub = 13;
         // GET: Timer
         public ActionResult Index(User_ login)
         {
@@ -24,9 +23,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
             try
             {
-                
-              
-                    Timer time = new Timer();
+                Timer time = new Timer();
                 using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
                     time = db.Timers.FirstOrDefault();
@@ -36,7 +33,6 @@ namespace AdoptifySystem.Controllers.Zinhle
                     return View();
                 }
                 return View(time);
-               
             }
             catch (Exception)
             {
@@ -52,9 +48,7 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
-                
-              
-                    Timer time = new Timer();
+                Timer time = new Timer();
                 using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
                     time = db.Timers.FirstOrDefault();
@@ -64,7 +58,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                         db.Timers.Add(timer);
                         db.SaveChanges();
-
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Timer");
 
                     }
                     else
@@ -73,12 +67,11 @@ namespace AdoptifySystem.Controllers.Zinhle
                         time.Minutes = timer.Minutes;
                         time.Seconds = timer.Seconds;
                         db.SaveChanges();
-
+                        flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Timer");
                     }
 
                 }
                 return RedirectToAction("Index", "Home");
-              
             }
             catch (Exception)
             {
@@ -93,8 +86,7 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
-               
-                    using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
+                using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
                     var time = db.Timers.Select(z => new
                     {
@@ -105,7 +97,6 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                     return Json(time, JsonRequestBehavior.AllowGet);
                 }
-               
             }
             catch (Exception e)
             {

@@ -14,7 +14,6 @@ namespace AdoptifySystem.Controllers
         // GET: Stock
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public static Flexible flex = new Flexible();
-        static int sub = 4;
         public ActionResult AddStock()
         {
             List<Stock_Type> Stock_Types = new List<Stock_Type>();
@@ -22,15 +21,12 @@ namespace AdoptifySystem.Controllers
             List<Unit_Type> unit_Types = new List<Unit_Type>();
             try
             {
-                
-             
-                    Stock_Types = db.Stock_Type.ToList();
+                Stock_Types = db.Stock_Type.ToList();
                 Packaging_Type = db.Packaging_Type.ToList();
                 unit_Types = db.Unit_Type.ToList();
                 flex.Stock_Types = Stock_Types;
                 flex.packaging_Types = Packaging_Type;
                 flex.unit_Types = unit_Types;
-              
             }
             catch (Exception)
             {
@@ -53,6 +49,7 @@ namespace AdoptifySystem.Controllers
                     {
                         db.Stocks.Add(stock);
                         db.SaveChanges();
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
                     }
                     return RedirectToAction("AddStock");
                 }
@@ -76,15 +73,12 @@ namespace AdoptifySystem.Controllers
             try
             {
                 stock = db.Stocks.ToList();
-                
-               
-                    if (stock.Count == 0)
+                if (stock.Count == 0)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
                 return View(stock);
-           
-        }
+            }
             catch (Exception e)
             {
                 ViewBag.errormessage = "there was a network error: " + e.Message;
@@ -100,7 +94,7 @@ namespace AdoptifySystem.Controllers
                 List<Stock> stock = new List<Stock>();
                 try
                 {
-                    stock = db.searchstock(search).ToList();
+                    //stock = db.searchstock(search).ToList();
                     //donation_types = db.Donation_Type.Where(z => z.Donation_Type_Name.StartsWith(search)|| z.Donation_Type_Description.StartsWith(search) ).ToList();
                     if (stock.Count == 0)
                     {
@@ -125,11 +119,9 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                
-             
-                    if (id == null)
+                if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("SearchStock", "Stock");
                 }
                 List<Stock_Type> Stock_Types = new List<Stock_Type>();
                 List<Packaging_Type> Packaging_Type = new List<Packaging_Type>();
@@ -149,7 +141,7 @@ namespace AdoptifySystem.Controllers
                 }
                 flex.stock = stock_;
                 return View(flex);
-              
+
             }
             catch (Exception)
             {
@@ -176,6 +168,7 @@ namespace AdoptifySystem.Controllers
                     stock1.Stock_Description = stock2.Stock_Description;
                     db.Entry(stock1).CurrentValues.SetValues(stock2);
                     db.SaveChanges();
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
                 }
             }
             catch (Exception e)
@@ -183,7 +176,7 @@ namespace AdoptifySystem.Controllers
                 ViewBag.err = e.Message;
                 throw new Exception("Something Went Wrong!");
             }
-            return Content("");
+            return RedirectToAction("SearchStock", "Stock");
 
         }
 
@@ -191,9 +184,7 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                
-                
-                    if (id == null)
+                if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -215,8 +206,8 @@ namespace AdoptifySystem.Controllers
                 }
                 flex.stock = stock_;
                 return View(flex);
-           
-        }
+
+            }
             catch (Exception)
             {
                 throw new Exception("Something Went Wrong!");
@@ -244,6 +235,7 @@ namespace AdoptifySystem.Controllers
                     newstock.Stock_Quantity -= stock.Stock_Quantity;
                     db.Entry(oldstock).CurrentValues.SetValues(newstock);
                     db.SaveChanges();
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
                     return RedirectToAction("SearchStock", "Stock");
                 }
                 if (button == "Cancel")
@@ -287,6 +279,7 @@ namespace AdoptifySystem.Controllers
                     {
                         db.Stock_Type.Add(stock_type);
                         db.SaveChanges();
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock Type");
                     }
                 }
                 else
@@ -294,7 +287,7 @@ namespace AdoptifySystem.Controllers
 
                     db.Stock_Type.Add(stock_type);
                     db.SaveChanges();
-
+                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock Type");
 
                 }
                 //Session["Userid"] = stock_type.Stock_Type_ID;
@@ -312,8 +305,7 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                
-                    if (id == null)
+                if (id == null)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
@@ -364,6 +356,7 @@ namespace AdoptifySystem.Controllers
                         newstock.Stock_Quantity = new_stock;
                         db.Entry(oldstock).CurrentValues.SetValues(newstock);
                         db.SaveChanges();
+                        flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
                     }
                     return RedirectToAction("Index", "Home");
                 }
@@ -383,19 +376,15 @@ namespace AdoptifySystem.Controllers
         {
             ViewBag.errormessage = "";
             List<Stock_Type> stock_Types = new List<Stock_Type>();
-
             try
             {
-                
-                
-                    stock_Types = db.Stock_Type.ToList();
+                stock_Types = db.Stock_Type.ToList();
                 if (stock_Types.Count == 0)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
                 return View(stock_Types);
-            
-        }
+            }
             catch (Exception e)
             {
                 ViewBag.errormessage = "there was a network error: " + e.Message;
@@ -413,7 +402,7 @@ namespace AdoptifySystem.Controllers
                 List<Stock_Type> stock_type = new List<Stock_Type>();
                 try
                 {
-                    stock_type = db.searchstocktype(search).ToList();
+                    //stock_type = db.searchstocktype(search).ToList();
 
                     if (stock_type.Count == 0)
                     {
@@ -434,9 +423,7 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                
-           
-                    if (id == null)
+                if (id == null)
                 {
                     throw new Exception("Something Went Wrong!");
                 }
@@ -446,7 +433,6 @@ namespace AdoptifySystem.Controllers
                     throw new Exception("Something Went Wrong!");
                 }
                 return View(stock_Type);
-              
             }
             catch (Exception)
             {
@@ -471,7 +457,7 @@ namespace AdoptifySystem.Controllers
                     Stock_Type.Stock_Type_Name = stock_Type.Stock_Type_Name;
                     Stock_Type.Stock_Type_Description = stock_Type.Stock_Type_Description;
                     db.SaveChanges();
-
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock Type");
                 }
             }
             catch (Exception e)
@@ -486,9 +472,7 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                
-            
-                    if (id != 0)
+                if (id != 0)
                 {
                     Stock stoc = db.Stocks.Find(id);
                     int count = stoc.Donation_Line.Count();
@@ -501,12 +485,12 @@ namespace AdoptifySystem.Controllers
                     {
                         db.Stocks.Remove(stoc);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock");
                         return View("Index", "Home");
                     }
                 }
                 //need to send message that cant send message back
                 return View("SearchStock");
-               
             }
             catch (Exception)
             {
@@ -517,9 +501,8 @@ namespace AdoptifySystem.Controllers
         }
         public ActionResult Deletestocktype(int id)
         {
-            
-         
-                if (id != 0)
+
+            if (id != 0)
             {
                 Stock_Type stocky = db.Stock_Type.Find(id);
                 int count = stocky.Stocks.Count();
@@ -532,15 +515,15 @@ namespace AdoptifySystem.Controllers
                 {
                     db.Stock_Type.Remove(stocky);
                     db.SaveChanges();
+                    flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Stock Type");
                     return View("Index", "Home");
                 }
             }
             //need to send message that cant send message back
 
             return View("Searchstocktype");
-      
 
-}
+        }
 
     }
 }

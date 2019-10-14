@@ -62,16 +62,14 @@
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "MainatainAnimalType", new { id = item.Animal_Type_ID }, new { @class = "btn btn-warning", @title = "Click to Maintian Animal Type" }) |
-
-                        <button class="btn btn-info" data-toggle="modal" title="Select to Display Details" data-target="#@item.Animal_Type_ID">More info </button> |
-                        @Html.ActionLink("Delete", "DeleteAnimalType", new { id = item.Animal_Type_ID }, new { @class = "btn btn-danger", @title = "Click to Delete Animal Type" }) |
+                        <button class="btn btn-info" data-toggle="modal" title="Select to Display Details" data-target="#@item.Animal_Type_ID">More info </button>
+                        @Html.ActionLink("Delete", "DeleteAnimalType", new { id = item.Animal_Type_ID }, new { @class = "btn btn-danger", @title = "Click to Delete Animal Type" })
                     </td>
                 </tr>
                 <div class="modal fade" id="@item.Animal_Type_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header table-primary">
                                 <h5 class="modal-title" id="exampleModalLongTitle">@item.Animal_Type_Name</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -114,6 +112,12 @@
             if (successMessage != '')
                 alertify.error(successMessage);
         });
+
+          $(function () {
+                    var successMessage = '@TempData["DeleteMessage"]'
+                    if (successMessage != '')
+                        alertify.error(successMessage);
+                });
 
     </script>
 }

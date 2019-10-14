@@ -34,7 +34,7 @@ namespace AdoptifySystem.Controllers
         static Adoption adoption = new Adoption();
         static int Id = 0;
         public static Flexible flex = new Flexible();
-        static int sub = 8;
+    
         // GET: Adoptions
         public ActionResult Index()
         {
@@ -42,11 +42,7 @@ namespace AdoptifySystem.Controllers
 
             try
             {
-
-
-
                 return View(db.Adoptions.ToList());
-
 
             }
             catch (Exception ex)
@@ -54,10 +50,7 @@ namespace AdoptifySystem.Controllers
                 throw new Exception("Something Went Wrong!");
                 //return View("Error");
             }
-            finally
-            {
-
-            }
+        
 
 
         }
@@ -360,6 +353,7 @@ namespace AdoptifySystem.Controllers
 
                 if (adoption != null)
                 {
+                    
                     ViewBag.ID = id;
                     ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
                     ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old";
@@ -381,14 +375,16 @@ namespace AdoptifySystem.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CaptureAdoptionPayment(int? id, string Payment = "")
+        public ActionResult CaptureAdoptionPayment(int? id, /*DateTime? date,*/ string Payment = "")
         {
             try {
                 adoption = db.Adoptions.Find(id);//Display the animal details object
-
+           
 
                 if (adoption != null)
                 {
+                    
+
                     ViewBag.ID = id;
                     ViewBag.IDName = adoption.Adopter.Adopter_Name + " " + adoption.Adopter.Adopter_Surname + ", " + adoption.Adopter.Adopter_Email;
                     ViewBag.IDet = adoption.Animal.Animal_Name + ", " + adoption.Animal.Animal_Type.Animal_Type_Name + ", " + adoption.Animal.Animal_Breed.Animal_Breed_Name.ToString() + ", " + adoption.Animal.Animal_Age.ToString() + " Years old" + " " + adoption.Animal.Animal_Image;
@@ -399,6 +395,7 @@ namespace AdoptifySystem.Controllers
                         Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
                         if (aaa != null)
                         {
+                           
                             aaa.Adopt_Status_ID = 5;
                             //AdoptionPayment obj = db.AdoptionPayments.SingleOrDefault(x => x.Adoption_ID == id);
                             AdoptionPayment obj = new AdoptionPayment();
@@ -406,6 +403,7 @@ namespace AdoptifySystem.Controllers
                             obj.Adoption_ID = id;
                             obj.Animal_Type_ID = aaa.Animal.Animal_Type_ID;
                             obj.Payment_Type_ID = 1;
+                            //obj.PaymentDate = date.Value;
                             db.AdoptionPayments.Add(obj);
                             db.SaveChanges();
                         }
@@ -425,6 +423,7 @@ namespace AdoptifySystem.Controllers
                         Adoption aaa = db.Adoptions.FirstOrDefault(x => x.Adoption_ID == id);
                         if (aaa != null)
                         {
+                            //aaa.AdoptionPayment.PaymentDate = date.Value;
                             aaa.Adopt_Status_ID = 5;
                             //AdoptionPayment obj = db.AdoptionPayments.SingleOrDefault(x => x.Adoption_ID == id);
                             AdoptionPayment obj = new AdoptionPayment();
@@ -432,6 +431,7 @@ namespace AdoptifySystem.Controllers
                             obj.Adoption_ID = id;
                             obj.Animal_Type_ID = aaa.Animal.Animal_Type_ID;
                             obj.Payment_Type_ID = 2;
+                            //obj.PaymentDate = date.Value;
                             db.AdoptionPayments.Add(obj);
                             db.SaveChanges();
                         }
@@ -467,7 +467,7 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-            return View("Index");
+            return View("AdoptionPaymentIndex");
         }
         public ActionResult CollectAnimal(int? id)
         {
@@ -577,7 +577,9 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-            return Redirect("https://adoptifysystem.azurewebsites.net/Adoptions/Index");
+        //return Redirect("https://adoptifysystem.azurewebsites.net/Adoptions/Index");
+        return Redirect("http://localhost:55003/Adoptions/Index");
+        
 
 
         }
@@ -659,7 +661,8 @@ namespace AdoptifySystem.Controllers
             {
 
             }
-            return Redirect("https://adoptifysystem.azurewebsites.net/Adoptions/Index");
+            // return Redirect("https://adoptifysystem.azurewebsites.net/Adoptions/Index");
+            return Redirect("http://localhost:55003/Adoptions/Index");
 
         }
         public ActionResult ReturnIndex()
@@ -718,10 +721,7 @@ namespace AdoptifySystem.Controllers
                 throw new Exception("Something Went Wrong!");
                 //return View("Error");
             }
-            finally
-            {
-
-            }
+           
             //try
             //{
             //    if (searchBy == "Animal_Name")
@@ -891,12 +891,11 @@ namespace AdoptifySystem.Controllers
         public ActionResult Create()
         {
 
+                db.Database.CommandTimeout = 300; 
+                var statusID = new List<Animal>();
+
             try
             {
-
-
-                //db.Database.CommandTimeout = 300; 
-                var statusID = new List<Animal>();
                 adoptionsA = db.Animals.ToList();
 
                 animalsss = db.Animals.ToList();
@@ -920,10 +919,7 @@ namespace AdoptifySystem.Controllers
                 throw new Exception("Something Went Wrong!");
                 //return View("Error");
             }
-            finally
-            {
-
-            }
+            
             return View();
         }
 
@@ -936,13 +932,13 @@ namespace AdoptifySystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Adoption_ID,Adoption_Date,Adoption_Form,Payment_ID,Adopter_ID,Adopt_Status_ID,Animal_ID,Collection_Date")] Adoption adoption, string ADate = "")
         {
-            try
-            {
+            
                 var statusID = new List<Animal>();
                 adoptionsA = db.Animals.ToList();
 
 
-
+            try
+             {
                 if (ModelState.IsValid)
                 {
                     String year = ADate.Substring(0, 4);
@@ -1157,15 +1153,74 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                List<Adoption> list = new List<Adoption>();
                 if (search != null)
                 {
-                    
-                    list = db.Adoptions.Where(z => z.Adopter.Adopter_Name.StartsWith(search) || z.Animal.Animal_Name.StartsWith(search)).ToList();
-                   
+
+                    List<Adoption> Adopt = new List<Adoption>();
+                    try
+                    {
+
+                        Adopt = db.Adoptions.Where(z => z.Adopter.Adopter_Name.StartsWith(search) || z.Adopter.Adopter_Surname.StartsWith(search) || z.Adopter.Adopter_Email.StartsWith(search) || z.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("Index", Adopt);
+                        }
+                        return View("Index", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
                 }
-                
-                return View("Index", list);
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+        [HttpPost]
+        public ActionResult Index2(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<Adoption> Adopt = new List<Adoption>();
+                    try
+                    {
+
+                        Adopt = db.Adoptions.Where(z => z.Adopter.Adopter_Name.StartsWith(search) || z.Adopter.Adopter_Surname.StartsWith(search) || z.Adopter.Adopter_Email.StartsWith(search) || z.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("Index2", Adopt);
+                        }
+                        return View("Index2", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
             }
             catch (Exception)
             {
@@ -1174,6 +1229,332 @@ namespace AdoptifySystem.Controllers
             }
         }
 
-        
+        [HttpGet]
+        public ActionResult AdoptionPaymentIndex(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<AdoptionPayment> Adopt = new List<AdoptionPayment>();
+                    try
+                    {
+
+                        Adopt = db.AdoptionPayments.Where(z => z.Adoption.Adopter.Adopter_Name.StartsWith(search) || z.Adoption.Adopter.Adopter_Surname.StartsWith(search) || z.Adoption.Adopter.Adopter_Email.StartsWith(search) || z.Adoption.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("AdoptionPaymentIndex", Adopt);
+                        }
+                        return View("AdoptionPaymentIndex", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+
+        public ActionResult AdoptionPaymentHistory(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<AdoptionPayment> Adopt = new List<AdoptionPayment>();
+                    try
+                    {
+
+                        Adopt = db.AdoptionPayments.Where(z => z.Adoption.Adopter.Adopter_Name.StartsWith(search) || z.Adoption.Adopter.Adopter_Surname.StartsWith(search) || z.Payment_Type.Payment_Type_Name.StartsWith(search) || z.Adoption.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("AdoptionPaymentHistory", Adopt);
+                        }
+                        return View("AdoptionPaymentHistory", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CollectionIndex(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<Adoption> Adopt = new List<Adoption>();
+                    try
+                    {
+
+                        Adopt = db.Adoptions.Where(z => z.Adopter.Adopter_Name.StartsWith(search) || z.Adopter.Adopter_Surname.StartsWith(search) || z.Adopter.Adopter_Email.StartsWith(search) || z.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("CollectionIndex", Adopt);
+                        }
+                        return View("CollectionIndex", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult HomeCheckHistory(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<HomeCheck> Adopt = new List<HomeCheck>();
+                    try
+                    {
+
+                        Adopt = db.HomeChecks.Where(z => z.Adoption.Adopter.Adopter_Name.StartsWith(search) || z.Adoption.Adopter.Adopter_Surname.StartsWith(search) || z.Employee.Emp_Name.StartsWith(search) || z.Employee.Emp_Surname.StartsWith(search) || z.Adoption.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("HomeCheckHistory", Adopt);
+                        }
+                        return View("HomeCheckHistory", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult HomeCheckIndex(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<HomeCheck> Adopt = new List<HomeCheck>();
+                    try
+                    {
+
+                        Adopt = db.HomeChecks.Where(z => z.Adoption.Adopter.Adopter_Name.StartsWith(search) || z.Adoption.Adopter.Adopter_Surname.StartsWith(search) || z.Adoption.Adopter.Adopter_Email.StartsWith(search) || z.Adoption.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("HomeCheckIndex", Adopt);
+                        }
+                        return View("HomeCheckIndex", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+        [HttpGet]
+        public ActionResult HomeCheckReportIndex(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<HomeCheckReport> Adopt = new List<HomeCheckReport>();
+                    try
+                    {
+
+                        Adopt = db.HomeCheckReports.Where(z => z.Adoption.Adopter.Adopter_Name.StartsWith(search) || z.Adoption.Adopter.Adopter_Surname.StartsWith(search) || z.Adoption.Adopter.Adopter_Email.StartsWith(search) || z.Adoption.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("HomeCheckReportIndex", Adopt);
+                        }
+                        return View("HomeCheckReportIndex", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult HomeCheckReportHistory(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<HomeCheckReport> Adopt = new List<HomeCheckReport>();
+                    try
+                    {
+
+                        Adopt = db.HomeCheckReports.Where(z => z.Adoption.Adopter.Adopter_Name.StartsWith(search) || z.Adoption.Adopter.Adopter_Surname.StartsWith(search) || z.Adoption.Adopter.Adopter_Email.StartsWith(search) || z.Adoption.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("HomeCheckReportHistory", Adopt);
+                        }
+                        return View("HomeCheckReportHistory", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult ReturnIndex(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<Adoption> Adopt = new List<Adoption>();
+                    try
+                    {
+
+                        Adopt = db.Adoptions.Where(z => z.Adopter.Adopter_Name.StartsWith(search) || z.Adopter.Adopter_Surname.StartsWith(search) || z.Adopter.Adopter_Email.StartsWith(search) || z.Animal.Animal_Name.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("Index", Adopt);
+                        }
+                        return View("Index", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+
     }
 }

@@ -99,6 +99,9 @@
 </div>
 
 <script>
+        document.getElementById("TreatmentStartDate").min = new Date().getFullYear() + "-" +  parseInt(new Date().getMonth() + 1 ) + "-" + new Date().getDate()
+        document.getElementById("TreatmentEndDate").min = new Date().getFullYear() + "-" +  parseInt(new Date().getMonth() + 1 ) + "-" + new Date().getDate()
+
      var today = new Date();
 
     document.getElementById("TreatmentStartDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);

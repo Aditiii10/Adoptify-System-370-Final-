@@ -25,6 +25,7 @@ namespace AdoptifySystem
         public Nullable<int> Animal_Type_ID { get; set; }
         public Nullable<int> Payment_Type_ID { get; set; }
         public Nullable<decimal> Adoption_Fee { get; set; }
+        public Nullable<System.DateTime> PaymentDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Adoption> Adoptions { get; set; }

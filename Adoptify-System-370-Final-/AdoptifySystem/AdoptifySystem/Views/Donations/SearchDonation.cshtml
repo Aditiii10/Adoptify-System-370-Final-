@@ -66,7 +66,7 @@
                         @Html.DisplayFor(modelItem => item.Donation_Date)
                     </td>
                     <td>
-                        @Html.ActionLink("View", "ViewDonation", new { id = item.Donation_ID }, new { @class = "btn btn-success", @title = "Click to Display Details" })
+                        @*@Html.ActionLink("View", "ViewDonation", new { id = item.Donation_ID }, new { @class = "btn btn-success", @title = "Click to Display Details" })*@
 
                         <button class="btn btn-info" title="Select to Display Details" data-toggle="modal" data-target="#@item.Donation_ID">More info </button>
                         @* @Html.ActionLink("Delete", "Delete", new { id = item.Donation_ID }, new { @class = "btn btn-danger" }) |*@

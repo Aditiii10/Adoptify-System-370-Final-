@@ -17,77 +17,93 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
-                <h4>Adoption Payment Details</h4>
-                <hr />
-                <div>
-                    <label>Adoption ID: </label> <label style="color:red">@ViewBag.ID</label>
-                </div>
-                <div>
-                    <label>Adopter's Details: </label> <label style="color:red">@ViewBag.IDName</label>
-                </div>
-                <div>
-                    <label>Animal Details: </label> <label style="color:red">@ViewBag.IDet</label>
-                </div>
-                <hr />
-                <br />
+<div class="form-horizontal">
+    <h4>Adoption Payment Details</h4>
+    <hr />
+    <div>
+        <label>Adoption ID: </label> <label style="color:red">@ViewBag.ID</label>
+    </div>
+    <div>
+        <label>Adopter's Details: </label> <label style="color:red">@ViewBag.IDName</label>
+    </div>
+    <div>
+        <label>Animal Details: </label> <label style="color:red">@ViewBag.IDet</label>
+    </div>
+    <hr />
+    <br />
 
-                <div>
-                    <label style="color:darkcyan; font-size:200%" title = "Adoption Fee that the Adopter should pay">Animal Adoption Fee : R</label> <label style="color:darkcyan; font-size:200%">@ViewBag.Price</label>
-                </div>
-                <br />
-                <div>
-                    <label title = "Select Payment Type">Payment Type: </label> <select required id="Payment" name="Payment" class="vn form-control" onclick="(this)">
-                        <option></option>
-                        <option id="Payment" value="Cash" name="Payment">Cash</option>
-                        <option id="Payment" value="EFT" name="Payment">EFT</option>
+    <div>
+        <label style="color:darkcyan; font-size:200%" title="Adoption Fee that the Adopter should pay">Animal Adoption Fee : R</label> <label style="color:darkcyan; font-size:200%">@ViewBag.Price</label>
+    </div>
+    <br />
+    <div class="form-group">
+        <label class="control-label col-md-2" title="Select Adoption Date">Select Adoption Date</label>
+        <div class="col-md-10">
+            <input type="date" name="PaymentDate" id="PaymentDate" class="form-control" required="required" />
+            @Html.ValidationMessageFor(model => model.AdoptionPayments, "", new { @class = "text-danger", required = "required" })
+        </div>
+    </div>
+    <div>
+        <label title="Select Payment Type">Payment Type: </label> <select required id="Payment" name="Payment" class="vn form-control" onclick="(this)">
+            <option></option>
+            <option id="Payment" value="Cash" name="Payment">Cash</option>
+            <option id="Payment" value="EFT" name="Payment">EFT</option>
 
-                    </select>
+        </select>
 
-                </div>
-                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Adoption_ID, "Adoption_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("Adoption_ID", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Adoption_ID, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
-                @*<div class="form-group">
-                    @Html.LabelFor(model => model.Animal_Type_ID, "Animal_Type_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("Animal_Type_ID", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Animal_Type_ID, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
-                @*<div class="form-group">
-                    <label>Payment_Type</label>
-                    <div class="col-md-10">
-
-                    </div>
-                </div>*@
-
-                @*<div class="form-group">
-                    @Html.LabelFor(model => model.Adoption_Fee, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Adoption_Fee, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Adoption_Fee, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-                <br />
-                <br />
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        @Html.ActionLink("Back", "AdoptionPaymentIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
-                        <input type="submit" value="Pay" class="btn btn-success" style="float:right" title = "Click to Make Payment"/>
-                    </div>
-                </div>
+    </div>
+    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Adoption_ID, "Adoption_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Adoption_ID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Adoption_ID, "", new { @class = "text-danger" })
             </div>
+        </div>*@
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Animal_Type_ID, "Animal_Type_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Animal_Type_ID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Animal_Type_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    @*<div class="form-group">
+            <label>Payment_Type</label>
+            <div class="col-md-10">
+
+            </div>
+        </div>*@
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Adoption_Fee, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Adoption_Fee, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Adoption_Fee, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+    <br />
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Back", "AdoptionPaymentIndex", "Adoptions", null, new { @class = "btn btn-primary glyphicon glyphicon-circle-arrow-left", @Title = "Click to go Back" })
+            <input type="submit" value="Pay" class="btn btn-success" style="float:right" title="Click to Make Payment" />
+        </div>
+    </div>
+</div>
         }
 
         <div>
           
         </div>
     </div>
+
+<script>
+    //Disable Previous day from current day
+    document.getElementById("PaymentDate").min = new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate()
+
+    //Default to current date
+    var today = new Date();
+    document.getElementById("PaymentDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+</script>

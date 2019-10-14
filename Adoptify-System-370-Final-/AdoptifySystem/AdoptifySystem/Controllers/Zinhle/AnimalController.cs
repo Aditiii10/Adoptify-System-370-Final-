@@ -16,6 +16,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         static public Innovation innovation = new Innovation();
+        static public Flexible flex = new Flexible();
         [HttpGet]
         public JsonResult animalbreed(int categoryID)
         {
@@ -88,6 +89,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     animal.Animal_Status_ID = status.Animal_Status_ID;
                     db.Animals.Add(animal);
                     db.SaveChanges();
+                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal");
                 }
                 if (Cross_Breed == "True")
                 {
@@ -212,7 +214,7 @@ namespace AdoptifySystem.Controllers.Zinhle
             if (!(search == ""))
             {
                 db.Database.CommandTimeout = 300;
-                var animallist = db.Animals.Where(z => z.Animal_Name.Equals(search)).ToList();
+                var animallist = db.Animals.Where(z => z.Animal_Name.StartsWith(search)).ToList();
                 if (animallist == null)
                 {
                     return RedirectToAction("SearchAnimal");
@@ -264,6 +266,29 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
+                List<Animal> animalist = new List<Animal>();
+                animalist = db.Animals.ToList();
+                if (animalist != null)
+                {
+                    foreach (var item in animalist)
+                    {
+                        if (animal.Animal_Name == item.Animal_Name &&
+                        animal.Animal_Coat == item.Animal_Coat &&
+                        animal.Animal_Age == item.Animal_Age &&
+                        animal.Animal_Description == item.Animal_Description &&
+                        animal.Animal_Sterilization == item.Animal_Sterilization &&
+                        animal.Animal_Castration == item.Animal_Castration &&
+                        animal.Animal_Size == item.Animal_Size &&
+                        animal.Animal_Gender == item.Animal_Gender)
+                        {
+                            if (item.Animal_ID != animal.Animal_ID)
+                            {
+                                return Content("");
+                            }
+
+                        }
+                    }
+                }
                 Animal searchanimal = db.Animals.Find(animal.Animal_ID);
 
                 searchanimal.Animal_Name = animal.Animal_Name;
@@ -291,6 +316,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
 
                 db.SaveChanges();
+                flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal");
                 if (micro != null)
                 {
                     if (searchanimal.Microchips.Count != 0 || searchanimal.Microchips != null)
@@ -358,6 +384,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                         an.Price = Convert.ToInt32(price);
                         db.Animal_Type.Add(an);
                         db.SaveChanges();
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal Type");
                         TempData["SuccessMessage"] = "Successfully Stored";
                     }
                 }
@@ -366,7 +393,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                     db.Animal_Type.Add(an);
                     db.SaveChanges();
-
+                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal Type");
                     TempData["SuccessMessage"] = "Successfully Stored";
                 }
                 return Content("");
@@ -408,6 +435,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     searchaniaml.Animal_Type_Name = animal_Type.Animal_Type_Name;
                     searchaniaml.Price = animal_Type.Price;
                     db.SaveChanges();
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal Type");
                 }
             }
             catch (Exception e)
@@ -507,6 +535,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         db.Animal_Breed.Add(animal_breed);
                         db.SaveChanges();
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Breed Type");
                     }
                 }
                 else
@@ -514,7 +543,7 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                     db.Animal_Breed.Add(animal_breed);
                     db.SaveChanges();
-
+                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Breed Type");
 
                 }
 
@@ -567,6 +596,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     searchbreed.Animal_Breed_Description = animal_breed.Animal_Breed_Description;
                     searchbreed.Animal_Type_ID = animal_breed.Animal_Type_ID;
                     db.SaveChanges();
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Breed Type");
                 }
             }
             catch (Exception e)
@@ -602,8 +632,9 @@ namespace AdoptifySystem.Controllers.Zinhle
             if (id != null)
             {
                 Animal_Breed breeds = db.Animal_Breed.Find(id);
+                int ani = breeds.Animals.Count();
                 int count = breeds.CrossBreeds.Count();
-                if (count != 0)
+                if (count != 0 || ani != 0)
                 {
                     //you cant delete becasue its referenced to another table
                     ViewBag.err = "You can not delete this";
@@ -613,6 +644,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 {
                     db.Animal_Breed.Remove(breeds);
                     db.SaveChanges();
+                    flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Breed Type");
                     return RedirectToAction("SearchBreedType");
                 }
             }
@@ -637,6 +669,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         //you cant delete becasue its referenced to another table
                         ViewBag.err = "You can not delete this";
+                        TempData["DeleteErrorMessage"] = "You can not delete this Animal as it is been used else where!!";
                         return RedirectToAction("SearchAnimal");
                     }
                     else
@@ -646,6 +679,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                             foreach (var item in animal.Microchips)
                             {
                                 db.Microchips.Remove(item);
+                                TempData["DeleteErrorMessage"] = "You can not delete this Animal as it is been used else where!!";
                                 db.SaveChanges();
                             }
 
@@ -655,11 +689,13 @@ namespace AdoptifySystem.Controllers.Zinhle
                             foreach (var item in animal.CrossBreeds)
                             {
                                 db.CrossBreeds.Remove(item);
+                                TempData["DeleteErrorMessage"] = "You can not delete this Animal as it is been used else where!!";
                                 db.SaveChanges();
                             }
                         }
                         db.Animals.Remove(animal);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal");
                         return RedirectToAction("SearchAnimal");
                     }
                 }
@@ -683,12 +719,14 @@ namespace AdoptifySystem.Controllers.Zinhle
                 {
                     //you cant delete becasue its referenced to another table
                     ViewBag.err = "You can not delete this";
+                    TempData["DeleteErrorMessage"] = "You can not delete this Animal Type as it is been used else where!!";
                     return RedirectToAction("SearchAnimalType");
                 }
                 else
                 {
                     db.Animal_Type.Remove(animal_type);
                     db.SaveChanges();
+                    flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal Type");
                     return RedirectToAction("SearchAnimalType");
                 }
             }
@@ -729,6 +767,8 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         //you cant delete becasue its referenced to another table
                         ViewBag.err = "You can not delete this";
+
+                        TempData["DeleteErrorMessage"] = "You can not delete this Animal as it is been used else where!!";
                         return RedirectToAction("SearchAnimal");
                     }
                     else
@@ -752,6 +792,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                         }
                         db.Animals.Remove(animal);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal");
                         return RedirectToAction("SearchAnimal");
                     }
                 }

@@ -4,19 +4,24 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div id="main">
-    <h2>Create</h2>
+    <br />
+    <div class="" style="text-align:center;padding-left:120px">
+        <div class="col-sm-10" style='background-color: #2ba6cb'>
+            <h1 style="color:white">Add Volunteer</h1>
+        </div>
+    </div>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Volunteer</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.Vol_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Vol_Name, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Volunteer Name" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Vol_Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Volunteer Name" } })
                     <br />
@@ -25,7 +30,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Vol_Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Vol_Surname, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Volunteer Surname" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Vol_Surname, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Volunteer Surname" } })
                     <br />
@@ -34,7 +39,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Vol_Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Vol_Email, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Volunteer Email" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Vol_Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Volunteer Email" } })
                     <br />
@@ -43,7 +48,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Vol_ContactNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+                @Html.LabelFor(model => model.Vol_ContactNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Volunteer Contact Number" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Vol_ContactNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Volunteer Contact Number" } })
                     <br />
@@ -52,7 +57,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Vol_Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Vol_Address, htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Volunteer Address" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Vol_Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Volunteer Address" } })
                     <br />
@@ -61,7 +66,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Vol_Emergency_ContactName, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+                @Html.LabelFor(model => model.Vol_Emergency_ContactName, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Volunteer Emergency Contact Name" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Vol_Emergency_ContactName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Volunteer Emergency Contact Name" } })
                     <br />
@@ -70,7 +75,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Vol_Emergency_ContactNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;" })
+                @Html.LabelFor(model => model.Vol_Emergency_ContactNumber, htmlAttributes: new { @class = "control-label col-md-2", style = "display:inline;", @Title = "Enter Volunteer Emergency Contact Number" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Vol_Emergency_ContactNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Volunteer Emergency Contact NumberS" } })
                     <br />
@@ -79,7 +84,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Title_ID, "Title_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Title_ID, "Volunteer Title", htmlAttributes: new { @class = "control-label col-md-2", @Title = "Enter Volunteer Title" })
                 <div class="col-md-10">
                     @Html.DropDownList("Title_ID", null, htmlAttributes: new { @class = "form-control", placeholder = "Enter Volunteer Title" })
                     <br />
@@ -89,13 +94,32 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <br />
+                    @Html.ActionLink("Back to List", "Index", "Adopters", new { @class = "btn btn-primary", style = "float:right", @Title = "Click to go Back" })
+                    <input type="submit" value="Save" class="btn btn-success" style="float:right" title="Click to Save Volunteer" />
+                    <br />
                 </div>
             </div>
         </div>
     }
+</div>
 
-    <div style="color:red">
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWS2RFX5WP2nl4kXOGpCZwjHsYFEQp5iA&=false&libraries=places">
+    </script>
+    <script type="text/javascript">
+        google.maps.event.addDomListener(window, 'load', function () {
+            var options = {
+                types: ['(regions)'],
+                componentRestrictions: { country: "za" }
+            };
+            var input = document.getElementById('Vol_Address');
+            var places = new google.maps.places.Autocomplete(input, options);
+
+        });
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

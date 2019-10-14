@@ -14,18 +14,18 @@ namespace AdoptifySystem.Controllers
     public class VeterinariansController : Controller
     {
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
-        public static Flexible flex = new Flexible();
-        static int sub = 9;
+       
         // GET: Veterinarians
         public ActionResult Index(string searchBy, string search)
         {
           
             try {
                 //db.VetSearch(searchBy).ToList();
-                if (searchBy == "Vet_Name")
-                    return View(db.Veterinarians.Where(x => x.Vet_Name == search || search == null).ToList());
-                else
-                    return View(db.Veterinarians.Where(x => x.Vet_Address == search || search == null).ToList());
+                //    if (searchBy == "Vet_Name")
+                //        return View(db.Veterinarians.Where(x => x.Vet_Name == search || search == null).ToList());
+                //    else
+                //        return View(db.Veterinarians.Where(x => x.Vet_Address == search || search == null).ToList());
+                return View(db.Veterinarians.ToList());
             }
             catch (Exception err)
             {
@@ -33,6 +33,48 @@ namespace AdoptifySystem.Controllers
             }
             return View(db.Veterinarians.ToList());
         }
+
+        [HttpGet]
+        public ActionResult SearchVet(string search)
+        {
+            try
+            {
+                if (search != null)
+                {
+
+                    List<Veterinarian> Adopt = new List<Veterinarian>();
+                    try
+                    {
+
+                        Adopt = db.Veterinarians.Where(z => z.Vet_Address.StartsWith(search) || z.Vet_Name.StartsWith(search) || z.Vet_Tel.StartsWith(search) || z.Vet_Emial.StartsWith(search)).ToList();
+                        if (Adopt.Count == 0)
+                        {
+                            ViewBag.err = "No results found";
+                            return View("Index", Adopt);
+                        }
+                        return View("Index", Adopt);
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.err = "there was a network error: " + e.Message;
+                        throw new Exception("Something Went Wrong!");
+                    }
+                }
+                else
+                {
+
+                }
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Something is wrong");
+            }
+        }
+
 
         // GET: Veterinarians/Details/5
         public ActionResult Details(int? id)

@@ -3,19 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AdoptifySystem.Models.nickeymodel;
-using AdoptifySystem;
-using AdoptifySystem.Models;
-
 
 namespace AdoptifySystem.Controllers.Zinhle
 {
-    
     public class FosterCarePeriodsController : Controller
     {
-        static int sub = 13;
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
-        public static Flexible flex = new Flexible();
         // GET: FosterCareDates
         public ActionResult Index()
         {
@@ -24,14 +17,10 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         public ActionResult AddFosterCareDates()
         {
-
             try
             {
-                
-                
-                    return View();
-           
-        }
+                return View();
+            }
             catch (Exception e)
             {
 
@@ -44,15 +33,12 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
-
                 if (time == null)
                 {
                     return View();
                 }
                 else
                 {
-
-
                     db.FosterCareDurations.Add(time);
                     db.SaveChanges();
 
@@ -72,16 +58,12 @@ namespace AdoptifySystem.Controllers.Zinhle
             try
             {
                 FosterCareDuration fd = db.FosterCareDurations.Where(z => z.FosterCareDuration_Id == id).FirstOrDefault();
-                
-              
-                    if (fd == null)
+                if (fd == null)
                 {
                     return RedirectToAction("SearchFosterCareDates");
                 }
 
                 return View(fd);
-               
-
             }
             catch (Exception e)
             {
@@ -137,16 +119,12 @@ namespace AdoptifySystem.Controllers.Zinhle
             try
             {
                 List<FosterCareDuration> Dates = new List<FosterCareDuration>();
-
-                
-               
-                    using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
+                using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
                 {
                     Dates = db.FosterCareDurations.ToList();
 
                 }
                 return View(Dates);
-                
             }
             catch (Exception e)
             {

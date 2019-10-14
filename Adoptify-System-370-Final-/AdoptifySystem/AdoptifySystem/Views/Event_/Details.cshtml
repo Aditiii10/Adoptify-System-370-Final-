@@ -4,81 +4,88 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="main">
-    <h2>Details</h2>
 
-    <div>
-        <h4>Event_</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Event_Name)
-            </dt>
+<h2>Event Details:</h2>
 
-            <dd>
-                @Html.DisplayFor(model => model.Event_Name)
-            </dd>
+<div>
+    <h4>Event Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Event Name:
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Event_StartTime)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event_Name)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Event_StartTime)
-            </dd>
+        <dt>
+            Start Time:
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Event_EndTime)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event_Start)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Event_EndTime)
-            </dd>
+        <dt>
+            Date:
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Event_Guest_Number)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event_Date)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Event_Guest_Number)
-            </dd>
+        <dt>
+            Event Status:
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Event_Ticket_Price)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event_Status)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Event_Ticket_Price)
-            </dd>
+        <dt>
+            Ticket Price:
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Event_Location)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event_Ticket_Price)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Event_Location)
-            </dd>
+        <dt>
+           Location:
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Event_Description)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event_Location)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Event_Description)
-            </dd>
+        <dt>
+            Description:
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Event_Type.Event_Type_Name)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event_Description)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Event_Type.Event_Type_Name)
-            </dd>
+        <dt>
+            Ticket Available:
+        </dt>
 
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Event_ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-    </div>
+        <dd>
+            @Html.DisplayFor(model => model.TicketAvailable)
+        </dd>
+
+        <dt>
+            Even Type:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event_Type.Event_Type_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Update", "Edit", new { id = Model.Event_ID }) |
+    @Html.ActionLink("Back", "Index")
+</p>

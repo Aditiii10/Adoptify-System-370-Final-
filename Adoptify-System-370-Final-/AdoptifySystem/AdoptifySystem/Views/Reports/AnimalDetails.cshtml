@@ -1,103 +1,93 @@
-﻿@model IEnumerable<AdoptifySystem.ViewModel.AnimalVM>
+﻿
 @{
     ViewBag.Title = "AnimalDetails";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<!--This is the xmls <html> tag injection-->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<h2>Animal Details</h2>
 
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-</head>
-<body>
-    <!--Main Content-->
-  
-    <div id="PrintContent">
-        <!--Gave div id a name-->
 
-        <section class="section">
-            <h1 class="section-header">
-                Employee Timesheet Report
-            </h1>
-
-            <div class="section-body">
-                <div class="row" id="dvContainer">
-                    <div class="col-md-20">
-                        <div class="card">
-                            <table>
-                                <thead>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Entry Date</th>
-                                        <th scope="col">Animal Name</th>
-                                        <th scope="col">Gender </th>
-                                        <th scope="col">_Sterilization</th>
-                                        <th scope="col">Castration </th>
-                                        <th scope="col"> Status_Name</th>
-                                        <th scope="col"> Castration </th>
-                                        <th scope="col">Kennel Name</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (ViewBag.Sheets != null)
-                                    {
-                                        foreach (var item in ViewBag.Sheets)
-                                        {
-                                    <tr>
-                                        <td>@item.Animal_Entry_Date</td>
-                                        <td>@item.Animal_Name</td>
-                                        <td>@item.Animal_Gender </td>
-                                        <td>@item.Animal_Sterilizatione</td>
-                                        <td>@item.Animal_Status_Name</td>
-                                        <td>@item.Animal_Castration </td>
-                                        <td>@item.Kennel_Namee/td>
-                                                                            
-                                    </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="criteria">
+    <div class="btn-group">
+        <button type="button" id="btnTo" value="Generate" class="btn btn-primary">Generate</button>
+        <button type="button" class="btn btn-dark" id="btnPrint" style="float:right" onclick="printContent('Appointment');">Print</button>
+        @*<button type="button" class="btn btn-dark" onclick="window.location.href(@Url.Action("ExportAnimalDetails","Reports"))">Export PDF</button>*@
     </div>
 
-    <input type="button" id="btnPrint" name="btnPrint" class="btn-primary" value="print" onclick="printWebPart() ;">
+</div>
+<hr style="background-color:dodgerblue" />
+<div id="Appointment" style="border-radius:20px;background-color:rgb(0, 138, 255)">
+    <h2 style="color:white"><span style="text-align:center">Outstanding Neutered Animals</span></h2>
+    <table class="table table-striped table-dark" id="tblAdded">
+        <thead>
+            <tr>
+                <th>Entry Date</th>
+                <th>Animal Name</th>
+                <th>Animal Type</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Castration</th>
+                <th>Sterilazation</th>
+                <th>Kennel Name</th>
+            </tr>
+        </thead>
+        <tbody id="table1">
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
     <script>
-        function printWebPart() {
-            var CSSContent = '';
-            var sOption = "toolbar=yes,location=no,directories=yes,menubar=yes,scrollbars=yes,left=100,top=25";
-            //CSSContent = CSSContent + "<title>" + title + "</title>";
-            CSSContent = "<style type='text/css'>";
-            CSSContent = CSSContent + "";// put your css code here compress or direct link
-            CSSContent = CSSContent + "</style>";
-            var re1 = /class=Btn/gi;
-            var re2 = /class=print/gi;
-            var innerContent = $("#PrintContent").html();
-            var html = "<HTML>\n<HEAD>\n" +
-                "\n" + CSSContent +
-                "\n</HEAD>\n<BODY>" +
-                "\n<table border='1'><tr><td> " +
-                innerContent +
-                "\n</td></tr></table>" +
-                "\n</BODY>\n</HTML>";
-            var printWP = window.open('', '', sOption);
-            printWP.document.open();
-            printWP.document.write(html);
-            //  printWP.focus();
+        $(document).ready(function () {
+            $("#btnPrint").attr("disabled", true);
+            $('#btnTo').click(function () {
+                $.ajax({
+                    url: '/Reports/AnimalDetails1',
+                    type: "Post",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: "",
+                    success: function (data) {
+                        $('#tblAdded').find("tbody").empty();
+                        console.log(data.aName);
+                        var i = 0;
+                        var length = data.aName.length;
+                        while (i < length) {
 
-            // printWP.document.close();
-            printWP.print();
-            //  printWP.close();
-        }
-
+                            var rowS = "<tr><td>" + data.aDate[i] + "</td><td>" + data.aName[i] + "</td><td>" + data.aType[i] + "</td><td>" + + data.aAge[i] + "</td><td>" + + data.aGender[i] + "</td><td>" +  data.aCast[i] + "</td><td>" + data.aSter[i] + "</td><td>" + data.aKennel[i] + "</td></tr>";
+                            i++
+                            $("#table1").append(rowS);
+                        }
+                        $("#btnPrint").attr("disabled", false);
+                    },
+                    error: function (xhr, ajaxoptions, thrownError) {
+                        alert(thrownError);
+                    }
+                });
+            });
+        });
+        //function TDate() {
+        //    var selectedDate = $('#InDate').val();
+        //    var now = new Date();
+        //    now.setHours(0, 0, 0, 0);
+        //    if (new Date(selectedDate).getDate() > now.getDate()) {
+        //        alert("The Date You Selected Has not Arrived lol");
+        //        return false;
+        //    }
+        //    if ($('#InDate').val().trim() == "") {
+        //        alert("Oops you Have not selected a Date");
+        //        return false;
+        //    }
+        //    return true;
+        //};
     </script>
-</body>
-</html>
+    <script>
+        function printContent(el) {
+            var retorepage = $('body').html();
+            var printcontent = $('#' + el).clone();
+            $('body').empty().html(printcontent);
+            window.print();
+            $('body').html(retorepage);
+        }
+    </script>
+}

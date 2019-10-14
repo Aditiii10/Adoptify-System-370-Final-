@@ -154,15 +154,18 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Animal_Shelter_Available)
+                @Html.DisplayNameFor(model => model.Animal_Vaccines_Updated)
             </dt>
 
             <dd>
-                @Html.RadioButtonFor(model => model.Animal_Shelter_Available, "true", new { disabled = "disabled" })
+                @Html.RadioButtonFor(model => model.Animal_Vaccines_Updated, "true", new { disabled = "disabled" })
                 <label>Yes</label>
-                @Html.RadioButtonFor(model => model.Animal_Shelter_Available, "false", new { disabled = "disabled" })
+                @Html.RadioButtonFor(model => model.Animal_Vaccines_Updated, "false", new { disabled = "disabled" })
                 <label>No</label>
+                @Html.RadioButtonFor(model => model.Animal_Vaccines_Updated, "false", new { disabled = "disabled" })
+                <label>Adopter Does Not Have an Animal</label>
             </dd>
+
 
             <dt>
                 @Html.DisplayNameFor(model => model.Sick_Animal)
@@ -192,6 +195,21 @@
             </dd>
 
             <dt>
+                @Html.DisplayNameFor(model => model.Animal_Shelter_Available)
+            </dt>
+
+            <dd>
+                @Html.RadioButtonFor(model => model.Animal_Shelter_Available, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Animal_Shelter_Available, "false", new { disabled = "disabled" })
+                <label>No</label>
+            </dd>
+
+
+
+
+
+            <dt>
                 @Html.DisplayNameFor(model => model.Given_Animal_Away)
             </dt>
 
@@ -199,6 +217,17 @@
                 @Html.RadioButtonFor(model => model.Given_Animal_Away, "true", new { disabled = "disabled" })
                 <label>Yes</label>
                 @Html.RadioButtonFor(model => model.Given_Animal_Away, "false", new { disabled = "disabled" })
+                <label>No</label>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Adopted_Before)
+            </dt>
+
+            <dd>
+                @Html.RadioButtonFor(model => model.Adopted_Before, "true", new { disabled = "disabled" })
+                <label>Yes</label>
+                @Html.RadioButtonFor(model => model.Adopted_Before, "false", new { disabled = "disabled" })
                 <label>No</label>
             </dd>
 
@@ -218,16 +247,7 @@
                 @Html.DisplayFor(model => model.Type_of_House)
             </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Adopted_Before)
-            </dt>
 
-            <dd>
-                @Html.RadioButtonFor(model => model.Adopted_Before, "true", new { disabled = "disabled" })
-                <label>Yes</label>
-                @Html.RadioButtonFor(model => model.Adopted_Before, "false", new { disabled = "disabled" })
-                <label>No</label>
-            </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.Complex_or_Flat)
@@ -259,16 +279,7 @@
                 @Html.DisplayFor(model => model.Animal_Captivity)
             </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Animal_Vaccines_Updated)
-            </dt>
 
-            <dd>
-                @Html.RadioButtonFor(model => model.Animal_Vaccines_Updated, "true", new { disabled = "disabled" })
-                <label>Yes</label>
-                @Html.RadioButtonFor(model => model.Animal_Vaccines_Updated, "false", new { disabled = "disabled" })
-                <label>No</label>
-            </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.Title.Title_Description)

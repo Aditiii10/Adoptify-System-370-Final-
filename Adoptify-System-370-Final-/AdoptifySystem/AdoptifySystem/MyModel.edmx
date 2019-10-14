@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Wollies_ShelterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adopter">
           <Key>
             <PropertyRef Name="Adopter_ID" />
@@ -110,6 +110,7 @@
           <Property Name="Animal_Type_ID" Type="int" />
           <Property Name="Payment_Type_ID" Type="int" />
           <Property Name="Adoption_Fee" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PaymentDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Animal">
           <Key>
@@ -132,6 +133,7 @@
           <Property Name="Animal_Image_Name" Type="nvarchar(max)" />
           <Property Name="Animal_Image_Type" Type="nvarchar(max)" />
           <Property Name="Kennel_ID" Type="int" />
+          <Property Name="Animal_Location" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Animal_Breed">
           <Key>
@@ -292,9 +294,9 @@
           </Key>
           <Property Name="Event_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Event_Name" Type="varchar" MaxLength="150" />
-          <Property Name="Event_StartTime" Type="datetime" />
-          <Property Name="Event_EndTime" Type="datetime" />
-          <Property Name="Event_Guest_Number" Type="int" />
+          <Property Name="Event_Start" Type="time" Precision="7" />
+          <Property Name="Event_Date" Type="date" />
+          <Property Name="Event_Status" Type="varchar" MaxLength="50" />
           <Property Name="Event_Ticket_Price" Type="decimal" Precision="12" Scale="0" />
           <Property Name="Event_Location" Type="varchar" MaxLength="200" />
           <Property Name="Event_Description" Type="varchar" MaxLength="200" />
@@ -633,8 +635,8 @@
           </Key>
           <Property Name="Vol_Hours_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Vol_workDate" Type="date" />
-          <Property Name="Vol_Start_Time" Type="datetime" />
-          <Property Name="Vol_End_Time" Type="datetime" />
+          <Property Name="Vol_Start_Time" Type="time" Precision="7" />
+          <Property Name="Vol_End_Time" Type="time" Precision="7" />
           <Property Name="Vol_ID" Type="int" />
           <Property Name="Vol_WorkType_ID" Type="int" />
         </EntityType>
@@ -1459,6 +1461,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
         <Function Name="Emp_SearchEmpType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="EventGrandTotal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GrandTotal" Type="decimal" Mode="InOut" />
+          <Parameter Name="EventID" Type="int" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="Kennel_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -1477,6 +1483,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
         <Function Name="Kennel_View" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="Parent_SearchParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ReduceTicketsAvailable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventID" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -1847,7 +1856,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Wollies_ShelterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1974,6 +1984,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Animal_Type_ID" Type="Int32" />
           <Property Name="Payment_Type_ID" Type="Int32" />
           <Property Name="Adoption_Fee" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt1" FromRole="AdoptionPayment" ToRole="Adoption" />
           <NavigationProperty Name="Adoption" Relationship="Self.fkcr1" FromRole="AdoptionPayment" ToRole="Adoption" />
           <NavigationProperty Name="Animal_Type" Relationship="Self.fkcr2" FromRole="AdoptionPayment" ToRole="Animal_Type" />
@@ -2000,6 +2011,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Animal_Image_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Animal_Image_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Kennel_ID" Type="Int32" />
+          <Property Name="Animal_Location" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Adoptions" Relationship="Self.fkadopt" FromRole="Animal" ToRole="Adoption" />
           <NavigationProperty Name="Animal_Status" Relationship="Self.fkani" FromRole="Animal" ToRole="Animal_Status" />
           <NavigationProperty Name="Animal_Type" Relationship="Self.fkani1" FromRole="Animal" ToRole="Animal_Type" />
@@ -2207,9 +2219,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           </Key>
           <Property Name="Event_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Event_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Event_StartTime" Type="DateTime" Precision="3" />
-          <Property Name="Event_EndTime" Type="DateTime" Precision="3" />
-          <Property Name="Event_Guest_Number" Type="Int32" />
+          <Property Name="Event_Start" Type="Time" Precision="7" />
+          <Property Name="Event_Date" Type="DateTime" Precision="0" />
+          <Property Name="Event_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Event_Ticket_Price" Type="Decimal" Precision="12" Scale="0" />
           <Property Name="Event_Location" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Event_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -2251,10 +2263,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Foster_Start_Date" Type="DateTime" Precision="0" />
           <Property Name="Foster_Parent_ID" Type="Int32" />
           <Property Name="Animal_ID" Type="Int32" />
+          <Property Name="FosterCareDuration_Id" Type="Int32" />
           <NavigationProperty Name="Animal" Relationship="Self.fkfosc" FromRole="Foster_Care" ToRole="Animal" />
           <NavigationProperty Name="Foster_Care_Parent" Relationship="Self.fkfosc1" FromRole="Foster_Care" ToRole="Foster_Care_Parent" />
-          <Property Name="FosterCareDuration_Id" Type="Int32" />
-          <NavigationProperty Name="FosterCareDuration" Relationship="Wollies_ShelterModel.fkfosc2" FromRole="Foster_Care" ToRole="FosterCareDuration" />
+          <NavigationProperty Name="FosterCareDuration" Relationship="Self.fkfosc2" FromRole="Foster_Care" ToRole="FosterCareDuration" />
         </EntityType>
         <EntityType Name="Foster_Care_Parent">
           <Key>
@@ -2276,6 +2288,14 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Name="Adopter_ID" Type="Int32" />
           <NavigationProperty Name="Adopter" Relationship="Self.fkfos" FromRole="Foster_Care_Parent" ToRole="Adopter" />
           <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc1" FromRole="Foster_Care_Parent" ToRole="Foster_Care" />
+        </EntityType>
+        <EntityType Name="FosterCareDuration">
+          <Key>
+            <PropertyRef Name="FosterCareDuration_Id" />
+          </Key>
+          <Property Name="FosterCareDuration_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DurationTime" Type="Int32" />
+          <NavigationProperty Name="Foster_Care" Relationship="Self.fkfosc2" FromRole="FosterCareDuration" ToRole="Foster_Care" />
         </EntityType>
         <EntityType Name="GoogleChartData">
           <Key>
@@ -2596,8 +2616,8 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           </Key>
           <Property Name="Vol_Hours_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Vol_workDate" Type="DateTime" Precision="0" />
-          <Property Name="Vol_Start_Time" Type="DateTime" Precision="3" />
-          <Property Name="Vol_End_Time" Type="DateTime" Precision="3" />
+          <Property Name="Vol_Start_Time" Type="Time" Precision="7" />
+          <Property Name="Vol_End_Time" Type="Time" Precision="7" />
           <Property Name="Vol_ID" Type="Int32" />
           <Property Name="Vol_WorkType_ID" Type="Int32" />
           <NavigationProperty Name="Volunteer" Relationship="Self.fkvolhrs" FromRole="Volunteer_Hours" ToRole="Volunteer" />
@@ -3228,6 +3248,18 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkfosc2">
+          <End Role="FosterCareDuration" Type="Self.FosterCareDuration" Multiplicity="0..1" />
+          <End Role="Foster_Care" Type="Self.Foster_Care" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FosterCareDuration">
+              <PropertyRef Name="FosterCareDuration_Id" />
+            </Principal>
+            <Dependent Role="Foster_Care">
+              <PropertyRef Name="FosterCareDuration_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkmedcard1">
           <End Role="Vet_Appointment_Master" Type="Self.Vet_Appointment_Master" Multiplicity="0..1" />
           <End Role="Mecidal_Card" Type="Self.Mecidal_Card" Multiplicity="*" />
@@ -3426,6 +3458,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySet Name="Event_Type" EntityType="Self.Event_Type" />
           <EntitySet Name="Foster_Care" EntityType="Self.Foster_Care" />
           <EntitySet Name="Foster_Care_Parent" EntityType="Self.Foster_Care_Parent" />
+          <EntitySet Name="FosterCareDurations" EntityType="Self.FosterCareDuration" />
           <EntitySet Name="GoogleChartDatas" EntityType="Self.GoogleChartData" />
           <EntitySet Name="HomeChecks" EntityType="Self.HomeCheck" />
           <EntitySet Name="HomeCheckReports" EntityType="Self.HomeCheckReport" />
@@ -3655,6 +3688,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Foster_Care_Parent" EntitySet="Foster_Care_Parent" />
             <End Role="Foster_Care" EntitySet="Foster_Care" />
           </AssociationSet>
+          <AssociationSet Name="fkfosc2" Association="Self.fkfosc2">
+            <End Role="FosterCareDuration" EntitySet="FosterCareDurations" />
+            <End Role="Foster_Care" EntitySet="Foster_Care" />
+          </AssociationSet>
           <AssociationSet Name="fkmedcard1" Association="Self.fkmedcard1">
             <End Role="Vet_Appointment_Master" EntitySet="Vet_Appointment_Master" />
             <End Role="Mecidal_Card" EntitySet="Mecidal_Card" />
@@ -3712,22 +3749,26 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
             <End Role="Volunteer_Hours" EntitySet="Volunteer_Hours" />
           </AssociationSet>
           <FunctionImport Name="AnimalType_SearchAnimalType" ReturnType="Collection(Wollies_ShelterModel.AnimalType_SearchAnimalType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="BreedType_SearchBreedType" ReturnType="Collection(Wollies_ShelterModel.BreedType_SearchBreedType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Don_SearchDon" ReturnType="Collection(Wollies_ShelterModel.Don_SearchDon_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Donor_SearchDonor" ReturnType="Collection(Wollies_ShelterModel.Donor_SearchDonor_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Emp_SearchEmpType" ReturnType="Collection(Wollies_ShelterModel.Emp_SearchEmpType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EventGrandTotal">
+            <Parameter Name="GrandTotal" Mode="InOut" Type="Decimal" />
+            <Parameter Name="EventID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Kennel_Delete">
-          <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Kennel_insert">
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -3742,7 +3783,10 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           </FunctionImport>
           <FunctionImport Name="Kennel_View" ReturnType="Collection(Wollies_ShelterModel.Kennel_View_Result)" />
           <FunctionImport Name="Parent_SearchParent" ReturnType="Collection(Wollies_ShelterModel.Parent_SearchParent_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ReduceTicketsAvailable">
+            <Parameter Name="EventID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -3775,47 +3819,27 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="Stock_SearchStock" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStock_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Stock_SearchStockType" ReturnType="Collection(Wollies_ShelterModel.Stock_SearchStockType_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Vet_SearchVet" ReturnType="Collection(Wollies_ShelterModel.Vet_SearchVet_Result)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="FosterCareDurations" EntityType="Wollies_ShelterModel.FosterCareDuration" />
-          <AssociationSet Name="fkfosc2" Association="Wollies_ShelterModel.fkfosc2">
-            <End Role="FosterCareDuration" EntitySet="FosterCareDurations" />
-            <End Role="Foster_Care" EntitySet="Foster_Care" />
-          </AssociationSet>
-          <FunctionImport Name="AddKennel">
+          <FunctionImport Name="AddKennel" EntitySet="Kennels" ReturnType="Collection(Wollies_ShelterModel.Kennel)">
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="Number" Mode="In" Type="Int32" />
             <Parameter Name="capacity" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="DeleteKennel">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateKennel">
+          <FunctionImport Name="UpdateKennel" EntitySet="Kennels" ReturnType="Collection(Wollies_ShelterModel.Kennel)">
             <Parameter Name="ID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="Number" Mode="In" Type="Int32" />
             <Parameter Name="capacity" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SearchDon" EntitySet="Donation_Type" ReturnType="Collection(Wollies_ShelterModel.Donation_Type)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchDonor" EntitySet="Donors" ReturnType="Collection(Wollies_ShelterModel.Donor)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchstock" EntitySet="Stocks" ReturnType="Collection(Wollies_ShelterModel.Stock)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchstocktype" EntitySet="Stock_Type" ReturnType="Collection(Wollies_ShelterModel.Stock_Type)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="searchParent" EntitySet="Foster_Care_Parent" ReturnType="Collection(Wollies_ShelterModel.Foster_Care_Parent)">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <FunctionImport Name="DeleteKennel" EntitySet="Kennels" ReturnType="Collection(Wollies_ShelterModel.Kennel)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
@@ -3904,26 +3928,6 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <Property Type="String" Name="Vet_Tel" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="Vet_Address" Nullable="true" MaxLength="300" />
         </ComplexType>
-        <EntityType Name="FosterCareDuration">
-          <Key>
-            <PropertyRef Name="FosterCareDuration_Id" />
-          </Key>
-          <Property Name="FosterCareDuration_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DurationTime" Type="Int32" />
-          <NavigationProperty Name="Foster_Care" Relationship="Wollies_ShelterModel.fkfosc2" FromRole="FosterCareDuration" ToRole="Foster_Care" />
-        </EntityType>
-        <Association Name="fkfosc2">
-          <End Type="Wollies_ShelterModel.FosterCareDuration" Role="FosterCareDuration" Multiplicity="0..1" />
-          <End Type="Wollies_ShelterModel.Foster_Care" Role="Foster_Care" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FosterCareDuration">
-              <PropertyRef Name="FosterCareDuration_Id" />
-            </Principal>
-            <Dependent Role="Foster_Care">
-              <PropertyRef Name="FosterCareDuration_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4041,6 +4045,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
                 <ScalarProperty Name="Animal_Type_ID" ColumnName="Animal_Type_ID" />
                 <ScalarProperty Name="Payment_Type_ID" ColumnName="Payment_Type_ID" />
                 <ScalarProperty Name="Adoption_Fee" ColumnName="Adoption_Fee" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4064,6 +4069,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
                 <ScalarProperty Name="Animal_Image_Name" ColumnName="Animal_Image_Name" />
                 <ScalarProperty Name="Animal_Image_Type" ColumnName="Animal_Image_Type" />
                 <ScalarProperty Name="Kennel_ID" ColumnName="Kennel_ID" />
+                <ScalarProperty Name="Animal_Location" ColumnName="Animal_Location" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4240,9 +4246,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               <MappingFragment StoreEntitySet="Event_">
                 <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
                 <ScalarProperty Name="Event_Name" ColumnName="Event_Name" />
-                <ScalarProperty Name="Event_StartTime" ColumnName="Event_StartTime" />
-                <ScalarProperty Name="Event_EndTime" ColumnName="Event_EndTime" />
-                <ScalarProperty Name="Event_Guest_Number" ColumnName="Event_Guest_Number" />
+                <ScalarProperty Name="Event_Start" ColumnName="Event_Start" />
+                <ScalarProperty Name="Event_Date" ColumnName="Event_Date" />
+                <ScalarProperty Name="Event_Status" ColumnName="Event_Status" />
                 <ScalarProperty Name="Event_Ticket_Price" ColumnName="Event_Ticket_Price" />
                 <ScalarProperty Name="Event_Location" ColumnName="Event_Location" />
                 <ScalarProperty Name="Event_Description" ColumnName="Event_Description" />
@@ -4277,12 +4283,12 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <EntitySetMapping Name="Foster_Care">
             <EntityTypeMapping TypeName="Wollies_ShelterModel.Foster_Care">
               <MappingFragment StoreEntitySet="Foster_Care">
-                <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
                 <ScalarProperty Name="Foster_Care_ID" ColumnName="Foster_Care_ID" />
                 <ScalarProperty Name="Foster_Care_Period" ColumnName="Foster_Care_Period" />
                 <ScalarProperty Name="Foster_Start_Date" ColumnName="Foster_Start_Date" />
                 <ScalarProperty Name="Foster_Parent_ID" ColumnName="Foster_Parent_ID" />
                 <ScalarProperty Name="Animal_ID" ColumnName="Animal_ID" />
+                <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4303,6 +4309,14 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
                 <ScalarProperty Name="Ownership_Housing" ColumnName="Ownership_Housing" />
                 <ScalarProperty Name="Hours_Left_Alone" ColumnName="Hours_Left_Alone" />
                 <ScalarProperty Name="Adopter_ID" ColumnName="Adopter_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FosterCareDurations">
+            <EntityTypeMapping TypeName="Wollies_ShelterModel.FosterCareDuration">
+              <MappingFragment StoreEntitySet="FosterCareDuration">
+                <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
+                <ScalarProperty Name="DurationTime" ColumnName="DurationTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4697,6 +4711,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EventGrandTotal" FunctionName="Wollies_ShelterModel.Store.EventGrandTotal" />
           <FunctionImportMapping FunctionImportName="Kennel_Delete" FunctionName="Wollies_ShelterModel.Store.Kennel_Delete" />
           <FunctionImportMapping FunctionImportName="Kennel_insert" FunctionName="Wollies_ShelterModel.Store.Kennel_insert" />
           <FunctionImportMapping FunctionImportName="Kennel_Update" FunctionName="Wollies_ShelterModel.Store.Kennel_Update" />
@@ -4730,6 +4745,7 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReduceTicketsAvailable" FunctionName="Wollies_ShelterModel.Store.ReduceTicketsAvailable" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Wollies_ShelterModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Wollies_ShelterModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Wollies_ShelterModel.Store.sp_dropdiagram" />
@@ -4791,22 +4807,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="FosterCareDurations">
-            <EntityTypeMapping TypeName="Wollies_ShelterModel.FosterCareDuration">
-              <MappingFragment StoreEntitySet="FosterCareDuration">
-                <ScalarProperty Name="DurationTime" ColumnName="DurationTime" />
-                <ScalarProperty Name="FosterCareDuration_Id" ColumnName="FosterCareDuration_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AddKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_insert" />
-          <FunctionImportMapping FunctionImportName="DeleteKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Delete" />
           <FunctionImportMapping FunctionImportName="UpdateKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Update" />
-          <FunctionImportMapping FunctionImportName="SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon" />
-          <FunctionImportMapping FunctionImportName="searchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor" />
-          <FunctionImportMapping FunctionImportName="searchstock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock" />
-          <FunctionImportMapping FunctionImportName="searchstocktype" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStockType" />
-          <FunctionImportMapping FunctionImportName="searchParent" FunctionName="Wollies_ShelterModel.Store.Parent_SearchParent" />
+          <FunctionImportMapping FunctionImportName="DeleteKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Delete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

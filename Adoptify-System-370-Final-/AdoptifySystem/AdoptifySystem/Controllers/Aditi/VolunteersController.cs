@@ -173,19 +173,10 @@ namespace AdoptifySystem.Controllers.Aditi
         public ActionResult DeleteConfirmed(int id)
         {
             Volunteer volunteer = db.Volunteers.Find(id);
-            int count = volunteer.Volunteer_Hours.Count();
-            if (count != 0)
-            {
-                TempData["DeleteErrorMessage"] = "You can not delete this item as it is been used else where!";
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                db.Volunteers.Remove(volunteer);
-                db.SaveChanges();
-                TempData["DeleteMessage"] = "Deleted Volunteer Successfully";
-                return RedirectToAction("Index");
-            }
+            db.SaveChanges();
+            TempData["DeleteMessage"] = "Deleted Volunteer Successfully";
+            return RedirectToAction("Index");
+
 
         }
 

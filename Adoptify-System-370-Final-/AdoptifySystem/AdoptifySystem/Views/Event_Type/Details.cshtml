@@ -4,25 +4,24 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="main">
-    <h2>Details</h2>
 
-    <div>
-        <h4>Event_Type</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Event_Type_Name)
-            </dt>
+<h2>Event Type Details</h2>
 
-            <dd>
-                @Html.DisplayFor(model => model.Event_Type_Name)
-            </dd>
+<div>
+    <h4>Event Type</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Event Type Name:
+        </dt>
 
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Event_Type_ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-    </div>
+        <dd>
+            @Html.DisplayFor(model => model.Event_Type_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Update", "Edit", new { id = Model.Event_Type_ID }) |
+    @Html.ActionLink("Back", "Index")
+</p>

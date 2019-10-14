@@ -17,7 +17,7 @@
         @Html.ActionLink("Create New Vet Appointment", "Create", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" , @Title = "Click to Add New Vet Appoinment"})
     </div>
     <br />
-    @using (Html.BeginForm("SearchAppointment", "Vet_Appointment_Master", FormMethod.Post))
+    @using (Html.BeginForm("SearchVetApp", "VetAppointment", FormMethod.Post))
     {
         <div class="row">
             <div class="col-md-5">
@@ -110,7 +110,7 @@
                                 <div class="modal-footer">
                                     <div style="position:center">
 
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil", @Title = "Click to go Update Vet Appointment Details"  })
+                                        @Html.ActionLink("Update", "Edit", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-warning glyphicon glyphicon-pencil", @Title = "Click to go Update Vet Appointment Details"  })
                                         @*@Html.ActionLink("Details", "Details", "Veterinarians", new { id = item.Vet_ID }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open" })*@
                                         @Html.ActionLink("Delete", "Delete", new { id = item.Vet_Appoint_Line_ID }, new { @class = "btn btn-danger glyphicon glyphicon-trash", @Title = "Click to go Delete Vet Appointment Details"  })
                                     </div>

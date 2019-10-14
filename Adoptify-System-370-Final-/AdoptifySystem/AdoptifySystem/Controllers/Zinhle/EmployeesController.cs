@@ -5,13 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem.Models;
 using AdoptifySystem.Models.nickeymodel;
-using Flexible = AdoptifySystem.Models.nickeymodel.Innovation;
 using System.IO;
 using Google.Authenticator;
 using System.Net;
 using AdoptifySystem;
 using System.Security.Cryptography;
 using System.Web.Helpers;
+using System.Net.Mail;
 
 namespace AdoptifySystem.Controllers.Zinhle
 {
@@ -21,6 +21,7 @@ namespace AdoptifySystem.Controllers.Zinhle
         // GET: Donations
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         static Innovation innovation = new Innovation();
+        public static Flexible flex = new Flexible();
         private const string key = "qaz123!@@)(*";
 
         public ActionResult Index()
@@ -48,20 +49,18 @@ namespace AdoptifySystem.Controllers.Zinhle
 
         }
         [HttpPost]
-        public ActionResult AddEmployeein(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract, FormCollection form)
+        public ActionResult AddEmployeein(Employee emp, User_ user, int?[] Role, string Gender, HttpPostedFileBase Contract)
         {
             try
             {
                 db.Database.CommandTimeout = 150;
                 Employee saveEmp = new Employee();
-                //HttpFileCollectionBase files = Request.Files;
-                //HttpPostedFileBase file = files[0];
                 saveEmp = emp;
-                //this is where we convert the contract to add to the database
                 if (emp == null || emp.Emp_Name == " " || emp.Emp_Gender == " " || emp.Emp_Surname == " " || emp.Title_ID == 0 || emp.Emp_Type_ID == 0)
                 {
                     return RedirectToAction("AddEmployee");
                 }
+                //this is where we convert the contract to add to the database
                 byte[] bytes;
                 if (Contract != null)
                 {
@@ -75,17 +74,17 @@ namespace AdoptifySystem.Controllers.Zinhle
                     saveEmp.Emp_Contract = bytes;
                     //file.SaveAs(HttpContext.Server.MapPath("~/Images/EmployeeContracts/")
                     //                              + Contract.FileName);
-                    //emp.Emp_Contract_Name = Contract.FileName;
+                    // emp.Emp_Contract_Name= Contract.FileName;
 
 
                 }
-                emp.Emp_Gender = Gender;
+
 
                 db.Employees.Add(saveEmp);
                 db.SaveChanges();
+                flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee");
                 //Now we have to store the user
                 //first look for the employee that we just added
-                
                 Employee old = db.Employees.Where(z => z.Title_ID == saveEmp.Title_ID && z.Emp_Type_ID == saveEmp.Emp_Type_ID && z.Emp_Name == saveEmp.Emp_Name && z.Emp_Email == saveEmp.Emp_Email && z.Emp_Surname == saveEmp.Emp_Surname && z.Emp_IDNumber == saveEmp.Emp_IDNumber).FirstOrDefault();
                 //then we add the employee id to the user that we created at the top
 
@@ -102,6 +101,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", user.Username, UserUniqueKey, 300, 300);
                 saveEmp.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
                 ViewBag.Qr = setupInfo.QrCodeSetupImageUrl;
+                SendVerificationLinkEmail(emp.Emp_Email, setupInfo.QrCodeSetupImageUrl, "Authorize Barcode");
                 db.Entry(old).CurrentValues.SetValues(saveEmp);
                 db.SaveChanges();
                 //var md5 = new MD5CryptoServiceProvider();
@@ -112,6 +112,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 user.FirstTime = true;
                 db.User_.Add(user);
                 db.SaveChanges();
+                flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User");
                 //we store the User acces that is needed
 
                 foreach (var item in Role)
@@ -301,6 +302,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     searchemployee_type.Emp_Contract = bytes;
                 }
                 db.SaveChanges();
+                flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee");
                 //now i have to update user 
                 if (searchemployee_type.User_.Count == 0)
                 {
@@ -312,9 +314,9 @@ namespace AdoptifySystem.Controllers.Zinhle
                 Session["UserUniqueKey"] = UserUniqueKey;
                 var setupInfo = tfa.GenerateSetupCode("Wollies Shelter", user.Username, UserUniqueKey, 300, 300);
                 searchemployee_type.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
-
+                SendVerificationLinkEmail(emp.Emp_Email, setupInfo.QrCodeSetupImageUrl, "Authorize Barcode");
                 db.SaveChanges();
-
+                flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User");
                 if (searchemployee_type.User_.Count == 0)
                 {
                     TempData["EditMessage"] = "Employee Succesfully Updated";
@@ -377,12 +379,14 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         db.Employee_Type.Add(employee_type);
                         db.SaveChanges();
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee Type");
                     }
                 }
                 else
                 {
                     db.Employee_Type.Add(employee_type);
                     db.SaveChanges();
+                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee Type");
                 }
             }
             catch (Exception e)
@@ -426,9 +430,6 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         User_ user = emp.User_.FirstOrDefault();
                         audit = user.Audit_Log.Count();
-
-
-
                     }
                     if (timesheet != 0 || kennel != 0 ||/* homechecks != 0 ||*/ audit != 0)
                     {
@@ -453,10 +454,12 @@ namespace AdoptifySystem.Controllers.Zinhle
                             }
                             db.User_.Remove(user);
                             db.SaveChanges();
+                            flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee");
                         }
 
                         db.Employees.Remove(emp);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee");
                         return RedirectToAction("SearchEmployee");
                     }
                 }
@@ -509,6 +512,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     searchemployee_type.Emp_Type_Name = employee_type.Emp_Type_Name;
                     searchemployee_type.Emp_Type_Description = employee_type.Emp_Type_Description;
                     db.SaveChanges();
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee Type");
                 }
             }
             catch (Exception e)
@@ -560,6 +564,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     {
                         db.Employee_Type.Remove(employee_type);
                         db.SaveChanges();
+                        flex.DeleteAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Employee Type");
                         return RedirectToAction("SearchEmployeeType");
                     }
                 }
@@ -576,6 +581,27 @@ namespace AdoptifySystem.Controllers.Zinhle
         public ActionResult BarCodeGenerated()
         {
             return View();
+        }
+        [NonAction]
+        public void SendVerificationLinkEmail(string emailID, string image, string emailFor = "VerifyAccount")
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("u16052642@tuks.co.za");
+                mail.To.Add(emailID);
+                mail.Subject = "Wollies Animal Shelter Barcode image First Time";
+                mail.Body = "<h1>Hello There!</h1><br><h3>Please Use this  Authorize for the Login:<br>" + "</h3><br /><img src =" + image + " />";
+                mail.IsBodyHtml = true;
+                //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential("u16052642@tuks.co.za", "Divinlonji08");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
+
         }
     }
 }

@@ -7,9 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
-using AdoptifySystem.Models;
 
-namespace AdoptifySystem.Controllers
+namespace AdoptifySystem.Controllers.Cassie
 {
     public class Event_Controller : Controller
     {
@@ -38,7 +37,7 @@ namespace AdoptifySystem.Controllers
         }
 
         // GET: Event_/Create
-        public ActionResult Create(DateTime? date)
+        public ActionResult Create()
         {
             ViewBag.Event_Type_ID = new SelectList(db.Event_Type, "Event_Type_ID", "Event_Type_Name");
             return View();
@@ -49,17 +48,10 @@ namespace AdoptifySystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Event_ID,Event_Name,Event_StartTime,Event_EndTime,Event_Guest_Number,Event_Ticket_Price,Event_Location,Event_Description,Event_Type_ID")] Event_ event_, DateTime? date, string time="")
+        public ActionResult Create([Bind(Include = "Event_ID,Event_Name,Event_Start,Event_Date,Event_Status,Event_Ticket_Price,Event_Location,Event_Description,Event_Type_ID,TicketAvailable")] Event_ event_)
         {
             if (ModelState.IsValid)
             {
-
-                int hour = Convert.ToInt32(time);
-
-                DateTime dt = DateTime.Now;
-
-                
-                event_.Event_StartTime = date.Value;
                 db.Event_.Add(event_);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -90,7 +82,7 @@ namespace AdoptifySystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Event_ID,Event_Name,Event_StartTime,Event_EndTime,Event_Guest_Number,Event_Ticket_Price,Event_Location,Event_Description,Event_Type_ID")] Event_ event_)
+        public ActionResult Edit([Bind(Include = "Event_ID,Event_Name,Event_Start,Event_Date,Event_Status,Event_Ticket_Price,Event_Location,Event_Description,Event_Type_ID,TicketAvailable")] Event_ event_)
         {
             if (ModelState.IsValid)
             {

@@ -238,6 +238,7 @@
                     @Html.ActionLink("Update", "Edit", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-success", @Title = "Click to Update Adopter" })
                     @Html.ActionLink("Delete", "Delete", "Adopters", new { id = item.Adopter_ID }, new { @class = "btn btn-danger", @Title = "Click to Delete Adopter" })
                     <button class="btn btn-info" title="Select to Display Details" data-toggle="modal" data-target="#@item.Adopter_ID">More info </button>
+                    @Html.ActionLink("View Adoptions", "View", new { id = item.Adopter_ID }, new { @class = "btn btn-primary", @title = "Click to View Adoptions" })
                 </td>
             </tr>
 
@@ -289,3 +290,28 @@
         <br />
     </div>
 </div>
+
+@section scripts{
+    <script>
+            $(function () {
+                var successMessage = '@TempData["SuccessMessage"]'
+                if (successMessage != '')
+                    alertify.success(successMessage);
+            });
+            $(function () {
+                var successMessage = '@TempData["EditMessage"]'
+                if (successMessage != '')
+                    alertify.warning(successMessage);
+            });
+            $(function () {
+                var successMessage = '@TempData["DeleteMessage"]'
+                if (successMessage != '')
+                    alertify.error(successMessage);
+            });
+             $(function () {
+                    var successMessage = '@TempData["DeleteErrorMessage"]'
+                    if (successMessage != '')
+                        alertify.warning(successMessage);
+                 });
+    </script>
+}

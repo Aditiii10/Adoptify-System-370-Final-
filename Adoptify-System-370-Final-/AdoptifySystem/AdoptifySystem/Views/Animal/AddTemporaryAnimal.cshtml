@@ -3,7 +3,8 @@
     ViewBag.Title = "AddTemporaryAnimal";
     Layout = "~/Views/Shared/_Layout.cshtml ";
 }
-
+<br />
+<div class=" table-primary"><h1>Add Animal</h1></div>
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#home">Animal Details</a>
@@ -15,7 +16,7 @@
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade show active" id="home">
         @Html.AntiForgeryToken()
-        <div class="col-sm-10 table-primary"><h1>Add Animal</h1></div>
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="column">
             <div class="text-center">
@@ -79,15 +80,7 @@
             </div>
             <br />
             <div class="form-group">
-                <label><b>Castrated?</b></label><br />
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="Animal_Castration_Yes" value="True" name="Animal_Castration" class="custom-control-input">
-                    <label class="custom-control-label" for="Animal_Castration_Yes">Yes</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="Animal_Castration_No" value="False" name="Animal_Castration" class="custom-control-input">
-                    <label class="custom-control-label" for="Animal_Castration_No">No</label>
-                </div>
+
                 <div class="form-group">
                 </div>
 
@@ -112,57 +105,83 @@
                 </div>
 
                 <br />
-                <div class="form-group">
-                    <label><b>Animal Gender</b></label><br />
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="Animal_Gender_Male" value="Male" name="Animal_Gender" class="custom-control-input">
-                        <label class="custom-control-label" for="Animal_Gender_Male">Male</label>
+                <div class="row">
+                    <div class="column" style="width:50%;">
+                        <div class="form-group">
+                            <label><b>Animal Gender</b></label><br />
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="Animal_Gender_Male" value="Male" name="Animal_Gender" class="custom-control-input">
+                                <label class="custom-control-label" for="Animal_Gender_Male">Male</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="Animal_Gender_Female" value="Female" name="Animal_Gender" class="custom-control-input">
+                                <label class="custom-control-label" for="Animal_Gender_Female">Female</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="Animal_Gender_Female" value="Female" name="Animal_Gender" class="custom-control-input">
-                        <label class="custom-control-label" for="Animal_Gender_Female">Female</label>
+                    <div class="column">
+                        <div class="form-group">
+                            <label><b>Animal Size</b></label><br />
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" name="Animal_Size" value="Small" id="Small" class="custom-control-input">
+                                <label class="custom-control-label" for="Small">Small</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" name="Animal_Size" value="Medium" id="Medium" class="custom-control-input">
+                                <label class="custom-control-label" for="Medium">Medium</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" name="Animal_Size" value="Large" id="Large" class="custom-control-input">
+                                <label class="custom-control-label" for="Large">Large</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label><b>Animal Size</b></label><br />
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="Animal_Size" value="Small" id="Small" class="custom-control-input">
-                        <label class="custom-control-label" for="Small">Small</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="Animal_Size" value="Medium" id="Medium" class="custom-control-input">
-                        <label class="custom-control-label" for="Medium">Medium</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="Animal_Size" value="Large" id="Large" class="custom-control-input">
-                        <label class="custom-control-label" for="Large">Large</label>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <label><b>Entry Date Of Animal</b></label><br />
                     <input type="date" name="Animal_Entry_Date" id="Animal_Entry_Date" class="form-control" placeholder="Enter Date of Entry" />
                 </div>
 
 
-                <div class="form-group">
-                    <label><b>Sterilized?</b></label><br />
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="Animal_Sterilization" value="True" id="Animal_Sterilization_Yes" class="custom-control-input">
-                        <label class="custom-control-label" for="Animal_Sterilization_Yes">Yes</label>
+                <div class="row">
+                    <div class="column" style="width:50%;">
+                        <label><b>Sterilized?</b></label><br />
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Sterilization" value="True" id="Animal_Sterilization_Yes" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Sterilization_Yes">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="Animal_Sterilization" value="False" id="Animal_Sterilization_No" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Sterilization_No">No</label>
+                        </div>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="Animal_Sterilization" value="False" id="Animal_Sterilization_No" class="custom-control-input">
-                        <label class="custom-control-label" for="Animal_Sterilization_No">No</label>
+                    <div class="column">
+                        <label><b>Castrated?</b></label><br />
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="Animal_Castration_Yes" value="True" name="Animal_Castration" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Castration_Yes">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="Animal_Castration_No" value="False" name="Animal_Castration" class="custom-control-input">
+                            <label class="custom-control-label" for="Animal_Castration_No">No</label>
+                        </div>
                     </div>
+
+
                 </div>
 
                 <div class="col-xs-6">
                     <label><b>Location Found</b></label><br />
                     <input type="text" name="Animal_Location" value="" id="Animal_Location" class="form-control" placeholder="Enter Location Found">
                 </div>
-
+                <br />
+                <div class="col-md-10">
+                    <h3 style="color:red">"Click on the Microchip Details Tab to Continue"</h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.ActionLink("Cancel", "SearchAnimal", "Animal", new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
+                </div>
 
             </div>
         </div>
@@ -201,17 +220,16 @@
                 <label><b>Owner Address</b></label><br />
                 <input type="text" name="Owner_Address" id="Owner_Address" class="form-control" placeholder="Enter Owner Address">
             </div>
+            <br />
             <div class="form-group">
+                @Html.ActionLink("Cancel", "SearchAnimal", "Animal", new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
                 <button type="submit" name="button" value="Save" onclick="Save()" title="Click to Add the Following Animal Details" class="btn btn-success float-right col-md-2">Save and Add to Kennel</button>
             </div>
         </div>
     </div>
-    <div class="form-group">
-        @Html.ActionLink("Cancel", "SearchAnimal","Animal", new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
-    </div>
+    <button onclick="Clearboxes()">Clear</button>
 </div>
 
-@*<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>*@
 <script>
     function yesnoCheck() {
         if (document.getElementById('Cross_Breed_Yes').checked) {
@@ -303,6 +321,7 @@
             Animal_Name.classList.remove("is-valid");
             //then add the class you want
             Animal_Name.classList.add("is-invalid");
+            alert("Please enter an animal name");
             isvalid = false;
         } else {
             //first remove
@@ -316,6 +335,7 @@
             Animal_Description.classList.remove("is-valid");
             //then add the class you want
             Animal_Description.classList.add("is-invalid");
+            alert("Please enter an animal description");
             isvalid = false;
         } else {
             //first remove
@@ -329,6 +349,7 @@
             Animal_Age.classList.remove("is-valid");
             //then add the class you want
             Animal_Age.classList.add("is-invalid");
+            alert("Please enter an animal age");
             isvalid = false;
         } else {
             //first remove
@@ -342,6 +363,7 @@
             Animal_Coat.classList.remove("is-valid");
             //then add the class you want
             Animal_Coat.classList.add("is-invalid");
+            alert("Please enter an animal coat");
             isvalid = false;
         } else {
             //first remove
@@ -355,6 +377,7 @@
             Animal_Entry_Date.classList.remove("is-valid");
             //then add the class you want
             Animal_Entry_Date.classList.add("is-invalid");
+            alert("Please enter an animal Entry Date");
             isvalid = false;
         } else {
             //first remove
@@ -368,6 +391,7 @@
             Animal_Location.classList.remove("is-valid");
             //then add the class you want
             Animal_Location.classList.add("is-invalid");
+            alert("Please enter where Animal was found Location");
             isvalid = false;
         } else {
             //first remove
@@ -460,9 +484,6 @@
             alert("Pick a Breed");
             isvalid = false;
         }
-        //else {
-        //    alert(breed1.value);
-        //}
 
         if (isvalid)
         {
@@ -511,7 +532,7 @@
                 success: function () {
                     $("#loader").hide();
                     isvalid = true;
-                    alert("Yes");
+                    this.Clearboxes();
                     window.location.href = '@Url.Action("Create","Animal_Kennel_History")';
                 },
                 error: function (error) {
@@ -530,6 +551,20 @@
         }
 
 
+    }
+
+    function Clearboxes()
+    {
+        document.getElementById("Animal_Name").value = "";
+        document.getElementById("Animal_Description").value = "";
+        document.getElementById("Animal_Age").value = "";
+        document.getElementById("Animal_Coat").value = "";
+        document.getElementById("Animal_Location").value = "";
+        document.getElementById("Animal_Microchip_Code").value = "";
+        document.getElementById("Implanters_PIN_Number").value = "";
+        document.getElementById("Owner_Name").value = "";
+        document.getElementById("Owner_Contact_Number").value = "";
+        document.getElementById("Owner_Address").value = "";
     }
 </script>
 @section scripts{
@@ -551,18 +586,22 @@
         });
 
     </script>
-}
-@*<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAwmDJO6_loN_pEkSnVY_AmasgeoIG7dCQ&sensor=false&libraries=places""></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWS2RFX5WP2nl4kXOGpCZwjHsYFEQp5iA&=false&libraries=places"></script>
     <script type="text/javascript">
+
         google.maps.event.addDomListener(window, 'load', function () {
             var options = {
-                types: ['(cities)'],
-                componentRestrictions: { country: "in" }
+                types: ['(regions)'],
+                componentRestrictions: { country: "za" }
             };
 
-            var input = document.getElementById('Owner_Address');
+            var input = document.getElementById('Animal_Location');
             var places = new google.maps.places.Autocomplete(input, options);
-
+            var input1 = document.getElementById('Owner_Address');
+            var places1 = new google.maps.places.Autocomplete(input1, options);
 
         });
-    </script>*@
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

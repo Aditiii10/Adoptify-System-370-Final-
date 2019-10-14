@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
+using AdoptifySystem.Models;
 
 namespace AdoptifySystem.Controllers.Aditi
 {
@@ -15,6 +16,59 @@ namespace AdoptifySystem.Controllers.Aditi
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
         // GET: Adopter_Contract
+
+        public ActionResult SearchAdopterContract()
+        {
+            ViewBag.errormessage = "";
+            List<Adopter_Contract> AdopterContract = new List<Adopter_Contract>();
+            try
+            {
+                AdopterContract = db.Adopter_Contract.ToList();
+                if (AdopterContract.Count == 0)
+                {
+                    throw new Exception("Something Went Wrong!");
+                }
+                return View(AdopterContract);
+            }
+            catch (Exception e)
+            {
+                ViewBag.errormessage = "Sorry! There was a network error: " + e.Message;
+                throw new Exception("Something Went Wrong!");
+            }
+        }
+        [HttpGet]
+        public ActionResult SearchAdopterContract(string search)
+        {
+            if (search != null)
+            {
+
+                List<Adopter_Contract> AdopterForm = new List<Adopter_Contract>();
+                try
+                {
+
+                    AdopterForm = db.Adopter_Contract.Where(z => z.Adopter.Adopter_Name.StartsWith(search)).ToList();
+                    if (AdopterForm.Count == 0)
+                    {
+                        ViewBag.err = "No results found";
+                        return View("Index", AdopterForm);
+                    }
+                    return View("Index", AdopterForm);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.err = "there was a network error: " + e.Message;
+                    throw new Exception("Something Went Wrong!");
+                }
+            }
+            else
+            {
+
+            }
+
+            return View();
+
+        }
+
         public ActionResult Index()
         {
             var adopter_Contract = db.Adopter_Contract.Include(a => a.Adopter);
@@ -26,12 +80,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Adopter_Contract adopter_Contract = db.Adopter_Contract.Find(id);
             if (adopter_Contract == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(adopter_Contract);
         }
@@ -66,12 +120,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Adopter_Contract adopter_Contract = db.Adopter_Contract.Find(id);
             if (adopter_Contract == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             ViewBag.Adopter_ID = new SelectList(db.Adopters, "Adopter_ID", "Adopter_Name", adopter_Contract.Adopter_ID);
             return View(adopter_Contract);
@@ -99,12 +153,12 @@ namespace AdoptifySystem.Controllers.Aditi
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new Exception("Something Went Wrong!");
             }
             Adopter_Contract adopter_Contract = db.Adopter_Contract.Find(id);
             if (adopter_Contract == null)
             {
-                return HttpNotFound();
+                throw new Exception("Something Went Wrong!");
             }
             return View(adopter_Contract);
         }

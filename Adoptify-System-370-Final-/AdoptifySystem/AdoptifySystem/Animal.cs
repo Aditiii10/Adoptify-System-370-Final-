@@ -43,6 +43,7 @@ namespace AdoptifySystem
         public string Animal_Image_Name { get; set; }
         public string Animal_Image_Type { get; set; }
         public Nullable<int> Kennel_ID { get; set; }
+        public string Animal_Location { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Adoption> Adoptions { get; set; }

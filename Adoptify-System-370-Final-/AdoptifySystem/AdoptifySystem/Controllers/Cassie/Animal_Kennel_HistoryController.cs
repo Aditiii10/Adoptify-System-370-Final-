@@ -17,6 +17,8 @@ namespace AdoptifySystem.Controllers.Cassie
 
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public static Innovation inno = new Innovation();
+        public static Flexible flex = new Flexible();
+
         // GET: Animal_Kennel_History
         public ActionResult Index()
         {
@@ -74,23 +76,19 @@ namespace AdoptifySystem.Controllers.Cassie
             }
 
         }
-        [HttpGet]
-        public JsonResult Search_Kennel(int inid)
+        [HttpPost]
+        public ActionResult Search_Kennel(int kennelid)
         {
             try
             {
-                int id = Convert.ToInt32(inid);
-                inno.Kennel = inno.Kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
-                var kennels = inno.Kennels.Select(x => new
+                int id = Convert.ToInt32(kennelid);
+                if (inno.animal == null)
                 {
-                    Kennel_ID = x.Kennel_ID,
-                    Kennel_Name = x.Kennel_Name,
-                    Kennel_Space = (x.Kennel_Capacity - x.Animals.Count),
-                    Kennel_Capacity = x.Kennel_Capacity,
-                }).ToList();
-                var kennel = kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
-                ViewBag.breed = kennels;
-                return Json(kennel, JsonRequestBehavior.AllowGet);
+                    ViewBag.err = "Please pick Animal first";
+                    return View("Create", inno);
+                }
+                inno.Kennel = inno.Kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
+                return View("Create", inno);
             }
             catch (Exception)
             {
@@ -98,6 +96,29 @@ namespace AdoptifySystem.Controllers.Cassie
             }
 
         }
+        //public JsonResult Search_Kennel(int inid)
+        //{
+        //    try
+        //    {
+        //        int id = Convert.ToInt32(inid);
+        //        inno.Kennel = inno.Kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
+        //        var kennels = inno.Kennels.Select(x => new
+        //        {
+        //            Kennel_ID = x.Kennel_ID,
+        //            Kennel_Name = x.Kennel_Name,
+        //            Kennel_Space = (x.Kennel_Capacity - x.Animals.Count),
+        //            Kennel_Capacity = x.Kennel_Capacity,
+        //        }).ToList();
+        //        var kennel = kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
+        //        ViewBag.breed = kennels;
+        //        return Json(kennel, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw new Exception("Something went Wrong");
+        //    }
+
+        //}
         [HttpGet]
         public ActionResult Search_Animal(int inid)
         {
@@ -114,19 +135,20 @@ namespace AdoptifySystem.Controllers.Cassie
             }
 
         }
-        public ActionResult Moveanimal(int inid)
+        public ActionResult Moveanimal()
         {
             try
             {
                 if (inno.Kennel == null || inno.animal == null)
                 {
-
+                    ViewBag.err = "Please pick Animal and Kennel";
                     return View("Create", inno);
                 }
                 if (inno.animal.Kennel_ID != 0)
                 {
                     if (inno.Kennel.Kennel_ID == inno.animal.Kennel_ID)
                     {
+                        ViewBag.err = "Cant Move Animal to same Kennel as current";
                         return View("Create", inno);
                     }
                     var animal = db.Animals.Find(inno.animal.Animal_ID);
@@ -136,10 +158,13 @@ namespace AdoptifySystem.Controllers.Cassie
                     }
                     animal.Kennel_ID = inno.Kennel.Kennel_ID;
                     db.SaveChanges();
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal's Kennel Location");
+                    inno.animal = null;
+                    inno.Kennel = null;
 
                 }
-
-                return View("Create", inno);
+                ViewBag.err = "Info Stored";
+                return RedirectToAction("Create");
             }
             catch (Exception)
             {

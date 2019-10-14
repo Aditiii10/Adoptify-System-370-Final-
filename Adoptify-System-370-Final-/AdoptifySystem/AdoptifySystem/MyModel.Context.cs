@@ -56,6 +56,7 @@ namespace AdoptifySystem
         public virtual DbSet<Event_Type> Event_Type { get; set; }
         public virtual DbSet<Foster_Care> Foster_Care { get; set; }
         public virtual DbSet<Foster_Care_Parent> Foster_Care_Parent { get; set; }
+        public virtual DbSet<FosterCareDuration> FosterCareDurations { get; set; }
         public virtual DbSet<GoogleChartData> GoogleChartDatas { get; set; }
         public virtual DbSet<HomeCheck> HomeChecks { get; set; }
         public virtual DbSet<HomeCheckReport> HomeCheckReports { get; set; }
@@ -89,7 +90,6 @@ namespace AdoptifySystem
         public virtual DbSet<Volunteer_Work_Type> Volunteer_Work_Type { get; set; }
         public virtual DbSet<Wolly> Wollies { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
-        public virtual DbSet<FosterCareDuration> FosterCareDurations { get; set; }
     
         public virtual ObjectResult<AnimalType_SearchAnimalType_Result> AnimalType_SearchAnimalType(string name)
         {
@@ -134,6 +134,15 @@ namespace AdoptifySystem
                 new ObjectParameter("Name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Emp_SearchEmpType_Result>("Emp_SearchEmpType", nameParameter);
+        }
+    
+        public virtual int EventGrandTotal(ObjectParameter grandTotal, Nullable<int> eventID)
+        {
+            var eventIDParameter = eventID.HasValue ?
+                new ObjectParameter("EventID", eventID) :
+                new ObjectParameter("EventID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EventGrandTotal", grandTotal, eventIDParameter);
         }
     
         public virtual int Kennel_Delete(Nullable<int> id)
@@ -195,6 +204,15 @@ namespace AdoptifySystem
                 new ObjectParameter("Name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Parent_SearchParent_Result>("Parent_SearchParent", nameParameter);
+        }
+    
+        public virtual int ReduceTicketsAvailable(Nullable<int> eventID)
+        {
+            var eventIDParameter = eventID.HasValue ?
+                new ObjectParameter("EventID", eventID) :
+                new ObjectParameter("EventID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ReduceTicketsAvailable", eventIDParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -327,7 +345,7 @@ namespace AdoptifySystem
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vet_SearchVet_Result>("Vet_SearchVet", nameParameter);
         }
     
-        public virtual int AddKennel(string name, Nullable<int> number, Nullable<int> capacity)
+        public virtual ObjectResult<Kennel> AddKennel(string name, Nullable<int> number, Nullable<int> capacity)
         {
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
@@ -341,19 +359,27 @@ namespace AdoptifySystem
                 new ObjectParameter("capacity", capacity) :
                 new ObjectParameter("capacity", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddKennel", nameParameter, numberParameter, capacityParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel>("AddKennel", nameParameter, numberParameter, capacityParameter);
         }
     
-        public virtual int DeleteKennel(Nullable<int> id)
+        public virtual ObjectResult<Kennel> AddKennel(string name, Nullable<int> number, Nullable<int> capacity, MergeOption mergeOption)
         {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteKennel", idParameter);
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel>("AddKennel", mergeOption, nameParameter, numberParameter, capacityParameter);
         }
     
-        public virtual int UpdateKennel(Nullable<int> iD, string name, Nullable<int> number, Nullable<int> capacity)
+        public virtual ObjectResult<Kennel> UpdateKennel(Nullable<int> iD, string name, Nullable<int> number, Nullable<int> capacity)
         {
             var iDParameter = iD.HasValue ?
                 new ObjectParameter("ID", iD) :
@@ -371,97 +397,46 @@ namespace AdoptifySystem
                 new ObjectParameter("capacity", capacity) :
                 new ObjectParameter("capacity", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateKennel", iDParameter, nameParameter, numberParameter, capacityParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel>("UpdateKennel", iDParameter, nameParameter, numberParameter, capacityParameter);
         }
     
-        public virtual ObjectResult<Donation_Type> SearchDon(string name)
+        public virtual ObjectResult<Kennel> UpdateKennel(Nullable<int> iD, string name, Nullable<int> number, Nullable<int> capacity, MergeOption mergeOption)
         {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
                 new ObjectParameter("Name", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donation_Type>("SearchDon", nameParameter);
+            var numberParameter = number.HasValue ?
+                new ObjectParameter("Number", number) :
+                new ObjectParameter("Number", typeof(int));
+    
+            var capacityParameter = capacity.HasValue ?
+                new ObjectParameter("capacity", capacity) :
+                new ObjectParameter("capacity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel>("UpdateKennel", mergeOption, iDParameter, nameParameter, numberParameter, capacityParameter);
         }
     
-        public virtual ObjectResult<Donation_Type> SearchDon(string name, MergeOption mergeOption)
+        public virtual ObjectResult<Kennel> DeleteKennel(Nullable<int> id)
         {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donation_Type>("SearchDon", mergeOption, nameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel>("DeleteKennel", idParameter);
         }
     
-        public virtual ObjectResult<Donor> searchDonor(string name)
+        public virtual ObjectResult<Kennel> DeleteKennel(Nullable<int> id, MergeOption mergeOption)
         {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donor>("searchDonor", nameParameter);
-        }
-    
-        public virtual ObjectResult<Donor> searchDonor(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Donor>("searchDonor", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock> searchstock(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock>("searchstock", nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock> searchstock(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock>("searchstock", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock_Type> searchstocktype(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_Type>("searchstocktype", nameParameter);
-        }
-    
-        public virtual ObjectResult<Stock_Type> searchstocktype(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Stock_Type>("searchstocktype", mergeOption, nameParameter);
-        }
-    
-        public virtual ObjectResult<Foster_Care_Parent> searchParent(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Foster_Care_Parent>("searchParent", nameParameter);
-        }
-    
-        public virtual ObjectResult<Foster_Care_Parent> searchParent(string name, MergeOption mergeOption)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Foster_Care_Parent>("searchParent", mergeOption, nameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Kennel>("DeleteKennel", mergeOption, idParameter);
         }
     }
 }

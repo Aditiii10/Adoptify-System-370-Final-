@@ -1,0 +1,346 @@
+﻿@{
+    ViewBag.Title = "Events";
+}
+
+<div class="col-md-12" id="idx1">
+    <h1>Events</h1>
+    <div class="input-group">
+        <div class="input-group-prepend" style="color:dodgerblue">
+            <span class="input-group-text" id="basic-text1">
+                <i class="fas fa-search text-white" aria-hidden="true"></i>
+            </span>
+        </div>
+        <input type="text" id="searchEvents" class="form-control" placeholder="Search Events" aria-label="Recipient's username" aria-describedby="button-addon2" style="background-color:white; border-bottom: none !important;color:black">
+    </div>
+</div>
+<div id="idx2" class="col-md-12">
+    <h3>List of Upcomming Events</h3>
+    <table class="table table-striped  table-responsive-lg table-dark" id="tblEvents">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Ticket Price</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tblRows">
+        </tbody>
+
+    </table>
+</div>
+<div id="idx3" class="col-md-12" style="border: 1px solid black">
+    <div id="sales">
+        <h3><b>Event Sales</b></h3>
+        <hr style="background-color:dodgerblue" />
+        <div style="border-radius:20px;border: 1px solid black;width:400px;margin-left:350px">
+            <br />
+            <div style="padding-left:50px" class="form-group">
+                <label>Event Name:</label><input class="form-control" style="border-radius:15px" disabled id="eventNameS" /><br />
+                <label>Ticket Price:</label><input class="form-control" style="border-radius:15px" disabled id="eventPriceS" /><br />
+                <label>Tickets Availible:</label><input class="form-control" style="border-radius:15px" disabled id="eventAvailibiltys" />
+            </div>
+            <br />
+        </div>
+        <br />
+        <br />
+        <table class="table table-striped  table-responsive-lg table-dark" id="tblSearchedEvents">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th> Customer Name</th>
+                    <th> Customer Surname</th>
+                    <th> Customer Email</th>
+                    <th>Ticket Purchased</th>
+                    <th>Total Paid </th>
+                </tr>
+            </thead>
+            <tbody id="tblSearchedRows">
+            </tbody>
+
+        </table>
+        <br />
+        <div style="float:right">
+            <h3 style="color:dodgerblue">Grand Total: <input style="border:none" id="Total" /></h3>
+            <hr style="background-color:black" />
+
+        </div>
+    </div>
+    <div class="btn">
+        <button type="button" class="btn btn-dark" id="btnBack"> Back</button>
+        <button type="button" class="btn btn-success" id="btnPrint" onclick="printContent('sales');"> Print</button>
+    </div>
+
+</div>
+<input id="ProCode4" style="display:none" />
+<input id="ProCode5" style="display:none" />
+<!--Modal for Adding New Payment -->
+<div id="myModalAdd" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="border-radius:15px">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Event Sale</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h3>Event Details</h3>
+                    <div style="background-color:rgba(0,0,0,0);margin-left:100px" class="form-group">
+                        <label>Event Name:</label><input class="form-control" style="border-radius:15px" disabled id="eventName" /><br />
+                        <label>Ticket Price:</label><input class="form-control" style="border-radius:15px" disabled id="eventPrice" /><br />
+                        <label>Tickets Availible:</label><input class="form-control" style="border-radius:15px" disabled id="eventAvailibilty" />
+                        <input class="form-control" style="display:none" disabled id="eventId" />
+                    </div>
+                </div>
+                <hr style="background-color:#0094ff" />
+                <div>
+                    <div style="margin-left:100px">
+                        <h2>Capture Details</h2>
+                        <div class="form-group">
+                            <label> Customer Name</label>
+                            <input type="text" required id="txtCusName" class="form-control" placeholder="Enter Name" style="border-radius:20px" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Customer Surname</label>
+                            <input type="text" required id="txtCusSurname" class="form-control" placeholder="Enter Surname" style="border-radius:20px" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" required id="txtCusEmail" class="form-control" placeholder="Enter Email" style="border-radius:20px" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Desired Tickets</label>
+                            <input type="number" required min="1" id="txtCusAmount" class="form-control" style="border-radius:20px" />
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" id="btnPay" class="btn btn-success" style="border-radius:20px">Pay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModalExecute" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="border-radius:15px">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Event Sale</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h3>Payment</h3>
+                    <div class="form-group">
+                        <label> Total Amount</label>
+                        <input type="text" disabled id="txttotalAmount" class="form-control" placeholder="Enter Amount" style="border-radius:20px;background-color:rgba(0,0,0,0)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Payment Type</label>
+                        <select id="txtPayment" class="form-control" placeholder="Enter Surname" style="border-radius:20px;background-color:rgba(0,0,0,0)">
+                            <option>Cash</option>
+                            <option>Card</option>
+                            <option>Cheque</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Payment Description</label>
+                        <textarea id="txtDescription" class="form-control" placeholder="Enter..Description" style="border-radius:20px;background-color:rgba(0,0,0,0)"></textarea>
+                    </div>
+                    <div>
+                        <button type="button" id="btnSave" class="btn btn-success" style="border-radius:20px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <!--Scripts-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#idx3').hide();
+            $('#idx1').show();
+            $('#idx2').show();
+            FetchEventsAndRenderTable();
+            function FetchEventsAndRenderTable() {
+                $.ajax
+                    ({
+                        type: "GET", //define type to retrive data
+                        url: "/Events/GetEvents", // provide url to get data from appointments
+
+                        //If Success Fetch //
+                        success: function (Events) {
+                            $('#tblEvents').find("tbody").empty();
+                            var i = 0;                        
+                            $.each(Events, function (i, item) {
+                                var rowS = "<tr class='search'><td>" + item.Date + "</td><td class='nr'>" + item.Name + "</td><td class='nr2'>" + item.Price + "</td><td>" + item.Description + "</td><td><button type='button' id='btnSale' class='btn btn-sm btn-outline-success' style='border-radius:20px'>Add Sale</button></td><td><button type='button' id='btnView' class='btn btn-sm btn-outline-primary' style='border-radius:20px'>View Sales</button></td><td style='display:none' class='id'>" + item.ID + "</td><td style='display:none' class='nr3'>" + item.Tickets + "</td></tr>";
+                                i++
+                                $("#tblRows").append(rowS);
+                            })
+                        },
+                        //Validation error handling
+                        error: function (error) {
+                            alert('failed');
+                        }
+                    })
+            }
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            };
+            $("#searchEvents").keyup(function () {
+                var searchText = $("#searchEvents").val().toLowerCase();
+                $(".search").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#btnAdd').click(function () {
+                $('#idx2').hide();
+                $('#idx3').show();
+            });
+            var Sale = [];
+            $('#btnPay').click(function () {
+                Sale = []
+                var Name = $('#txtCusName').val();
+                var SurName = $('#txtCusSurname').val();
+                var Email = $('#txtCusEmail').val();
+                var Amount = $('#txtCusAmount').val();
+                var Availible = $('#eventAvailibilty').val();
+                var Event = $('#eventId').val();
+                if (parseFloat(Amount) > parseFloat(Availible)) {
+                    alert("The Ticket Amount Selected is Not Availible...Please Choose again");
+                    return false;
+                }
+                if ($('#txtCusName').val() == "" || $('#txtCusSurname').val() == "" || $('#txtCusEmail').val() == "" || $('#txtCusAmount').val() == "") {
+                    alert("One of The Input Fields is Blank Please Double Check");
+                    return false;
+                }
+                var pTotal = $('#eventPrice').val();
+                var Total = parseFloat(Amount) * parseFloat(pTotal);
+                $('#txttotalAmount').val(Total);
+                var Total1 = Total;
+                Sale.push({ Name, SurName, Email, Amount, Total1, Event });
+                $('#myModalAdd').modal('hide');
+                $('#myModalExecute').modal('show');
+
+            });
+            $('#btnSave').click(function () {
+                var Type = $('#txtPayment').val();
+                var Description = $('#txtDescription').val();
+                var Name1 = Sale[0].Name;
+                var Surname1 = Sale[0].SurName;
+                var Email1 = Sale[0].Email;
+                var Amount1 = Sale[0].Amount;
+                var Total = Sale[0].Total1;
+                var Event1 = Sale[0].Event;
+                //if ($('#txtPayment').val().trim() == "" || $('#txtDescription').val().trim() == "") {
+                //    alert("One of The Input Fields is Blank Please Double Check");
+                //    return false;
+                //}
+                $.ajax({
+                    url: "/Events/CreateEvent",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        "Name": Name1,
+                        "Surname": Surname1,
+                        "Email": Email1,
+                        "Amount": Amount1,
+                        "Total": Total,
+                        "Event": Event1,
+                        "Description": Description,
+                        "Type": Type
+                    }),
+                    success: function (data) {
+                        alert("success");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert("failed");
+                    }
+
+                });
+                
+            });
+            $('body').on('click', '#btnView', function () {
+                var $row = $(this).closest('tr');
+                var text = $row.find(".id").text();
+                var text1 = $row.find(".nr").text();
+                var text2 = $row.find(".nr2").text();
+                var text3 = $row.find(".nr3").text();
+                $.ajax({
+                    url: "/Events/ViewEvent",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ "Name": text }),
+                    success: function (data) {
+                        $('#tblSearchedEvents').find("tbody").empty();
+                        var i = 0;
+                        var length = data.Date.length;
+                         $('#Total').val(" " + "R" +  data.GrandTotal);
+                        while (i < length) {
+                            var rowS = "<tr><td>" + data.Date[i] + "</td><td>" + data.CusName[i] + "</td><td>" + data.Surname[i] + "</td><td>" + data.Email[i] + "</td><td>" + data.Tickets[i] + "</td><td>" + data.Total[i] + "</td></tr>";
+                            i++
+                            $("#tblSearchedRows").append(rowS);
+                        }
+                        $('#eventNameS').val(text1);
+                        $('#eventPriceS').val(text2);
+                        $('#eventAvailibiltys').val(text3);
+
+                        $('#idx1').hide();
+                        $('#idx2').hide();
+                        $('#idx3').show();
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert("failed");
+                    }
+                });
+            });
+            $('#btnBack').click(function () {
+                        $('#idx3').hide();
+                        $('#idx1').hide();
+                        $('#idx2').show();
+            });
+            $('body').on('click', '#btnSale', function () {
+                var $row = $(this).closest('tr');
+                var text = $row.find(".nr").text();
+                var text2 = $row.find(".nr2").text();
+                var text3 = $row.find(".nr3").text();
+                var text4 = $row.find(".id").text();
+                $('#eventName').val(text);
+                $('#eventPrice').val(text2);
+                $('#eventAvailibilty').val(text3);
+                $('#eventId').val(text4);
+                $('#myModalAdd').modal('show');
+            });
+        });
+    </script>
+    <script>
+        function printContent(el) {
+            var retorepage = $('body').html();
+            var printcontent = $('#' + el).clone();
+            $('body').empty().html(printcontent);
+            window.print();
+            $('body').html(retorepage);
+        }
+    </script>
+}
+

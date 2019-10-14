@@ -73,3 +73,10 @@
 
        
     </div>
+
+    <script>
+        document.getElementById("AppointmentDate").min = new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate()
+
+        var today = new Date();
+        document.getElementById("AppointmentDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+    </script>

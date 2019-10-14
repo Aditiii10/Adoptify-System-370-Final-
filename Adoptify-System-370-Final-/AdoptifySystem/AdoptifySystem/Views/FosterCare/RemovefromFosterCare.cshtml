@@ -3,7 +3,12 @@
     ViewBag.Title = "RemovefromFosterCare";
 
 }
-
+@if (!string.IsNullOrEmpty(ViewBag.err))
+{
+    <script type="text/javascript">
+        alert('@ViewBag.err');
+    </script>
+}
 <mat-toolbar class="form-header ">
     <h1 class="mat-headline center-align table-primary">Remove Animal from Foster</h1>
 </mat-toolbar>

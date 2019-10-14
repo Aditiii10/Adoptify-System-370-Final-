@@ -22,14 +22,14 @@ namespace AdoptifySystem
     
         public int Event_ID { get; set; }
         public string Event_Name { get; set; }
-        public Nullable<System.DateTime> Event_StartTime { get; set; }
-        public Nullable<System.DateTime> Event_EndTime { get; set; }
-        public Nullable<int> Event_Guest_Number { get; set; }
-        public Nullable<decimal> Event_Ticket_Price { get; set; }
+        public TimeSpan Event_Start { get; set; }
+        public DateTime Event_Date { get; set; }
+        public string Event_Status { get; set; }
+        public decimal Event_Ticket_Price { get; set; }
         public string Event_Location { get; set; }
         public string Event_Description { get; set; }
         public Nullable<int> Event_Type_ID { get; set; }
-        public Nullable<int> TicketAvailable { get; set; }
+        public int TicketAvailable { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer_Event> Customer_Event { get; set; }

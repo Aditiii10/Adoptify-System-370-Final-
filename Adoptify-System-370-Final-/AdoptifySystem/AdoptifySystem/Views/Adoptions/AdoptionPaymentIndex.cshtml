@@ -23,7 +23,7 @@
                 @Html.TextBox("search")<input type="submit" value="Search" ? />
             }
         </p>*@
-        @using (Html.BeginForm("AdoptionPayemenHistory", "Adoptions", FormMethod.Post))
+        @using (Html.BeginForm("AdoptionPaymentIndex", "Adoptions", FormMethod.Post))
         {
             <div class="row">
                 <div class="col-md-5">
@@ -73,6 +73,7 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Adoption_Date)
+                        @*@Html.DisplayFor(modelItem => item.AdoptionPayment.PaymentDate)*@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)  @Html.DisplayFor(modelItem => item.Adopter.Adopter_Surname), @Html.DisplayFor(modelItem => item.Adopter.Adopter_Address), @Html.DisplayFor(modelItem => item.Adopter.Adopter_CellNumber)

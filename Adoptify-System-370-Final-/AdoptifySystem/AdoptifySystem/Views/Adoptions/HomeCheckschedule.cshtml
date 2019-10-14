@@ -74,6 +74,10 @@
     </div>
 
 <script>
-     var today = new Date();
+    //Disable Previous day from current day 
+ document.getElementById("HCSdate").min = new Date().getFullYear() + "-" +  parseInt(new Date().getMonth() + 1 ) + "-" + new Date().getDate()
+
+    //Default to current date
+    var today = new Date();
     document.getElementById("HCSdate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
 </script>

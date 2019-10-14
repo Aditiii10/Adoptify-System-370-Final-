@@ -7,9 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem;
-using AdoptifySystem.Models;
 
-namespace AdoptifySystem.Controllers
+namespace AdoptifySystem.Controllers.Cassie
 {
     public class Event_TypeController : Controller
     {

@@ -18,7 +18,7 @@ namespace AdoptifySystem.Controllers
         private const string key = "qaz123!@@)(*";//this needs to be generated for each person so that it is unique barcode
                                                   /* any 10-12 char string for use as private key in google authenticator
                                                   use later for generate Google authenticator code.*/
-       static  int sub = 2;
+
         //this is the Db that i will be unstatnitatiung to use thought the whole controller
         Wollies_ShelterEntities db = new Wollies_ShelterEntities();
         public static Flexible flex = new Flexible();
@@ -88,7 +88,7 @@ namespace AdoptifySystem.Controllers
         {
             if (Convert.ToInt32(Session["TempID"]) == 0)
             {
-                 return RedirectToAction("Login","Admin");
+                return RedirectToAction("Logout");
             }
             return View();
         }
@@ -120,7 +120,7 @@ namespace AdoptifySystem.Controllers
                     User_ user = db.User_.Find(tempid);
                     if (user == null)
                     {
-                         return RedirectToAction("Login","Admin");
+                        return RedirectToAction("Logout");
                     }
                     user.FirstTime = false;
                     db.SaveChanges();
@@ -169,7 +169,7 @@ namespace AdoptifySystem.Controllers
                         string resetCode = Membership.GeneratePassword(12, 1);
                         SendVerificationLinkEmail(account.Emp_Email, resetCode, "ResetPassword");
                         var hashed = Crypto.Hash(resetCode, "MD5");
-                        user.Password = resetCode;
+                        user.Password = hashed;
                         //This line I have added here to avoid confirm password not match issue , as we had added a confirm password property 
                         //in our model class in part 1
                         dc.Configuration.ValidateOnSaveEnabled = false;
@@ -194,14 +194,23 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                
+                if (Convert.ToInt32(Session["ID"]) == 0)
+                {
+                    return RedirectToAction("Logout");
+                }
+                if (flex.Authorize(Convert.ToInt32(Session["ID"]), 1))
+                {
                     List<Employee> emp = new List<Employee>();
                     emp = db.Employees.Where(z => z.Employee_Status == true).ToList();
                     flex.employeelist = emp;
                     flex.employee = null;
                     ViewBag.Time = DateTime.Now;
                     return View(flex);
-               
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception)
             {
@@ -251,39 +260,29 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-                if (Convert.ToInt32(Session["ID"]) == 0)
+                //int userId = Convert.ToInt32(Request.Form["id"]);
+                //fetch the data by userId and assign in a variable, for ex: myUser
+                //Flexible myUser = new Flexible();
+                if (id == null)
                 {
-                     return RedirectToAction("Login","Admin");
-                }                //int userId = Convert.ToInt32(Request.Form["id"]);
-                                 //fetch the data by userId and assign in a variable, for ex: myUser
-                                 //Flexible myUser = new Flexible();
-                if (flex.Authorize(Convert.ToInt32(Session["ID"]), sub))
-                {
-                    if (id == null)
-                    {
-                        return RedirectToAction("Checkin");
-                    }
-                    var emp = flex.employeelist.Where(z => z.Emp_ID == id).FirstOrDefault();
-                    if (id == null)
-                    {
-                        ViewBag.err = "Employee not found";
-                        return RedirectToAction("Checkin");
-                    }
-                    flex.employee = emp;
-                    if (button == "checkout")
-                    {
-                        return View("Checkout", flex);
-                    }
-                    if (button == "checkin")
-                    {
-                        return View("Checkin", flex);
-                    }
-                    return View("Search");
+                    return RedirectToAction("Checkin");
                 }
-                else
+                var emp = flex.employeelist.Where(z => z.Emp_ID == id).FirstOrDefault();
+                if (id == null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.err = "Employee not found";
+                    return RedirectToAction("Checkin");
                 }
+                flex.employee = emp;
+                if (button == "checkout")
+                {
+                    return View("Checkout", flex);
+                }
+                if (button == "checkin")
+                {
+                    return View("Checkin", flex);
+                }
+                return View("Search");
             }
             catch (Exception)
             {
@@ -298,7 +297,7 @@ namespace AdoptifySystem.Controllers
             {
                 if (Convert.ToInt32(Session["ID"]) == 0)
                 {
-                     return RedirectToAction("Login","Admin");
+                    return RedirectToAction("Logout");
                 }
                 if (flex.Authorize(Convert.ToInt32(Session["ID"]), 1))
                 {
@@ -386,13 +385,13 @@ namespace AdoptifySystem.Controllers
                     User_ user = db.User_.Find(test);
                     if (user == null)
                     {
-                         return RedirectToAction("Login","Admin");
+                        return RedirectToAction("Logout");
                     }
                     return View(user);
                 }
                 else
                 {
-                     return RedirectToAction("Login","Admin");
+                    return RedirectToAction("Logout");
                 }
             }
             catch (Exception)
@@ -405,17 +404,14 @@ namespace AdoptifySystem.Controllers
 
         public ActionResult AddUserRole()
         {
-
             try
             {
-
-                    flex.subsystemslist = db.Subsystems.ToList();
+                flex.subsystemslist = db.Subsystems.ToList();
                 if (flex.subsystemslist == null)
                 {
                     return RedirectToAction("Search");
                 }
                 return View(flex);
-                
             }
             catch (Exception)
             {
@@ -454,6 +450,7 @@ namespace AdoptifySystem.Controllers
                         {
                             db.Role_.Add(role);
                             db.SaveChanges();
+                            flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User Role");
                         }
                     }
                     else
@@ -461,7 +458,7 @@ namespace AdoptifySystem.Controllers
 
                         db.Role_.Add(role);
                         db.SaveChanges();
-
+                        flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User Role");
 
                     }
                     if (Subsystem_Id.Length > 0)
@@ -500,15 +497,12 @@ namespace AdoptifySystem.Controllers
             List<Role_> roles = new List<Role_>();
             try
             {
-
-              
-                    roles = db.Role_.ToList();
+                roles = db.Role_.ToList();
                 if (roles.Count == 0)
                 {
 
                 }
                 return View(roles);
-             
             }
             catch (Exception e)
             {
@@ -525,13 +519,12 @@ namespace AdoptifySystem.Controllers
             List<Role_> roles = new List<Role_>();
             try
             {
-                    roles = db.Role_.ToList();
+                roles = db.Role_.ToList();
                 if (roles.Count == 0)
                 {
 
                 }
                 return View(roles);
-              
             }
             catch (Exception e)
             {
@@ -546,8 +539,7 @@ namespace AdoptifySystem.Controllers
         {
             try
             {
-
-                    if (id == null)
+                if (id == null)
                 {
                     return RedirectToAction("SearchUserRole");
                 }
@@ -560,7 +552,6 @@ namespace AdoptifySystem.Controllers
                 flex.role = role;
                 flex.subsystemslist = subsystems;
                 return View(flex);
-             
             }
             catch (Exception)
             {
@@ -603,7 +594,7 @@ namespace AdoptifySystem.Controllers
                             dbrole.Role_Name = role.Role_Name;
 
                             db.SaveChanges();
-
+                            flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "User Role");
                         }
                     }
 

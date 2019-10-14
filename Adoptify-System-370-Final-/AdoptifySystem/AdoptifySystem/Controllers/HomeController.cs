@@ -18,8 +18,7 @@ namespace AdoptifySystem.Controllers
     {
         private Wollies_ShelterEntities dc = new Wollies_ShelterEntities();
         // GET: Home
-        public static Flexible flex = new Flexible();
-        static int sub = 16;
+        
        
         public ActionResult Index()
         {
