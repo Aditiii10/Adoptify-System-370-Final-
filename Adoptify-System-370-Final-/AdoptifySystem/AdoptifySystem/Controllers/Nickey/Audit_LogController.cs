@@ -13,7 +13,7 @@ namespace AdoptifySystem.Controllers.Zinhle
     public class Audit_LogController : Controller
     {
         private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
-
+        
         // GET: Audit_Log
         public ActionResult Index()
         {

@@ -57,11 +57,29 @@ namespace AdoptifySystem.Controllers.Zinhle
             }
 
         }
-
-        public ContentResult test(string Cross_Breed, Animal animal, string[] breeds, Microchip micro, HttpPostedFileBase animalPicture, FormCollection form)
+        [HttpPost]
+        public ActionResult AddTemporaryAnimal(string Cross_Breed, Animal animal, string[] breeds, Microchip micro, HttpPostedFileBase animalPicture)
         {
             try
             {
+                ///this is where we check information is correct
+                if (animal.Animal_Name == null || animal.Animal_Size == null || animal.Animal_Description == null 
+                    || animal.Animal_Castration == null || animal.Animal_Coat == null || animal.Animal_Entry_Date == null 
+                    || animal.Animal_Gender == null || animal.Animal_Sterilization == null || animal.Animal_Type_ID == null)
+                {
+                    ViewBag.err = "Please enter all the Animal Details";
+                    return View("");
+                }
+
+                //if (micro.Implanters_PIN_Number == null && micro.Animal_Microchip_Code == null &&
+                //    micro.Owner_Address == null && micro.Owner_Contact_Number == null && micro.Owner_Name == null && micro.Date_of_Implant != null)
+                //{
+
+                //    ViewBag.err = "Please enter all the Mirochip Details";
+                //    return View("");
+                //}
+                
+                
                 if (animalPicture != null)
                 {
                     //this is where we convert the contract to add to the database
@@ -89,7 +107,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                     animal.Animal_Status_ID = status.Animal_Status_ID;
                     db.Animals.Add(animal);
                     db.SaveChanges();
-                    flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal");
+                    //flex.CreateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal");
                 }
                 if (Cross_Breed == "True")
                 {
@@ -262,7 +280,7 @@ namespace AdoptifySystem.Controllers.Zinhle
         }
 
         [HttpPost]
-        public ContentResult MaintainAnimal(Animal animal, Microchip micro, HttpPostedFileBase animalPicture)
+        public ActionResult MaintainAnimal(string Cross_Breed, Animal animal, string[] breeds, Microchip micro, HttpPostedFileBase animalPicture)
         {
             try
             {
@@ -283,7 +301,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                         {
                             if (item.Animal_ID != animal.Animal_ID)
                             {
-                                return Content("");
+                                return View("There is a duplicate");
                             }
                             
                         }
@@ -293,12 +311,14 @@ namespace AdoptifySystem.Controllers.Zinhle
 
                 searchanimal.Animal_Name = animal.Animal_Name;
                 searchanimal.Animal_Coat = animal.Animal_Coat;
-                searchanimal.Animal_Age = searchanimal.Animal_Age;
+                searchanimal.Animal_Age = animal.Animal_Age;
                 searchanimal.Animal_Description = animal.Animal_Description;
                 searchanimal.Animal_Sterilization = animal.Animal_Sterilization;
                 searchanimal.Animal_Castration = animal.Animal_Castration;
                 searchanimal.Animal_Size = animal.Animal_Size;
                 searchanimal.Animal_Gender = animal.Animal_Gender;
+                searchanimal.Animal_Type_ID = animal.Animal_Type_ID;
+
                 if (animalPicture != null)
                 {
                     //this is where we convert the contract to add to the database
@@ -316,7 +336,30 @@ namespace AdoptifySystem.Controllers.Zinhle
 
 
                 db.SaveChanges();
-                flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal");
+
+                if (Cross_Breed == "True")
+                {
+                    // Split authors separated by a comma followed by space  
+                    string[] breed = breeds[0].Split(',');
+                    foreach (var item in breed)
+                    {
+                        CrossBreed cross = new CrossBreed();
+                        cross.Animal_ID = animal.Animal_ID;
+                        cross.Animal_Breed_ID = Convert.ToInt32(item);
+                        db.CrossBreeds.Add(cross);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    CrossBreed cross = new CrossBreed();
+                    cross.Animal_ID = animal.Animal_ID;
+                    cross.Animal_Breed_ID = Convert.ToInt32(breeds);
+                    db.CrossBreeds.Add(cross);
+                    db.SaveChanges();
+
+                }
+                //flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal");
                 if (micro != null)
                 {
                     if (searchanimal.Microchips.Count != 0 || searchanimal.Microchips != null)

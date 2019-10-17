@@ -13,6 +13,8 @@
         <a class="nav-link" data-toggle="tab" href="#profile">Microchip</a>
     </li>
 </ul>
+@*@using (Html.BeginForm("AddTemporaryAnimal", "Animal"))
+{*@
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade show active" id="home">
         @Html.AntiForgeryToken()
@@ -28,7 +30,7 @@
             <div class="form-group">
                 <label><b>Animal Type</b></label><br />
                 <div class="col-md-10">
-                    <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select" style="width:30%;" onchange="LoadProduct(this)" title="Select Animal Type">
+                    <select name="Animal_Type_ID" id="Animal_Type_ID" class="custom-select" style="width:30%;" onclick="LoadProduct(this)" title="Select Animal Type">
                         @if (Model.animalTypes != null)
                         {
                             <option value="0">-- Select Animal Type--</option>
@@ -225,12 +227,56 @@
                 @Html.ActionLink("Cancel", "SearchAnimal", "Animal", new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
                 <button type="submit" name="button" value="Save" onclick="Save()" title="Click to Add the Following Animal Details" class="btn btn-success float-right col-md-2">Save and Add to Kennel</button>
             </div>
+
+        </div>
+
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Succesfully Stored</h5>
+                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>*@
+                </div>
+                <div class="modal-body">
+                    <p>Animal has be stored would you like to place him in a kennel.</p>
+                </div>
+                <div class="modal-footer" onclick="hide()">
+                    @Html.ActionLink("Add to Kennel", "SearchAnimal", "Animal", new { @class = "btn btn-success", @title = "Click to Add the Following Animal Details" })
+                    @Html.ActionLink("Cancel", "SearchAnimal", "Animal", new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
+                </div>
+            </div>
         </div>
     </div>
-    <button onclick="Clearboxes()">Clear</button>
+    <div id="failed" class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Succesfully Failed</h5>
+                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>*@
+                </div>
+                <div class="modal-body">
+                    <p>Failed.</p>
+                </div>
+                <div class="modal-footer" onclick="hide()">
+                    @*@Html.ActionLink("Add to Kennel", "SearchAnimal", "Animal", new { @class = "btn btn-success", @title = "Click to Add the Following Animal Details" })
+                    @Html.ActionLink("Cancel", "SearchAnimal", "Animal", new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+    @*}*@
+    @*<button onclick="Clearboxes()">Clear</button>*@
 </div>
 
-<script>
+    <script>
+        function hide() {
+            document.getElementById('modal-footer').style.display = 'none';
+        }
     function yesnoCheck() {
         if (document.getElementById('Cross_Breed_Yes').checked) {
             document.getElementById('second_breed').style.display = 'block';
@@ -290,6 +336,7 @@
 
     }
 
+
     function Save()
     {
 
@@ -308,6 +355,7 @@
         var Date_of_Implant = document.getElementById("Date_of_Implant");
         var Animal_Entry_Date = document.getElementById("Animal_Entry_Date");
         var Animal_Location = document.getElementById("Animal_Location");
+
         var Animal_Microchip_Code = document.getElementById("Animal_Microchip_Code");
         var Implanters_PIN_Number = document.getElementById("Implanters_PIN_Number");
         var Owner_Name = document.getElementById("Owner_Name");
@@ -400,6 +448,82 @@
             Animal_Location.classList.add("is-valid");
         }
 
+        //this is where i Validate Microtab
+        if (Animal_Microchip_Code.value != "" || Implanters_PIN_Number.value != "" || Owner_Name.value != "" || Owner_Contact_Number.value != "" || Owner_Address.value != "")
+        {
+            alert("Time To validate if all of them need to be validated");
+            if (Animal_Microchip_Code.value == "") {
+            //first remove
+            Animal_Microchip_Code.classList.remove("is-valid");
+            //then add the class you want
+            Animal_Microchip_Code.classList.add("is-invalid");
+            //alert("Please enter where Animal was found Location");
+            isvalid = false;
+        } else {
+            //first remove
+            Animal_Microchip_Code.classList.remove("is-invalid");
+            //then add the class you want
+            Animal_Microchip_Code.classList.add("is-valid");
+            }
+            if (Implanters_PIN_Number.value == "") {
+            //first remove
+            Implanters_PIN_Number.classList.remove("is-valid");
+            //then add the class you want
+            Implanters_PIN_Number.classList.add("is-invalid");
+            //alert("Please enter where Animal was found Location");
+            isvalid = false;
+        } else {
+            //first remove
+            Implanters_PIN_Number.classList.remove("is-invalid");
+            //then add the class you want
+            Implanters_PIN_Number.classList.add("is-valid");
+            }
+            if (Owner_Name.value == "") {
+            //first remove
+            Owner_Name.classList.remove("is-valid");
+            //then add the class you want
+            Owner_Name.classList.add("is-invalid");
+            //alert("Please enter where Animal was found Location");
+            isvalid = false;
+        } else {
+            //first remove
+            Owner_Name.classList.remove("is-invalid");
+            //then add the class you want
+            Owner_Name.classList.add("is-valid");
+            }
+            if (Owner_Contact_Number.value == "") {
+            //first remove
+            Owner_Contact_Number.classList.remove("is-valid");
+            //then add the class you want
+            Owner_Contact_Number.classList.add("is-invalid");
+            //alert("Please enter where Animal was found Location");
+            isvalid = false;
+        } else {
+            //first remove
+            Owner_Contact_Number.classList.remove("is-invalid");
+            //then add the class you want
+            Owner_Contact_Number.classList.add("is-valid");
+            }
+            if (Owner_Address.value == "") {
+            //first remove
+            Owner_Address.classList.remove("is-valid");
+            //then add the class you want
+            Owner_Address.classList.add("is-invalid");
+            //alert("Please enter where Animal was found Location");
+            isvalid = false;
+        } else {
+            //first remove
+            Owner_Address.classList.remove("is-invalid");
+            //then add the class you want
+            Owner_Address.classList.add("is-valid");
+        }
+
+        } else {
+             alert("Dont need to validate");
+            isvalid = false;
+        }
+        
+
 
         var breed = false;
         var ii = 0;
@@ -482,9 +606,10 @@
         var b = document.getElementById("breed1").selectedIndex;
         if (b == 0) {
             alert("Pick a Breed");
+            //$('#myModal').modal('toggle');
             isvalid = false;
         }
-
+        //isvalid = true;
         if (isvalid)
         {
 
@@ -520,23 +645,27 @@
             formData.append("Date_of_Implant", Date_of_Implant.value);
 
             $("#loader").show();
-            console.log(formData)
+            //console.log(formData);
             $.ajax(
                 {
                 type: "POST",
                 data: formData,
-                url: "/Animal/test",
+                url: "/Animal/AddTemporaryAnimal",
                     cache: false,
                     contentType: false,
                     processData: false,
                 success: function () {
-                    $("#loader").hide();
+                     $("#loader").hide();
                     isvalid = true;
-                    this.Clearboxes();
-                    window.location.href = '@Url.Action("Create","Animal_Kennel_History")';
+                    //this.Clearboxes();
+                    $('#myModal').modal({"backdrop": "static"});
+                    //window.location.href = '@Url.Action("Create","Animal_Kennel_History")';
+                   
                 },
                 error: function (error) {
                     $("#loader").hide();
+                    //$("#failed").modal({"backdrop": "static"});
+                    $('#failed').modal('show');
                     isvalid = false;
                     console.log(error);
                     //alert("There was an internal error try again later" + error);
@@ -547,7 +676,7 @@
 
             //}
         } else {
-            alert("all is not valid");
+            //alert("all is not valid");
         }
 
 
@@ -566,9 +695,9 @@
         document.getElementById("Owner_Contact_Number").value = "";
         document.getElementById("Owner_Address").value = "";
     }
-</script>
-@section scripts{
-    <script>
+    </script>
+    @section scripts{
+        <script>
         $(function () {
             var successMessage = '@TempData["SuccessMessage"]'
             if (successMessage != '')
@@ -585,23 +714,23 @@
                 alertify.error(successMessage);
         });
 
-    </script>
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWS2RFX5WP2nl4kXOGpCZwjHsYFEQp5iA&=false&libraries=places"></script>
-    <script type="text/javascript">
+        </script>
+        @Scripts.Render("~/bundles/jqueryval")
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWS2RFX5WP2nl4kXOGpCZwjHsYFEQp5iA&=false&libraries=places"></script>
+        <script type="text/javascript">
 
-        google.maps.event.addDomListener(window, 'load', function () {
-            var options = {
-                types: ['(regions)'],
-                componentRestrictions: { country: "za" }
-            };
+            google.maps.event.addDomListener(window, 'load', function () {
+                var options = {
+                    types: ['(regions)'],
+                    componentRestrictions: { country: "za" }
+                };
 
-            var input = document.getElementById('Animal_Location');
-            var places = new google.maps.places.Autocomplete(input, options);
-            var input1 = document.getElementById('Owner_Address');
-            var places1 = new google.maps.places.Autocomplete(input1, options);
+                var input = document.getElementById('Animal_Location');
+                var places = new google.maps.places.Autocomplete(input, options);
+                var input1 = document.getElementById('Owner_Address');
+                var places1 = new google.maps.places.Autocomplete(input1, options);
 
-        });
-    </script>
-    @Scripts.Render("~/bundles/jqueryval")
-}
+            });
+        </script>
+        @Scripts.Render("~/bundles/jqueryval")
+    }
