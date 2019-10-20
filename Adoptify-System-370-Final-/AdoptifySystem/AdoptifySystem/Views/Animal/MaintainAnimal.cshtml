@@ -4,23 +4,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml ";
 }
 
+
+<br />
+@Html.AntiForgeryToken()
+<div class=" table-primary"><h1>Maintain Animal</h1></div>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" title="Click to View Animal Details" data-toggle="tab" href="#home">Animal Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" title="Click to View Microchip Details" data-toggle="tab" href="#profile">Microchip</a>
+    </li>
+</ul>
+<br />
 <div id="myTabContent" class="tab-content">
-    <br />
-    @Html.AntiForgeryToken()
-    <div class=" table-primary"><h1>Maintain Animal</h1></div>
-
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link active" title="Click to View Animal Details" data-toggle="tab" href="#home">Animal Details</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" title="Click to View Microchip Details" data-toggle="tab" href="#profile">Microchip</a>
-        </li>
-    </ul>
-    <br />
-
     <div class="tab-pane fade show active" id="home">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input value="@Model.animal.Animal_ID" name="Animal_ID" id="Animal_ID" hidden />
         <div class="column">
             <div class="text-center">
                 @if (Model.animal.Animal_Image != null)
@@ -311,21 +312,7 @@
                             <label class="custom-control-label" for="Large">Large</label>
                         </div>
                     }
-                    else
-                    {
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="Animal_Size" value="Small" id="Small" class="custom-control-input">
-                            <label class="custom-control-label" for="Small">Small</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="Animal_Size" value="Medium" id="Medium" class="custom-control-input">
-                            <label class="custom-control-label" for="Medium">Medium</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="Animal_Size" value="Large" id="Large" class="custom-control-input">
-                            <label class="custom-control-label" for="Large">Large</label>
-                        </div>
-                    }
+
 
                 </div>
 
@@ -466,6 +453,7 @@
         @Html.ActionLink("Delete", "DeleteAnimal", new { id = Model.animal.Animal_ID }, new { @class = "btn btn-danger", @style = "width:100%", @title = "Click to go delete animal" })
 
     </div>
+    @*}*@
 </div>
 <script>
     function yesnoCheck() {
@@ -534,7 +522,7 @@
 
     function Save()
     {
-
+        var Animal_ID = document.getElementById("Animal_ID");
         var Animal_Type_ID = document.getElementById("Animal_Type_ID");
         var breed1 = document.getElementById("breed1");
         var breed2 = document.getElementById("breed2");
@@ -739,6 +727,7 @@
             var fileUpload = $("#animalPicture").get(0);
             var files = fileUpload.files;
 
+            formData.append("Animal_ID", Animal_ID.value );
             formData.append("Animal_Name", Animal_Name.value );
             formData.append("Animal_Coat", Animal_Coat.value );
             formData.append("Animal_Age", Animal_Age.value);

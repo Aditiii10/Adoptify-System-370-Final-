@@ -30,38 +30,5 @@ namespace AdoptifySystem
         public virtual ICollection<Animal> Animals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Emp_Kennel> Emp_Kennel { get; set; }
-
-        public int Capacityleft()
-        {
-            int capacityleft = 0;
-            int capacity = Convert.ToInt32(this.Kennel_Capacity);
-            int inkennel = 0;
-            try
-            {
-                using (Wollies_ShelterEntities db = new Wollies_ShelterEntities())
-                {
-                    if (this.Animals == null)
-                    {
-                        inkennel = 0;
-                    }
-                    else
-                    {
-                        foreach (var item in this.Animals)
-                        {
-                            inkennel++;
-                        }
-                    }
-                }
-                capacityleft = capacity - inkennel;
-                return capacityleft;
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
-
-        }
-
     }
 }

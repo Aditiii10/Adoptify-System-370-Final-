@@ -3841,6 +3841,15 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <FunctionImport Name="DeleteKennel" EntitySet="Kennels" ReturnType="Collection(Wollies_ShelterModel.Kennel)">
             <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="searchDonor" EntitySet="Donors" ReturnType="Collection(Wollies_ShelterModel.Donor)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchDon" EntitySet="Donation_Type" ReturnType="Collection(Wollies_ShelterModel.Donation_Type)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchStock" EntitySet="Stocks" ReturnType="Collection(Wollies_ShelterModel.Stock)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AnimalType_SearchAnimalType_Result">
           <Property Type="Int32" Name="Animal_Type_ID" Nullable="false" />
@@ -4810,6 +4819,9 @@ warning 6002: The table/view 'Wollies_Shelter.sys.database_firewall_rules' does 
           <FunctionImportMapping FunctionImportName="AddKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_insert" />
           <FunctionImportMapping FunctionImportName="UpdateKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Update" />
           <FunctionImportMapping FunctionImportName="DeleteKennel" FunctionName="Wollies_ShelterModel.Store.Kennel_Delete" />
+          <FunctionImportMapping FunctionImportName="searchDonor" FunctionName="Wollies_ShelterModel.Store.Donor_SearchDonor" />
+          <FunctionImportMapping FunctionImportName="SearchDon" FunctionName="Wollies_ShelterModel.Store.Don_SearchDon" />
+          <FunctionImportMapping FunctionImportName="SearchStock" FunctionName="Wollies_ShelterModel.Store.Stock_SearchStock" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

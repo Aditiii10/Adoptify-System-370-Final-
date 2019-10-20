@@ -94,7 +94,7 @@ namespace AdoptifySystem.Controllers
                 List<Stock> stock = new List<Stock>();
                 try
                 {
-                    //stock = db.searchstock(search).ToList();
+                    stock = db.SearchStock(search).ToList();
                     //donation_types = db.Donation_Type.Where(z => z.Donation_Type_Name.StartsWith(search)|| z.Donation_Type_Description.StartsWith(search) ).ToList();
                     if (stock.Count == 0)
                     {

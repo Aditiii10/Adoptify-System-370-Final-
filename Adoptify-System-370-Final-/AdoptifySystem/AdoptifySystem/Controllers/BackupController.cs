@@ -35,29 +35,29 @@ namespace AdoptifySystem.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Backup(string message)
-        {
-            try
-            {
-                connection = new SqlConnection(connectionString);
-                connection.Open();
-                var Query = "BACKUP DATABASE Wollies_Shelter TO DISK = 'C:\\backups\\ '";
-                SqlCommand cmd = new SqlCommand(Query, connection);
-                cmd.ExecuteNonQuery();
-                message = "Successful Backup";
-            }
-            catch (Exception ex)
-            {
-                message = Convert.ToString(ex);
-            }
-            finally
-            {
-                connection.Close();
-            }
+        //[HttpPost]
+        //public ActionResult Backup(string message)
+        //{
+        //    try
+        //    {
+        //        connection = new SqlConnection(connectionString);
+        //        connection.Open();
+        //        var Query = "BACKUP DATABASE Wollies_Shelter TO DISK = 'C:\\backups\\ '";
+        //        SqlCommand cmd = new SqlCommand(Query, connection);
+        //        cmd.ExecuteNonQuery();
+        //        message = "Successful Backup";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        message = Convert.ToString(ex);
+        //    }
+        //    finally
+        //    {
+        //        connection.Close();
+        //    }
 
-            return View();
-        }
+        //    return View();
+        //}
 
 
         //[HttpPost]
