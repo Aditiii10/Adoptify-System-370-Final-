@@ -285,7 +285,7 @@ namespace AdoptifySystem.Controllers
                     return View("AddtoFosterCare", flex);
                 }
                 int id = Convert.ToInt32(inid);
-                id = id + 1;
+                //id = id + 1;
                 flex.parent = flex.fostercareparent.Where(a => a.Foster_Parent_ID == id).FirstOrDefault();
 
                 if (flex.parent == null)
@@ -314,7 +314,7 @@ namespace AdoptifySystem.Controllers
                     return View("AddtoFosterCare", flex);
                 }
                 int id = Convert.ToInt32(inid);
-                flex.animal = flex.animallist.ElementAt(id);
+                flex.animal = flex.animallist.Where(z=>z.Animal_ID == id).FirstOrDefault();
 
                 if (flex.animal == null)
                 {

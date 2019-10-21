@@ -171,11 +171,6 @@
 
 
                 </div>
-
-                <div class="col-xs-6">
-                    <label><b>Location Found</b></label><br />
-                    <input type="text" name="Animal_Location" value="" id="Animal_Location" class="form-control" placeholder="Enter Location Found">
-                </div>
                 <br />
                 <div class="col-md-10">
                     <h3 style="color:red">"Click on the Microchip Details Tab to Continue"</h3>
@@ -244,7 +239,7 @@
                     <p>Animal has be stored would you like to place him in a kennel.</p>
                 </div>
                 <div class="modal-footer" onclick="hide()">
-                    @Html.ActionLink("Add to Kennel", "SearchAnimal", "Animal", new { @class = "btn btn-success", @title = "Click to Add the Following Animal Details" })
+                    @Html.ActionLink("Add to Kennel", "Create", "Animal_Kennel_History", new { @class = "btn btn-success", @title = "Click to Add the Following Animal Details" })
                     @Html.ActionLink("Cancel", "SearchAnimal", "Animal", new { @class = "btn btn-warning", @title = "Click to go back to Search Animal screen" })
                 </div>
             </div>
@@ -307,7 +302,7 @@
     function LoadProduct(categoryDD)
     {
         if ($(categoryDD).val() == 0) {
-            alert("Select an Animal Type");
+             //alert("Select an Animal Type");
         } else {
             $.ajax({
             type: "GET",
@@ -518,11 +513,7 @@
             Owner_Address.classList.add("is-valid");
         }
 
-        } else {
-             alert("Dont need to validate");
-            isvalid = false;
-        }
-        
+        } 
 
 
         var breed = false;
@@ -671,12 +662,6 @@
                     //alert("There was an internal error try again later" + error);
                 }
             });
-
-            //if (isvalid) {
-
-            //}
-        } else {
-            //alert("all is not valid");
         }
 
 

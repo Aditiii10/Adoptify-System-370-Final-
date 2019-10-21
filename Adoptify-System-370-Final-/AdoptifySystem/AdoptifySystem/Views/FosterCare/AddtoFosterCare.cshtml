@@ -42,18 +42,18 @@
             @using (Html.BeginForm("search_parent", "FosterCare", FormMethod.Post))
             {
                 <h1>Search For Foster Care Parent</h1>
-                <select id="parent" onclick="myFunction()" title="Select Parent">
+                <select id="parent" onclick="myFunction()" class="custom-select" title="Select Parent">
                     @if (Model.parent != null)
                     {
                         foreach (var item in Model.fostercareparent)
                         {
                             if (item.Foster_Parent_Name == Model.parent.Foster_Parent_Name)
                             {
-                                <option selected>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
+                                <option value="@item.Foster_Parent_ID" selected>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
                             }
                             else
                             {
-                                <option>@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
+                                <option value="@item.Foster_Parent_ID">@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
                             }
 
                         }
@@ -64,7 +64,7 @@
 
                         foreach (var item in Model.fostercareparent)
                         {
-                            <option class="form-control">@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
+                            <option value="@item.Foster_Parent_ID" class="form-control">@item.Foster_Parent_Name @item.Foster_Parent_Surname</option>
                         }
 
 
@@ -111,11 +111,11 @@
                         {
                             if (item.Animal_Name == Model.animal.Animal_Name)
                             {
-                                <option selected>@item.Animal_Name</option>
+                                <option value="@item.Animal_ID" selected>@item.Animal_Name</option>
                             }
                             else
                             {
-                                <option>@item.Animal_Name</option>
+                                <option value="@item.Animal_ID">@item.Animal_Name</option>
                             }
 
                         }
@@ -126,7 +126,7 @@
 
                         foreach (var item in Model.animallist)
                         {
-                            <option class="form-control">@item.Animal_Name</option>
+                            <option value="@item.Animal_ID" class="form-control">@item.Animal_Name</option>
                         }
 
 
@@ -232,17 +232,12 @@
 </div>
 <script type="text/javascript">
     function myFunction() {
-        var x = document.getElementById("parent").selectedIndex;
-        var y = document.getElementById("parent").options;
-        var id = y[x].index;
-        document.getElementById("pa").value = id;
-        // alert("Index: " + y[x].index + " is " + y[x].text);
+        var x = document.getElementById("parent");
+        document.getElementById("pa").value = x.value;
     }
     function sync() {
-        var x = document.getElementById("animal").selectedIndex;
-        var y = document.getElementById("animal").options;
-        var id = y[x].index;
-        document.getElementById("an").value = id;
+        var x = document.getElementById("animal");
+        document.getElementById("an").value = x.value;
         // alert("Index: " + y[x].index + " is " + y[x].text);
     }
     (function ($) {

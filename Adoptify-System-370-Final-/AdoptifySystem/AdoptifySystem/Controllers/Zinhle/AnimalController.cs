@@ -124,9 +124,10 @@ namespace AdoptifySystem.Controllers.Zinhle
                 }
                 else
                 {
+                    string[] breed = breeds[0].Split(',');
                     CrossBreed cross = new CrossBreed();
                     cross.Animal_ID = animal.Animal_ID;
-                    cross.Animal_Breed_ID = Convert.ToInt32(breeds);
+                    cross.Animal_Breed_ID = Convert.ToInt32(breed[0]);
                     db.CrossBreeds.Add(cross);
                     db.SaveChanges();
 
@@ -284,29 +285,29 @@ namespace AdoptifySystem.Controllers.Zinhle
         {
             try
             {
-                List<Animal> animalist = new List<Animal>();
-                animalist = db.Animals.ToList();
-                if (animalist != null)
-                {
-                    foreach (var item in animalist)
-                    {
-                        if (animal.Animal_Name == item.Animal_Name &&
-                        animal.Animal_Coat == item.Animal_Coat &&
-                        animal.Animal_Age == item.Animal_Age &&
-                        animal.Animal_Description == item.Animal_Description &&
-                        animal.Animal_Sterilization == item.Animal_Sterilization &&
-                        animal.Animal_Castration == item.Animal_Castration &&
-                        animal.Animal_Size == item.Animal_Size &&
-                        animal.Animal_Gender == item.Animal_Gender)
-                        {
-                            if (item.Animal_ID != animal.Animal_ID)
-                            {
-                                return View("There is a duplicate");
-                            }
+                //List<Animal> animalist = new List<Animal>();
+                //animalist = db.Animals.ToList();
+                //if (animalist != null)
+                //{
+                //    foreach (var item in animalist)
+                //    {
+                //        if (animal.Animal_Name == item.Animal_Name &&
+                //        animal.Animal_Coat == item.Animal_Coat &&
+                //        animal.Animal_Age == item.Animal_Age &&
+                //        animal.Animal_Description == item.Animal_Description &&
+                //        animal.Animal_Sterilization == item.Animal_Sterilization &&
+                //        animal.Animal_Castration == item.Animal_Castration &&
+                //        animal.Animal_Size == item.Animal_Size &&
+                //        animal.Animal_Gender == item.Animal_Gender)
+                //        {
+                //            if (item.Animal_ID != animal.Animal_ID)
+                //            {
+                //                return View("There is a duplicate");
+                //            }
                             
-                        }
-                    }
-                }
+                //        }
+                //    }
+                //}
                 Animal searchanimal = db.Animals.Find(animal.Animal_ID);
 
                 searchanimal.Animal_Name = animal.Animal_Name;
@@ -336,11 +337,11 @@ namespace AdoptifySystem.Controllers.Zinhle
 
 
                 db.SaveChanges();
-
+                string[] breed = breeds[0].Split(',');
                 if (Cross_Breed == "True")
                 {
                     // Split authors separated by a comma followed by space  
-                    string[] breed = breeds[0].Split(',');
+                    
                     foreach (var item in breed)
                     {
                         CrossBreed cross = new CrossBreed();
@@ -354,7 +355,7 @@ namespace AdoptifySystem.Controllers.Zinhle
                 {
                     CrossBreed cross = new CrossBreed();
                     cross.Animal_ID = animal.Animal_ID;
-                    cross.Animal_Breed_ID = Convert.ToInt32(breeds);
+                    cross.Animal_Breed_ID = Convert.ToInt32(breed[0]);
                     db.CrossBreeds.Add(cross);
                     db.SaveChanges();
 

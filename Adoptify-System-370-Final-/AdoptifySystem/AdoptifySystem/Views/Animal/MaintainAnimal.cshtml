@@ -347,11 +347,6 @@
                             </div>
                         }
                     </div>
-
-                    <div class="col-xs-6">
-                        <label><b>Location Found</b></label><br />
-                        <input type="text" name="Animal_Location" value="" id="Animal_Location" class="form-control" placeholder="Enter Location Found">
-                    </div>
                     <br />
                     <div class="col-md-10">
                         <h3 style="color:red">"Click on the Microchip Details Tab to Continue"</h3>
@@ -537,7 +532,7 @@
         var Animal_Coat = document.getElementById("Animal_Coat");
         var Date_of_Implant = document.getElementById("Date_of_Implant");
         var Animal_Entry_Date = document.getElementById("Animal_Entry_Date");
-        var Animal_Location = document.getElementById("Animal_Location");
+        //var Animal_Location = document.getElementById("Animal_Location");
         var Animal_Microchip_Code = document.getElementById("Animal_Microchip_Code");
         var Implanters_PIN_Number = document.getElementById("Implanters_PIN_Number");
         var Owner_Name = document.getElementById("Owner_Name");
@@ -616,19 +611,19 @@
             Animal_Entry_Date.classList.add("is-valid");
         }
 
-        if (Animal_Location.value == "") {
-            //first remove
-            Animal_Location.classList.remove("is-valid");
-            //then add the class you want
-            Animal_Location.classList.add("is-invalid");
-            alert("Please enter where Animal was found Location");
-            isvalid = false;
-        } else {
-            //first remove
-            Animal_Location.classList.remove("is-invalid");
-            //then add the class you want
-            Animal_Location.classList.add("is-valid");
-        }
+        //if (Animal_Location.value == "") {
+        //    //first remove
+        //    Animal_Location.classList.remove("is-valid");
+        //    //then add the class you want
+        //    Animal_Location.classList.add("is-invalid");
+        //    alert("Please enter where Animal was found Location");
+        //    isvalid = false;
+        //} else {
+        //    //first remove
+        //    Animal_Location.classList.remove("is-invalid");
+        //    //then add the class you want
+        //    Animal_Location.classList.add("is-valid");
+        //}
 
 
         var breed = false;
@@ -739,9 +734,9 @@
             formData.append("Animal_Gender", $('input[name="Animal_Gender"]:checked').val());
             formData.append("Animal_Type_ID",Animal_Type_ID.value );
             formData.append("Cross_Breed", $('input[name="Cross_Breed"]:checked').val());
-            formData.append("breed",array);
+            formData.append("breeds",array);
             formData.append("Animal_Entry_Date", Animal_Entry_Date.value);
-            formData.append("Animal_Location", Animal_Location.value);
+            //formData.append("Animal_Location", Animal_Location.value);
 
             formData.append("Animal_Microchip_Code", Animal_Microchip_Code.value);
             formData.append("Implanters_PIN_Number", Implanters_PIN_Number.value);
@@ -763,11 +758,13 @@
                 success: function () {
                     $("#loader").hide();
                     isvalid = true;
-                    this.Clearboxes();
+                    alert('Completed');
+                    //this.Clearboxes();
                     location.href = '@Url.Action("SearchAnimal","Animal")';
                 },
                 error: function (error) {
                     $("#loader").hide();
+                    alert('Falied');
                     isvalid = false;
                     console.log(error);
                     //alert("There was an internal error try again later" + error);
