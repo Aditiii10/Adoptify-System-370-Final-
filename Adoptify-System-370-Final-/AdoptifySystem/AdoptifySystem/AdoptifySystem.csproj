@@ -339,6 +339,11 @@
     <Compile Include="MyModel.Designer.cs">
       <DependentUpon>MyModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="MyModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Packaging_Type.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
