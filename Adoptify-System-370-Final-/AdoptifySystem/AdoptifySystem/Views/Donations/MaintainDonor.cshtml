@@ -4,53 +4,137 @@
     ViewBag.Title = "Maintain Donor";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Maintain Donor</h2>
-
-@using (Html.BeginForm())
-{
-    if (Model != null)
+<br />
+<div class="border-primary card mb-3">
+    <h1 class="table-primary">Maintain Donor</h1>
+    @if (Model != null)
     {
-        using (Html.BeginForm())
-        {
-            @Html.HiddenFor(model => model.donor.Donor_ID)
-            <select name="Title_ID" id="exampleList">
+        <select name="Title_ID" class="form-control col-md-2" id="Title_ID" title="Select Title">
 
-                @foreach (var item in Model.Titles)
-                {
-                    <option value="@item.Title_ID">@item.Title_Description</option>
-                    @*<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />*@
+            @foreach (var item in Model.Titles)
+            {
+                <option value="@item.Title_ID">@item.Title_Description</option>
+                @*<input id="@item.Emp_Name @item.Emp_Surname" value="@item.Emp_ID" hidden />*@
+            }
+        </select>
+    }       <br />
+    <label>
+        Donor Name
+    </label>
+    <br />
+    <div class="col-md-5">
+        <input name="Donor_Name" id="Donor_Name" value="@Model.donor.Donor_Name" class="form-control" type="text" />
+    </div>
+    <br />
+    <label>
+        Donor Surname
+    </label>
+    <br />
+    <div class="col-md-5">
+        <input name="Donor_Surname" id="Donor_Surname" value="@Model.donor.Donor_Surname" class="form-control" type="text" />
+    </div>
+    <br />
+    <label>
+        Donor Email
+    </label>
+    <br />
+    <div class="col-md-5">
+        <input name="Donor_Email" id="Donor_Email" value="@Model.donor.Donor_Email" class="form-control" type="email" />
+    </div>
+    <input name="Donor_ID" id="Donor_ID" value="@Model.donor.Donor_ID" class="form-control" type="text" hidden />
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Cancel", "SearchDonor", null, new { @class = "btn btn-warning" })
+            <button type="submit" name="button" value="Save" title="Click to Update the Following Donor Details" onclick="Save()" class=" btn btn-success float-right">Save</button>
+        </div>
+    </div>
+</div>
+<script>
+
+               function Save() {
+                   var Title_ID = document.getElementById("Title_ID");
+                   var Donor_ID = document.getElementById("Donor_ID");
+                   var Donor_Name = document.getElementById("Donor_Name");
+                   var Donor_Surname = document.getElementById("Donor_Surname");
+                var Donor_Email = document.getElementById("Donor_Email");
+
+
+                var isvalid = true;
+
+                if (Donor_Name.value == "") {
+                    //first remove
+                    Donor_Name.classList.remove("is-valid");
+                    //then add the class you want
+                    Donor_Name.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Donor_Name.classList.remove("is-invalid");
+                    //then add the class you want
+                    Donor_Name.classList.add("is-valid");
+                   }
+
+                if (Donor_Surname.value == "") {
+                    //first remove
+                    Donor_Surname.classList.remove("is-valid");
+                    //then add the class you want
+                    Donor_Surname.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Donor_Surname.classList.remove("is-invalid");
+                    //then add the class you want
+                    Donor_Surname.classList.add("is-valid");
+                   }
+                   if (Donor_Email.value == "") {
+                    //first remove
+                    Donor_Email.classList.remove("is-valid");
+                    //then add the class you want
+                    Donor_Email.classList.add("is-invalid");
+                    isvalid = false;
+                } else {
+                    //first remove
+                    Donor_Email.classList.remove("is-invalid");
+                    //then add the class you want
+                    Donor_Email.classList.add("is-valid");
                 }
-            </select>
-            <br />
-            <label>
-                Donor Name
-            </label>
-            <br />
-            <input name="Donor_Name" type="text" value="@Model.donor.Donor_Name" />
-            <br />
-            <label>
-                Donor Surname
-            </label>
-            <br />
-            <input name="Donor_Surname" type="text" value="@Model.donor.Donor_Surname" />
-            <br />
-            <label>
-                Donor Email
-            </label>
-            <br />
-            <input name="Donor_Email" type="text" value="@Model.donor.Donor_Email" />
-            <br />
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" name="button" value="Cancel" class="btn btn-warning">Cancel</button>
-                    <button type="submit" name="button" value="Save" class=" btn btn-success float-right">Update</button>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        <h1>the Title is empty</h1>
-    }
-}
+                if (isvalid) {
+
+                    var formData = new FormData();
+
+                    formData.append("Title_ID", Title_ID.value);
+                     formData.append("Donor_ID", Donor_ID.value );
+                    formData.append("Donor_Name", Donor_Name.value);
+                    formData.append("Donor_Surname", Donor_Surname.value);
+                    formData.append("Donor_Email", Donor_Email.value);
+
+                    $("#loader").show();
+                $.ajax(
+                    {
+                    type: "POST",
+                    data: formData,
+                    url: "/Donations/MaintainDonor",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    success: function (d) {
+                        $("#loader").hide();
+                        isvalid = true;
+
+                    },
+                    error: function (error) {
+                        $("#loader").hide();
+                        isvalid = false;
+                        alert("There was an internal error try again later" + error);
+                }
+            });
+
+                    if (isvalid)
+                    {
+                        location.href = '@Url.Action("SearchDonor","Donations")';
+                    }
+
+                }
+            }
+</script>

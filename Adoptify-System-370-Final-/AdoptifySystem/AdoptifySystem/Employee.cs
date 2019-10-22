@@ -27,6 +27,7 @@ namespace AdoptifySystem
         public int Emp_ID { get; set; }
         public string Emp_Name { get; set; }
         public string Emp_Surname { get; set; }
+        public string Emp_Gender { get; set; }
         public string Emp_ContactNumber { get; set; }
         public string Emp_IDNumber { get; set; }
         public string Emp_Email { get; set; }
@@ -34,7 +35,7 @@ namespace AdoptifySystem
         public Nullable<System.DateTime> Emp_Date_Employed { get; set; }
         public Nullable<int> Title_ID { get; set; }
         public Nullable<int> Emp_Type_ID { get; set; }
-        public Nullable<int> Employee_Status_ID { get; set; }
+        public Nullable<bool> Employee_Status { get; set; }
         public string Emp_Contract_Name { get; set; }
         public string Emp_Contract_Type { get; set; }
         public string BarcodeImageUrl { get; set; }
@@ -45,7 +46,6 @@ namespace AdoptifySystem
         public virtual ICollection<Event_Schedule> Event_Schedule { get; set; }
         public virtual Title Title { get; set; }
         public virtual Employee_Type Employee_Type { get; set; }
-        public virtual Employee_Status Employee_Status { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HomeCheck> HomeChecks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

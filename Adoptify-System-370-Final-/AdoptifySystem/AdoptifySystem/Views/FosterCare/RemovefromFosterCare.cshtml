@@ -3,9 +3,14 @@
     ViewBag.Title = "RemovefromFosterCare";
 
 }
-
-<mat-toolbar class="form-header">
-    <h1 class="mat-headline center-align">Remove Animal from Foster</h1>
+@if (!string.IsNullOrEmpty(ViewBag.err))
+{
+    <script type="text/javascript">
+        alert('@ViewBag.err');
+    </script>
+}
+<mat-toolbar class="form-header ">
+    <h1 class="mat-headline center-align table-primary">Remove Animal from Foster</h1>
 </mat-toolbar>
 <div>
     <div>
@@ -14,19 +19,19 @@
             <div class="form-group" style="padding: 0 20px;">
                 <label>Search Foster Care Parent</label>
                 <br>
-                <input class="form-control" name="search" type="text" placeholder="Search For Foster Care Parent">
-                <button type="submit" class="btn btn-lg btn-primary">Search</button>
+                <input class="form-control" autocomplete="off" name="search" type="text" placeholder="Search For Foster Care Parent">
+                <button type="submit" title="Click to Search Parent" class="btn btn-lg btn-primary">Search</button>
             </div>
         }
     </div>
-    <mat-toolbar class="form-header">
-        <h1 class="mat-headline center-align">Current Animals Foster Caring</h1>
+    <mat-toolbar class="form-header ">
+        <h1 class="mat-headline center-align table-primary">Current Animals Foster Caring</h1>
     </mat-toolbar>
     @if (Model.Fostercarelist != null)
     {
 
         <table class="table table-bordered">
-            <thead class="thead-dark">
+            <thead class="table-primary">
                 <tr>
                     <td>Parent Name</td>
                     <td>Parent Surname</td>
@@ -40,18 +45,20 @@
                     <td>@item.Foster_Care_Parent.Foster_Parent_Name</td>
                     <td>@item.Foster_Care_Parent.Foster_Parent_Surname</td>
                     <td>@item.Animal.Animal_Name</td>
-                    <td><button class="btn btn-danger" data-toggle="modal" data-target="#@item.Foster_Parent_ID">Remove</button></td>
+                    <td><button class="btn btn-danger" data-toggle="modal" title="Click to remove" data-target="#@item.Foster_Parent_ID">Remove</button></td>
                 </tr>
                 <div class="modal fade" id="@item.Foster_Parent_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">@item.Foster_Care_Parent.Foster_Parent_Name  @item.Foster_Care_Parent.Foster_Parent_Surname</h5>
+                            <div class="modal-header border-primary">
+                                <h2 class="modal-title" id="exampleModalLongTitle">Are you sure you want to remove <b>@item.Animal.Animal_Name</b> from Foster Care?</h2>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
+                                <span class="value">Foster Care Parent:</span>
+                                @item.Foster_Care_Parent.Foster_Parent_Name  @item.Foster_Care_Parent.Foster_Parent_Surname<br />
                                 <span class="value">Location:</span>
                                 @Html.DisplayFor(modelItem => item.Foster_Care_Parent.Foster_Parent_Address) <br />
                                 <span class="value">Animal Name:</span>
@@ -64,7 +71,7 @@
                             <div class="modal-footer">
 
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                @Html.ActionLink("Remove", "removefromfostercarelist", new { id = item.Foster_Care_ID }, new { @style = "color: white", @class = "btn btn-danger" })
+                                @Html.ActionLink("Remove", "removefromfostercarelist", new { id = item.Foster_Care_ID }, new { @style = "color: white", @class = "btn btn-danger", @title = "Click to remove" })
                             </div>
                         </div>
                     </div>
@@ -72,7 +79,7 @@
             }
         </table>
 
-        @Html.ActionLink("Save", "savetofostercare", null, new { @class = "btn btn-success" });
+        @Html.ActionLink("Save", "saveremovefostercare", null, new { @class = "btn btn-success", @title = "Click to Save" });
     }
     else
     {
@@ -84,6 +91,3 @@
         </table>
     }
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

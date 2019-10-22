@@ -7,130 +7,171 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdoptifySystem.Models;
+using AdoptifySystem.Models.nickeymodel;
+using OfficeOpenXml;
 
 namespace AdoptifySystem.Controllers.Cassie
 {
     public class Animal_Kennel_HistoryController : Controller
     {
-        private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
 
+        private Wollies_ShelterEntities db = new Wollies_ShelterEntities();
+        public static Innovation inno = new Innovation();
+        public static Flexible flex = new Flexible();
+        
         // GET: Animal_Kennel_History
         public ActionResult Index()
         {
-            var animal_Kennel_History = db.Animal_Kennel_History.Include(a => a.Animal).Include(a => a.Kennel);
-            return View(animal_Kennel_History.ToList());
-        }
-
-        // GET: Animal_Kennel_History/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Animal_Kennel_History animal_Kennel_History = db.Animal_Kennel_History.Find(id);
-            if (animal_Kennel_History == null)
-            {
-                return HttpNotFound();
-            }
-            return View(animal_Kennel_History);
+            return View();
         }
 
         // GET: Animal_Kennel_History/Create
         public ActionResult Create()
         {
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image");
-            ViewBag.Kennel_ID = new SelectList(db.Kennels, "Kennel_ID", "Kennel_Name");
-            return View();
-        }
 
-        // POST: Animal_Kennel_History/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+            try
+            {
+                db.Database.CommandTimeout = 300;
+                List<Kennel> kennels = new List<Kennel>();
+                List<Animal> animals = new List<Animal>();
+
+
+                List<Kennel> listy = new List<Kennel>();
+
+                animals = db.Animals.ToList();
+                kennels = db.Kennels.ToList();
+                if (animals == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                if (kennels == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                foreach (var item in kennels)
+                {
+                    if (item.Animals.Count > 0)
+                    {
+
+
+                        if (item.Animals.Count <= item.Kennel_Capacity)
+                        {
+                            listy.Add(item);
+
+                        }
+                    }
+                    else
+                    {
+                        listy.Add(item);
+                    }
+                }
+                inno.Kennels = listy;
+                inno.animals = animals;
+                return View(inno);
+            }
+            catch (Exception e)
+            {
+                string ex = e.Message;
+                throw new Exception("Something went Wrong");
+            }
+
+        }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Animal_Kennel_History_ID,Animal_ID,Kennel_ID")] Animal_Kennel_History animal_Kennel_History)
+        public ActionResult Search_Kennel(int kennelid)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Animal_Kennel_History.Add(animal_Kennel_History);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                int id = Convert.ToInt32(kennelid);
+                if (inno.animal == null)
+                {
+                    ViewBag.err = "Please pick Animal first";
+                    return View("Create", inno);
+                }
+                inno.Kennel = inno.Kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
+                return View("Create", inno);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something went Wrong");
             }
 
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", animal_Kennel_History.Animal_ID);
-            ViewBag.Kennel_ID = new SelectList(db.Kennels, "Kennel_ID", "Kennel_Name", animal_Kennel_History.Kennel_ID);
-            return View(animal_Kennel_History);
         }
+        //public JsonResult Search_Kennel(int inid)
+        //{
+        //    try
+        //    {
+        //        int id = Convert.ToInt32(inid);
+        //        inno.Kennel = inno.Kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
+        //        var kennels = inno.Kennels.Select(x => new
+        //        {
+        //            Kennel_ID = x.Kennel_ID,
+        //            Kennel_Name = x.Kennel_Name,
+        //            Kennel_Space = (x.Kennel_Capacity - x.Animals.Count),
+        //            Kennel_Capacity = x.Kennel_Capacity,
+        //        }).ToList();
+        //        var kennel = kennels.Where(z => z.Kennel_ID == id).FirstOrDefault();
+        //        ViewBag.breed = kennels;
+        //        return Json(kennel, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw new Exception("Something went Wrong");
+        //    }
 
-        // GET: Animal_Kennel_History/Edit/5
-        public ActionResult Edit(int? id)
+        //}
+        [HttpGet]
+        public ActionResult Search_Animal(int inid)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                int id = Convert.ToInt32(inid);
+                inno.animal = inno.animals.Where(z => z.Animal_ID == id).FirstOrDefault();
+                return View("Create", inno);
             }
-            Animal_Kennel_History animal_Kennel_History = db.Animal_Kennel_History.Find(id);
-            if (animal_Kennel_History == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                throw new Exception("Something went Wrong");
             }
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", animal_Kennel_History.Animal_ID);
-            ViewBag.Kennel_ID = new SelectList(db.Kennels, "Kennel_ID", "Kennel_Name", animal_Kennel_History.Kennel_ID);
-            return View(animal_Kennel_History);
+
         }
-
-        // POST: Animal_Kennel_History/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Animal_Kennel_History_ID,Animal_ID,Kennel_ID")] Animal_Kennel_History animal_Kennel_History)
+        public ActionResult Moveanimal()
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(animal_Kennel_History).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Animal_ID = new SelectList(db.Animals, "Animal_ID", "Animal_Image", animal_Kennel_History.Animal_ID);
-            ViewBag.Kennel_ID = new SelectList(db.Kennels, "Kennel_ID", "Kennel_Name", animal_Kennel_History.Kennel_ID);
-            return View(animal_Kennel_History);
-        }
+                if (inno.Kennel == null || inno.animal == null)
+                {
+                    ViewBag.err = "Please pick Animal and Kennel";
+                    return View("Create", inno);
+                }
+                if (inno.animal.Kennel_ID != 0)
+                {
+                    if (inno.Kennel.Kennel_ID == inno.animal.Kennel_ID)
+                    {
+                        ViewBag.err = "Cant Move Animal to same Kennel as current";
+                        return View("Create", inno);
+                    }
+                    var animal = db.Animals.Find(inno.animal.Animal_ID);
+                    if (animal == null)
+                    {
+                        return View("Create", inno);
+                    }
+                    animal.Kennel_ID = inno.Kennel.Kennel_ID;
+                    db.SaveChanges();
+                    flex.UpdateAuditTrail(Convert.ToInt32(Session["ID"].ToString()), "Animal's Kennel Location");
+                    inno.animal = null;
+                    inno.Kennel = null;
 
-        // GET: Animal_Kennel_History/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                ViewBag.err = "Info Stored";
+                return RedirectToAction("Create");
             }
-            Animal_Kennel_History animal_Kennel_History = db.Animal_Kennel_History.Find(id);
-            if (animal_Kennel_History == null)
+            catch (Exception)
             {
-                return HttpNotFound();
-            }
-            return View(animal_Kennel_History);
-        }
 
-        // POST: Animal_Kennel_History/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Animal_Kennel_History animal_Kennel_History = db.Animal_Kennel_History.Find(id);
-            db.Animal_Kennel_History.Remove(animal_Kennel_History);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
+                throw new Exception("Something went Wrong");
             }
-            base.Dispose(disposing);
+
         }
     }
 }

@@ -1,0 +1,114 @@
+﻿@model List<AdoptifySystem.Employee_Type>
+@{
+    ViewBag.Title = "SearchEmployeeType";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="main">
+    <div class="col-sm-12 table-primary"><h1>Search Employee Type</h1></div>
+
+    <h1>@ViewBag.errormessage</h1>
+    @Html.ActionLink("Add Employee Type", "AddEmployeeType", null, new { @style = "color: # fff" }, new { @class = "btn btn-success" ,@title="Click to Add Employee Type" })
+    @using (Html.BeginForm("SearchEmployeeType", "Employees", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="col-md-5">
+                <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                @Html.TextBox("search", "", new { @name = "txtSearch",  @autocomplete = "off", @placeholder = "Search Criteria",@class ="form-control" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" value="Search" title="Click to Search Employee Type" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    }
+    <br />
+    <table class="table table-bordered">
+        <tr class="table-primary">
+
+            <th>
+                Employee Type Name
+            </th>
+            <th>
+                Employee Type  Description
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+
+        @if (Model == null)
+        {
+            <tr>
+                <td colspan="8">
+                    No results found
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Emp_Type_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Emp_Type_Description)
+                    </td>
+                    <td>
+                        <button class="btn btn-info" data-toggle="modal" title="Select to Display Details" data-target="#@item.Emp_Type_ID">More Info </button> |
+                     
+                    </td>
+                </tr>
+                <div class="modal fade" id="@item.Emp_Type_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header table-primary">
+                                <h5 class="modal-title" id="exampleModalLongTitle">@item.Emp_Type_Name</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">ID:</span>
+                                @Html.DisplayFor(modelItem => item.Emp_Type_ID) <br />
+                                <span class="value">Description:</span>
+                                @Html.DisplayFor(modelItem => item.Emp_Type_Description) <br />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                @Html.ActionLink("Delete", "DeleteEmployeeType", new { id = item.Emp_Type_ID }, new { @class = "btn btn-danger" ,@title="Click to Delete Employee Type"}) 
+                                @Html.ActionLink("Maintain Employee Type", "MaintainEmployeeType", new { id = item.Emp_Type_ID }, new { @style = "color: white", @class = "btn btn-warning" ,@title="Click to Maintian Employee Type" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+    </table>
+   
+    </div>
+    @section scripts{
+        <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+         $(function () {
+            var successMessage = '@TempData["EditMessage"]'
+            if (successMessage != '')
+                alertify.warning(successMessage);
+         });
+        $(function () {
+            var successMessage = '@TempData["DeleteMessage"]'
+            if (successMessage != '')
+                alertify.error(successMessage);
+        });
+
+        </script>
+    }

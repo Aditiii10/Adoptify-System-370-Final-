@@ -1,0 +1,78 @@
+﻿@model AdoptifySystem.Models.nickeymodel.Flexible
+@{
+    ViewBag.Title = "ViewDonor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="table-primary">View Donor</h2>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#Details">Donor Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Donations">Donations History</a>
+    </li>
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="box-body">
+        <div class="col-sm-6">
+            <h2 style="color:#00b1b1;">@Model.donor.Title.Title_Description @Model.donor.Donor_Name  @Model.donor.Donor_Surname</h2>
+        </div>
+        <div class="clearfix"></div>
+        <hr style="margin:5px 0 5px 0;">
+    </div>
+        <div id="Details" class="panel panel-default tab-pane fade show active">
+            <div class="panel-body">
+                <div class="box box-info">
+                    <div class="col-sm-5 col-xs-6 tital ">First Name:</div><div class="col-sm-7 col-xs-6 ">@Model.donor.Donor_Name</div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                    <div class="col-sm-5 col-xs-6 tital ">Surname:</div><div class="col-sm-7"> @Model.donor.Donor_Surname </div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                    <div class="col-sm-5 col-xs-6 tital ">Email:</div><div class="col-sm-7"> @Model.donor.Donor_Email </div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+
+                    @if (Model.donor.Donations.Count > 0)
+                    {
+                        <div class="col-sm-5 col-xs-6 tital ">Total Donations Made:</div><div class="col-sm-7"> @Model.donor.Donations.Count</div>
+                    }
+                    else
+                    {
+
+                    }
+                </div>
+            </div>
+    </div>
+        <div class="tab-pane fade" id="Donations">
+            @if (Model.donor.Donations.Count > 0)
+            {
+                foreach (Donation don in Model.donor.Donations)
+                {
+                    <h4>Date of Donation: @don.Donation_Date</h4>
+                    <table class="table-bordered">
+                        <tr class="table-primary">
+                            <td>Donation Type</td>
+                        </tr>
+                        @foreach (Donation_Line line in don.Donation_Line)
+                        {
+
+
+                        <tr>
+                            <td>@line.Donation_Type.Donation_Type_Name</td>
+                            <td>@line.Donation_Quantity</td>
+                        </tr>
+
+                        }
+                    </table>
+
+                }
+            }
+            else
+            {
+                <p>No Donations Made</p>
+
+            }
+        </div>
+</div>

@@ -3,53 +3,25 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div id="main">
+    <h2>Generate Reports</h2>
 
-<h2>Generate Reports</h2>
-
-<div>
-    <h3>Generate Employee Timesheet Report</h3>
-    <input type="button" class="btn btn-success" value="Generate" onclick="location.href='@Url.Action("EmployeeTimesheet","Report")'" />
-</div>
-
-<br />
-<br />
-<div>
-    <h3>Generate Animal Details Report</h3>
-    <input type="button" class="btn btn-success" value="Generate" onclick="location.href='@Url.Action("Animal","AnimalsDetailsReport")'" />
-</div>
-
-<br />
-<br />
-<div>
-    <h3>Generate Vet Appointment Report</h3>
-    <input type="button" class="btn btn-success" value="Generate" onclick="location.href='@Url.Action("Index","VetAppointReport")'" />
-</div>
-<br />
-<br />
-<div>
-    <h3>Generate Volunteer Community Hours Report</h3>
-    <input type="button" class="btn btn-success" value="Generate" onclick="location.href='@Url.Action("Index","VetAppointReport")'" />
-</div>
-<br />
-<br />
-    <h3>Generate Animal Intake Report</h3>
-    <div class="criteria">
-        @using (Html.BeginForm("Advanced", "Home", FormMethod.Post))
-        {
-            <label>Select Vendor</label>
-            @Html.DropDownListFor(m => m.SelectedVendorID, Model.Vendors, "-- Please select --", new { @class = "form-control" })
-            <label>From</label>
-            @Html.TextBoxFor(m => m.DateFrom, "yyyy-MM-dd", new { @Value = "2013-08-01", @type = "date", @class = "form-control" })
-            <label>To</label>
-            @Html.TextBoxFor(m => m.DateTo, "yyyy-MM-dd", new { @Value = "2013-08-30", @type = "date", @class = "form-control" })
-            <br />
-            <input type="submit" value="Generate" class="btn btn-primary" />
-        }
-        <input type="button" class="btn btn-success" value="Generate" onclick="location.href='@Url.Action("Index","VetAppointReport")'" />
+    <div>
+        <h3>Generate Employee Timesheet Report</h3>
+        <input type="button" class="btn btn-success" value="Generate" onclick="location.href='@Url.Action("EmployeeTimesheet","Report")'" />
     </div>
-<br />
-<br />
-<div>
-    <h3>Generate Audit Trail Report</h3>
-    <input type="button" class="btn btn-success" value="Generate" onclick="location.href='@Url.Action("Index","VetAppointReport")'" />
-</div>
+
+    <br />
+    <br />
+    <div>
+        <h3>Generate Animal Details Report</h3>
+        <input type="button" class="btn btn-success" value="Generate" onclick="location.href='@Url.Action("Animal","AnimalsDetailsReport")'" />
+    </div>
+
+    <br />
+    <br />
+    @*<div>
+        <h3>Generate Vet Appointment Report</h3>
+        <input type="button" class="btn btn-success" value="Generate" onclick="location.href='@Url.Action("Index","VetAppointReport")'" />
+    </div>*@
+    </div>

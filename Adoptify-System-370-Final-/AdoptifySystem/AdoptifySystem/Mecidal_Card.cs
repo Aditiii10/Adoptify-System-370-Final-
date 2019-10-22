@@ -22,8 +22,8 @@ namespace AdoptifySystem
     
         public int Id { get; set; }
         public int Animal_ID { get; set; }
-        public int Vet_Appointment_ID { get; set; }
         public string Diagnosis_Details { get; set; }
+        public Nullable<int> Vet_Appoint_Line_ID { get; set; }
         public Nullable<System.DateTime> Arrival_from_Vet { get; set; }
         public Nullable<System.DateTime> Next_Appointment_Date_ { get; set; }
         public string MedicalCard { get; set; }
@@ -32,6 +32,6 @@ namespace AdoptifySystem
         public virtual Animal Animal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Animal_Treatment> Animal_Treatment1 { get; set; }
-        public virtual Vet_Appointment Vet_Appointment { get; set; }
+        public virtual Vet_Appointment_Master Vet_Appointment_Master { get; set; }
     }
 }

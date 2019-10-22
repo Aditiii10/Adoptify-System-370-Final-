@@ -30,12 +30,13 @@
 <br />
 <div class="card border-primary mb-3">
     <h1 class="table-primary" style="width:100%">Clock-in Detail</h1>
+    <h4>@ViewBag.err</h4>
     <div class="row">
         <div class="container column">
             @using (Html.BeginForm("GetUserDetails", "Admin", FormMethod.Post))
             {
                 <h2 class="text-center">Search For Employee</h2>
-                <select id="employee" name="id" class="custom-select" onclick="myFunction()">
+                <select id="employee" name="id" class="custom-select">
                     @if (Model.employee != null)
                     {
                         foreach (var item in Model.employeelist)

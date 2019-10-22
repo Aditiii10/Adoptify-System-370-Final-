@@ -1,0 +1,99 @@
+﻿@model IEnumerable<AdoptifySystem.Kennel>
+
+@{
+    ViewBag.Title = "SearchKennel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div id="main">
+        <div class="table-primary" style="text-align:center;padding-left:120px">
+            <h1>Search Kennel</h1>
+        </div>
+        <h1>@ViewBag.errormessage</h1>
+        @Html.ActionLink("Create New", "AddKennel", null, new { @style = "color: # fff" }, new { @class = "btn btn-success", @title = "Click to Add Stock Type" })
+
+        @using (Html.BeginForm("SearchKennel", "Kennel", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-5">
+                    <h4><span style="font-weight:bold">Search Criteria:<span class="label label-default"></span></span></h4>
+                    @Html.TextBox("search", "", new { @name = "txtSearch", @autocomplete = "off", @placeholder = "Search Criteria", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" value="Search" title="Click to Search Kennel" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        }
+        <br />
+        <table class="table table-bordered">
+            <tr class="table-primary">
+                <th>
+                    Kennel Number
+                </th>
+                <th>
+                    Kennel Name
+                </th>
+                <th>
+                    Kennel Capacity
+                </th>
+                <th>
+                    Capacity Left
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kennel_Number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kennel_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kennel_Capacity)
+                    </td>
+                    <td>
+                        @*@{
+                            ViewBag.Capacity = item.Capacityleft();
+
+                        }
+                        @ViewBag.Capacity*@
+                    </td>
+                    <td>
+                        @Html.ActionLink("Maintain", "MaintainKennel", new { id = item.Kennel_ID }, new { @class = "btn btn-warning", @title = "Click to go back to Maintain Kennel" })
+                        <button class="btn btn-info" title="Select to Display Details" data-toggle="modal" data-target="#@item.Kennel_ID">More info </button>
+                    </td>
+                </tr>
+                <div class="modal fade" id="@item.Kennel_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header table-primary">
+                                <h5 class="modal-title" id="exampleModalLongTitle">@item.Kennel_Name</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <span class="value">ID:</span>
+                                @Html.DisplayFor(modelItem => item.Kennel_ID) <br />
+                                <span class="value">Kennel Capacity:</span>
+                                @Html.DisplayFor(modelItem => item.Kennel_Capacity) <br />
+                                @*<span class="value">Animals in Kennel:</span>
+                                @Html.DisplayFor(modelItem => item.Animals.Count)<br />*@
+                            </div>
+                            <div class="modal-footer">
+                                @Html.ActionLink("Delete", "DeleteKennel", new { id = item.Kennel_ID }, new { @class = "btn btn-danger", @title = "Click to Delete Kennel" })
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                @Html.ActionLink("MaintainKennel", "MaintainKennel", new { id = item.Kennel_ID }, new { @style = "color: white", @class = "btn btn-warning", @title = "Click to Maintian Kennel" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </table>
+    </div>

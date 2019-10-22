@@ -18,7 +18,7 @@ namespace AdoptifySystem
         public Nullable<int> Emp_ID { get; set; }
         public Nullable<int> Kennel_ID { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual Kennel Kennel { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

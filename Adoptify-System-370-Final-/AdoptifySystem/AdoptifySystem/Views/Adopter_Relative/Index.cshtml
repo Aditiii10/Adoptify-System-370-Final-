@@ -1,0 +1,103 @@
+﻿@model IEnumerable<AdoptifySystem.Models.Adopter_Relative>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("Index", "Adopter_Relative", FormMethod.Get))
+    {
+        <b>Search by:</b>@Html.RadioButton("Searchby", "Relative_Name", true) <text>Relative Name</text>
+        @Html.RadioButton("Searchby", "Relative_Surname")<text>Relative Surname</text><br />
+        @Html.TextBox("search")<input type="submit" value="Search" ? />
+    }
+</p>
+
+@*@section scripts{
+    <script>
+    $(function () {
+        var successMessage = '@TempData["AdopterRelativeMessage"]'
+        if (successMessage != '')
+            alertify.success(successMessage);
+    });
+    <script/>*@
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Relative_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Relative_Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Relative_Email)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Relative_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Relative_PostalAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Relative_Home_Tel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Relative_Work_Tel)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Relative_Cell)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Relationship)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Adopter.Adopter_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Relative_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Relative_Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Relative_Email)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Relative_Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Relative_PostalAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Relative_Home_Tel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Relative_Work_Tel)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Relative_Cell)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Relationship)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adopter.Adopter_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Relative_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Relative_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Relative_ID })
+        </td>
+    </tr>
+}
+
+</table>

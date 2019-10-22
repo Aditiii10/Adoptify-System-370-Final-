@@ -1,127 +1,360 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Adoptify System Application</title>
     @Scripts.Render("~/bundles/modernizr")
-    @*@Styles.Render("~/Content/css")*@
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> <!-- KIM added this here and the two below -->
+
+    @* Favicon Adoptify Logo *@
+    @*  <link rel="icon" href="~/AdopifyLogo.ico" width="20" height="20" />*@
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link href="~/CSS/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="~/JS/jquery-3.2.1.slim.min.js"></script>
+    <script src="~/JS/popper.min.js"></script>
+    <script src="~/JS/bootstrap.min.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>*@
+    <link href="~/Content/alertifyjs/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/alertifyjs/themes/default.min.css" rel="stylesheet" />
+    <link href="~/CSS/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen" runat="server" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        .modal1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: black;
+            z-index: 99;
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+            -moz-opacity: 0.8;
+            min-height: 100%;
+            width: 100%;
+        }
+
+        .loading {
+            font-family: Arial;
+            font-size: 10pt;
+            /*border: 5px solid #67CFF5;
+            width: 200px;
+            height: 100px;*/
+            display: none;
+            position: fixed;
+            /*background-color: White;*/
+            z-index: 999;
+        }
+    </style>
+
 </head>
 
 <body>
-    @*//the Loader*@
-    <div class="loading" align="center">
-        Loading. Please wait.<br />
-        <br />
-        <img src="~/Images/Loader.gif" />
-    </div>
-    @*The navabar*@
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Wollies Animal Shelter</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="top:0; width:100%">
+        @* <img src="~/AdoptifyLogo.PNG" width="80" height="80" alt="Adoptify" />*@
+        <a class="navbar-brand" href="http://localhost:55003/Home/Index">Wollies Animal Shelter</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
+
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Animals</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @Html.ActionLink("Animals", "SearchAnimal", "Animal", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Animal", "AddTemporaryAnimal", "Animal", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Animal Types", "SearchAnimalType", "Animal", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Animal Type", "AddAnimalType", "Animal", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Animal Breed", "SearchBreedType", "Animal", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Animal Breed", "AddBreedType", "Animal", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
                 <li class="nav-item dropdown show">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Admin</a>
                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-                        @Html.ActionLink("Login", "AddDonation", "Admin", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Add User Role", "adduserrole", "Admin", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Change Password", "AddDonor", "Admin", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Checkin", "Checkin", "Admin", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Checkout", "AddDonation", "Admin", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Maintain User Role", "maintainuserrole", "Admin", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Search User Role", "searchuserrole", "Admin", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Reset Password", "Reset Password", "Admin", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Logout", "Login", "Admin", null, new { @class = "dropdown-item" })
+                        @*@Html.ActionLink("Change Password", "AddDonor", "Admin", null, new { @class = "dropdown-item" })*@
+                        @Html.ActionLink("Checkin Employee", "Checkin", "Admin", null, new { @class = "dropdown-item" })
+                        @{
+                            ViewBag.id = Convert.ToInt32(Session["ID"]);
+
+                        }
+                        @if (ViewBag.id != null)
+                        {
+                            @Html.ActionLink("ChangePassword", "ChangePassword", "Admin", new { id = ViewBag.id }, new { @class = "dropdown-item" })
+                        }
+
+                        @Html.ActionLink("Checkout Employee", "Checkout", "Admin", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add User Role", "AddUserRole", "Admin", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Search User Role", "SearchUserRole", "Admin", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Reset Password", "ResetPassword", "Admin", null, new { @class = "dropdown-item" })
                     </div>
                 </li>
                 <li class="nav-item dropdown show">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Donations</a>
                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
                         @Html.ActionLink("Add Donations", "AddDonation", "Donations", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Search Donations", "SearchDonations", "Donations", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Search Donations", "SearchDonation", "Donations", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Add Donor", "AddDonor", "Donations", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Maintain Donor", "maintaindonor", "Donations", null, new { @class = "dropdown-item" })
+                        @*@Html.ActionLink("Maintain Donor", "maintaindonor", "Donations", null, new { @class = "dropdown-item" })*@
                         @Html.ActionLink("Search Donor", "searchdonor", "Donations", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Add Donation Type", "AddDonationType", "Donations", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Maintain Donation Type", "MaintianDonationType", "Donations", null, new { @class = "dropdown-item" })
+                        @*@Html.ActionLink("Maintain Donation Type", "MaintianDonationType", "Donations", null, new { @class = "dropdown-item" })*@
                         @Html.ActionLink("Search Donation Type", "SearchDonationType", "Donations", null, new { @class = "dropdown-item" })
                     </div>
                 </li>
                 <li class="nav-item dropdown show">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Stock</a>
                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-                        @Html.ActionLink("Add Stock", "AddDonation", "Stock", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Stock", "AddStock", "Stock", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Search Stock", "SearchStock", "Stock", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Maintian Stock", "MaintianStock", "Stock", null, new { @class = "dropdown-item" })
+                        @*@Html.ActionLink("Maintian Stock", "MaintianStock", "Stock", null, new { @class = "dropdown-item" })*@
                         @Html.ActionLink("Add Stock Type", "AddStockType", "Stock", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Search Stock Type", "SearchStockType", "Stock", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Maintian Stock Type", "MaintianStockType", "Stock", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Capture Stock Take", "SearchStock", "Stock", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Receive Stock", "SearchStock", "Stock", null, new { @class = "dropdown-item" })
+                        @*@Html.ActionLink("Maintian Stock Type", "MaintianStockType", "Stock", null, new { @class = "dropdown-item" })*@
+                        @*@Html.ActionLink("Capture Stock Take", "SearchStock", "Stock", null, new { @class = "dropdown-item" })*@
+                        @*@Html.ActionLink("Receive Stock", "SearchStock", "Stock", null, new { @class = "dropdown-item" })*@
                     </div>
                 </li>
                 <li class="nav-item dropdown show">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Foster Care</a>
                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-                        @Html.ActionLink("Add Foster Care Parent", "Addfostercareparent", "Foster Care", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Search Foster Care Parent", "Searchfostercareparent", "Foster Care", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Maintain Foster Care Parent", "maintainfostercareparent", "Foster Care", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Add to Foster Care", "AddtoFosterCare", "Foster Care", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Remove from Foster Care", "removefromFosterCare", "Foster Care", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Foster Care Parent", "AddFostercareParent", "FosterCare", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Search Foster Care Parent", "SearchFosterCareParent", "FosterCare", null, new { @class = "dropdown-item" })
+                        @*@Html.ActionLink("Maintain Foster Care Parent", "MaintainFosterCareParent", "FosterCare", null, new { @class = "dropdown-item" })*@
+                        @Html.ActionLink("Add to Foster Care", "AddtoFosterCare", "FosterCare", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Remove from Foster Care", "RemoveFromFosterCare", "FosterCare", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Event</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @*@Html.ActionLink("Add Foster Care Parent", "AddFostercareParent", "FosterCare", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Search Foster Care Parent", "SearchFosterCareParent", "FosterCare", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Maintain Foster Care Parent", "MaintainFosterCareParent", "FosterCare", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Add to Foster Care", "AddtoFosterCare", "FosterCare", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Remove from Foster Care", "RemoveFromFosterCare", "FosterCare", null, new { @class = "dropdown-item" })*@
+                    </div>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Employees</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @Html.ActionLink("Search Employees", "SearchEmployee", "Employees", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Employee", "AddEmployee", "Employees", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Search Employee Type", "SearchEmployeeType", "Employees", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Employee Type", "AddEmployeeType", "Employees", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Adoption</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @Html.ActionLink("Adoption Home", "Index", "Adoptions", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Create Adoption", "Create", "Adoptions", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("HomeCheck Home", "HomeCheckIndex", "Adoptions", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("HomeCheck Report Home", "HomeCheckReportIndex", "Adoptions", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Adoption Payment Home", "AdoptionPaymentIndex", "Adoptions", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Animal Collection Home", "CollectionIndex", "Adoptions", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Return Animal From Adoption", "ReturnIndex", "Adoptions", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Adopter</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @Html.ActionLink("Adopters Home", "Index", "Adopters", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Create Adopter", "Create", "Adopters", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Veterinarian</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @Html.ActionLink("Veterinarian Home", "Index", "Veterinarians", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Create Veterinarian", "Create", "Veterinarians", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Vet Appointment Home", "Index", "VetAppointment", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Create Vet Appointment", "Create", "VetAppointment", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Search Medical Cards", "Index", "Mecidal_Card", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Capture Medical Cards", "Index", "Mecidal_Card", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Animal Treatment Home", "Index", "Animal_Treatment", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Animal Treatment Home", "Create", "Animal_Treatment", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Kennel</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @Html.ActionLink("Kennel Home", "SearchKennel", "Kennel", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Create Kennel", "AddKennel", "Kennel", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Animal Kenna History", "Index", "Animal_Kennel_History", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Move Animal to Kennel", "Create", "Animal_Kennel_History", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Volunteers</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @Html.ActionLink("Volunteers", "Index", "Volunteers", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Volunteer", "Create", "Volunteers", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Volunteer Work Hours", "Create", "Volunteers", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Volunteer Types", "Create", "Volunteers", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Add Volunteer Type", "Create", "Volunteers", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Reporting</a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                        @Html.ActionLink("Report Screen", "Index", "ReportScreen", null, new { @class = "dropdown-item" })
+
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
+
+            @*<br /><div><label>||</label></div>*@
+            <div class="form-group usr_buttons">
+                <a class="navbar-brand" href="http://localhost:55003/Admin/Login"><i class="fas fa-user" style="color:black"></i><span style="color:black"> Logout  @Html.Raw(HttpContext.Current.Session["ID"])</span></a>
+            </div>
+            @*<form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>*@
         </div>
     </nav>
+
+    @*//the Loader*@
+    <div id="loader" class="loading" align="center">
+        @*Loading. Please wait.<br />
+            <br />*@
+        @*<img src="~/Images/Loader.gif" />*@
+        <img src="~/Images/eecb0228d91417e5368c7dc527c16d8f.gif" width="300" height="200" />
+        @*<img src="~/Images/tenor.gif"width="300" height="200" />*@
+        @*<img src="~/Images/dribbble_loadingbone.gif" />*@
+
+    </div>
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Developed by WaveyTec Group</p>
-        </footer>
-    </div>
 
+    </div>
+    <footer>
+        <div class="form-group">
+            @*<h4 style="color: black; font-size: 12px; font-family: 'Lato', sans-serif">  </h4>*@
+            @*</div>
+                <div class="form-group">*@
+            <label>Inactivity Timer : </label>
+            <h4 id="demo" style="color:black; font-size: 12px; font-family: 'Lato', sans-serif"> <a href="#" id="demo" style="color:black; font-size: 20px"></a></h4>
+
+        </div>
+        <p>&copy; @DateTime.Now.Year - Adoptify System Developed by WaveyTec Group</p>
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/alertify.min.js"></script>
     @RenderSection("scripts", false)
+
+    <script type="text/javascript">
+        var modal, loading;
+        function ShowProgress() {
+            modal = document.createElement("DIV");
+            modal.className = "modal1";
+            document.body.appendChild(modal);
+            loading = document.getElementsByClassName("loading")[0];
+            loading.style.display = "block";
+            var top = Math.max(window.innerHeight / 2 - loading.offsetHeight / 2, 0);
+            var left = Math.max(window.innerWidth / 2 - loading.offsetWidth / 2, 0);
+            loading.style.top = top + "px";
+            loading.style.left = left + "px";
+        };
+        ShowProgress();
+    </script>
+
+    <!-- Keep the Page Content Here.-->
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var time;
+            setTimeout(function () {
+                document.body.removeChild(modal);
+                loading.style.display = "none";
+            }, 500); //Delay just used for example and must be set to 0.
+
+            $.ajax({
+                url: '/Timer/getTime',
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8', //define a contentType of your request
+                cache: false,
+                success: function (data) {
+
+                    console.log(data);
+                    var hours = parseInt(data.hours);
+                    var minutes = parseInt(data.minutes);
+                    var seconds = parseInt(data.seconds);
+                    var hmilliseconds = hours * 60 * 60 * 1000;
+                    var mmilliseconds = minutes * 1000 * 60;
+                    var smilliseconds = seconds * 1000;
+                    time = hmilliseconds + mmilliseconds + smilliseconds;
+                    console.log(time);
+                    console.log(hmilliseconds + " : " + mmilliseconds + " : " + smilliseconds);
+                    setTime(time);
+                },
+                error: function (xhr) {
+                    alert('failed to load timer');
+                }
+            });
+
+            
+            function setTime(time) {
+
+                var countDownDate = new Date().getTime() + time;
+                
+                // Update the count down every 1 second
+                var x = setInterval(function () {
+                    // Get todays date and time
+                    var now = new Date().getTime();
+                    //alert(countDownDate);
+                    //alert(now);
+                    // Find the distance between now and the count down date
+                    var distance = countDownDate - now;
+                    // Time calculations for days, hours, minutes and seconds
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    // Display the result in the element with id="demo"
+                    document.getElementById("demo").innerHTML = hours + "h "
+                        + minutes + "m " + seconds + "s ";
+                    // If the count down is finished, write some text
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("demo").innerHTML = "EXPIRED";
+                    }
+                }, 1000);
+            };
+        }
+           
+        
+    </script>
+
+    <script>
+        // Set the date we're counting down to
+        //window.onload =
+
+//        function msToHMS( ms ) {
+//    // 1- Convert to seconds:
+//    var seconds = ms / 1000;
+//    // 2- Extract hours:
+//    var hours = parseInt( seconds / 3600 ); // 3,600 seconds in 1 hour
+//    seconds = seconds % 3600; // seconds remaining after extracting hours
+//    // 3- Extract minutes:
+//    var minutes = parseInt( seconds / 60 ); // 60 seconds in 1 minute
+//    // 4- Keep only seconds not extracted to minutes:
+//    seconds = seconds % 60;
+//    alert( hours+" hours and "+minutes+" minutes and "+seconds+" seconds!" );
+//}
+        
+    </script>
+
 </body>
 </html>
-<script type="text/javascript">
-    var modal, loading;
-    function ShowProgress() {
-        modal = document.createElement("DIV");
-        modal.className = "modal1";
-        document.body.appendChild(modal);
-        loading = document.getElementsByClassName("loading")[0];
-        loading.style.display = "block";
-        var top = Math.max(window.innerHeight / 2 - loading.offsetHeight / 2, 0);
-        var left = Math.max(window.innerWidth / 2 - loading.offsetWidth / 2, 0);
-        loading.style.top = top + "px";
-        loading.style.left = left + "px";
-    };
-    ShowProgress();
-</script>
-
-<!-- Keep the Page Content Here.-->
-
-<script type="text/javascript">
-    window.onload = function () {
-        setTimeout(function () {
-            document.body.removeChild(modal);
-            loading.style.display = "none";
-        }, 500); //Delay just used for example and must be set to 0.
-    };
-</script>

@@ -15,10 +15,9 @@ namespace AdoptifySystem
     public partial class HomeCheckReport
     {
         public int HomeCheckReportID { get; set; }
-        public Nullable<int> HomeCheck_ID { get; set; }
+        public Nullable<int> Adoption_ID { get; set; }
         public Nullable<bool> HomeCheckStatus { get; set; }
-        public string HCDoc { get; set; }
     
-        public virtual HomeCheck HomeCheck { get; set; }
+        public virtual Adoption Adoption { get; set; }
     }
 }
